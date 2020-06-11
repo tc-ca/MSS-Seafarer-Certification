@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["CDTS Blazor/CDNApplication.csproj", "CDTS Blazor/"]
+COPY ["./CDNApplication.csproj", "CDTS Blazor/"]
 RUN dotnet restore "CDTS Blazor/CDNApplication.csproj"
 COPY . .
 WORKDIR "/src/CDTS Blazor"
