@@ -1,6 +1,6 @@
 # SeaCertsBlazor
 
-[![Board Status](https://dev.azure.com/transport-canada/0f91b5b9-ce7e-44d1-b2f1-ca76af598788/f7a003ec-d6de-4bef-a3b5-e1ea2d282372/_apis/work/boardbadge/f8975bd6-2e82-4aee-927a-642bbe432844)](https://dev.azure.com/transport-canada/0f91b5b9-ce7e-44d1-b2f1-ca76af598788/_boards/board/t/f7a003ec-d6de-4bef-a3b5-e1ea2d282372/Microsoft.RequirementCategory) ![.NET Core](https://github.com/tc-tibo/SeaCertsBlazor/workflows/.NET%20Core/badge.svg?branch=master)
+[![Board Status](https://dev.azure.com/transport-canada/0f91b5b9-ce7e-44d1-b2f1-ca76af598788/f7a003ec-d6de-4bef-a3b5-e1ea2d282372/_apis/work/boardbadge/f8975bd6-2e82-4aee-927a-642bbe432844)](https://dev.azure.com/transport-canada/0f91b5b9-ce7e-44d1-b2f1-ca76af598788/_boards/board/t/f7a003ec-d6de-4bef-a3b5-e1ea2d282372/Microsoft.RequirementCategory) ![.NET Core](https://github.com/tc-tibo/SeaCertsBlazor/workflows/.NET%20Core/badge.svg?branch=master) [![Build status](https://dev.azure.com/transport-canada/DSD-MARINE%20Certification/_apis/build/status/CDNApplicationPrototype/CDNApplicationPrototype-CI)](https://dev.azure.com/transport-canada/DSD-MARINE%20Certification/_build/latest?definitionId=265)
 
 # Introduction 
 
