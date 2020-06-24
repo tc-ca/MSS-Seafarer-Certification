@@ -1,4 +1,5 @@
 ﻿using CDNApplication.Data.Services;
+using CDNApplication.Test.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace CDNApplication.Test
 
         public AzureKeyVaultTests()
         {
-            azureKeyVaultService = new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/");
+            azureKeyVaultService = Service.GetAzureKeyVaultService();
         }
 
         [Theory]
