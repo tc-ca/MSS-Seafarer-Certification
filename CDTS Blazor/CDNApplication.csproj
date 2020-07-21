@@ -40,6 +40,11 @@
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
     <Folder Include="Data\Resources\" />
+    <Folder Include="Model\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Pages\" />
+    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +55,10 @@
     <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Data\Resources\ErrorMessages %28copy%29.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>labels_en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\CandidateDocumentNumberForm.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CandidateDocumentNumberForm.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
