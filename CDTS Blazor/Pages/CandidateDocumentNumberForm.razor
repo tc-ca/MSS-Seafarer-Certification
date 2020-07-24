@@ -1,4 +1,5 @@
 ﻿@page "/cdnform"
+@page "/{LanguageCode}/cdnform"
 @using System.ComponentModel.DataAnnotations;
 
 @using Data;
@@ -6,19 +7,22 @@
 @using CDNApplication.Data.Resources;
 
 @inject NavigationManager navigationManger
+@inject IStringLocalizer<Pages.CandidateDocumentNumberForm> localizer
+
+@inherits BaseComponent
 
 <nav aria-label="progress" class="step-indicator">
-<ul class="steps">
-<li class="active" aria-current="true">
+    <ul class="steps">
+        <li class="active" aria-current="true">
             @labels_en.CDNApplicationProgressApplicantDetails
         </li>
-<li>
+        <li>
             @labels_en.CDNApplicationProgressMailingAddress<span class="sr-only">not completed</span>
         </li>
-<li>
+        <li>
             @labels_en.CDNApplicationProgressIdentityDocuments<span class="sr-only">not completed</span>
         </li>
-<li>
+        <li>
             @labels_en.CDNApplicationProgressSignature<span class="sr-only">not completed</span>
         </li>
     </ul>
@@ -26,75 +30,77 @@
 
 <br />
 
+<h1>@localizer["PageTitle"]</h1>
+
 <EditForm Model="@tombstoneInformation" OnValidSubmit="HandleValidSubmit">
-<DataAnnotationsValidator />
-<div class="form-group">
-<TCInputText Label="Surname"
-             Id="CDN-Surname"
-             @bind-Value="tombstoneInformation.Surname"
-             ValidationFor="@(() => tombstoneInformation.Surname)" />
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <TCInputText Label="Surname"
+                     Id="CDN-Surname"
+                     @bind-Value="tombstoneInformation.Surname"
+                     ValidationFor="@(() => tombstoneInformation.Surname)" />
 
 
 
     </div>
-<div class="form-group">
-<TCInputText Label="Givenname(s)"
-             Id="CDN-Givennames"
-             @bind-Value="tombstoneInformation.GivenName"
-             ValidationFor="@(() => tombstoneInformation.GivenName)" />
+    <div class="form-group">
+        <TCInputText Label="Givenname(s)"
+                     Id="CDN-Givennames"
+                     @bind-Value="tombstoneInformation.GivenName"
+                     ValidationFor="@(() => tombstoneInformation.GivenName)" />
 
 
 
     </div>
-<div class="form-group">
-<TCInputText Label="Initials"
-             Id="CDN-Initials"
-             @bind-Value="tombstoneInformation.Initials"
-             ValidationFor="@(() => tombstoneInformation.Initials)" />
+    <div class="form-group">
+        <TCInputText Label="Initials"
+                     Id="CDN-Initials"
+                     @bind-Value="tombstoneInformation.Initials"
+                     ValidationFor="@(() => tombstoneInformation.Initials)" />
 
 
 
     </div>
-<div class="form-group">
-<TCInputText Label="Date of Birth (dd-mm-yyyy)"
-             Id="CDN-DateOfBirth"
-             @bind-Value="tombstoneInformation.DateOfBirth"
-             ValidationFor="@(() => tombstoneInformation.DateOfBirth)" />
+    <div class="form-group">
+        <TCInputText Label="Date of Birth (dd-mm-yyyy)"
+                     Id="CDN-DateOfBirth"
+                     @bind-Value="tombstoneInformation.DateOfBirth"
+                     ValidationFor="@(() => tombstoneInformation.DateOfBirth)" />
 
 
 
     </div>
-<div class="form-group">
-<TCInputText Label="Nationality"
-             Id="CDN-Nationalty"
-             @bind-Value="tombstoneInformation.Nationality"
-             ValidationFor="@(() => tombstoneInformation.Nationality)" />
-
-
-
-    </div>
-
-<div class="form-group">
-<TCInputRadio Label="English"
-              Id="CDN-Language-English"
-              name="language"
-              SelectedValue="CorrespondenceLanguage.ENGLISH"
-              @bind-Value="tombstoneInformation.LanguagePreference" />
-
-
-
-<TCInputRadio Label="Français"
-              Id="CDN-Language-French"
-              name="language"
-              SelectedValue="CorrespondenceLanguage.FRENCH"
-              @bind-Value="tombstoneInformation.LanguagePreference" />
+    <div class="form-group">
+        <TCInputText Label="Nationality"
+                     Id="CDN-Nationalty"
+                     @bind-Value="tombstoneInformation.Nationality"
+                     ValidationFor="@(() => tombstoneInformation.Nationality)" />
 
 
 
     </div>
 
-<button class="btn btn-primary" type="submit">Next</button>
-<a class="btn btn-secondary" href="/" role="button">Cancel</a>
+    <div class="form-group">
+        <TCInputRadio Label="English"
+                      Id="CDN-Language-English"
+                      name="language"
+                      SelectedValue="CorrespondenceLanguage.ENGLISH"
+                      @bind-Value="tombstoneInformation.LanguagePreference" />
+
+
+
+        <TCInputRadio Label="Français"
+                      Id="CDN-Language-French"
+                      name="language"
+                      SelectedValue="CorrespondenceLanguage.FRENCH"
+                      @bind-Value="tombstoneInformation.LanguagePreference" />
+
+
+
+    </div>
+
+    <button class="btn btn-primary" type="submit">Next</button>
+    <a class="btn btn-secondary" href="/" role="button">Cancel</a>
 </EditForm>
 
 @code {

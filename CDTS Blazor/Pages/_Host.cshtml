@@ -3,9 +3,12 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject GoC.WebTemplate.Components.Core.Services.ModelAccessor ModelAccessor
 
+@inject CDNApplication.Views.LayoutViewModel VM
+
 @{
     GoC.WebTemplate.Components.Model WebTemplateModel;
     WebTemplateModel = ModelAccessor.Model;
+    VM.InitializePage();
 }
 
 <!DOCTYPE html>
@@ -81,6 +84,6 @@
     @WebTemplateModel.Render.HtmlBodyElements()
     <script src="_framework/blazor.server.js"></script>
     <script src="_content/BlazorInputFile/inputfile.js"></script>
-    <script src="~/js/aurora.min.js"></script>
+    <script src="js/aurora.min.js"></script>
 </body>
 </html>
