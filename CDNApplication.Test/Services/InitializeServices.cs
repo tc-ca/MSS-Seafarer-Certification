@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CDNApplication.Test.Services
 {
-    public class Service
+    public class InitializeServices
     {
 
         public static AzureKeyVaultService GetAzureKeyVaultService()

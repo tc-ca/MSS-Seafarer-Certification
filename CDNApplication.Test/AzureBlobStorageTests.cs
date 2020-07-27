@@ -16,14 +16,12 @@ namespace CDNApplication.Test
 
         public AzureBlobStorageTests()
         {
-            azureBlobService = Service.GetAzureBlobService();
+            azureBlobService = InitializeServices.GetAzureBlobService();
         }
 
         [Theory]
         [InlineData("random-text.txt")]
-        [InlineData("Azure-EBook.pdf")]
-        [InlineData("happy-birthday.png")]
-        public async void UploadFileToAzureBlob(string fileName)
+        public async void Upload_File_To_Azure_Blob(string fileName)
         {
 
             var root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;

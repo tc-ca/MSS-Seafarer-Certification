@@ -1,5 +1,6 @@
 ﻿using CDNApplication.Data.Services;
 using CDNApplication.Test.Services;
+using Microsoft.Azure.KeyVault.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,24 +15,25 @@ namespace CDNApplication.Test
 
         public AzureKeyVaultTests()
         {
-            azureKeyVaultService = Service.GetAzureKeyVaultService();
+            azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
         }
 
         [Theory]
         [InlineData("BlobStorage")]
-        public void GetSerectByName_ReturnsSerect(string serectName)
+        public void GetSerectByName_ReturnsSecret(string serectName)
         {
+
             var serect = azureKeyVaultService.GetSecretByName(serectName);
 
-            Assert.NotNull(serect);
+            Assert.NotEmpty(serect);
+
         }
 
         [Fact]
         public void GetSerects_ReturnsAListOfSerects()
         {
-            var serect = azureKeyVaultService.GetListOfSecrets();
 
-            Assert.NotNull(serect);
+            var serect = azureKeyVaultService.GetListOfSecrets();
 
             Assert.NotEmpty(serect);
 
