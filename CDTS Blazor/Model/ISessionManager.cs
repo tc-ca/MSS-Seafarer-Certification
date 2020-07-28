@@ -1,8 +1,15 @@
 ﻿namespace CDNApplication.Model
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+    /// <summary>
+    /// Defines the session manager.
+    /// </summary>
     public interface ISessionManager
     {
+        /// <summary>
+        /// Updates the session state with the current language and the last viewed page.
+        /// </summary>
+        /// <param name="currentLanguage">The current language.</param>
+        /// <param name="lastViewedPage">The last viewed page.</param>
         void UpdateSessionState(string currentLanguage, string lastViewedPage);
     }
 }
