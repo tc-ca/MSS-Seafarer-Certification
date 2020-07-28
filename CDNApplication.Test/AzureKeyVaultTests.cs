@@ -15,7 +15,7 @@ namespace CDNApplication.Test
 
         [Theory]
         [InlineData("BlobStorage")]
-        public void GetSecretByName_ReturnsSecret(string secretName)
+        public void GetSecretByName_GetBlobStorageSecret_ReturnsNotEmpty(string secretName)
         {
             var secret = azureKeyVaultService.GetSecretByName(secretName);
 
@@ -23,9 +23,8 @@ namespace CDNApplication.Test
         }
 
         [Fact]
-        public void GetSerects_ReturnsAListOfSecrets()
+        public void GetListOfSecrets_GetAllSecrets_ReturnsNotEmpty()
         {
-
             var secret = azureKeyVaultService.GetListOfSecrets();
 
             Assert.NotEmpty(secret);
