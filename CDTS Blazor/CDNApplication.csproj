@@ -5,6 +5,8 @@
     <RootNamespace>CDNApplication</RootNamespace>
     <AssemblyName>CDNApplication</AssemblyName>
     <NeutralLanguage>en</NeutralLanguage>
+    <UserSecretsId>5a1e3f1f-28cd-4322-b8d1-921af0053adb</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -24,6 +26,7 @@
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.5.0" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -40,6 +43,11 @@
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
     <Folder Include="Data\Resources\" />
+    <Folder Include="Model\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Pages\" />
+    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +58,10 @@
     <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Data\Resources\ErrorMessages %28copy%29.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>labels_en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\CandidateDocumentNumberForm.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CandidateDocumentNumberForm.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

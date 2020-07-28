@@ -1,4 +1,6 @@
-﻿@page "/"
+﻿@page "/index"
+@page "/{LanguageCode}/index"
+@inherits BaseComponent
 
 <h1>APPLICATION FOR CANDIDATE DOCUMENT NUMBER (CDN)</h1>
 
@@ -13,4 +15,4 @@
     </p>
 </div>
 
-<a class="btn btn-primary" href="/cdnform" role="button">Next</a>
+<a class="btn btn-primary" href="cdnform" role="button">Next</a>
