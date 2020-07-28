@@ -1,16 +1,11 @@
 ﻿using CDNApplication.Data.Services;
 using CDNApplication.Test.Services;
-using Microsoft.Azure.KeyVault.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace CDNApplication.Test
 {
     public class AzureKeyVaultTests
     {
-
         private AzureKeyVaultService azureKeyVaultService;
 
         public AzureKeyVaultTests()
@@ -20,24 +15,20 @@ namespace CDNApplication.Test
 
         [Theory]
         [InlineData("BlobStorage")]
-        public void GetSerectByName_ReturnsSecret(string serectName)
+        public void GetSecretByName_ReturnsSecret(string secretName)
         {
+            var secret = azureKeyVaultService.GetSecretByName(secretName);
 
-            var serect = azureKeyVaultService.GetSecretByName(serectName);
-
-            Assert.NotEmpty(serect);
-
+            Assert.NotEmpty(secret);
         }
 
         [Fact]
-        public void GetSerects_ReturnsAListOfSerects()
+        public void GetSerects_ReturnsAListOfSecrets()
         {
 
-            var serect = azureKeyVaultService.GetListOfSecrets();
+            var secret = azureKeyVaultService.GetListOfSecrets();
 
-            Assert.NotEmpty(serect);
-
+            Assert.NotEmpty(secret);
         }
-
     }
 }

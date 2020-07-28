@@ -1,11 +1,7 @@
-﻿using BlazorInputFile;
-using CDNApplication.Data.Services;
+﻿using CDNApplication.Data.Services;
 using CDNApplication.Test.Services;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 
 namespace CDNApplication.Test
@@ -41,8 +37,6 @@ namespace CDNApplication.Test
             var result = await azureBlobService.UploadFileAsync(file, "unittests");
 
             Assert.NotNull(result);
-
         }
-
     }
 }
