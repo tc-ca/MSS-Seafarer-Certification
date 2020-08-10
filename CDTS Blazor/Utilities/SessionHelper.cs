@@ -9,7 +9,7 @@
     public sealed class SessionHelper
     {
         // TODO: This should be in a config file
-        private const string DefaultLanguage= "en";
+        private const string DefaultLanguage = "en";
         private const int LanguageIndexInPath = 1;
 
         /// <summary>
