@@ -9,7 +9,7 @@
     public sealed class SessionHelper
     {
         // TODO: This should be in a config file
-        private const string DEFAULTLANGUAGE = "en";
+        private const string DefaultLanguage = "en";
         private const int LanguageIndexInPath = 1;
 
         /// <summary>
@@ -26,7 +26,7 @@
 
             if (SessionHelper.IsContextPathEmpty(context))
             {
-                return DEFAULTLANGUAGE;
+                return DefaultLanguage;
             }
 
             return GetLanguageFromPath(context.Request.Path.Value);
@@ -46,18 +46,18 @@
         {
             if (string.IsNullOrEmpty(path))
             {
-                return DEFAULTLANGUAGE;
+                return DefaultLanguage;
             }
 
             var pathSubDirectories = path.Split('/');
             if (SessionHelper.DoesURLPathContainOnlyOneSubdirectory(pathSubDirectories))
             {
-                return DEFAULTLANGUAGE;
+                return DefaultLanguage;
             }
 
             if (SessionHelper.IsSecondPathInURLNullOrEmpty(pathSubDirectories))
             {
-                return DEFAULTLANGUAGE;
+                return DefaultLanguage;
             }
 
             return pathSubDirectories[LanguageIndexInPath];
