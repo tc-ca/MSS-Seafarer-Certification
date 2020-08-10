@@ -28,7 +28,7 @@
         /// <summary>
         /// Gets the base uri for the language.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "In this case we want this tu be a string")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "In this case we want this to be a string")]
         public string LangBaseUri => this.NavigationManager.BaseUri + this.LanguageCode;
 
         /// <inheritdoc/>
