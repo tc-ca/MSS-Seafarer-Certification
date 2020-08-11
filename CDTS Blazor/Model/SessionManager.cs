@@ -1,19 +1,26 @@
 ﻿namespace CDNApplication.Model
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+    /// <summary>
+    /// The sessions manager.
+    /// </summary>
     public class SessionManager : ISessionManager
     {
-        private readonly SessionStateModel sessionState;
+        private readonly SessionStateModel sessionStateModel;
 
-        public SessionManager(SessionStateModel sessionState)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionManager"/> class.
+        /// </summary>
+        /// <param name="sessionStateModel">The session state model.</param>
+        public SessionManager(SessionStateModel sessionStateModel)
         {
-            this.sessionState = sessionState;
+            this.sessionStateModel = sessionStateModel;
         }
 
+        /// <inheritdoc/>
         public void UpdateSessionState(string currentLanguage, string lastViewedPage)
         {
-            this.sessionState.CurrentLanguage = !string.IsNullOrEmpty(currentLanguage) ? currentLanguage : this.sessionState.CurrentLanguage;
-            this.sessionState.LastViewedPage = !string.IsNullOrEmpty(lastViewedPage) ? lastViewedPage : this.sessionState.LastViewedPage;
+            this.sessionStateModel.CurrentLanguage = !string.IsNullOrEmpty(currentLanguage) ? currentLanguage : this.sessionStateModel.CurrentLanguage;
+            this.sessionStateModel.LastViewedPage = !string.IsNullOrEmpty(lastViewedPage) ? lastViewedPage : this.sessionStateModel.LastViewedPage;
         }
     }
 }

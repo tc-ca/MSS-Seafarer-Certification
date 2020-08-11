@@ -1,6 +1,8 @@
 ﻿namespace CDNApplication.Model
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+    /// <summary>
+    /// The session state model.
+    /// </summary>
     public class SessionStateModel
     {
         public string CurrentLanguage { get; set; }

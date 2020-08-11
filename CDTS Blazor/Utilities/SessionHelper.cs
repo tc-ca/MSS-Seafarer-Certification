@@ -1,41 +1,76 @@
 ﻿namespace CDNApplication.Utilities
 {
+    using System;
     using Microsoft.AspNetCore.Http;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1052:Static holder types should be Static or NotInheritable", Justification = "Testing purposes")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
-    public class SessionHelper
+    /// <summary>
+    /// The application's session helper.
+    /// </summary>
+    public sealed class SessionHelper
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Testing purposes")]
+        // TODO: This should be in a config file
+        private const string DefaultLanguage = "en";
+        private const int LanguageIndexInPath = 1;
+
+        /// <summary>
+        /// Gets the language from the http context.
+        /// </summary>
+        /// <param name="context">the http context.</param>
+        /// <returns>the language code.</returns>
         public static string GetLanguageFromContext(HttpContext context)
         {
-            if (!context.Request.Path.HasValue)
+            if (context == null)
             {
-                return "en";
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (SessionHelper.IsContextPathEmpty(context))
+            {
+                return DefaultLanguage;
             }
 
             return GetLanguageFromPath(context.Request.Path.Value);
         }
 
+        private static bool IsContextPathEmpty(HttpContext context)
+        {
+            return !context.Request.Path.HasValue;
+        }
+
+        /// <summary>
+        /// Gets the language from the uri path.
+        /// </summary>
+        /// <param name="path">the uri path.</param>
+        /// <returns>the language code.</returns>
         public static string GetLanguageFromPath(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
-                return "en";
+                return DefaultLanguage;
             }
 
-            var items = path.Split('/');
-            if (items.Length < 2)
+            var pathSubDirectories = path.Split('/');
+            if (SessionHelper.DoesURLPathContainOnlyOneSubdirectory(pathSubDirectories))
             {
-                return "en";
+                return DefaultLanguage;
             }
 
-            if (string.IsNullOrEmpty(items[1]))
+            if (SessionHelper.IsSecondPathInURLNullOrEmpty(pathSubDirectories))
             {
-                return "en";
+                return DefaultLanguage;
             }
 
-            return items[1];
+            return pathSubDirectories[LanguageIndexInPath];
+        }
+
+        private static bool DoesURLPathContainOnlyOneSubdirectory(string[] pathSubDirectories)
+        {
+            return pathSubDirectories.Length < 2;
+        }
+
+        private static bool IsSecondPathInURLNullOrEmpty(string[] pathSubDirectories)
+        {
+            return string.IsNullOrEmpty(pathSubDirectories[LanguageIndexInPath]);
         }
     }
 }
