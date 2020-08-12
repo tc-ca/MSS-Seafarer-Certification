@@ -3,6 +3,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject GoC.WebTemplate.Components.Core.Services.ModelAccessor ModelAccessor
 
+@using CDNApplication.Components.Banners
+
 @inject CDNApplication.Views.LayoutViewModel VM
 
 @{
@@ -18,6 +20,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="@WebTemplateModel.TwoLetterCultureLanguage" dir="ltr">
 <!--<![endif]-->
 <head>
+    <base href="~/" />
     <meta charset="utf-8" />
     <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
         wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
@@ -82,8 +85,8 @@
     document.write(wet.builder.refFooter(@WebTemplateModel.Render.RefFooter()));
     </script>
     @WebTemplateModel.Render.HtmlBodyElements()
-    <script src="_framework/blazor.server.js"></script>
-    <script src="_content/BlazorInputFile/inputfile.js"></script>
-    <script src="js/aurora.min.js"></script>
+    <script src="~/_framework/blazor.server.js"></script>
+    <script src="~/_content/BlazorInputFile/inputfile.js"></script>
+    <script src="~/js/aurora.min.js"></script>
 </body>
 </html>
