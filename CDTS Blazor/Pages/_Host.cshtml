@@ -43,6 +43,10 @@
     @WebTemplateModel.Render.HtmlHeaderElements()
 </head>
 <body vocab="http://schema.org/" typeof="WebPage">
+
+    <!-- BANNERS -->
+    @(await Html.RenderComponentAsync<PageHeader>(RenderMode.ServerPrerendered))
+
     @WebTemplateModel.Render.SessionTimeoutControl()
     <div id="def-top">
         <!-- Write closure fall-back static file -->
