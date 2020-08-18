@@ -1,0 +1,98 @@
+﻿@page "/upload"
+@using CDNApplication.Data.Services;
+@using BlazorInputFile;
+
+@inject IAzureBlobService azureBlobService;
+@using Data.Resources;
+@using System.ComponentModel.DataAnnotations;
+
+@using Data;
+@using CDNApplication.TCComponents;
+@inject NavigationManager navigationManger
+@inject IStringLocalizer<Pages.CandidateDocumentNumberForm> localizer
+
+@inherits BaseComponent
+
+<h1>Upload Document</h1>
+
+<EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <TCInputText Label="CDN Number"
+                     Id="CDN-Number"
+                     TextInputType="TextInputType.NUMBER"
+                     @bind-value="model.CdnNumber.ToString()"
+                     ValidationFor="@(() => model.CdnNumber.ToString())" />
+    </div>
+
+    <div class="form-group">
+        <div class="form-control-wrapper">
+            <label class="form-control-label" for="CDN-Certification-Selection">Certification-Selection</label>
+            <input type="text" class="form-control"
+                   id="CDN-Certification-Selection" @bind-value="@model.CertificationSelection" />
+        </div>
+
+    </div>
+
+
+
+    <button class="btn btn-primary" type="submit">Submit Application</button>
+</EditForm>
+
+@code {
+
+    public IFileListEntry[] selectedFiles = new IFileListEntry[0];
+
+    private Model model = new Model();
+
+    bool loading = false;
+
+    public FileUploaded fileUploaded { get; set; }
+
+    public enum FileUploaded
+    {
+        DEFAULT,
+        SUCCESS,
+        FAIL,
+    }
+
+    public class Model
+    {
+        public int CdnNumber { get; set; }
+
+        public string CertificationSelection { get; set; }
+
+        public List<IFileListEntry> selectedFiles { get; set; }
+
+    }
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+        //navigationManger.NavigateTo($"{navigationManger.BaseUri}/mailingaddress");
+    }
+
+    async void HandleFileSelected(IFileListEntry[] files)
+    {
+
+        selectedFiles = files;
+
+        fileUploaded = FileUploaded.DEFAULT;
+
+        loading = true;
+
+        StateHasChanged();
+
+        // Upload the file to the root directory
+        var result = await azureBlobService.UploadMultipleFilesAsync(files);
+
+        loading = false;
+
+        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+
+        StateHasChanged();
+
+    }
+
+
+}
