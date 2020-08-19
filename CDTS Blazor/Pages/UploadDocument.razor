@@ -35,20 +35,27 @@
                 <option>Autumn</option>
                 <option>Winter</option>
             </InputSelect>
-            </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="Document">Upload Documents</label>
-            <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
-        </div>
+    <div class="form-group">
+        <label for="Document">Upload Documents</label>
+        <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+    </div>
 
-        <button class="btn btn-primary" type="submit">Submit Application</button>
+    <button class="btn btn-primary" type="submit">Submit Application</button>
 </EditForm>
+
+@foreach (var i in files)
+{
+    <p>File @i.Name has been uploaded</p>
+}
 
 @code {
 
     public IFileListEntry[] selectedFiles = new IFileListEntry[0];
+
+    public List<IFileListEntry> files = new List<IFileListEntry>();
 
     private Model model = new Model();
 
@@ -77,23 +84,29 @@
         //navigationManger.NavigateTo($"{navigationManger.BaseUri}/mailingaddress");
     }
 
-    async void HandleFileSelected(IFileListEntry[] files)
+    void HandleFileSelected(IFileListEntry[] files)
     {
 
         selectedFiles = files;
+
+        foreach (var item in files)
+        {
+            this.files.Add(item);
+        }
 
         fileUploaded = FileUploaded.DEFAULT;
 
 
         StateHasChanged();
 
+        model.selectedFiles = this.files;
         // Upload the file to the root directory
-        var result = await azureBlobService.UploadMultipleFilesAsync(files);
+        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
 
-        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
 
-        StateHasChanged();
+        //StateHasChanged();
 
     }
 
