@@ -2,34 +2,37 @@
 @using CDNApplication.Data.Services;
 @using BlazorInputFile;
 
-@inject IAzureBlobService azureBlobService;
+@{
+    //inject IAzureBlobService azureBlobService;
+}
 @using Data.Resources;
 @using System.ComponentModel.DataAnnotations;
 
 @using Data;
 @using CDNApplication.TCComponents;
 @inject NavigationManager navigationManger
-@inject IStringLocalizer<Pages.CandidateDocumentNumberForm> localizer
+@inject IStringLocalizer<Pages.UploadDocument> pageLocalizer
 
 @inherits BaseComponent
 
-<h1>Upload Document</h1>
+<h1>@pageLocalizer["PageTitle"]</h1>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+    <ValidationSummary />
     <DataAnnotationsValidator />
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Number">CDN Number</label>
-            <InputNumber class="form-control" @bind-Value="@model.CdnNumber"
-                         id="CDN-Certification-Selection" />
+            <label class="form-control-label" for="CDN-Number">@pageLocalizer["CDNLabel"]</label>
+            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
         </div>
     </div>
 
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Certification-Selection">Certification-Selection</label>
+            <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
             <InputSelect id="CDN-Certification-Selection" @bind-Value="model.CertificationSelection">
+                <option>@pageLocalizer["SelectCertificateDropDown"]</option>
                 <option>Spring</option>
                 <option>Summer</option>
                 <option>Autumn</option>
@@ -37,19 +40,16 @@
             </InputSelect>
         </div>
     </div>
-
     <div class="form-group">
-        <label for="Document">Upload Documents</label>
+        <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
         <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+        @foreach (var i in files)
+        {
+            <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.Name)</p>
+        }
     </div>
-
-    <button class="btn btn-primary" type="submit">Submit Application</button>
+    <button class="btn btn-primary" type="submit">@pageLocalizer["SubmitButton"]</button>
 </EditForm>
-
-@foreach (var i in files)
-{
-    <p>File @i.Name has been uploaded</p>
-}
 
 @code {
 
@@ -70,21 +70,34 @@
 
     public class Model
     {
-        public int CdnNumber { get; set; }
+        [StringLength(6)]
+        [Range(1, 999999)]
+        [Required]
+        public string CdnNumber { get; set; }
 
+        [Required]
         public string CertificationSelection { get; set; }
 
         public List<IFileListEntry> selectedFiles { get; set; }
 
+        public override string ToString()
+        {
+            return string.Format("{1}{0} {2}{0} {3}{0}",
+                System.Environment.NewLine,
+                this.CdnNumber,
+                this.CertificationSelection,
+                this.selectedFiles);
+        }
     }
 
     private void HandleValidSubmit()
     {
         Console.WriteLine("OnValidSubmit");
+        Console.WriteLine(model);
         //navigationManger.NavigateTo($"{navigationManger.BaseUri}/mailingaddress");
     }
 
-    void HandleFileSelected(IFileListEntry[] files)
+    public void HandleFileSelected(IFileListEntry[] files)
     {
 
         selectedFiles = files;
@@ -101,12 +114,15 @@
 
         model.selectedFiles = this.files;
         // Upload the file to the root directory
+
         //var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
 
         //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
-        //StateHasChanged();
+
+        fileUploaded = FileUploaded.SUCCESS; // result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
 
     }
 

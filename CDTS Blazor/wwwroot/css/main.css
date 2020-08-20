@@ -3,6 +3,14 @@
 }
 
 /**
+    UPLOAD PAGE
+*/
+.form-control-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+/**
     BANNER
 */
 .banner-container {

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="PageTitle" xml:space="preserve">
+        <value>Upload Document</value>
+    </data>
+    <data name="CDNLabel" xml:space="preserve">
+        <value>Candidate Document Number (CDN)</value>
+    </data>
+    <data name="SelectCertificateLabel" xml:space="preserve">
+        <value>Certificate Selection</value>
+    </data>
+    <data name="SelectCertificateDropDown" xml:space="preserve">
+        <value>Select a certificate</value>
+    </data>
+    <data name="AddYourDocumentsLabel" xml:space="preserve">
+        <value>Add Your Documents</value>
+    </data>
+    <data name="SubmitButton" xml:space="preserve">
+        <value>Submit</value>
+    </data>
+    <data name="FileUploadedSuccessText" xml:space="preserve">
+        <value>File {0} has been uploaded</value>
+    </data>
+</root>
