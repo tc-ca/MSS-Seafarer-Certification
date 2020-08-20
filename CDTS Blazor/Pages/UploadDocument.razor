@@ -61,6 +61,8 @@
 
     public FileUploaded fileUploaded { get; set; }
 
+    public int confirmation { get; set; }
+
     public enum FileUploaded
     {
         DEFAULT,
@@ -94,7 +96,8 @@
     {
         Console.WriteLine("OnValidSubmit");
         Console.WriteLine(model);
-        //navigationManger.NavigateTo($"{navigationManger.BaseUri}/mailingaddress");
+        //Console.WriteLine($"{navigationManger.BaseUri}/confirmation/{confirmation}");
+        navigationManger.NavigateTo($"{navigationManger.BaseUri}/confirmation/{confirmation}");
     }
 
     public void HandleFileSelected(IFileListEntry[] files)
@@ -126,5 +129,14 @@
 
     }
 
+
+    protected override void OnInitialized() // = On Page Load
+    {
+       
+        Random random = new Random();
+
+        confirmation = random.Next(100000, 999999);
+
+    }
 
 }

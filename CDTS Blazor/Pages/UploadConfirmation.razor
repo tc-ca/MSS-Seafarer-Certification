@@ -1,0 +1,16 @@
+﻿@page "/confirmation/{confirmation:int}"
+
+@inject NavigationManager navigationManger
+@inject IStringLocalizer<Pages.UploadConfirmation> pageLocalizer
+
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">@pageLocalizer["PageTitle"]</h4>
+    <p class="mb-0">Your confirmation number is #@confirmation</p>
+</div>
+
+@code {
+
+    [Parameter]
+    public int confirmation { get; set; }
+
+}

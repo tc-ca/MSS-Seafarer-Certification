@@ -42,8 +42,6 @@
     <Folder Include="Data\Resources\" />
     <Folder Include="Model\" />
     <Folder Include="Utilities\" />
-    <Folder Include="Resources\" />
-    <Folder Include="Resources\Pages\" />
     <Folder Include="Views\" />
     <Folder Include="Components\" />
     <Folder Include="Components\Banners\" />
