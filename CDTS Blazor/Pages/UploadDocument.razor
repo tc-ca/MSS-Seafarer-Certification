@@ -2,9 +2,7 @@
 @using CDNApplication.Data.Services;
 @using BlazorInputFile;
 
-@{
-    //inject IAzureBlobService azureBlobService;
-}
+@inject IAzureBlobService azureBlobService;
 @using Data.Resources;
 @using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +14,8 @@
 @inherits BaseComponent
 
 <h1>@pageLocalizer["PageTitle"]</h1>
+
+<p>@pageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
     <ValidationSummary />
@@ -31,12 +31,12 @@
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
-            <InputSelect id="CDN-Certification-Selection" @bind-Value="model.CertificationSelection">
-                <option>@pageLocalizer["SelectCertificateDropDown"]</option>
-                <option>Spring</option>
-                <option>Summer</option>
-                <option>Autumn</option>
-                <option>Winter</option>
+            <InputSelect class="form-control" id="CDN-Certification-Selection" @bind-Value="model.CertificationSelection">
+                <option value="@string.Empty">@pageLocalizer["SelectCertificateDropDown"]</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Autumn">Autumn</option>
+                <option value="Winter">Winter</option>
             </InputSelect>
         </div>
     </div>
@@ -100,7 +100,7 @@
         navigationManger.NavigateTo($"{navigationManger.BaseUri}/confirmation/{confirmation}");
     }
 
-    public void HandleFileSelected(IFileListEntry[] files)
+    async void HandleFileSelected(IFileListEntry[] files)
     {
 
         selectedFiles = files;
@@ -118,14 +118,9 @@
         model.selectedFiles = this.files;
         // Upload the file to the root directory
 
-        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
+        var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
-
-        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
-        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
-
-
-        fileUploaded = FileUploaded.SUCCESS; // result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
 
     }
 

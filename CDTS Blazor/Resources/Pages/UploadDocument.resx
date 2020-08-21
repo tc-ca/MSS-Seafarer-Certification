@@ -15,6 +15,9 @@
     <data name="PageTitle" xml:space="preserve">
         <value>Upload Document</value>
     </data>
+    <data name="PageDescription" xml:space="preserve">
+        <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum maximus arcu elit. Mauris non mauris vulputate, dapibus mauris eget, congue lacus. Mauris ex lorem, tempus eu iaculis at, pellentesque ut risus.</value>
+    </data>
     <data name="CDNLabel" xml:space="preserve">
         <value>Candidate Document Number (CDN)</value>
     </data>

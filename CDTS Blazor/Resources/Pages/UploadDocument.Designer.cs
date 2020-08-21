@@ -53,6 +53,12 @@ namespace CDNApplication.Resources.Pages {
             }
         }
         
+        internal static string PageDescription {
+            get {
+                return ResourceManager.GetString("PageDescription", resourceCulture);
+            }
+        }
+        
         internal static string CDNLabel {
             get {
                 return ResourceManager.GetString("CDNLabel", resourceCulture);
