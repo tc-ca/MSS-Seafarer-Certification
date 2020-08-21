@@ -88,6 +88,8 @@
     </Compile>
     <Compile Update="Resources\Pages\UploadDocument.Designer.cs">
       <DependentUpon>UploadDocument.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
 </Project>

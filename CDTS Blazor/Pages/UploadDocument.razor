@@ -20,13 +20,13 @@
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
     <ValidationSummary />
     <DataAnnotationsValidator />
+
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label" for="CDN-Number">@pageLocalizer["CDNLabel"]</label>
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
         </div>
     </div>
-
 
     <div class="form-group">
         <div class="form-control-wrapper">
@@ -40,28 +40,46 @@
             </InputSelect>
         </div>
     </div>
+
     <div class="form-group">
+        <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
+        <InputText class="form-control" required @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+
         <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
         <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+
         @foreach (var i in files)
         {
-            <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.Name)</p>
+
+            <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.SelectedFile.Name) | @pageLocalizer["Description"]: @i.Description</p>
+
         }
     </div>
+
     <button class="btn btn-primary" type="submit">@pageLocalizer["SubmitButton"]</button>
+
 </EditForm>
 
 @code {
 
     public IFileListEntry[] selectedFiles = new IFileListEntry[0];
 
-    public List<IFileListEntry> files = new List<IFileListEntry>();
+    public List<UploadedFile> files = new List<UploadedFile>();
 
     private Model model = new Model();
 
     public FileUploaded fileUploaded { get; set; }
 
     public int confirmation { get; set; }
+
+    public class UploadedFile
+    {
+
+        public IFileListEntry SelectedFile { get; set; }
+
+        public string Description { get; set; }
+
+    }
 
     public enum FileUploaded
     {
@@ -80,7 +98,9 @@
         [Required]
         public string CertificationSelection { get; set; }
 
-        public List<IFileListEntry> selectedFiles { get; set; }
+        public List<UploadedFile> UserFiles { get; set; }
+
+        public string FileDescription { get; set; }
 
         public override string ToString()
         {
@@ -88,7 +108,7 @@
                 System.Environment.NewLine,
                 this.CdnNumber,
                 this.CertificationSelection,
-                this.selectedFiles);
+                this.UserFiles);
         }
     }
 
@@ -103,34 +123,42 @@
     async void HandleFileSelected(IFileListEntry[] files)
     {
 
+        if (string.IsNullOrEmpty(model.FileDescription))
+        {
+            return;
+        }
+
         selectedFiles = files;
 
         foreach (var item in files)
         {
-            this.files.Add(item);
+            this.files.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
+
+            model.FileDescription = string.Empty;
         }
 
         fileUploaded = FileUploaded.DEFAULT;
 
-
         StateHasChanged();
 
-        model.selectedFiles = this.files;
+        await Task.Delay(100);
+
+        model.UserFiles = this.files;
         // Upload the file to the root directory
 
-        var result = await azureBlobService.UploadMultipleFilesAsync(files);
+        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
-        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
 
     }
 
 
     protected override void OnInitialized() // = On Page Load
     {
-       
+
         Random random = new Random();
 
-        confirmation = random.Next(100000, 999999);
+        confirmation = random.Next(100000, 9999999);
 
     }
 
