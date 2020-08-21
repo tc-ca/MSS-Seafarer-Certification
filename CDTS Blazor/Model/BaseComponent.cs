@@ -2,34 +2,42 @@
 {
     using Microsoft.AspNetCore.Components;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+    /// <summary>
+    /// The base component for any page or component in our application.
+    /// </summary>
     public class BaseComponent : LayoutComponentBase
     {
+        /// <summary>
+        /// Gets or sets application's navigation manager.
+        /// </summary>
         [Inject]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:Element should begin with upper-case letter", Justification = "Testing purposes")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
-        public NavigationManager navigationManager { get; set; }
+        public NavigationManager NavigationManager { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:Element should begin with upper-case letter", Justification = "Testing purposes")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+        /// <summary>
+        /// Gets or sets the application's session manager.
+        /// </summary>
         [Inject]
-        public ISessionManager sessionManager { get; set; }
+        public ISessionManager SessionManager { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+        /// <summary>
+        /// Gets or sets the culture language code.
+        /// </summary>
         [Parameter]
         public string LanguageCode { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "Testing purposes")]
-        public string LangBaseUri => this.navigationManager.BaseUri + this.LanguageCode;
+        /// <summary>
+        /// Gets the base uri for the language.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "In this case we want this to be a string")]
+        public string LangBaseUri => this.NavigationManager.BaseUri + this.LanguageCode;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+        /// <inheritdoc/>
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            var lastViewedPage = this.navigationManager.Uri;
+            var lastViewedPage = this.NavigationManager.Uri;
 
-            this.sessionManager.UpdateSessionState(this.LanguageCode, lastViewedPage);
+            this.SessionManager.UpdateSessionState(this.LanguageCode, lastViewedPage);
         }
     }
 }

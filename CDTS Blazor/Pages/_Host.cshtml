@@ -3,6 +3,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject GoC.WebTemplate.Components.Core.Services.ModelAccessor ModelAccessor
 
+@using CDNApplication.Components.Banners
+
 @inject CDNApplication.Views.LayoutViewModel VM
 
 @{
@@ -18,6 +20,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="@WebTemplateModel.TwoLetterCultureLanguage" dir="ltr">
 <!--<![endif]-->
 <head>
+    <base href="~/" />
     <meta charset="utf-8" />
     <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
         wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
@@ -26,7 +29,7 @@
     <!-- Load closure template scripts -->
     <script type="text/javascript" src="@string.Concat(WebTemplateModel.CDNPath, "soyutils.js")"></script>
     <link href="~/css/aurora.min.css" rel="stylesheet" />
-    <link href="/css/main.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
     <script type="text/javascript" src="@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}wet-{1}.js", WebTemplateModel.CDNPath, WebTemplateModel.TwoLetterCultureLanguage)"></script>
     <noscript>
         <!-- Write closure fall-back static file -->
@@ -40,6 +43,10 @@
     @WebTemplateModel.Render.HtmlHeaderElements()
 </head>
 <body vocab="http://schema.org/" typeof="WebPage">
+
+    <!-- BANNERS -->
+    @(await Html.RenderComponentAsync<PageHeader>(RenderMode.ServerPrerendered))
+
     @WebTemplateModel.Render.SessionTimeoutControl()
     <div id="def-top">
         <!-- Write closure fall-back static file -->
@@ -82,8 +89,8 @@
     document.write(wet.builder.refFooter(@WebTemplateModel.Render.RefFooter()));
     </script>
     @WebTemplateModel.Render.HtmlBodyElements()
-    <script src="_framework/blazor.server.js"></script>
-    <script src="_content/BlazorInputFile/inputfile.js"></script>
-    <script src="js/aurora.min.js"></script>
+    <script src="~/_framework/blazor.server.js"></script>
+    <script src="~/_content/BlazorInputFile/inputfile.js"></script>
+    <script src="~/js/aurora.min.js"></script>
 </body>
 </html>

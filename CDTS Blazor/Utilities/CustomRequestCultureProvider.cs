@@ -5,7 +5,9 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Localization;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Testing purposes")]
+    /// <summary>
+    /// The application's request culture provider for managing multiple languages (en and fr in this case).
+    /// </summary>
     public class CustomRequestCultureProvider : RequestCultureProvider
     {
         private readonly string englishCulture = "en-CA";
@@ -14,9 +16,13 @@
         private readonly string french = "/fr";
 
         /// <inheritdoc/>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Testing purposes")]
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
         {
+            if (httpContext == null)
+            {
+                throw new ArgumentNullException(nameof(httpContext));
+            }
+
             if (this.IsCanadianEnglishContext(httpContext))
             {
                 return Task.FromResult(new ProviderCultureResult(this.englishCulture));
