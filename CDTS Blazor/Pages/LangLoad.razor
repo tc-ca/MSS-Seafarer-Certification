@@ -12,8 +12,11 @@
         base.OnParametersSet();
 
         SelectedLanguage = string.IsNullOrEmpty(SelectedLanguage) ? "en" : SelectedLanguage;
-        var startPage = "/index";//configuration["StartPage"];
+    }
 
+    protected override void OnAfterRender(bool render) 
+    {
+        var startPage = "/apply-seafarer-certificate";
         navigationManager.NavigateTo($"{navigationManager.BaseUri}{SelectedLanguage}{startPage}");
     }
 }
