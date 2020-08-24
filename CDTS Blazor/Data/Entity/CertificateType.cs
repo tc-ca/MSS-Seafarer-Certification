@@ -27,7 +27,7 @@
         public string FrenchName { get; set; }
 
         /// <summary>
-        /// This method is used for fun.
+        /// This method is used for getting Certificate types.
         /// </summary>
         /// <returns>All available certificate types.</returns>
         public static List<CertificateType> GetAllCertificateTypes()
