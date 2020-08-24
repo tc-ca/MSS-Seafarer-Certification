@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PageTitle" xml:space="preserve">
-    <value>Upload Document</value>
+    <value>Enter your information and add your documents</value>
   </data>
   <data name="PageDescription" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum maximus arcu elit. Mauris non mauris vulputate, dapibus mauris eget, congue lacus. Mauris ex lorem, tempus eu iaculis at, pellentesque ut risus.</value>
+    <value>Fill in this form with your information and add your documents.</value>
   </data>
   <data name="CDNLabel" xml:space="preserve">
-    <value>Candidate Document Number (CDN)</value>
+    <value>Enter your Candidate Document Number (CDN)</value>
   </data>
   <data name="SelectCertificateLabel" xml:space="preserve">
-    <value>Certificate Selection</value>
+    <value>Select the certification you want</value>
   </data>
   <data name="SelectCertificateDropDown" xml:space="preserve">
-    <value>Select a certificate</value>
+    <value>Select the certificate</value>
   </data>
   <data name="AddYourDocumentsLabel" xml:space="preserve">
-    <value>Add Your Documents</value>
+    <value>Select your file</value>
   </data>
   <data name="SubmitButton" xml:space="preserve">
     <value>Submit</value>

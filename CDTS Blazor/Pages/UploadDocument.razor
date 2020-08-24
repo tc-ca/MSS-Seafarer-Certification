@@ -1,8 +1,11 @@
 ﻿@page "/upload"
+@page "/{LanguageCode}/upload"
 @using CDNApplication.Data.Services;
 @using BlazorInputFile;
 
-@inject IAzureBlobService azureBlobService;
+@{
+    //inject IAzureBlobService azureBlobService;
+}
 @using Data.Resources;
 @using System.ComponentModel.DataAnnotations;
 
@@ -43,7 +46,7 @@
 
     <div class="form-group">
         <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
-        <InputText class="form-control" required @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+        <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
 
         <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
         <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
@@ -100,7 +103,7 @@
 
         public List<UploadedFile> UserFiles { get; set; }
 
-        public string FileDescription { get; set; }
+        public string FileDescription { get; set; } = String.Empty;
 
         public override string ToString()
         {
@@ -122,12 +125,6 @@
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
-
-        if (string.IsNullOrEmpty(model.FileDescription))
-        {
-            return;
-        }
-
         selectedFiles = files;
 
         foreach (var item in files)
