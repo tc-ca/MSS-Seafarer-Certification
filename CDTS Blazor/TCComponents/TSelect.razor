@@ -1,0 +1,86 @@
+﻿@*  NOTE*    Component information   @
+    @*This is a select component where you can generate a select tag with multiple select options when you pass a list of objects
+                and you can choose to show only one property of the object in the list.
+                Pass the Property Name of that object to FieldName parameter of this component.
+                Following is an example of the use of this component.
+                To get the selected value from a parent component, we need to write
+                In a parent component
+
+            <h3>Selected Country is : @someTextValue</h3>
+            <TSelect Items="@Countries" FieldName="Text" OnSelectChangeFromChildEvent="CallingTSelectChild" >
+
+            </TSelect>
+
+         @code
+        {
+
+             public string someTextValue { get; set; }
+            private void CallingTSelectChild(ChangeEventArgs e)
+            {
+                someTextValue = "Selected Country  is : " + e.Value.ToString();
+            }
+
+            List<Country> Countries = new List<Country>()
+            {
+                new Country{Id=1, Text="Canada"},
+                new Country{Id=2, Text="USA"},
+                new Country{Id=3, Text="UK"},
+                new Country{Id=4, Text="Mexico"}
+            };
+
+            public class Country
+            {
+                public int Id { get; set; }
+                public string Text { get; set; }
+            }
+
+        }
+*@
+
+
+
+@typeparam TItem
+@using System.Reflection
+
+<select id="SelectWithGenericList" class="form-control" @onchange="OnSelectChangeFromChildEvent">
+
+    @foreach (var item in Items)
+    {
+        @foreach (var member in memberInfo)
+        {
+            @if (member.MemberType == MemberTypes.Property && member.Name == FieldName)
+            {
+                <option>@item.GetType().GetProperty(member.Name).GetValue(item)</option>
+            }
+        }
+    }
+</select>
+
+@code
+{
+
+    [Parameter]
+    public string FieldName { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnSelectChangeFromChildEvent { get; set; }
+
+
+
+    MemberInfo[] memberInfo;
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (Items != null && Items.Count > 0)
+        {
+            Type typeofItem = this.Items[0].GetType();
+            memberInfo = typeofItem.GetMembers();
+        }
+    }
+
+    [Parameter]
+    public List<TItem> Items { get; set; }
+
+}
+
