@@ -2,10 +2,10 @@
 @page "/{LanguageCode}/upload"
 @using CDNApplication.Data.Services;
 @using BlazorInputFile;
+@using CDNApplication.Data.Entity;
 
-@{
-    //inject IAzureBlobService azureBlobService;
-}
+@inject IAzureBlobService azureBlobService;
+
 @using Data.Resources;
 @using System.ComponentModel.DataAnnotations;
 
@@ -34,13 +34,7 @@
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
-            <InputSelect class="form-control" id="CDN-Certification-Selection" @bind-Value="model.CertificationSelection">
-                <option value="@string.Empty">@pageLocalizer["SelectCertificateDropDown"]</option>
-                <option value="Spring">Spring</option>
-                <option value="Summer">Summer</option>
-                <option value="Autumn">Autumn</option>
-                <option value="Winter">Winter</option>
-            </InputSelect>
+            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
         </div>
     </div>
 
@@ -75,6 +69,10 @@
 
     public int confirmation { get; set; }
 
+
+    public List<CertificateType> certificateTypes;
+
+
     public class UploadedFile
     {
 
@@ -83,6 +81,7 @@
         public string Description { get; set; }
 
     }
+
 
     public enum FileUploaded
     {
@@ -119,7 +118,6 @@
     {
         Console.WriteLine("OnValidSubmit");
         Console.WriteLine(model);
-        //Console.WriteLine($"{navigationManger.BaseUri}/confirmation/{confirmation}");
         navigationManger.NavigateTo($"{navigationManger.BaseUri}/confirmation/{confirmation}");
     }
 
@@ -143,12 +141,16 @@
         model.UserFiles = this.files;
         // Upload the file to the root directory
 
-        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
+        var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
-        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
 
     }
 
+    private void SelectionChanged(ChangeEventArgs e)
+    {
+        model.CertificationSelection = e.Value.ToString();
+    }
 
     protected override void OnInitialized() // = On Page Load
     {
@@ -156,6 +158,8 @@
         Random random = new Random();
 
         confirmation = random.Next(100000, 9999999);
+
+        certificateTypes = CertificateType.GetAllCertificateTypes();
 
     }
 
