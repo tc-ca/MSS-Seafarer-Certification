@@ -94,5 +94,17 @@ namespace CDNApplication.Resources.Pages {
                 return ResourceManager.GetString("FileUploadedSuccessText", resourceCulture);
             }
         }
+        
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        internal static string FileDescription {
+            get {
+                return ResourceManager.GetString("FileDescription", resourceCulture);
+            }
+        }
     }
 }
