@@ -27,22 +27,13 @@
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
         </div>
     </div>
-    <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
-    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged">
-    </TSelect>
 
-    @*<div class="form-group">
+    <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
-            <InputSelect class="form-control" id="CDN-Certification-Selection" @bind-Value="model.CertificationSelection">
-                <option value="@string.Empty">@pageLocalizer["SelectCertificateDropDown"]</option>
-                <option value="Spring">Spring</option>
-                <option value="Summer">Summer</option>
-                <option value="Autumn">Autumn</option>
-                <option value="Winter">Winter</option>
-            </InputSelect>
+            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
         </div>
-    </div>*@
+    </div>
     <div class="form-group">
         <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
         <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
