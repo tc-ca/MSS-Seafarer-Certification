@@ -2,6 +2,27 @@
     padding-top: 0px;
 }
 
+p {
+    font-size:1.8rem;
+}
+
+@media screen and (max-width: 1920px) {
+    input.form-control {
+        width: 400px;
+    }
+    select.form-control {
+        width:400px;
+    }
+}
+
+/**
+    UPLOAD PAGE
+*/
+.form-control-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 /**
     BANNER
 */
