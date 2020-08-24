@@ -1,6 +1,7 @@
 ﻿@page "/upload"
 @using CDNApplication.Data.Services;
 @using BlazorInputFile;
+@using CDNApplication.Data.Entity;
 
 @inject IAzureBlobService azureBlobService;
 @using Data.Resources;
@@ -26,9 +27,11 @@
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
         </div>
     </div>
+    <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
+    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged">
+    </TSelect>
 
-
-    <div class="form-group">
+    @*<div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
             <InputSelect class="form-control" id="CDN-Certification-Selection" @bind-Value="model.CertificationSelection">
@@ -39,7 +42,7 @@
                 <option value="Winter">Winter</option>
             </InputSelect>
         </div>
-    </div>
+    </div>*@
     <div class="form-group">
         <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
         <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
@@ -62,6 +65,10 @@
     public FileUploaded fileUploaded { get; set; }
 
     public int confirmation { get; set; }
+
+    public List<CertificateType> certificateTypes;
+    public string selectedCertificateType;
+
 
     public enum FileUploaded
     {
@@ -124,13 +131,19 @@
 
     }
 
+    private void SelectionChanged(ChangeEventArgs e)
+    {
+        selectedCertificateType = e.Value.ToString();
+    }
 
     protected override void OnInitialized() // = On Page Load
     {
-       
+
         Random random = new Random();
 
         confirmation = random.Next(100000, 999999);
+
+        certificateTypes = CertificateType.GetAllCertificateTypes();
 
     }
 
