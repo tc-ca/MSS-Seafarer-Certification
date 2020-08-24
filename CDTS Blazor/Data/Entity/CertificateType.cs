@@ -102,7 +102,6 @@
                     { "82", "THIRD-CLASS ENGINEER, STEAMSHIP (3SN)", "OFFICIER MÉCANICIEN DE TROISIÈME CLASSE, NAVIRE À VAPEUR (3SN)" },
                     { "83", "WATCHKEEPING MATE", "OFFICIER DE PONT DE QUART" },
                     { "84", "WATCHKEEPING MATE, NEAR COASTAL", "OFFICIER DE PONT DE QUART, À PROXIMITÉ DU LITTORAL" },
-                    { "85", "WATCHKEEPING MATE.", "OFFICIER DE PONT DE QUART." },
                 };
             #pragma warning restore CA1814 // The rule wants us to use jagged arrays. We prefer multi dimensional array at this point.
 
