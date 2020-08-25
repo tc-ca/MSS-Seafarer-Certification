@@ -4,7 +4,7 @@
 @using BlazorInputFile;
 @using CDNApplication.Data.Entity;
 
-@inject IAzureBlobService azureBlobService;
+@*@inject IAzureBlobService azureBlobService;*@
 
 @using Data.Resources;
 @using System.ComponentModel.DataAnnotations;
@@ -149,9 +149,9 @@
         model.UserFiles = this.files;
         // Upload the file to the root directory
 
-        var result = await azureBlobService.UploadMultipleFilesAsync(files);
+        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
-        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
 
     }
 
