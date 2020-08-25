@@ -1,7 +1,9 @@
 ﻿@page "/confirmation/{confirmation:int}"
+@page "/{LanguageCode}/confirmation/{confirmation:int}"
 
-@inject NavigationManager navigationManger
 @inject IStringLocalizer<Pages.UploadConfirmation> pageLocalizer
+
+@inherits BaseComponent
 
 <h1 class="alert-heading">@pageLocalizer["PageTitle"]</h1>
 

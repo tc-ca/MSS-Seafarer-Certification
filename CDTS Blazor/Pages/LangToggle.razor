@@ -7,6 +7,8 @@
 @inject ILogger<LangToggle> logger  
 
 @code {
+    private string navigateTo;
+
     [Parameter]
     public string SelectedLanguage { get; set; }
 
@@ -23,11 +25,16 @@
             logger.LogTrace($"flipped URL:{previousUrlLangFlipped}");
 
             sessionManager.UpdateSessionState(SelectedLanguage, "");
-            navigationManager.NavigateTo(previousUrlLangFlipped, true);
+            this.navigateTo = previousUrlLangFlipped;
         }
         else
-        {;
-            navigationManager.NavigateTo($"{navigationManager.BaseUri}{SelectedLanguage}", true);
+        {
+            this.navigateTo = $"{navigationManager.BaseUri}{SelectedLanguage}";
         }
+    }
+
+    protected override void OnAfterRender(bool render)
+    {
+        navigationManager.NavigateTo(this.navigateTo, true);
     }
 }

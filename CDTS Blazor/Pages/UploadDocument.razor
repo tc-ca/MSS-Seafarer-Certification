@@ -11,7 +11,6 @@
 
 @using Data;
 @using CDNApplication.TCComponents;
-@inject NavigationManager navigationManger
 @inject IStringLocalizer<Pages.UploadDocument> pageLocalizer
 
 @inherits BaseComponent
@@ -51,17 +50,22 @@
                 <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
 
 
-                @foreach (var i in files)
+                @for (int i = 0; i < files.Count; i++)
                 {
-
-                    <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.SelectedFile.Name) | @pageLocalizer["Description"]: @i.Description</p>
-
+                    <p>
+                        @string.Format(@pageLocalizer["FileUploadedSuccessText"], files[i].SelectedFile.Name) | @pageLocalizer["Description"]: @files[i].Description
+                        @*--(i) is a work around*@
+                        <button class="btn btn-danger" type="button" @onclick="@(e => RemoveFile(--(i)))">X</button>
+                    </p>
                 }
+
             </div>
         </div>
     </section>
 
-    <button class="btn btn-primary" type="submit">@pageLocalizer["SubmitButton"]</button>
+    <button class=" btn btn-primary" type="submit">
+        @pageLocalizer["SubmitButton"]
+    </button>
 
 </EditForm>
 
@@ -127,7 +131,7 @@
     {
         Console.WriteLine("OnValidSubmit");
         Console.WriteLine(model);
-        navigationManger.NavigateTo($"{navigationManger.BaseUri}/confirmation/{confirmation}");
+        this.NavigationManager.NavigateTo($"{this.NavigationManager.BaseUri}{LanguageCode}/confirmation/{confirmation}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
@@ -161,8 +165,16 @@
         model.CertificationSelection = e.Value.ToString();
     }
 
+    void RemoveFile(int index)
+    {
+        model.UserFiles.RemoveAt(index);
+
+        StateHasChanged();
+    }
+
     protected override void OnInitialized() // = On Page Load
     {
+        base.OnInitialized();
 
         Random random = new Random();
 
