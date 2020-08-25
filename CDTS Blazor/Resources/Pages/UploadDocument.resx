@@ -127,7 +127,7 @@
     <value>Enter your Candidate Document Number (CDN)</value>
   </data>
   <data name="SelectCertificateLabel" xml:space="preserve">
-    <value>Select the certification you want</value>
+    <value>Select the certificate you want</value>
   </data>
   <data name="SelectCertificateDropDown" xml:space="preserve">
     <value>Select the certificate</value>

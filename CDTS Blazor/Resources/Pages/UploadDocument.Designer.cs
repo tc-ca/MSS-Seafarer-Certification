@@ -133,7 +133,7 @@ namespace CDNApplication.Resources.Pages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the certification you want.
+        ///   Looks up a localized string similar to Select the certificate you want.
         /// </summary>
         internal static string SelectCertificateLabel {
             get {
