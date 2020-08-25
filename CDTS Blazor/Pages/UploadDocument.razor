@@ -38,20 +38,28 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
-        <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@pageLocalizer["AddYourDocumentsPanel"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
+                <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
 
-        <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
-        <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+                <label for="Document">@pageLocalizer["SelectFile"]</label>
+                <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
 
-        @foreach (var i in files)
-        {
 
-            <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.SelectedFile.Name) | @pageLocalizer["Description"]: @i.Description</p>
+                @foreach (var i in files)
+                {
 
-        }
-    </div>
+                    <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.SelectedFile.Name) | @pageLocalizer["Description"]: @i.Description</p>
+
+                }
+            </div>
+        </div>
+    </section>
 
     <button class="btn btn-primary" type="submit">@pageLocalizer["SubmitButton"]</button>
 
