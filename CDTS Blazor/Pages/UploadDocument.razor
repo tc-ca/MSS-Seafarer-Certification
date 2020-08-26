@@ -47,15 +47,16 @@
                 <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
 
                 <label for="Document">@pageLocalizer["SelectFile"]</label>
-                <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+                <InputFile id="Document" class="form-control" OnChange="HandleFileSelected" />
 
 
                 @for (int i = 0; i < files.Count; i++)
                 {
+                    int index = i;
                     <p>
                         @string.Format(@pageLocalizer["FileUploadedSuccessText"], files[i].SelectedFile.Name) | @pageLocalizer["Description"]: @files[i].Description
-                        @*--(i) is a work around*@
-                        <button class="btn btn-danger" type="button" @onclick="@(e => RemoveFile(--(i)))">X</button>
+
+                        <button class="btn btn-danger" type="button" @onclick="@(e => RemoveFile(index))">X</button>
                     </p>
                 }
 
