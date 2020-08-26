@@ -20,13 +20,11 @@
 <p>@pageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
-    <ValidationSummary />
-    <DataAnnotationsValidator />
 
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label" for="CDN-Number">@pageLocalizer["CDNLabel"]</label>
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
+            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" required/>
         </div>
     </div>
 
@@ -44,10 +42,10 @@
         <div class="panel-body">
             <div class="form-group">
                 <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
-                <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+                <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" required/>
 
                 <label for="Document">@pageLocalizer["SelectFile"]</label>
-                <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+                <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected"/>
 
 
                 @for (int i = 0; i < files.Count; i++)
@@ -55,7 +53,7 @@
                     <p>
                         @string.Format(@pageLocalizer["FileUploadedSuccessText"], files[i].SelectedFile.Name) | @pageLocalizer["Description"]: @files[i].Description
                         @*--(i) is a work around*@
-                        <button class="btn btn-danger" type="button" @onclick="@(e => RemoveFile(--(i)))">X</button>
+                        <button class="btn btn-warning" type="button"  @onclick="@(e => RemoveFile(--(i)))">X</button>
                     </p>
                 }
 
@@ -114,7 +112,6 @@
 
         public List<UploadedFile> UserFiles { get; set; }
 
-        [Required]
         public string FileDescription { get; set; } = String.Empty;
 
         public override string ToString()
@@ -142,7 +139,7 @@
         {
             this.files.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
 
-            model.FileDescription = string.Empty;
+            //model.FileDescription = string.Empty;
         }
 
         fileUploaded = FileUploaded.DEFAULT;
@@ -168,6 +165,7 @@
     void RemoveFile(int index)
     {
         model.UserFiles.RemoveAt(index);
+        //model.FileDescription = String.Empty;
 
         StateHasChanged();
     }

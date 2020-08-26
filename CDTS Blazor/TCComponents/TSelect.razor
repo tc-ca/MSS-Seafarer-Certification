@@ -42,7 +42,7 @@
 @typeparam TItem
 @using System.Reflection
 
-<select id="SelectWithGenericList" class="form-control" @onchange="OnSelectChangeFromChildEvent">
+<select id="SelectWithGenericList" class="form-control" @onchange="OnSelectChangeFromChildEvent" required>
 
     @foreach (var item in Items)
     {
