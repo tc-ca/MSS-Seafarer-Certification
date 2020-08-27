@@ -25,7 +25,9 @@
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Number">@pageLocalizer["CDNLabel"]</label>
+            <label class="form-control-label required" for="CDN-Number">
+                @pageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
+            </label>
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
         </div>
     </div>
