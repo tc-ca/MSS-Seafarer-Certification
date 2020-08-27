@@ -32,7 +32,9 @@
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
+            <label class="form-control-label required" for="CDN-Certification-Selection">
+                @pageLocalizer["SelectCertificateLabel"] <strong class="required">(required)</strong>
+            </label>
             <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
         </div>
     </div>
