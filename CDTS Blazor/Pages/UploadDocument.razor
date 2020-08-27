@@ -29,6 +29,7 @@
                 @pageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
             </label>
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
+            <ValidationMessage For="() => model.CdnNumber" />
         </div>
     </div>
 
@@ -38,6 +39,7 @@
                 @pageLocalizer["SelectCertificateLabel"] <strong class="required">(required)</strong>
             </label>
             <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
+            <ValidationMessage For="() => model.CertificationSelection" />
         </div>
     </div>
 
@@ -109,12 +111,12 @@
 
     public class Model
     {
-        [StringLength(6)]
-        [Range(1, 999999)]
-        [Required]
+
+        [Range(1, 999999, ErrorMessage = "CDN must be a valid 6-digit number.")]
+        [Required(ErrorMessage = "The Candidate Document Number is a required field.")]
         public string CdnNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Certificate Type is a required field.")]
         public string CertificationSelection { get; set; }
 
         public List<UploadedFile> UserFiles { get; set; }
