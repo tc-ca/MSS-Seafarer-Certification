@@ -16,7 +16,6 @@
 @inherits BaseComponent
 
 <h1>@pageLocalizer["PageTitle"]</h1>
-
 <p>@pageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
@@ -48,7 +47,6 @@
 
                 <label for="Document">@pageLocalizer["SelectFile"]</label>
                 <InputFile id="Document" class="form-control" OnChange="HandleFileSelected" />
-
 
                 @for (int i = 0; i < files.Count; i++)
                 {
