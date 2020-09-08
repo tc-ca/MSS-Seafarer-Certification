@@ -74,6 +74,7 @@ namespace CDNApplication
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
             services.AddScoped<ISessionManager, SessionManager>();
+            services.AddHttpContextAccessor();
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
         }
