@@ -1,7 +1,10 @@
 ﻿@page "/"
 @page "/{SelectedLanguage}"
 
-@inject NavigationManager navigationManager 
+@inject NavigationManager navigationManager
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+
 
 @code {
     [Parameter]
@@ -10,11 +13,10 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-
         SelectedLanguage = string.IsNullOrEmpty(SelectedLanguage) ? "en" : SelectedLanguage;
     }
 
-    protected override void OnAfterRender(bool render) 
+    protected override void OnAfterRender(bool render)
     {
         var startPage = "/apply-seafarer-certificate";
         navigationManager.NavigateTo($"{navigationManager.BaseUri}{SelectedLanguage}{startPage}");

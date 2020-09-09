@@ -127,12 +127,12 @@
     <value>Enter your Candidate Document Number (CDN)</value>
   </data>
   <data name="SelectCertificateLabel" xml:space="preserve">
-    <value>Select the certification you want</value>
+    <value>Select the certificate you want</value>
   </data>
   <data name="SelectCertificateDropDown" xml:space="preserve">
     <value>Select the certificate</value>
   </data>
-  <data name="AddYourDocumentsLabel" xml:space="preserve">
+  <data name="SelectFile" xml:space="preserve">
     <value>Select your file</value>
   </data>
   <data name="SubmitButton" xml:space="preserve">
@@ -145,6 +145,9 @@
     <value>Description</value>
   </data>
   <data name="FileDescription" xml:space="preserve">
-    <value>File Description</value>
+    <value>Identify your document type</value>
+  </data>
+  <data name="AddYourDocumentsPanel" xml:space="preserve">
+    <value>Add your documents</value>
   </data>
 </root>

@@ -1,24 +1,16 @@
 ﻿@page "/upload"
 @page "/{LanguageCode}/upload"
-@using CDNApplication.Data.Services;
-@using BlazorInputFile;
-@using CDNApplication.Data.Entity;
 
-@*@inject IAzureBlobService azureBlobService;*@
+@inject IStringLocalizer<UploadDocument> PageLocalizer
 
-@using Data.Resources;
-@using System.ComponentModel.DataAnnotations;
-
-@using Data;
-@using CDNApplication.TCComponents;
-@inject NavigationManager navigationManger
-@inject IStringLocalizer<Pages.UploadDocument> pageLocalizer
-
+@using BlazorInputFile
+@using CDNApplication.Data.Entity
+@using System.ComponentModel.DataAnnotations
 @inherits BaseComponent
 
-<h1>@pageLocalizer["PageTitle"]</h1>
+<h1>@PageLocalizer["PageTitle"]</h1>
 
-<p>@pageLocalizer["PageDescription"]</p>
+<p>@PageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
     <ValidationSummary />
@@ -26,71 +18,83 @@
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Number">@pageLocalizer["CDNLabel"]</label>
+            <label class="form-control-label" for="CDN-Number">@PageLocalizer["CDNLabel"]</label>
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
         </div>
     </div>
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Certification-Selection">@pageLocalizer["SelectCertificateLabel"]</label>
+            <label class="form-control-label" for="CDN-Certification-Selection">@PageLocalizer["SelectCertificateLabel"]</label>
             <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
-        <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["AddYourDocumentsPanel"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="form-control-label" for="CDN-File-Description">@PageLocalizer["FileDescription"]</label>
+                <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
 
-        <label for="Document">@pageLocalizer["AddYourDocumentsLabel"]</label>
-        <InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+                <label for="Document">@PageLocalizer["SelectFile"]</label>
+                <InputFile id="Document" class="form-control" OnChange="HandleFileSelected" />
 
-        @foreach (var i in files)
-        {
 
-            <p>@string.Format(@pageLocalizer["FileUploadedSuccessText"], i.SelectedFile.Name) | @pageLocalizer["Description"]: @i.Description</p>
+                @for (var i = 0; i < files.Count; i++)
+                {
+                    var index = i;
+                    <p>
+                        @string.Format(PageLocalizer["FileUploadedSuccessText"], files[i].SelectedFile.Name) | @PageLocalizer["Description"]: @files[i].Description
 
-        }
-    </div>
+                        <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
+                    </p>
+                }
 
-    <button class="btn btn-primary" type="submit">@pageLocalizer["SubmitButton"]</button>
+            </div>
+        </div>
+    </section>
+
+    <button class=" btn btn-primary" type="submit">
+        @PageLocalizer["SubmitButton"]
+    </button>
 
 </EditForm>
 
 @code {
 
-    public IFileListEntry[] selectedFiles = new IFileListEntry[0];
+    private IFileListEntry[] selectedFiles = new IFileListEntry[0];
 
-    public List<UploadedFile> files = new List<UploadedFile>();
+    private List<UploadedFile> files = new List<UploadedFile>();
 
-    private Model model = new Model();
+    private readonly Model model = new Model();
 
-    public FileUploaded fileUploaded { get; set; }
+    private UploadedFileStatus fileUploaded { get; set; }
 
-    public int confirmation { get; set; }
-
-
-    public List<CertificateType> certificateTypes;
+    private int confirmation { get; set; }
 
 
-    public class UploadedFile
+    private List<CertificateType> certificateTypes;
+
+
+    private class UploadedFile
     {
-
         public IFileListEntry SelectedFile { get; set; }
 
         public string Description { get; set; }
-
     }
 
 
-    public enum FileUploaded
+    private enum UploadedFileStatus
     {
         DEFAULT,
         SUCCESS,
-        FAIL,
+        FAIL
     }
 
-    public class Model
+    private class Model
     {
         [StringLength(6)]
         [Range(1, 999999)]
@@ -102,23 +106,24 @@
 
         public List<UploadedFile> UserFiles { get; set; }
 
-        public string FileDescription { get; set; } = String.Empty;
+        [Required]
+        public string FileDescription { get; set; } = string.Empty;
 
         public override string ToString()
         {
             return string.Format("{1}{0} {2}{0} {3}{0}",
-                System.Environment.NewLine,
-                this.CdnNumber,
-                this.CertificationSelection,
-                this.UserFiles);
+                Environment.NewLine,
+                CdnNumber,
+                CertificationSelection,
+                UserFiles);
         }
     }
 
     private void HandleValidSubmit()
     {
-        Console.WriteLine("OnValidSubmit");
+        Console.WriteLine("HandleValidSubmit");
         Console.WriteLine(model);
-        navigationManger.NavigateTo($"{navigationManger.BaseUri}/confirmation/{confirmation}");
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{confirmation}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
@@ -132,7 +137,7 @@
             model.FileDescription = string.Empty;
         }
 
-        fileUploaded = FileUploaded.DEFAULT;
+        fileUploaded = UploadedFileStatus.DEFAULT;
 
         StateHasChanged();
 
@@ -144,7 +149,6 @@
         //var result = await azureBlobService.UploadMultipleFilesAsync(files);
 
         //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
-
     }
 
     private void SelectionChanged(ChangeEventArgs e)
@@ -152,15 +156,22 @@
         model.CertificationSelection = e.Value.ToString();
     }
 
+    void RemoveFile(int index)
+    {
+        model.UserFiles.RemoveAt(index);
+
+        StateHasChanged();
+    }
+
     protected override void OnInitialized() // = On Page Load
     {
+        base.OnInitialized();
 
-        Random random = new Random();
+        var random = new Random();
 
         confirmation = random.Next(100000, 9999999);
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
-
     }
 
 }

@@ -1,0 +1,8 @@
+﻿
+.validation-message {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 100%;
+    font-weight: 900;
+    color: #dc3545;
+}

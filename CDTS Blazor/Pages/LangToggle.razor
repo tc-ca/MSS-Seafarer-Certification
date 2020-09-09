@@ -4,9 +4,13 @@
 @inject NavigationManager navigationManager
 @inject SessionStateModel sessionState
 @inject ISessionManager sessionManager
-@inject ILogger<LangToggle> logger  
+@inject ILogger<LangToggle> logger
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
 
 @code {
+    private string navigateTo;
+
     [Parameter]
     public string SelectedLanguage { get; set; }
 
@@ -17,17 +21,22 @@
         var currentLanguage = string.IsNullOrEmpty(sessionState.CurrentLanguage) ? "en" : sessionState.CurrentLanguage;
         var previousUrl = sessionState.LastViewedPage;
 
-        if(!string.IsNullOrEmpty(previousUrl) && !previousUrl.Contains("langload") && !previousUrl.Contains("langtoggle"))
+        if (!string.IsNullOrEmpty(previousUrl) && !previousUrl.Contains("langload") && !previousUrl.Contains("langtoggle"))
         {
             var previousUrlLangFlipped = previousUrl.Replace($"/{currentLanguage}/", $"/{SelectedLanguage}/");
             logger.LogTrace($"flipped URL:{previousUrlLangFlipped}");
 
             sessionManager.UpdateSessionState(SelectedLanguage, "");
-            navigationManager.NavigateTo(previousUrlLangFlipped, true);
+            this.navigateTo = previousUrlLangFlipped;
         }
         else
-        {;
-            navigationManager.NavigateTo($"{navigationManager.BaseUri}{SelectedLanguage}", true);
+        {
+            this.navigateTo = $"{navigationManager.BaseUri}{SelectedLanguage}";
         }
+    }
+
+    protected override void OnAfterRender(bool render)
+    {
+        navigationManager.NavigateTo(this.navigateTo, true);
     }
 }
