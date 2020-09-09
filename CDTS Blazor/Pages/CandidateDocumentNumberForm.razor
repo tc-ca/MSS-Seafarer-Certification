@@ -1,14 +1,11 @@
 ﻿@page "/cdnform"
 @page "/{LanguageCode}/cdnform"
-@using System.ComponentModel.DataAnnotations;
 
-@using Data;
-@using CDNApplication.TCComponents;
-@using CDNApplication.Data.Resources;
+@inject IStringLocalizer<CandidateDocumentNumberForm> Localizer
 
-@inject NavigationManager navigationManger
-@inject IStringLocalizer<Pages.CandidateDocumentNumberForm> localizer
-
+@using CDNApplication.Data
+@using CDNApplication.Data.Resources
+@using System.ComponentModel.DataAnnotations
 @inherits BaseComponent
 
 <nav aria-label="progress" class="step-indicator">
@@ -28,18 +25,17 @@
     </ul>
 </nav>
 
-<br />
+<br/>
 
-<h1>@localizer["PageTitle"]</h1>
+<h1>@Localizer["PageTitle"]</h1>
 
 <EditForm Model="@tombstoneInformation" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
+    <DataAnnotationsValidator/>
     <div class="form-group">
         <TCInputText Label="Surname"
                      Id="CDN-Surname"
                      @bind-Value="tombstoneInformation.Surname"
-                     ValidationFor="@(() => tombstoneInformation.Surname)" />
-
+                     ValidationFor="() => tombstoneInformation.Surname"/>
 
 
     </div>
@@ -47,8 +43,7 @@
         <TCInputText Label="Givenname(s)"
                      Id="CDN-Givennames"
                      @bind-Value="tombstoneInformation.GivenName"
-                     ValidationFor="@(() => tombstoneInformation.GivenName)" />
-
+                     ValidationFor="() => tombstoneInformation.GivenName"/>
 
 
     </div>
@@ -56,8 +51,7 @@
         <TCInputText Label="Initials"
                      Id="CDN-Initials"
                      @bind-Value="tombstoneInformation.Initials"
-                     ValidationFor="@(() => tombstoneInformation.Initials)" />
-
+                     ValidationFor="() => tombstoneInformation.Initials"/>
 
 
     </div>
@@ -65,8 +59,7 @@
         <TCInputText Label="Date of Birth (dd-mm-yyyy)"
                      Id="CDN-DateOfBirth"
                      @bind-Value="tombstoneInformation.DateOfBirth"
-                     ValidationFor="@(() => tombstoneInformation.DateOfBirth)" />
-
+                     ValidationFor="() => tombstoneInformation.DateOfBirth"/>
 
 
     </div>
@@ -74,8 +67,7 @@
         <TCInputText Label="Nationality"
                      Id="CDN-Nationalty"
                      @bind-Value="tombstoneInformation.Nationality"
-                     ValidationFor="@(() => tombstoneInformation.Nationality)" />
-
+                     ValidationFor="() => tombstoneInformation.Nationality"/>
 
 
     </div>
@@ -85,16 +77,14 @@
                       Id="CDN-Language-English"
                       name="language"
                       SelectedValue="CorrespondenceLanguage.ENGLISH"
-                      @bind-Value="tombstoneInformation.LanguagePreference" />
-
+                      @bind-Value="tombstoneInformation.LanguagePreference"/>
 
 
         <TCInputRadio Label="Français"
                       Id="CDN-Language-French"
                       name="language"
                       SelectedValue="CorrespondenceLanguage.FRENCH"
-                      @bind-Value="tombstoneInformation.LanguagePreference" />
-
+                      @bind-Value="tombstoneInformation.LanguagePreference"/>
 
 
     </div>
@@ -108,15 +98,15 @@
 
     private void HandleValidSubmit()
     {
-        Console.WriteLine("OnValidSubmit");
-        navigationManger.NavigateTo($"{navigationManger.BaseUri}/mailingaddress");
+        Console.WriteLine("HandleValidSubmit");
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}/mailingaddress");
     }
 
     public class TombstoneInformation
     {
         public TombstoneInformation()
         {
-            this.DateOfBirth = DateTime.Now.ToString("dd-MM-yyyy");
+            DateOfBirth = DateTime.Now.ToString("dd-MM-yyyy");
         }
 
         [Required]
@@ -140,4 +130,5 @@
         [Display(Name = "Language")]
         public CorrespondenceLanguage LanguagePreference { get; set; }
     }
+
 }
