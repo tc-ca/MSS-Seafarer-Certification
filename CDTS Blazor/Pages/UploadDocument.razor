@@ -105,7 +105,7 @@
     private class Model
     {
 
-        [Range(1, 999999, ErrorMessage = "CDN must be a valid 6-digit number.")]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only alphanumeric characters allowed.")]
         [Required(ErrorMessage = "The Candidate Document Number is a required field.")]
         public string CdnNumber { get; set; }
 
