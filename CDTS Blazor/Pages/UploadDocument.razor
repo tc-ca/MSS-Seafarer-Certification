@@ -106,6 +106,7 @@
     {
 
         [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only alphanumeric characters allowed.")]
+        [StringLength(7, MinimumLength = 6, ErrorMessage = "CDN must be 6-7 characters.")]
         [Required(ErrorMessage = "The Candidate Document Number is a required field.")]
         public string CdnNumber { get; set; }
 
