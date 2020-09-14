@@ -41,7 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
     <Folder Include="Data\Resources\" />
     <Folder Include="Model\" />
     <Folder Include="Utilities\" />

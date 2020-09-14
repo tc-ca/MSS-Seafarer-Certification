@@ -18,15 +18,21 @@
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Number">@PageLocalizer["CDNLabel"]</label>
+            <label class="form-control-label required" for="CDN-Number">
+                @pageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
+            </label>
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
+            <ValidationMessage For="() => model.CdnNumber" />
         </div>
     </div>
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label" for="CDN-Certification-Selection">@PageLocalizer["SelectCertificateLabel"]</label>
+            <label class="form-control-label required" for="CDN-Certification-Selection">
+                @pageLocalizer["SelectCertificateLabel"] <strong class="required">(required)</strong>
+            </label>
             <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
+            <ValidationMessage For="() => model.CertificationSelection" />
         </div>
     </div>
 
@@ -52,6 +58,8 @@
                         <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
                     </p>
                 }
+                <br />
+                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">Add another file </button>
 
             </div>
         </div>
@@ -96,18 +104,17 @@
 
     private class Model
     {
-        [StringLength(6)]
-        [Range(1, 999999)]
-        [Required]
+
+        [Range(1, 999999, ErrorMessage = "CDN must be a valid 6-digit number.")]
+        [Required(ErrorMessage = "The Candidate Document Number is a required field.")]
         public string CdnNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Certificate Type is a required field.")]
         public string CertificationSelection { get; set; }
 
         public List<UploadedFile> UserFiles { get; set; }
 
-        [Required]
-        public string FileDescription { get; set; } = string.Empty;
+        public string FileDescription { get; set; } = String.Empty;
 
         public override string ToString()
         {
