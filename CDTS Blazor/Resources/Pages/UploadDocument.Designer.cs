@@ -79,6 +79,15 @@ namespace CDNApplication.Resources.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 12345.
+        /// </summary>
+        internal static string CandidateDocumentNumberHint {
+            get {
+                return ResourceManager.GetString("CandidateDocumentNumberHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your Candidate Document Number (CDN).
         /// </summary>
         internal static string CDNLabel {
@@ -93,6 +102,15 @@ namespace CDNApplication.Resources.Pages {
         internal static string DescriptionText {
             get {
                 return ResourceManager.GetString("DescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This document contains my personal information..
+        /// </summary>
+        internal static string FileDescriptionHint {
+            get {
+                return ResourceManager.GetString("FileDescriptionHint", resourceCulture);
             }
         }
         

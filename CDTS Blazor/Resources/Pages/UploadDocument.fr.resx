@@ -156,4 +156,7 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Ajoutez un autre fichier</value>
   </data>
+  <data name="FileDescriptionHint" xml:space="preserve">
+    <value>Ce document contient mes informations personnelles.</value>
+  </data>
 </root>

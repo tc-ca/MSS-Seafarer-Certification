@@ -10,8 +10,6 @@
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
-<p>@PageLocalizer["PageDescription"]</p>
-
 <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
     <ValidationSummary />
     <DataAnnotationsValidator />
@@ -21,7 +19,7 @@
             <label class="form-control-label required" for="@nameof(_model.CdnNumber)">
                 @PageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
             </label>
-            <InputText class="form-control" @bind-Value="@_model.CdnNumber" id="@nameof(_model.CdnNumber)" />
+            <InputText class="form-control" @bind-Value="@_model.CdnNumber" id="@nameof(_model.CdnNumber)" placeholder="@PageLocalizer["CandidateDocumentNumberHint"]" />
             <ValidationMessage For="() => _model.CdnNumber" />
         </div>
     </div>
@@ -43,10 +41,11 @@
         <div class="panel-body">
             <div class="form-group">
                 <label class="form-control-label" for="@nameof(_model.FileDescription)">@PageLocalizer["FileDescriptionLabel"]</label>
-                <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
+                <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)"
+                           placeholder="@PageLocalizer["FileDescriptionHint"]" />
 
                 <label for="upload-file">@PageLocalizer["SelectFileLabel"]</label>
-                <InputFile class="form-control" OnChange="HandleFileSelected"  id="upload-file"/>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="upload-file" />
                 <ValidationMessage For="() => _model.UploadedFiles" />
 
                 @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)
@@ -124,6 +123,9 @@
 
         foreach (var item in files)
         {
+
+            Console.WriteLine(item.RelativePath);
+
             _model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = _model.FileDescription });
 
             _model.FileDescription = string.Empty;
@@ -137,6 +139,32 @@
     private void CertificateTypeSelectionChanged(ChangeEventArgs e)
     {
         _model.CertificateType = e.Value.ToString();
+    }
+
+    bool ExtensionIsValid(string ext)
+    {
+        if (string.Equals("png", ext, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    string GetExtension(string path)
+    {
+
+        string ext = System.IO.Path.GetExtension(path);
+
+        switch (ext)
+        {
+            case "png":
+            case "doc":
+            case "pdf":
+                return ext;
+        }
+
+        return "";
     }
 
     void RemoveFile(int index)
