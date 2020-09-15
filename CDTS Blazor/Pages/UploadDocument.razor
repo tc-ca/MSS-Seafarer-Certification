@@ -12,54 +12,54 @@
 
 <p>@PageLocalizer["PageDescription"]</p>
 
-<EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
     <ValidationSummary />
     <DataAnnotationsValidator />
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label required" for="CDN-Number">
+            <label class="form-control-label required" for="@nameof(_model.CdnNumber)">
                 @PageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
             </label>
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
-            <ValidationMessage For="() => model.CdnNumber" />
+            <InputText class="form-control" @bind-Value="@_model.CdnNumber" id="@nameof(_model.CdnNumber)" />
+            <ValidationMessage For="() => _model.CdnNumber" />
         </div>
     </div>
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label required" for="CDN-Certification-Selection">
+            <label class="form-control-label required">
                 @PageLocalizer["SelectCertificateLabel"] <strong class="required">(required)</strong>
             </label>
-            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
-            <ValidationMessage For="() => model.CertificationSelection" />
+            <TSelect Items="@_certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+            <ValidationMessage For="() => _model.CertificateType" />
         </div>
     </div>
 
     <section class="panel panel-primary">
         <header class="panel-heading">
-            <h5 class="panel-title">@PageLocalizer["AddYourDocumentsPanel"]</h5>
+            <h5 class="panel-title">@PageLocalizer["AddYourDocumentsPanelHeading"]</h5>
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="form-control-label" for="CDN-File-Description">@PageLocalizer["FileDescription"]</label>
-                <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+                <label class="form-control-label" for="@nameof(_model.FileDescription)">@PageLocalizer["FileDescriptionLabel"]</label>
+                <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
 
-                <label for="Document">@PageLocalizer["SelectFile"]</label>
-                <InputFile id="Document" class="form-control" OnChange="HandleFileSelected" />
+                <label for="upload-file">@PageLocalizer["SelectFileLabel"]</label>
+                <InputFile class="form-control" OnChange="HandleFileSelected"  id="upload-file"/>
+                <ValidationMessage For="() => _model.UploadedFiles" />
 
-
-                @for (var i = 0; i < files.Count; i++)
+                @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)
                 {
                     var index = i;
                     <p>
-                        @string.Format(PageLocalizer["FileUploadedSuccessText"], files[i].SelectedFile.Name) | @PageLocalizer["Description"]: @files[i].Description
+                        @string.Format(PageLocalizer["FileUploadedSuccessText"], _model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @_model.UploadedFiles?[i].Description
 
                         <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
                     </p>
                 }
                 <br />
-                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">Add another file </button>
+                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
             </div>
         </div>
@@ -73,19 +73,11 @@
 
 @code {
 
-    private IFileListEntry[] selectedFiles = new IFileListEntry[0];
+    private readonly UploadDocumentsModel _model = new UploadDocumentsModel();
 
-    private List<UploadedFile> files = new List<UploadedFile>();
+    private int _confirmationGuid;
 
-    private readonly Model model = new Model();
-
-    private UploadedFileStatus fileUploaded { get; set; }
-
-    private int confirmation { get; set; }
-
-
-    private List<CertificateType> certificateTypes;
-
+    private List<CertificateType> _certificateTypes;
 
     private class UploadedFile
     {
@@ -94,15 +86,7 @@
         public string Description { get; set; }
     }
 
-
-    private enum UploadedFileStatus
-    {
-        DEFAULT,
-        SUCCESS,
-        FAIL
-    }
-
-    private class Model
+    private class UploadDocumentsModel
     {
 
         [Range(1, 999999, ErrorMessage = "CDN must be a valid 6-digit number.")]
@@ -110,9 +94,10 @@
         public string CdnNumber { get; set; }
 
         [Required(ErrorMessage = "The Certificate Type is a required field.")]
-        public string CertificationSelection { get; set; }
+        public string CertificateType { get; set; }
 
-        public List<UploadedFile> UserFiles { get; set; }
+        [Required(ErrorMessage = "Where yo files be at dawg?")]
+        public List<UploadedFile> UploadedFiles { get; set; }
 
         public string FileDescription { get; set; } = String.Empty;
 
@@ -121,64 +106,56 @@
             return string.Format("{1}{0} {2}{0} {3}{0}",
                 Environment.NewLine,
                 CdnNumber,
-                CertificationSelection,
-                UserFiles);
+                CertificateType,
+                UploadedFiles);
         }
     }
 
     private void HandleValidSubmit()
     {
         Console.WriteLine("HandleValidSubmit");
-        Console.WriteLine(model);
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{confirmation}");
+        Console.WriteLine(_model);
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
-        selectedFiles = files;
+        _model.UploadedFiles ??= new List<UploadedFile>();
 
         foreach (var item in files)
         {
-            this.files.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
+            _model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = _model.FileDescription });
 
-            model.FileDescription = string.Empty;
+            _model.FileDescription = string.Empty;
         }
-
-        fileUploaded = UploadedFileStatus.DEFAULT;
 
         StateHasChanged();
 
         await Task.Delay(100);
-
-        model.UserFiles = this.files;
-        // Upload the file to the root directory
-
-        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
-
-        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
     }
 
-    private void SelectionChanged(ChangeEventArgs e)
+    private void CertificateTypeSelectionChanged(ChangeEventArgs e)
     {
-        model.CertificationSelection = e.Value.ToString();
+        _model.CertificateType = e.Value.ToString();
     }
 
     void RemoveFile(int index)
     {
-        model.UserFiles.RemoveAt(index);
+        _model.UploadedFiles.RemoveAt(index);
+
+        if (_model.UploadedFiles.Count == 0)
+            _model.UploadedFiles = null;
 
         StateHasChanged();
     }
 
-    protected override void OnInitialized() // = On Page Load
+    protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        var random = new Random();
+        _confirmationGuid = new Random().Next(100000, 9999999);
 
-        confirmation = random.Next(100000, 9999999);
-
-        certificateTypes = CertificateType.GetAllCertificateTypes();
+        _certificateTypes = CertificateType.GetAllCertificateTypes();
     }
 
 }
