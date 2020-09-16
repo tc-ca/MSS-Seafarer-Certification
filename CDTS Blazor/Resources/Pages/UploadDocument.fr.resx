@@ -132,7 +132,7 @@
   <data name="SelectCertificateDropDown" xml:space="preserve">
     <value>Sélectionnez le certificat</value>
   </data>
-  <data name="SelectFile" xml:space="preserve">
+  <data name="SelectFileLabel" xml:space="preserve">
     <value>Sélectionnez votre dossier</value>
   </data>
   <data name="SubmitButton" xml:space="preserve">
@@ -141,14 +141,20 @@
   <data name="FileUploadedSuccessText" xml:space="preserve">
     <value>Le fichier {0} a été téléchargé</value>
   </data>
-  <data name="Description" xml:space="preserve">
+  <data name="DescriptionText" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="FileDescription" xml:space="preserve">
+  <data name="FileDescriptionLabel" xml:space="preserve">
     <value>Identifiez votre type de document</value>
   </data>
-  <data name="AddYourDocumentsPanel" xml:space="preserve">
+  <data name="AddYourDocumentsPanelHeading" xml:space="preserve">
     <value>Ajoutez vos documents</value>
+  </data>
+  <data name="UploadDocument_ErrorMessage_Field_CdnNumber" xml:space="preserve">
+    <value>Le CDN doit être composé de 6 chiffres.</value>
+  </data>
+  <data name="AddAnotherFileText" xml:space="preserve">
+    <value>Ajoutez un autre fichier</value>
   </data>
   <data name="CDNVerificationAlphanumeric" xml:space="preserve">
     <value>Le CDN ne doit contenir que des caractères alphanumériques.</value>

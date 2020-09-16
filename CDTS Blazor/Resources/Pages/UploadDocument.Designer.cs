@@ -61,11 +61,20 @@ namespace CDNApplication.Resources.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add another file.
+        /// </summary>
+        internal static string AddAnotherFileText {
+            get {
+                return ResourceManager.GetString("AddAnotherFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add your documents.
         /// </summary>
-        internal static string AddYourDocumentsPanel {
+        internal static string AddYourDocumentsPanelHeading {
             get {
-                return ResourceManager.GetString("AddYourDocumentsPanel", resourceCulture);
+                return ResourceManager.GetString("AddYourDocumentsPanelHeading", resourceCulture);
             }
         }
         
@@ -108,18 +117,18 @@ namespace CDNApplication.Resources.Pages {
         /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
-        internal static string Description {
+        internal static string DescriptionText {
             get {
-                return ResourceManager.GetString("Description", resourceCulture);
+                return ResourceManager.GetString("DescriptionText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Identify your document type.
         /// </summary>
-        internal static string FileDescription {
+        internal static string FileDescriptionLabel {
             get {
-                return ResourceManager.GetString("FileDescription", resourceCulture);
+                return ResourceManager.GetString("FileDescriptionLabel", resourceCulture);
             }
         }
         
@@ -171,9 +180,9 @@ namespace CDNApplication.Resources.Pages {
         /// <summary>
         ///   Looks up a localized string similar to Select your file.
         /// </summary>
-        internal static string SelectFile {
+        internal static string SelectFileLabel {
             get {
-                return ResourceManager.GetString("SelectFile", resourceCulture);
+                return ResourceManager.GetString("SelectFileLabel", resourceCulture);
             }
         }
         
@@ -183,6 +192,15 @@ namespace CDNApplication.Resources.Pages {
         internal static string SubmitButton {
             get {
                 return ResourceManager.GetString("SubmitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CDN must be a valid 6-digit number..
+        /// </summary>
+        internal static string UploadDocument_ErrorMessage_Field_CdnNumber {
+            get {
+                return ResourceManager.GetString("UploadDocument_ErrorMessage_Field_CdnNumber", resourceCulture);
             }
         }
     }
