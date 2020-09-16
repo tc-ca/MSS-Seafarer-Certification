@@ -45,8 +45,8 @@
                 <label class="form-control-label" for="@nameof(_model.FileDescription)">@PageLocalizer["FileDescriptionLabel"]</label>
                 <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
 
-                <label for="upload-file">@PageLocalizer["SelectFileLabel"]</label>
-                <InputFile class="form-control" OnChange="HandleFileSelected" id="upload-file" />
+                <label for="@nameof(_model.UploadedFiles)">@PageLocalizer["SelectFileLabel"]</label>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(_model.UploadedFiles)" />
                 <ValidationMessage For="() => _model.UploadedFiles" />
 
                 @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)

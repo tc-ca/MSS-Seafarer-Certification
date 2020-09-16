@@ -19,28 +19,21 @@
         {
             var localizer = new ResourceManager(typeof(ValidationResources.UploadDocumentErrorMessages));
 
-            // CDN number is required
             this.RuleFor(m => m.CdnNumber)
-                .NotEmpty()
-                .WithMessage(localizer.GetString("CdnNumberNotEmptyText"));
+                .Cascade(CascadeMode.Stop)
+                    .NotEmpty()
+                    .WithMessage(localizer.GetString("CdnNumberNotEmptyText"))
+                    .MinimumLength(6)
+                    .WithMessage(localizer.GetString("CdnLengthText"))
+                    .MaximumLength(7)
+                    .WithMessage(localizer.GetString("CdnLengthText"))
+                    .Matches(new Regex("^[a-zA-Z0-9]*$"))
+                    .WithMessage(localizer.GetString("CdnFormatText"));
 
-            // CDN number is composed of alphanumeric only (format)
-            this.RuleFor(m => m.CdnNumber)
-                .Matches(new Regex("^[a-zA-Z0-9]*$"))
-                .WithMessage(localizer.GetString("CdnFormatText"));
-
-            // CDN number is composed of 6 to 7 digits (length)
-            this.RuleFor(m => m.CdnNumber)
-                .MinimumLength(6)
-                .MaximumLength(7)
-                .WithMessage(localizer.GetString("CdnLengthText"));
-
-            // Certificate type is required
             this.RuleFor(m => m.CertificateType)
                 .NotEmpty()
                 .WithMessage(localizer.GetString("CertificateTypeNotEmptyText"));
 
-            // There must be at least 1 uploaded file
             this.RuleFor(m => m.UploadedFiles)
                 .NotEmpty()
                 .WithMessage(localizer.GetString("UploadedFilesNotEmptyText"));
