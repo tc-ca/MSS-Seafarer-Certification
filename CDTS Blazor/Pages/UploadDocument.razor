@@ -124,7 +124,10 @@
         foreach (var item in files)
         {
 
-            Console.WriteLine(item.RelativePath);
+            if (!ExtensionIsValid(item.Name))
+            {
+                return;
+            }
 
             _model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = _model.FileDescription });
 
@@ -141,9 +144,12 @@
         _model.CertificateType = e.Value.ToString();
     }
 
-    bool ExtensionIsValid(string ext)
+    bool ExtensionIsValid(string path)
     {
-        if (string.Equals("png", ext, StringComparison.OrdinalIgnoreCase))
+
+        string ext = System.IO.Path.GetExtension(path);
+
+        if (string.Equals(".png", ext, StringComparison.OrdinalIgnoreCase) | string.Equals(".pdf", ext, StringComparison.OrdinalIgnoreCase) || string.Equals(".doc", ext, StringComparison.OrdinalIgnoreCase))
         {
             return true;
         }
@@ -151,21 +157,7 @@
         return false;
     }
 
-    string GetExtension(string path)
-    {
 
-        string ext = System.IO.Path.GetExtension(path);
-
-        switch (ext)
-        {
-            case "png":
-            case "doc":
-            case "pdf":
-                return ext;
-        }
-
-        return "";
-    }
 
     void RemoveFile(int index)
     {
