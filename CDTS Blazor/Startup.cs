@@ -45,7 +45,7 @@ namespace CDNApplication
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         /// </summary>
-        /// <param name="services">Use to set services used by application</param>
+        /// <param name="services">Use to set services used by application.</param>
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -57,7 +57,7 @@ namespace CDNApplication
             var supportedCultures = new List<CultureInfo>
             {
                 new CultureInfo("en-CA"),
-                new CultureInfo("fr-CA")
+                new CultureInfo("fr-CA"),
             };
 
             services.Configure<RequestLocalizationOptions>(options =>
@@ -103,13 +103,15 @@ namespace CDNApplication
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        /// <param name="app">This object corresponds to the current running application</param>
-        /// <param name="env">Our web hosting environment</param>
-        /// <param name="antiForgery">Anti Forgery settings</param>
+        /// <param name="app">This object corresponds to the current running application.</param>
+        /// <param name="env">Our web hosting environment.</param>
+        /// <param name="antiForgery">Anti Forgery settings.</param>
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
         {
             if (app == null)
+            {
                 throw new ArgumentNullException(nameof(app));
+            }
 
             if (env.IsDevelopment())
             {
