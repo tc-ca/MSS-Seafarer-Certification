@@ -61,16 +61,25 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN must be a valid 6-digit number..
+        ///   Looks up a localized string similar to CDN must contain only alphanumeric characters..
         /// </summary>
-        internal static string CdnNumberFormatText {
+        internal static string CdnFormatText {
             get {
-                return ResourceManager.GetString("CdnNumberFormatText", resourceCulture);
+                return ResourceManager.GetString("CdnFormatText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Candidate Document Number is a required field..
+        ///   Looks up a localized string similar to CDN must be 6-7 characters in length..
+        /// </summary>
+        internal static string CdnLengthText {
+            get {
+                return ResourceManager.GetString("CdnLengthText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CDN is a required field..
         /// </summary>
         internal static string CdnNumberNotEmptyText {
             get {
@@ -79,7 +88,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Certificate Type is a required field..
+        ///   Looks up a localized string similar to Certificate Type is a required field..
         /// </summary>
         internal static string CertificateTypeNotEmptyText {
             get {

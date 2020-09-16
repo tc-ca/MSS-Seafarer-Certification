@@ -24,10 +24,16 @@
                 .NotEmpty()
                 .WithMessage(localizer.GetString("CdnNumberNotEmptyText"));
 
-            // CDN number is composed of 6 digits
+            // CDN number is composed of alphanumeric only (format)
             this.RuleFor(m => m.CdnNumber)
-                .Matches(new Regex("^[0-9]{6}$"))
-                .WithMessage(localizer.GetString("CdnNumberFormatText"));
+                .Matches(new Regex("^[a-zA-Z0-9]*$"))
+                .WithMessage(localizer.GetString("CdnFormatText"));
+
+            // CDN number is composed of 6 to 7 digits (length)
+            this.RuleFor(m => m.CdnNumber)
+                .MinimumLength(6)
+                .MaximumLength(7)
+                .WithMessage(localizer.GetString("CdnLengthText"));
 
             // Certificate type is required
             this.RuleFor(m => m.CertificateType)

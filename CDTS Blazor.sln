@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDNApplication", "CDTS Blaz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDNApplication.Test", "CDNApplication.Test\CDNApplication.Test.csproj", "{C7A2902C-5052-4CFA-8172-088AE2E09E06}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Components.Testing", "Microsoft.AspNetCore.Components.Testing\Microsoft.AspNetCore.Components.Testing.csproj", "{AD4419C5-7154-4078-A21A-4A60D2EC7C0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{C7A2902C-5052-4CFA-8172-088AE2E09E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7A2902C-5052-4CFA-8172-088AE2E09E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7A2902C-5052-4CFA-8172-088AE2E09E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4419C5-7154-4078-A21A-4A60D2EC7C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4419C5-7154-4078-A21A-4A60D2EC7C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4419C5-7154-4078-A21A-4A60D2EC7C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4419C5-7154-4078-A21A-4A60D2EC7C0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
