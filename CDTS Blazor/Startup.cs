@@ -43,7 +43,7 @@ namespace CDNApplication
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
-        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
         /// </summary>
         /// <param name="services">Use to set services used by application.</param>
         public static void ConfigureServices(IServiceCollection services)
