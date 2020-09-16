@@ -150,4 +150,13 @@
   <data name="AddYourDocumentsPanel" xml:space="preserve">
     <value>Add your documents</value>
   </data>
+  <data name="CDNVerificationAlphanumeric" xml:space="preserve">
+    <value>CDN must contain only alphanumeric characters.</value>
+  </data>
+  <data name="CDNVerificationLength" xml:space="preserve">
+    <value>CDN must be 6-7 characters in length.</value>
+  </data>
+  <data name="CDNVerificationRequired" xml:space="preserve">
+    <value>CDN is a required field.</value>
+  </data>
 </root>

@@ -79,6 +79,33 @@ namespace CDNApplication.Resources.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CDN must contain only alphanumeric characters..
+        /// </summary>
+        internal static string CDNVerificationAlphanumeric {
+            get {
+                return ResourceManager.GetString("CDNVerificationAlphanumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CDN must be 6-7 characters in length..
+        /// </summary>
+        internal static string CDNVerificationLength {
+            get {
+                return ResourceManager.GetString("CDNVerificationLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CDN is a required field..
+        /// </summary>
+        internal static string CDNVerificationRequired {
+            get {
+                return ResourceManager.GetString("CDNVerificationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string Description {

@@ -105,9 +105,9 @@
     private class Model
     {
 
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "CDN must contain only alphanumeric characters.")]
-        [StringLength(7, MinimumLength = 6, ErrorMessage = "CDN must be 6-7 characters in length.")]
-        [Required(ErrorMessage = "The Candidate Document Number is a required field.")]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessageResourceType = (typeof(CDNApplication.Resources.Pages.UploadDocument)), ErrorMessageResourceName = "CDNVerificationAlphanumeric")]
+        [StringLength(7, MinimumLength = 6, ErrorMessageResourceType = (typeof(CDNApplication.Resources.Pages.UploadDocument)), ErrorMessageResourceName = "CDNVerificationLength")]
+        [Required(ErrorMessageResourceType = (typeof(CDNApplication.Resources.Pages.UploadDocument)), ErrorMessageResourceName = "CDNVerificationRequired")]
         public string CdnNumber { get; set; }
 
         [Required(ErrorMessage = "The Certificate Type is a required field.")]
