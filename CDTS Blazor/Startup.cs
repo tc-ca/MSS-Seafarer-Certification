@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 namespace CDNApplication
 {
+    using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using CDNApplication.Data.Services;
@@ -24,7 +23,7 @@ namespace CDNApplication
     using CustomRequestCultureProvider = CDNApplication.Utilities.CustomRequestCultureProvider;
 
     /// <summary>
-    ///     The startup class for the BlazorApplication.
+    ///     The startup class for the Blazor application.
     /// </summary>
     public class Startup
     {
@@ -34,7 +33,7 @@ namespace CDNApplication
         /// <param name="configuration">The startup configuration options.</param>
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         /// <summary>
@@ -46,6 +45,7 @@ namespace CDNApplication
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         /// </summary>
+        /// <param name="services">Use to set services used by application</param>
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -103,12 +103,13 @@ namespace CDNApplication
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="antiForgery"></param>
+        /// <param name="app">This object corresponds to the current running application</param>
+        /// <param name="env">Our web hosting environment</param>
+        /// <param name="antiForgery">Anti Forgery settings</param>
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
         {
-            Contract.Requires<ArgumentNullException>(app != null, "app");
+            if (app == null)
+                throw new ArgumentNullException(nameof(app));
 
             if (env.IsDevelopment())
             {
@@ -133,8 +134,10 @@ namespace CDNApplication
                     var tokens = antiForgery.GetAndStoreTokens(context);
 
                     // Set the antiForgery token
-                    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken,
-                        new CookieOptions {HttpOnly = false});
+                    context.Response.Cookies.Append(
+                        "XSRF-TOKEN",
+                        tokens.RequestToken,
+                        new CookieOptions { HttpOnly = false });
                 }
 
                 return next(context);
