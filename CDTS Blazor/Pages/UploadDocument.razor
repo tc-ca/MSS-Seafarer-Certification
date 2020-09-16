@@ -5,7 +5,7 @@
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
-@using System.ComponentModel.DataAnnotations
+@using CDNApplication.Models.PageModels
 @inherits BaseComponent
 
 <h1>@PageLocalizer["PageTitle"]</h1>
@@ -13,8 +13,8 @@
 <p>@PageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
+    <FluentValidationValidator />
     <ValidationSummary />
-    <DataAnnotationsValidator />
 
     <div class="form-group">
         <div class="form-control-wrapper">
@@ -46,7 +46,7 @@
                 <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
 
                 <label for="upload-file">@PageLocalizer["SelectFileLabel"]</label>
-                <InputFile class="form-control" OnChange="HandleFileSelected"  id="upload-file"/>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="upload-file" />
                 <ValidationMessage For="() => _model.UploadedFiles" />
 
                 @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)
@@ -73,44 +73,10 @@
 
 @code {
 
-    private readonly UploadDocumentsModel _model = new UploadDocumentsModel();
-
+    private List<CertificateType> _certificateTypes = new List<CertificateType>();
     private int _confirmationGuid;
+    private readonly UploadDocumentPageModel _model = new UploadDocumentPageModel();
 
-    private List<CertificateType> _certificateTypes;
-
-    private class UploadedFile
-    {
-        public IFileListEntry SelectedFile { get; set; }
-
-        public string Description { get; set; }
-    }
-
-    private class UploadDocumentsModel
-    {
-
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessageResourceType = (typeof(CDNApplication.Resources.Pages.UploadDocument)), ErrorMessageResourceName = "CDNVerificationAlphanumeric")]
-        [StringLength(7, MinimumLength = 6, ErrorMessageResourceType = (typeof(CDNApplication.Resources.Pages.UploadDocument)), ErrorMessageResourceName = "CDNVerificationLength")]
-        [Required(ErrorMessageResourceType = (typeof(CDNApplication.Resources.Pages.UploadDocument)), ErrorMessageResourceName = "CDNVerificationRequired")]
-        public string CdnNumber { get; set; }
-
-        [Required(ErrorMessage = "The Certificate Type is a required field.")]
-        public string CertificateType { get; set; }
-
-        [Required(ErrorMessage = "Where yo files be at dawg?")]
-        public List<UploadedFile> UploadedFiles { get; set; }
-
-        public string FileDescription { get; set; } = String.Empty;
-
-        public override string ToString()
-        {
-            return string.Format("{1}{0} {2}{0} {3}{0}",
-                Environment.NewLine,
-                CdnNumber,
-                CertificateType,
-                UploadedFiles);
-        }
-    }
 
     private void HandleValidSubmit()
     {
@@ -121,8 +87,6 @@
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
-        _model.UploadedFiles ??= new List<UploadedFile>();
-
         foreach (var item in files)
         {
             _model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = _model.FileDescription });
@@ -143,9 +107,6 @@
     void RemoveFile(int index)
     {
         _model.UploadedFiles.RemoveAt(index);
-
-        if (_model.UploadedFiles.Count == 0)
-            _model.UploadedFiles = null;
 
         StateHasChanged();
     }

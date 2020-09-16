@@ -20,8 +20,10 @@
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Blazored.FluentValidation" Version="1.3.1" />
+    <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="GoC.WebTemplate-Components.Core" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="3.1.8" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.5.0" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
@@ -42,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Resources\" />
-    <Folder Include="Model\" />
     <Folder Include="Utilities\" />
     <Folder Include="Views\" />
     <Folder Include="Components\" />
@@ -78,6 +79,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UploadDocument.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <!--<EmbeddedResource Update="Resources\Validation\UploadDocumentValidation.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>-->
+    <EmbeddedResource Update="Resources\Validation\UploadDocumentErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UploadDocumentErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Data\Resources\ErrorMessages.Designer.cs">
@@ -96,6 +104,11 @@
       <DependentUpon>UploadDocument.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Validation\UploadDocumentErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UploadDocumentErrorMessages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

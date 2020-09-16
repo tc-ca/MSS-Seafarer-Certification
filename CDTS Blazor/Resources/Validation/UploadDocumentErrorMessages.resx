@@ -117,40 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Enter your information and add your documents</value>
+  <data name="CdnFormatText" xml:space="preserve">
+    <value>CDN must contain only alphanumeric characters.</value>
   </data>
-  <data name="PageDescription" xml:space="preserve">
-    <value>Fill in this form with your information and add your documents.</value>
+  <data name="CdnLengthText" xml:space="preserve">
+    <value>CDN must be 6-7 characters in length.</value>
   </data>
-  <data name="CDNLabel" xml:space="preserve">
-    <value>Enter your Candidate Document Number (CDN)</value>
+  <data name="CdnNumberNotEmptyText" xml:space="preserve">
+    <value>CDN is a required field.</value>
   </data>
-  <data name="SelectCertificateLabel" xml:space="preserve">
-    <value>Select the certificate you want</value>
+  <data name="CertificateTypeNotEmptyText" xml:space="preserve">
+    <value>Certificate Type is a required field.</value>
   </data>
-  <data name="SelectCertificateDropDown" xml:space="preserve">
-    <value>Select the certificate</value>
-  </data>
-  <data name="SelectFileLabel" xml:space="preserve">
-    <value>Select your file</value>
-  </data>
-  <data name="SubmitButton" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="FileUploadedSuccessText" xml:space="preserve">
-    <value>File {0} has been uploaded</value>
-  </data>
-  <data name="DescriptionText" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="FileDescriptionLabel" xml:space="preserve">
-    <value>Identify your document type</value>
-  </data>
-  <data name="AddYourDocumentsPanelHeading" xml:space="preserve">
-    <value>Add your documents</value>
-  </data>
-  <data name="AddAnotherFileText" xml:space="preserve">
-    <value>Add another file</value>
+  <data name="UploadedFilesNotEmptyText" xml:space="preserve">
+    <value>You must upload at least 1 file.</value>
   </data>
 </root>
