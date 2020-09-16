@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Thank you</value>
-  </data>
-  <data name="ContentTitle" xml:space="preserve">
-    <value>Your documents were successfully submitted.</value>
-  </data>
-  <data name="ConfirmationLabel" xml:space="preserve">
-    <value>Confirmation number: {0}</value>
-  </data>
-  <data name="ReceptionConfirmation" xml:space="preserve">
-    <value>We have received your documents and will begin reviewing them soon. We will contact you if needed.</value>
-  </data>
-  <data name="NextStepsParagraph" xml:space="preserve">
-    <value>Please make note of your confirmation number for future reference.</value>
+  <data name="Required" xml:space="preserve">
+    <value>Obligatoire</value>
   </data>
 </root>

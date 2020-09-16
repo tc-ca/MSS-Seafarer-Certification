@@ -1,22 +1,22 @@
 ﻿@page "/confirmation/{confirmation:int}"
 @page "/{LanguageCode}/confirmation/{confirmation:int}"
 
-@inject IStringLocalizer<Pages.UploadConfirmation> pageLocalizer
+@inject IStringLocalizer<UploadConfirmation> PageLocalizer
 
 @inherits BaseComponent
 
-<h1 class="alert-heading">@pageLocalizer["PageTitle"]</h1>
+<h1 class="alert-heading">@PageLocalizer["PageTitle"]</h1>
 
 <div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">@pageLocalizer["ContentTitle"]</h4>
-    <p class="mb-0">@string.Format(pageLocalizer["ConfirmationLabel"], @confirmation)</p>
-    <p class="mb-0">@pageLocalizer["ReceptionConfirmation"]</p>
-    <p class="mb-0">@pageLocalizer["NextStepsParagraph"]</p>
+    <h4 class="alert-heading">@PageLocalizer["ContentTitle"]</h4>
+    <p class="mb-0">@string.Format(PageLocalizer["ConfirmationLabel"], Confirmation)</p>
+    <p class="mb-0">@PageLocalizer["ReceptionConfirmation"]</p>
+    <p class="mb-0">@PageLocalizer["NextStepsParagraph"]</p>
 </div>
 
 @code {
 
     [Parameter]
-    public int confirmation { get; set; }
+    public int Confirmation { get; set; }
 
 }

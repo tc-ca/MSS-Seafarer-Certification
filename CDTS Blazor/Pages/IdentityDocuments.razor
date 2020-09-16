@@ -2,7 +2,7 @@
 @using CDNApplication.Data.Services;
 @using BlazorInputFile;
 
-@inject IAzureBlobService azureBlobService;
+@inject IAzureBlobService AzureBlobService;
 @using Data.Resources
 
 <nav aria-label="progress" class="step-indicator">
@@ -40,7 +40,7 @@
         </div>
     </form>
 
-    @if (@loading == true)
+    @if (isLoading == true)
     {
         // TODO : Add a loading animation instead of just text.
         // Aurora: https://design.gccollab.ca/component/icons
@@ -49,7 +49,7 @@
     <div>Loading.....</div>
     }
 
-    @if (fileUploaded == FileUploaded.SUCCESS)
+    @if (fileUploaded == UploadedFileStatus.SUCCESS)
     {
     // TODO : Make the alerts closeable
     // https://www.blazorade.com/Blazorade-Bootstrap/alerts
@@ -67,7 +67,7 @@
 
     </div>
     }
-    else if (fileUploaded == FileUploaded.FAIL)
+    else if (fileUploaded == UploadedFileStatus.FAIL)
     {
     <div class="alert alert-danger" role="alert">
         @labels_en.IdentityDocumentsUploadUnsuccessful
@@ -80,35 +80,35 @@
 
 @code {
 
-    bool loading = false;
+    private bool isLoading = false;
 
-    public FileUploaded fileUploaded { get; set; }
+    private UploadedFileStatus fileUploaded { get; set; }
 
-    public IFileListEntry[] selectedFiles = new IFileListEntry[0];
+    private IFileListEntry[] selectedFiles = new IFileListEntry[0];
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
 
         selectedFiles = files;
 
-        fileUploaded = FileUploaded.DEFAULT;
+        fileUploaded = UploadedFileStatus.DEFAULT;
 
-        loading = true;
+        isLoading = true;
 
         StateHasChanged();
 
         // Upload the file to the root directory
-        var result = await azureBlobService.UploadMultipleFilesAsync(files);
+        var result = await AzureBlobService.UploadMultipleFilesAsync(files);
 
-        loading = false;
+        isLoading = false;
 
-        fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
+        fileUploaded = result.Count == files.Length ? UploadedFileStatus.SUCCESS : UploadedFileStatus.FAIL;
 
         StateHasChanged();
 
     }
 
-    public enum FileUploaded
+    public enum UploadedFileStatus
     {
         DEFAULT,
         SUCCESS,

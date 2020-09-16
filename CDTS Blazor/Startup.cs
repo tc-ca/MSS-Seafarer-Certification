@@ -80,6 +80,7 @@ namespace CDNApplication
             services.AddSingleton<SessionStateModel>();
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
+            services.AddHttpContextAccessor();
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
