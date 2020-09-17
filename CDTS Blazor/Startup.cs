@@ -93,6 +93,7 @@ namespace CDNApplication
             services
                 .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
+            
             services.AddHttpsRedirection(options =>
             {
                 options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
@@ -123,7 +124,9 @@ namespace CDNApplication
 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
+
 
             app.Use(next => context =>
             {
@@ -145,7 +148,8 @@ namespace CDNApplication
                 return next(context);
             });
 
-            app.UseHttpsRedirection();
+            
+
             app.UseStaticFiles();
             app.UsePageSettingsMiddleware();
             app.UseRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
