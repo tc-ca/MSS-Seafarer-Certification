@@ -117,19 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back" xml:space="preserve">
-    <value>Retour</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Review</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="CertificateType" xml:space="preserve">
+    <value>Certificate Type</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Suivant</value>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Submit</value>
   </data>
-  <data name="Required" xml:space="preserve">
-    <value>Obligatoire</value>
+  <data name="CDNNumber" xml:space="preserve">
+    <value>CDN Number</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachment(s)</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Soumettre</value>
+    <value>Submit</value>
   </data>
 </root>

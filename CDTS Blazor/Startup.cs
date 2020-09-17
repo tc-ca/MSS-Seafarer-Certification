@@ -9,6 +9,7 @@ namespace CDNApplication
     using CDNApplication.Models;
     using CDNApplication.Models.PageModels;
     using CDNApplication.PageValidators;
+    using CDNApplication.Utilities;
     using CDNApplication.Views;
     using FluentValidation;
     using GoC.WebTemplate.Components.Core.Services;
@@ -66,6 +67,7 @@ namespace CDNApplication
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSingleton<SessionState>();
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");

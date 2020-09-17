@@ -117,19 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back" xml:space="preserve">
-    <value>Retour</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Saisissez vos informations et ajoutez vos documents</value>
   </data>
-  <data name="Description" xml:space="preserve">
+  <data name="PageDescription" xml:space="preserve">
+    <value>Remplissez ce formulaire avec vos informations et ajoutez vos documents.</value>
+  </data>
+  <data name="CDNLabel" xml:space="preserve">
+    <value>Entrez votre numéro de document de candidat (CDN)</value>
+  </data>
+  <data name="SelectCertificateLabel" xml:space="preserve">
+    <value>Sélectionnez le certificat que vous souhaitez</value>
+  </data>
+  <data name="SelectCertificateDropDown" xml:space="preserve">
+    <value>Sélectionnez le certificat</value>
+  </data>
+  <data name="SelectFileLabel" xml:space="preserve">
+    <value>Sélectionnez votre dossier</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Soumettre</value>
+  </data>
+  <data name="FileUploadedSuccessText" xml:space="preserve">
+    <value>Le fichier {0} a été téléchargé</value>
+  </data>
+  <data name="DescriptionText" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Suivant</value>
+  <data name="FileDescriptionLabel" xml:space="preserve">
+    <value>Identifiez votre type de document</value>
   </data>
-  <data name="Required" xml:space="preserve">
-    <value>Obligatoire</value>
+  <data name="AddYourDocumentsPanelHeading" xml:space="preserve">
+    <value>Ajoutez vos documents</value>
   </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Soumettre</value>
+  <data name="UploadDocument_ErrorMessage_Field_CdnNumber" xml:space="preserve">
+    <value>Le CDN doit être composé de 6 chiffres.</value>
+  </data>
+  <data name="AddAnotherFileText" xml:space="preserve">
+    <value>Ajoutez un autre fichier</value>
+  </data>
+  <data name="CDNVerificationAlphanumeric" xml:space="preserve">
+    <value>Le CDN ne doit contenir que des caractères alphanumériques.</value>
+  </data>
+  <data name="CDNVerificationLength" xml:space="preserve">
+    <value>Le CDN doit comporter 6 à 7 caractères.</value>
+  </data>
+  <data name="CDNVerificationRequired" xml:space="preserve">
+    <value>Le CDN est un champ obligatoire.</value>
   </data>
 </root>
