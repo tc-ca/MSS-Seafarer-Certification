@@ -76,8 +76,7 @@
       <LastGenOutput>PrototypeBanner.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Pages\UploadDocument.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>UploadDocument.Designer.cs</LastGenOutput>
+      <Generator></Generator>
     </EmbeddedResource>
     <!--<EmbeddedResource Update="Resources\Validation\UploadDocumentValidation.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,11 +98,6 @@
     </Compile>
     <Compile Update="Components\Banners\Resources\Prototype.Designer.cs">
       <DependentUpon>PrototypeBanner.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Pages\UploadDocument.Designer.cs">
-      <DependentUpon>UploadDocument.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\Validation\UploadDocumentErrorMessages.Designer.cs">
       <DesignTime>True</DesignTime>

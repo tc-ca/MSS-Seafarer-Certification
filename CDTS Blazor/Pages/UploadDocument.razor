@@ -1,6 +1,7 @@
 ﻿@page "/upload"
 @page "/{LanguageCode}/upload"
 
+@inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
 
 @using BlazorInputFile
@@ -19,7 +20,7 @@
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label required" for="@nameof(_model.CdnNumber)">
-                @PageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
+                @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
             <InputText class="form-control" @bind-Value="@_model.CdnNumber" id="@nameof(_model.CdnNumber)" />
             <ValidationMessage For="() => _model.CdnNumber" />
@@ -29,7 +30,7 @@
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label required">
-                @PageLocalizer["SelectCertificateLabel"] <strong class="required">(required)</strong>
+                @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
             <TSelect Items="@_certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
             <ValidationMessage For="() => _model.CertificateType" />
@@ -42,10 +43,14 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="form-control-label" for="@nameof(_model.FileDescription)">@PageLocalizer["FileDescriptionLabel"]</label>
+                <label class="form-control-label required" for="@nameof(_model.FileDescription)">
+                    @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
                 <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
 
-                <label for="@nameof(_model.UploadedFiles)">@PageLocalizer["SelectFileLabel"]</label>
+                <label class="required" for="@nameof(_model.UploadedFiles)">
+                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
                 <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(_model.UploadedFiles)" />
                 <ValidationMessage For="() => _model.UploadedFiles" />
 
@@ -66,7 +71,7 @@
     </section>
 
     <button class=" btn btn-primary" type="submit">
-        @PageLocalizer["SubmitButton"]
+        @CommonLocalizer["SubmitButton"]
     </button>
 
 </EditForm>
