@@ -135,9 +135,6 @@
   <data name="SelectFileLabel" xml:space="preserve">
     <value>Select your file</value>
   </data>
-  <data name="SubmitButton" xml:space="preserve">
-    <value>Submit</value>
-  </data>
   <data name="FileUploadedSuccessText" xml:space="preserve">
     <value>File {0} has been uploaded</value>
   </data>

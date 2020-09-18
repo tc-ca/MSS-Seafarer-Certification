@@ -15,7 +15,7 @@
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\netcoreapp3.1\CDNApplicationForm.xml</DocumentationFile>
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Resources\" />
+    <Folder Include="Utilities\" />
     <Folder Include="Views\" />
     <Folder Include="Components\" />
     <Folder Include="Components\Banners\" />
@@ -79,8 +80,7 @@
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Pages\UploadDocument.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>UploadDocument.Designer.cs</LastGenOutput>
+      <Generator></Generator>
     </EmbeddedResource>
     <!--<EmbeddedResource Update="Resources\Validation\UploadDocumentValidation.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

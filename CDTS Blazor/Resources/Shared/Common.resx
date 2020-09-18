@@ -127,7 +127,10 @@
     <value>Next</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>Required</value>
+    <value>(required)</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
