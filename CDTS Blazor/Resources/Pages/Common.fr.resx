@@ -117,34 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Review and submit</value>
+  <data name="Back" xml:space="preserve">
+    <value>Retour</value>
   </data>
-  <data name="SelectedCertificate" xml:space="preserve">
-    <value>Selected certificate</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="CDNNumber" xml:space="preserve">
-    <value>Candidate Document Number</value>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
   </data>
-  <data name="Attachment" xml:space="preserve">
-    <value>Attachment</value>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
   </data>
-  <data name="Attachments" xml:space="preserve">
-    <value>Attachment(s)</value>
+  <data name="Next" xml:space="preserve">
+    <value>Suivant</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Obligatoire</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="PageDescription" xml:space="preserve">
-    <value>Review your details. Make any edits or submit when you are ready.</value>
-  </data>
-  <data name="YourCertificateSelection" xml:space="preserve">
-    <value>Your certificate selection</value>
-  </data>
-  <data name="YourDocument" xml:space="preserve">
-    <value>Your document(s)</value>
-  </data>
-  <data name="YourInformation" xml:space="preserve">
-    <value>Your information</value>
+    <value>Soumettre</value>
   </data>
 </root>

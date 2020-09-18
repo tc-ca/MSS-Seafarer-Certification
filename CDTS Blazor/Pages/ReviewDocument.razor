@@ -12,6 +12,8 @@
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
+<p>@PageLocalizer["PageDescription"]</p>
+
 @if (model == null)
 {
     <button class="btn btn-light" @onclick="GoBack" role="button">
@@ -21,9 +23,9 @@
 else
 {
     <div class="panel panel-default">
-
         <div class="panel-heading">
-            <span id="1">Review</span>
+            <span id="1">@PageLocalizer["YourInformation"]</span>
+            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
 
         <div class="panel-body">
@@ -31,17 +33,26 @@ else
                 <div class="col-md-3">@PageLocalizer["CDNNumber"]:</div>
                 <div class="col-md-3">@model.CdnNumber</div>
             </div>
-            <div class="row">
-                <div class="col-md-3">@PageLocalizer["CertificateType"]:</div>
-                <div class="col-md-3">@model.CertificateType</div>
-            </div>
         </div>
-
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span class="panel-header" id="3">@PageLocalizer["Attachments"]</span>
+            <span id="1">@PageLocalizer["YourCertificateSelection"]</span>
+            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">@PageLocalizer["SelectedCertificate"]:</div>
+                <div class="col-md-3">@model.CertificateType</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-header" id="3">@PageLocalizer["YourDocument"]</span>
+            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
 
@@ -50,7 +61,7 @@ else
                 int index = i + 1;
 
                 <div>
-                    <span class="wrap-text">@PageLocalizer["Attachment"] @index:</span>
+                    <span class="wrap-text">@CommonPageLocalizer["Document"] @index:</span>
                     <div class="wrap-text">@model.UploadedFiles[i].SelectedFile.Name &nbsp; (@model.UploadedFiles[i].SelectedFile.Size bytes)</div>
                     <div class="wrap-text">@CommonPageLocalizer["Description"]: @model.UploadedFiles[i].Description</div>
                 </div>
