@@ -117,43 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ThankYouHeader" xml:space="preserve">
-    <value>Thank you</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Saisissez vos informations et ajoutez vos documents</value>
   </data>
-  <data name="DocumentsSubmittedHeader" xml:space="preserve">
-    <value>Your documents were successfully submitted.</value>
+  <data name="PageDescription" xml:space="preserve">
+    <value>Remplissez ce formulaire avec vos informations et ajoutez vos documents.</value>
   </data>
-  <data name="ConfirmationNumberText" xml:space="preserve">
-    <value>Confirmation number: {0}</value>
+  <data name="CDNLabel" xml:space="preserve">
+    <value>Entrez votre numéro de document de candidat (CDN)</value>
   </data>
-  <data name="WeWillReviewYourDocumentsText" xml:space="preserve">
-    <value>Our team will review your documents within the next _X_ days. We will ensure they meet the requirements for your selected certificate.</value>
+  <data name="SelectCertificateLabel" xml:space="preserve">
+    <value>Sélectionnez le certificat que vous souhaitez</value>
   </data>
-  <data name="CheckEmailConfirmationText" xml:space="preserve">
-    <value>Check your email for a confirmation message with this number and a copy of your submission.</value>
+  <data name="SelectCertificateDropDown" xml:space="preserve">
+    <value>Sélectionnez le certificat</value>
   </data>
-  <data name="ContactUsHeader" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="SelectFileLabel" xml:space="preserve">
+    <value>Sélectionnez votre dossier</value>
   </data>
-  <data name="IfYouHaveQuestionsPart1Text" xml:space="preserve">
-    <value>If you have questions or concerns, contact your local </value>
+  <data name="FileUploadedSuccessText" xml:space="preserve">
+    <value>Le fichier {0} a été téléchargé</value>
   </data>
-  <data name="IfYouHaveQuestionsPart2Text" xml:space="preserve">
-    <value>. Be sure to have your confirmation number ready to share.</value>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="MarineRegionalOfficesHyperlink" xml:space="preserve">
-    <value>https://tc.canada.ca/en/marine-transportation-regions</value>
+  <data name="FileDescriptionLabel" xml:space="preserve">
+    <value>Identifiez votre type de document</value>
   </data>
-  <data name="MarineRegionalOfficesHyperlinkText" xml:space="preserve">
-    <value>Transport Canada Service Centre</value>
+  <data name="AddYourDocumentsPanelHeading" xml:space="preserve">
+    <value>Ajoutez vos documents</value>
   </data>
-  <data name="SaveConfirmationNumberText" xml:space="preserve">
-    <value>Please save your confirmation number in a safe place. You will need this number if you contact us about your submission.</value>
-  </data>
-  <data name="WeWillContactYouText" xml:space="preserve">
-    <value>We will contact you by the phone number or email address your provided if there are any issues.</value>
-  </data>
-  <data name="WhatHappensNextHeader" xml:space="preserve">
-    <value>What happens next</value>
+  <data name="AddAnotherFileText" xml:space="preserve">
+    <value>Ajoutez un autre fichier</value>
   </data>
 </root>

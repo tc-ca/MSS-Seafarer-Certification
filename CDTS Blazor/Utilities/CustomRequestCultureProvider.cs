@@ -14,6 +14,8 @@
         private readonly string frenchCulture = "fr-CA";
         private readonly string english = "/en";
         private readonly string french = "/fr";
+        private readonly string blazorFrameworkURL = "/_blazor";
+        private string lastSetCulture;
 
         /// <inheritdoc/>
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
@@ -23,18 +25,27 @@
                 throw new ArgumentNullException(nameof(httpContext));
             }
 
-            if (this.IsCanadianEnglishContext(httpContext))
+            if (!this.IsBlazorFramework(httpContext) && this.IsCanadianEnglishContext(httpContext))
             {
+                this.lastSetCulture = this.englishCulture;
                 return Task.FromResult(new ProviderCultureResult(this.englishCulture));
             }
-            else if (this.IsCanadianFrenchContext(httpContext))
+            else if (!this.IsBlazorFramework(httpContext) && this.IsCanadianFrenchContext(httpContext))
             {
+                this.lastSetCulture = this.frenchCulture;
                 return Task.FromResult(new ProviderCultureResult(this.frenchCulture));
             }
-            else
+            else if (!this.IsBlazorFramework(httpContext))
             {
                 return Task.FromResult(new ProviderCultureResult(this.englishCulture));
             }
+
+            return Task.FromResult(new ProviderCultureResult(this.lastSetCulture));
+        }
+
+        private bool IsBlazorFramework(HttpContext httpContext)
+        {
+            return httpContext.Request.Path.Value.Contains(this.blazorFrameworkURL, StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsCanadianEnglishContext(HttpContext httpContext)

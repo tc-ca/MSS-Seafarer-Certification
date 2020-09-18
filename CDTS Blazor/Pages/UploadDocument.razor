@@ -1,196 +1,144 @@
 ﻿@page "/upload"
 @page "/{LanguageCode}/upload"
-@using CDNApplication.Data.Services;
-@using BlazorInputFile;
-@using CDNApplication.Data.Entity;
 
+@inject IStringLocalizer<Common> CommonLocalizer
+@inject IStringLocalizer<UploadDocument> PageLocalizer
+@inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
+@inject Utilities.SessionState state
 
-@*@inject IAzureBlobService azureBlobService;*@
-
-@using Data.Resources;
-@using System.ComponentModel.DataAnnotations;
-
-@using Data;
-@using CDNApplication.TCComponents;
-@inject IStringLocalizer<Pages.UploadDocument> pageLocalizer
-
+@using BlazorInputFile
+@using CDNApplication.Data.Entity
+@using CDNApplication.Models.PageModels
 @inherits BaseComponent
 
-<h1>@pageLocalizer["PageTitle"]</h1>
+<h1>@PageLocalizer["PageTitle"]</h1>
 
-<p>@pageLocalizer["PageDescription"]</p>
+<p>@PageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+    <FluentValidationValidator />
     <ValidationSummary />
-    <DataAnnotationsValidator />
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label required" for="CDN-Number">
-                @pageLocalizer["CDNLabel"] <strong class="required">(required)</strong>
+            <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="CDN-Certification-Selection" />
+            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
             <ValidationMessage For="() => model.CdnNumber" />
         </div>
     </div>
 
     <div class="form-group">
         <div class="form-control-wrapper">
-            <label class="form-control-label required" for="CDN-Certification-Selection">
-                @pageLocalizer["SelectCertificateLabel"] <strong class="required">(required)</strong>
+            <label class="form-control-label required">
+                @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
-            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="SelectionChanged"></TSelect>
-            <ValidationMessage For="() => model.CertificationSelection" />
+            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+            <ValidationMessage For="() => model.CertificateType" />
         </div>
     </div>
 
     <section class="panel panel-primary">
         <header class="panel-heading">
-            <h5 class="panel-title">@pageLocalizer["AddYourDocumentsPanel"]</h5>
+            <h5 class="panel-title">@PageLocalizer["AddYourDocumentsPanelHeading"]</h5>
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="form-control-label" for="CDN-File-Description">@pageLocalizer["FileDescription"]</label>
-                <InputText class="form-control" @bind-Value="@model.FileDescription" id="CDN-File-Description" />
+                <label class="form-control-label required" for="@nameof(model.FileDescription)">
+                    @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
+                <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" />
 
-                <label for="Document">@pageLocalizer["SelectFile"]</label>
-                <InputFile id="Document" class="form-control" OnChange="HandleFileSelected" />
+                <label class="required" for="@nameof(model.UploadedFiles)">
+                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" />
+                <ValidationMessage For="() => model.UploadedFiles" />
 
-
-                @for (int i = 0; i < files.Count; i++)
+                @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
                 {
-                    int index = i;
+                    var index = i;
                     <p>
-                        @string.Format(@pageLocalizer["FileUploadedSuccessText"], files[i].SelectedFile.Name) | @pageLocalizer["Description"]: @files[i].Description
+                        @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
 
-                        <button class="btn btn-danger" type="button" @onclick="@(e => RemoveFile(index))">X</button>
+                        <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
                     </p>
                 }
                 <br />
-                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">Add another file </button>
+                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
             </div>
         </div>
     </section>
 
-    <button class=" btn btn-primary" type="submit">
-        @pageLocalizer["SubmitButton"]
+    <button class=" btn btn-primary">
+        @CommonPageLocalizer["Next"]
     </button>
 
 </EditForm>
 
 @code {
 
-    public IFileListEntry[] selectedFiles = new IFileListEntry[0];
+    private List<CertificateType> certificateTypes = new List<CertificateType>();
 
-    public List<UploadedFile> files = new List<UploadedFile>();
+    private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
-    private Model model = new Model();
-
-    public FileUploaded fileUploaded { get; set; }
-
-    public int confirmation { get; set; }
-
-
-    public List<CertificateType> certificateTypes;
-
-
-    public class UploadedFile
-    {
-
-        public IFileListEntry SelectedFile { get; set; }
-
-        public string Description { get; set; }
-
-    }
-
-
-    public enum FileUploaded
-    {
-        DEFAULT,
-        SUCCESS,
-        FAIL,
-    }
-
-    public class Model
-    {
-
-        [Range(1, 999999, ErrorMessage = "CDN must be a valid 6-digit number.")]
-        [Required(ErrorMessage = "The Candidate Document Number is a required field.")]
-        public string CdnNumber { get; set; }
-
-        [Required(ErrorMessage = "The Certificate Type is a required field.")]
-        public string CertificationSelection { get; set; }
-
-        public List<UploadedFile> UserFiles { get; set; }
-
-        public string FileDescription { get; set; } = String.Empty;
-
-        public override string ToString()
-        {
-            return string.Format("{1}{0} {2}{0} {3}{0}",
-                System.Environment.NewLine,
-                this.CdnNumber,
-                this.CertificationSelection,
-                this.UserFiles);
-        }
-    }
 
     private void HandleValidSubmit()
     {
-        Console.WriteLine("OnValidSubmit");
+
+        state.UploadDocumentPage = model;
+
         Console.WriteLine(model);
-        this.NavigationManager.NavigateTo($"{this.NavigationManager.BaseUri}{LanguageCode}/confirmation/{confirmation}");
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
-        selectedFiles = files;
+        
+        if (string.IsNullOrWhiteSpace(model.FileDescription))
+        {
+            return;
+        }
 
         foreach (var item in files)
         {
-            this.files.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
+            model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
 
             model.FileDescription = string.Empty;
         }
 
-        fileUploaded = FileUploaded.DEFAULT;
-
         StateHasChanged();
 
         await Task.Delay(100);
-
-        model.UserFiles = this.files;
-        // Upload the file to the root directory
-
-        //var result = await azureBlobService.UploadMultipleFilesAsync(files);
-
-        //fileUploaded = result.Count == files.Length ? FileUploaded.SUCCESS : FileUploaded.FAIL;
-
     }
 
-    private void SelectionChanged(ChangeEventArgs e)
+    private void CertificateTypeSelectionChanged(ChangeEventArgs e)
     {
-        model.CertificationSelection = e.Value.ToString();
+        model.CertificateType = e.Value.ToString();
     }
 
     void RemoveFile(int index)
     {
-        model.UserFiles.RemoveAt(index);
+        model.UploadedFiles.RemoveAt(index);
 
         StateHasChanged();
     }
 
-    protected override void OnInitialized() // = On Page Load
+    protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        Random random = new Random();
+        if (state.UploadDocumentPage != null)
+        {
+            model = state.UploadDocumentPage;
 
-        confirmation = random.Next(100000, 9999999);
+            StateHasChanged();
+        }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
-
     }
 
 }

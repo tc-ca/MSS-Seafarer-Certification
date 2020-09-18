@@ -5,6 +5,8 @@
     <RootNamespace>CDNApplication</RootNamespace>
     <AssemblyName>CDNApplication</AssemblyName>
     <NeutralLanguage>en</NeutralLanguage>
+    <UserSecretsId>5a1e3f1f-28cd-4322-b8d1-921af0053adb</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -13,17 +15,20 @@
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\netcoreapp3.1\CDNApplicationForm.xml</DocumentationFile>
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Blazored.FluentValidation" Version="1.3.1" />
+    <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="GoC.WebTemplate-Components.Core" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="3.1.8" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.5.0" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -39,11 +44,14 @@
 
   <ItemGroup>
     <Folder Include="Data\Resources\" />
-    <Folder Include="Model\" />
     <Folder Include="Utilities\" />
     <Folder Include="Views\" />
     <Folder Include="Components\" />
     <Folder Include="Components\Banners\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,9 +75,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PrototypeBanner.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Pages\UploadDocument.resx">
+    <EmbeddedResource Update="Resources\Pages\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>UploadDocument.Designer.cs</LastGenOutput>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\UploadDocument.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <!--<EmbeddedResource Update="Resources\Validation\UploadDocumentValidation.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>-->
+    <EmbeddedResource Update="Resources\Validation\UploadDocumentErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UploadDocumentErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -85,10 +103,20 @@
     <Compile Update="Components\Banners\Resources\Prototype.Designer.cs">
       <DependentUpon>PrototypeBanner.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Pages\Common.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Pages\UploadDocument.Designer.cs">
       <DependentUpon>UploadDocument.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Validation\UploadDocumentErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UploadDocumentErrorMessages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

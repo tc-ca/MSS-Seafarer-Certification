@@ -22,14 +22,14 @@ namespace CDNApplication.Resources.Pages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class UploadDocument {
+    internal class Common {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal UploadDocument() {
+        internal Common() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace CDNApplication.Resources.Pages {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CDNApplication.Resources.Pages.UploadDocument", typeof(UploadDocument).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CDNApplication.Resources.Pages.Common", typeof(Common).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,11 @@ namespace CDNApplication.Resources.Pages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add your documents.
+        ///   Looks up a localized string similar to Back.
         /// </summary>
-        internal static string AddYourDocumentsPanel {
+        internal static string Back {
             get {
-                return ResourceManager.GetString("AddYourDocumentsPanel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter your Candidate Document Number (CDN).
-        /// </summary>
-        internal static string CDNLabel {
-            get {
-                return ResourceManager.GetString("CDNLabel", resourceCulture);
+                return ResourceManager.GetString("Back", resourceCulture);
             }
         }
         
@@ -88,74 +79,47 @@ namespace CDNApplication.Resources.Pages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Identify your document type.
+        ///   Looks up a localized string similar to Document.
         /// </summary>
-        internal static string FileDescription {
+        internal static string Document {
             get {
-                return ResourceManager.GetString("FileDescription", resourceCulture);
+                return ResourceManager.GetString("Document", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File {0} has been uploaded.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
-        internal static string FileUploadedSuccessText {
+        internal static string Edit {
             get {
-                return ResourceManager.GetString("FileUploadedSuccessText", resourceCulture);
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fill in this form with your information and add your documents..
+        ///   Looks up a localized string similar to Next.
         /// </summary>
-        internal static string PageDescription {
+        internal static string Next {
             get {
-                return ResourceManager.GetString("PageDescription", resourceCulture);
+                return ResourceManager.GetString("Next", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter your information and add your documents.
+        ///   Looks up a localized string similar to Required.
         /// </summary>
-        internal static string PageTitle {
+        internal static string Required {
             get {
-                return ResourceManager.GetString("PageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the certificate.
-        /// </summary>
-        internal static string SelectCertificateDropDown {
-            get {
-                return ResourceManager.GetString("SelectCertificateDropDown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the certificate you want.
-        /// </summary>
-        internal static string SelectCertificateLabel {
-            get {
-                return ResourceManager.GetString("SelectCertificateLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select your file.
-        /// </summary>
-        internal static string SelectFile {
-            get {
-                return ResourceManager.GetString("SelectFile", resourceCulture);
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        internal static string SubmitButton {
+        internal static string Submit {
             get {
-                return ResourceManager.GetString("SubmitButton", resourceCulture);
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
     }
