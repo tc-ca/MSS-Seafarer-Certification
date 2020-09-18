@@ -12,10 +12,10 @@ RUN dotnet restore "CDTS Blazor/CDNApplication.csproj"
 ARG target="CDTS Blazor/"
 COPY . ${target}
 WORKDIR "/src/CDTS Blazor"
-RUN dotnet build "CDNApplication.csproj" -c Debug -o /app/build
+RUN dotnet build "CDNApplication.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CDNApplication.csproj" -c Debug -o /app/publish
+RUN dotnet publish "CDNApplication.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
