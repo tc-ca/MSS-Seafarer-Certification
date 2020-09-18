@@ -48,6 +48,7 @@
     <Folder Include="Views\" />
     <Folder Include="Components\" />
     <Folder Include="Components\Banners\" />
+    <Folder Include="TCComponents\Stepper\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,13 +9,18 @@
 @using CDNApplication.Models.PageModels
 @inherits BaseComponent
 
+<CDNApplication.TCComponents.Stepper.StepperComponent Stepper="@this.stepper" />
+
 <h1>@PageLocalizer["PageTitle"]</h1>
 
 <p>@PageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
     <FluentValidationValidator />
+
     <ValidationSummary />
+
+
 
     <div class="form-group">
         <div class="form-control-wrapper">
@@ -23,7 +28,9 @@
                 @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
             <InputText class="form-control" @bind-Value="@_model.CdnNumber" id="@nameof(_model.CdnNumber)" />
+
             <ValidationMessage For="() => _model.CdnNumber" />
+
         </div>
     </div>
 
@@ -33,7 +40,9 @@
                 @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
             <TSelect Items="@_certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+
             <ValidationMessage For="() => _model.CertificateType" />
+
         </div>
     </div>
 
@@ -48,11 +57,16 @@
                 </label>
                 <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
 
+
+
                 <label class="required" for="@nameof(_model.UploadedFiles)">
                     @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                 </label>
                 <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(_model.UploadedFiles)" />
+
                 <ValidationMessage For="() => _model.UploadedFiles" />
+
+
 
                 @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)
                 {
@@ -64,6 +78,7 @@
                     </p>
                 }
                 <br />
+
                 <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
             </div>
@@ -78,6 +93,7 @@
 
 @code {
 
+    private CDNApplication.TCComponents.Stepper.BaseStepper stepper = new CDNApplication.TCComponents.Stepper.BaseStepper();
     private List<CertificateType> _certificateTypes = new List<CertificateType>();
     private int _confirmationGuid;
     private readonly UploadDocumentPageModel _model = new UploadDocumentPageModel();
@@ -123,6 +139,32 @@
         _confirmationGuid = new Random().Next(100000, 9999999);
 
         _certificateTypes = CertificateType.GetAllCertificateTypes();
+
+        var step1 = new CDNApplication.TCComponents.Stepper.BaseStep
+        {
+            Text = CommonLocalizer["DocumentUpload_Step1"],
+            Index = 0,
+            IsComplete = true,
+            IsActive = false
+        };
+        var step2 = new CDNApplication.TCComponents.Stepper.BaseStep
+        {
+            Text = CommonLocalizer["DocumentUpload_Step2"],
+            Index = 1,
+            IsComplete = false,
+            IsActive = true
+        };
+        var step3 = new CDNApplication.TCComponents.Stepper.BaseStep
+        {
+            Text = CommonLocalizer["DocumentUpload_Step3"],
+            Index = 2,
+            IsComplete = false,
+            IsActive = false
+        };
+
+        stepper.AddStep(step1);
+        stepper.AddStep(step2);
+        stepper.AddStep(step3);
     }
 
 }
