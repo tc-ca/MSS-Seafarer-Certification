@@ -117,19 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PageTitle" xml:space="preserve">
+  <data name="ThankYouHeader" xml:space="preserve">
     <value>Thank you</value>
   </data>
-  <data name="ContentTitle" xml:space="preserve">
+  <data name="DocumentsSubmittedHeader" xml:space="preserve">
     <value>Your documents were successfully submitted.</value>
   </data>
-  <data name="ConfirmationLabel" xml:space="preserve">
+  <data name="ConfirmationNumberText" xml:space="preserve">
     <value>Confirmation number: {0}</value>
   </data>
-  <data name="ReceptionConfirmation" xml:space="preserve">
-    <value>We have received your documents and will begin reviewing them soon. We will contact you if needed.</value>
+  <data name="WeWillReviewYourDocumentsText" xml:space="preserve">
+    <value>Our team will review your documents within the next _X_ days. We will ensure they meet the requirements for your selected certificate.</value>
   </data>
-  <data name="NextStepsParagraph" xml:space="preserve">
-    <value>Please make note of your confirmation number for future reference.</value>
+  <data name="CheckEmailConfirmationText" xml:space="preserve">
+    <value>Check your email for a confirmation message with this number and a copy of your submission.</value>
+  </data>
+  <data name="ContactUsHeader" xml:space="preserve">
+    <value>Contact us</value>
+  </data>
+  <data name="IfYouHaveQuestionsPart1Text" xml:space="preserve">
+    <value>If you have questions or concerns, contact your local </value>
+  </data>
+  <data name="IfYouHaveQuestionsPart2Text" xml:space="preserve">
+    <value>. Be sure to have your confirmation number ready to share.</value>
+  </data>
+  <data name="MarineRegionalOfficesHyperlink" xml:space="preserve">
+    <value>https://tc.canada.ca/en/marine-transportation-regions</value>
+  </data>
+  <data name="MarineRegionalOfficesHyperlinkText" xml:space="preserve">
+    <value>Transport Canada Service Centre</value>
+  </data>
+  <data name="SaveConfirmationNumberText" xml:space="preserve">
+    <value>Please save your confirmation number in a safe place. You will need this number if you contact us about your submission.</value>
+  </data>
+  <data name="WeWillContactYouText" xml:space="preserve">
+    <value>We will contact you by the phone number or email address your provided if there are any issues.</value>
+  </data>
+  <data name="WhatHappensNextHeader" xml:space="preserve">
+    <value>What happens next</value>
   </data>
 </root>
