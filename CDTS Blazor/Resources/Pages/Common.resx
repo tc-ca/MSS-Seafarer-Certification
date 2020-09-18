@@ -118,21 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Back" xml:space="preserve">
-    <value>Retour</value>
+    <value>Back</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="Next" xml:space="preserve">
-    <value>Suivant</value>
+    <value>Next</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>(obligatoire)</value>
-  </data>
-  <data name="SubmitButton" xml:space="preserve">
-    <value>Soumettre</value>
+    <value>Required</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Soumettre</value>
+    <value>Submit</value>
   </data>
 </root>

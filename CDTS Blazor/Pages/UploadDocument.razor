@@ -3,6 +3,8 @@
 
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
+@inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
+@inject Utilities.SessionState state
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -70,8 +72,8 @@
         </div>
     </section>
 
-    <button class=" btn btn-primary" type="submit">
-        @CommonLocalizer["SubmitButton"]
+    <button class=" btn btn-primary">
+        @CommonPageLocalizer["Next"]
     </button>
 
 </EditForm>
@@ -79,19 +81,28 @@
 @code {
 
     private List<CertificateType> certificateTypes = new List<CertificateType>();
-    private int confirmationGuid;
-    private readonly UploadDocumentPageModel model = new UploadDocumentPageModel();
+
+    private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
 
     private void HandleValidSubmit()
     {
-        Console.WriteLine("HandleValidSubmit");
+
+        state.UploadDocumentPage = model;
+
         Console.WriteLine(model);
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{confirmationGuid}");
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
+        
+        if (string.IsNullOrWhiteSpace(model.FileDescription))
+        {
+            return;
+        }
+
         foreach (var item in files)
         {
             model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
@@ -120,7 +131,12 @@
     {
         base.OnInitialized();
 
-        confirmationGuid = new Random().Next(100000, 9999999);
+        if (state.UploadDocumentPage != null)
+        {
+            model = state.UploadDocumentPage;
+
+            StateHasChanged();
+        }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
     }
