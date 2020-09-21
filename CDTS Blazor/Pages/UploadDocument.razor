@@ -45,7 +45,7 @@
                            placeholder="@PageLocalizer["FileDescriptionHint"]" />
 
                 <label for="upload-file">@PageLocalizer["SelectFileLabel"]</label>
-                <InputFile class="form-control" OnChange="HandleFileSelected" id="upload-file" />
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="upload-file" accept=".jpg, .png, .gif, .pdf" />
                 <ValidationMessage For="() => _model.UploadedFiles" />
 
                 @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)
@@ -146,10 +146,13 @@
 
     bool ExtensionIsValid(string path)
     {
-
+        
         string ext = System.IO.Path.GetExtension(path);
 
-        if (string.Equals(".png", ext, StringComparison.OrdinalIgnoreCase) | string.Equals(".pdf", ext, StringComparison.OrdinalIgnoreCase) || string.Equals(".doc", ext, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(".jpg", ext, StringComparison.OrdinalIgnoreCase) || 
+            string.Equals(".png", ext, StringComparison.OrdinalIgnoreCase) || 
+            string.Equals(".gif", ext, StringComparison.OrdinalIgnoreCase) || 
+            string.Equals(".pdf", ext, StringComparison.OrdinalIgnoreCase))
         {
             return true;
         }
