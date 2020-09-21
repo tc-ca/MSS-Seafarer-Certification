@@ -95,7 +95,6 @@ namespace CDNApplication
             services
                 .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
-            
             services.AddHttpsRedirection(options =>
             {
                 options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
@@ -149,8 +148,6 @@ namespace CDNApplication
 
                 return next(context);
             });
-
-            
 
             app.UseStaticFiles();
             app.UsePageSettingsMiddleware();
