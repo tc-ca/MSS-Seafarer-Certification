@@ -62,16 +62,6 @@
         <div class="panel-body">
             <div class="form-group">
                 <div class="form-control-wrapper">
-                    <label class="form-control-label required" for="@nameof(model.CdnNumber)">
-                        @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                    </label>
-                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
-                    <ValidationMessage For="() => model.CdnNumber" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-control-wrapper">
                     <label class="form-control-label required">
                         @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                     </label>
@@ -118,6 +108,9 @@
     <button class=" btn btn-primary">
         @CommonPageLocalizer["Next"]
     </button>
+    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+        @CommonPageLocalizer["Previous"]
+    </button>
 
 </EditForm>
 
@@ -135,6 +128,11 @@
         state.UploadDocumentPage = model;
 
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+    }
+
+    private void HandlePreviousClick()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
