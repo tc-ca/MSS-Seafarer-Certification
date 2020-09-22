@@ -120,9 +120,6 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Saisissez vos informations et ajoutez vos documents</value>
   </data>
-  <data name="PageDescription" xml:space="preserve">
-    <value>Remplissez ce formulaire avec vos informations et ajoutez vos documents.</value>
-  </data>
   <data name="CDNLabel" xml:space="preserve">
     <value>Entrez votre numéro de document de candidat (CDN)</value>
   </data>
