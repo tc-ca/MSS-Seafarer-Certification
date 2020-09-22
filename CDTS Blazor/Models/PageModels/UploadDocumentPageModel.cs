@@ -15,6 +15,16 @@
         public string CdnNumber { get; set; }
 
         /// <summary>
+        ///  Gets or sets phone number.
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
+        ///  Gets or sets email address.
+        /// </summary>
+        public string EmailAddress { get; set; }
+
+        /// <summary>
         ///     Gets or sets the certificate type.
         /// </summary>
         public string CertificateType { get; set; }

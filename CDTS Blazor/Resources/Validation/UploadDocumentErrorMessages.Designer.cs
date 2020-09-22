@@ -97,6 +97,24 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email address must be a valid format.
+        /// </summary>
+        internal static string EmailAddressFormatText {
+            get {
+                return ResourceManager.GetString("EmailAddressFormatText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number is a required field.
+        /// </summary>
+        internal static string PhoneNumberNotEmptyText {
+            get {
+                return ResourceManager.GetString("PhoneNumberNotEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must upload at least 1 file..
         /// </summary>
         internal static string UploadedFilesNotEmptyText {
