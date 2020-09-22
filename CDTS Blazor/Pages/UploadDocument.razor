@@ -59,63 +59,65 @@
             <h5 class="panel-title">@PageLocalizer["SelectCertificatePanelHeading"]</h5>
         </header>
 
-        <div class="form-group">
-            <div class="form-control-wrapper">
-                <label class="form-control-label required" for="@nameof(model.CdnNumber)">
-                    @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
-                <ValidationMessage For="() => model.CdnNumber" />
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                        @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
+                    <ValidationMessage For="() => model.CdnNumber" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="form-control-wrapper">
-                <label class="form-control-label required">
-                    @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
-                <ValidationMessage For="() => model.CertificateType" />
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required">
+                        @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+                    <ValidationMessage For="() => model.CertificateType" />
+                </div>
             </div>
         </div>
     </section>
 
-        <section class="panel panel-primary">
-            <header class="panel-heading">
-                <h5 class="panel-title">@PageLocalizer["AddYourDocumentsPanelHeading"]</h5>
-            </header>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="form-control-label required" for="@nameof(model.FileDescription)">
-                        @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                    </label>
-                    <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["AddYourDocumentsPanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="form-control-label required" for="@nameof(model.FileDescription)">
+                    @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
+                <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" />
 
-                    <label class="required" for="@nameof(model.UploadedFiles)">
-                        @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                    </label>
-                    <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" />
-                    <ValidationMessage For="() => model.UploadedFiles" />
+                <label class="required" for="@nameof(model.UploadedFiles)">
+                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" />
+                <ValidationMessage For="() => model.UploadedFiles" />
 
-                    @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
-                    {
-                        var index = i;
-                        <p>
-                            @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
+                @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
+                {
+                    var index = i;
+                    <p>
+                        @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
 
-                            <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
-                        </p>
-                    }
-                    <br />
-                    <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
+                        <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
+                    </p>
+                }
+                <br />
+                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <button class=" btn btn-primary">
-            @CommonPageLocalizer["Next"]
-        </button>
+    <button class=" btn btn-primary">
+        @CommonPageLocalizer["Next"]
+    </button>
 
 </EditForm>
 
