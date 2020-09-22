@@ -23,6 +23,37 @@
     <FluentValidationValidator />
     <ValidationSummary />
 
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["EnterYourInformationPanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                        @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
+                    <ValidationMessage For="() => model.CdnNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.PhoneNumber)">
+                        @PageLocalizer["PhoneNumberLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" />
+                    <ValidationMessage For="() => model.PhoneNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <label class="form-control-label" for="@nameof(model.EmailAddress)">
+                        @PageLocalizer["EmailAddressLabel"]
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" />
+                    <ValidationMessage For="() => model.EmailAddress" />
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="form-group">
         <div class="form-control-wrapper">
             <label class="form-control-label required" for="@nameof(model.CdnNumber)">
