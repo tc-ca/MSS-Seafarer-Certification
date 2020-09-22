@@ -117,43 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CheckEmailConfirmationText" xml:space="preserve">
-    <value>Vérifiez votre courriel pour un message de confirmation avec ce numéro et une copie de votre soumission.</value>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
   </data>
-  <data name="ConfirmationNumberText" xml:space="preserve">
-    <value>Numéro de confirmation : {0}</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="ContactUsHeader" xml:space="preserve">
-    <value>Comment nous joindre</value>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
   </data>
-  <data name="DocumentsSubmittedHeader" xml:space="preserve">
-    <value>Vos documents ont été soumis avec succès.</value>
+  <data name="Required" xml:space="preserve">
+    <value>(required)</value>
   </data>
-  <data name="IfYouHaveQuestionsPart1Text" xml:space="preserve">
-    <value>Si vous avez des questions ou des préoccupations, communiquez avec votre </value>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Submit</value>
   </data>
-  <data name="IfYouHaveQuestionsPart2Text" xml:space="preserve">
-    <value> local. Assurez-vous que votre numéro de confirmation est prêt à être partagé.</value>
-  </data>
-  <data name="MarineRegionalOfficesHyperlink" xml:space="preserve">
-    <value>https://tc.canada.ca/fr/transport-maritime-dans-regions</value>
-  </data>
-  <data name="MarineRegionalOfficesHyperlinkText" xml:space="preserve">
-    <value>Centre de services Transports Canada</value>
-  </data>
-  <data name="SaveConfirmationNumberText" xml:space="preserve">
-    <value>Veuillez garder votre numéro de confirmation dans un endroit sûr. Vous aurez besoin de ce numéro si vous nous contactez au sujet de votre soumission.</value>
-  </data>
-  <data name="ThankYouHeader" xml:space="preserve">
-    <value>Merci</value>
-  </data>
-  <data name="WeWillContactYouText" xml:space="preserve">
-    <value>Nous vous contacterons par le numéro de téléphone ou l’adresse courriel que vous avez fourni s’il ya des problèmes.</value>
-  </data>
-  <data name="WeWillReviewYourDocumentsText" xml:space="preserve">
-    <value>Notre équipe examinera vos documents dans les prochains _X_ jours. Nous nous assurerons qu’ils répondent aux exigences du certificat sélectionné.</value>
-  </data>
-  <data name="WhatHappensNextHeader" xml:space="preserve">
-    <value>Qu'est-ce-qui se passe par la suite</value>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
 </root>

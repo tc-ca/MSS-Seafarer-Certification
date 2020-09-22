@@ -135,9 +135,6 @@
   <data name="SelectFileLabel" xml:space="preserve">
     <value>Select your file</value>
   </data>
-  <data name="SubmitButton" xml:space="preserve">
-    <value>Submit</value>
-  </data>
   <data name="FileUploadedSuccessText" xml:space="preserve">
     <value>File {0} has been uploaded</value>
   </data>
@@ -149,9 +146,6 @@
   </data>
   <data name="AddYourDocumentsPanelHeading" xml:space="preserve">
     <value>Add your documents</value>
-  </data>
-  <data name="UploadDocument_ErrorMessage_Field_CdnNumber" xml:space="preserve">
-    <value>CDN must be a valid 6-digit number.</value>
   </data>
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Add another file</value>

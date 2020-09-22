@@ -1,4 +1,4 @@
-﻿namespace CDNApplication.Model
+﻿namespace CDNApplication.Models
 {
     /// <summary>
     /// Defines the session manager.
