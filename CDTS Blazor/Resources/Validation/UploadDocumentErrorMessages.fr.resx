@@ -129,6 +129,12 @@
   <data name="CertificateTypeNotEmptyText" xml:space="preserve">
     <value>Le type de certificat est un champ obligatoire.</value>
   </data>
+  <data name="EmailAddressFormatText" xml:space="preserve">
+    <value>L'adresse électronique doit avoir un format valide</value>
+  </data>
+  <data name="PhoneNumberNotEmptyText" xml:space="preserve">
+    <value>Le numéro de téléphone est un champ obligatoire</value>
+  </data>
   <data name="UploadedFilesNotEmptyText" xml:space="preserve">
     <value>Vous devez soumettre au moins 1 fichier.</value>
   </data>

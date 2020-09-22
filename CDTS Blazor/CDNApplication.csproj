@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,12 +10,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\netcoreapp3.1\CDNApplicationForm.xml</DocumentationFile>
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\netcoreapp3.1\CDNApplicationForm.xml</DocumentationFile>
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
@@ -76,6 +76,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PrototypeBanner.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Common.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Pages\UploadDocument.resx">
       <Generator></Generator>
     </EmbeddedResource>
@@ -99,6 +103,16 @@
     </Compile>
     <Compile Update="Components\Banners\Resources\Prototype.Designer.cs">
       <DependentUpon>PrototypeBanner.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Common.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\UploadDocument.Designer.cs">
+      <DependentUpon>UploadDocument.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\Validation\UploadDocumentErrorMessages.Designer.cs">
       <DesignTime>True</DesignTime>

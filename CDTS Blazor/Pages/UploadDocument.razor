@@ -3,7 +3,12 @@
 
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
+<<<<<<< HEAD
 @inject NavigationManager MyNavigationManager  
+=======
+@inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
+@inject Utilities.SessionState state
+>>>>>>> develop
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -14,14 +19,19 @@
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
+<<<<<<< HEAD
 <p>@PageLocalizer["PageDescription"]</p>
 
 <p>Uri: @(MyNavigationManager.Uri.Split('/')[MyNavigationManager.Uri.Split('/').Length - 1])</p>
 
 <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
+=======
+<EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+>>>>>>> develop
     <FluentValidationValidator />
 
     <ValidationSummary />
+<<<<<<< HEAD
 
 
 
@@ -46,8 +56,55 @@
 
             <ValidationMessage For="() => _model.CertificateType" />
 
+=======
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["EnterYourInformationPanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                        @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
+                    <ValidationMessage For="() => model.CdnNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.PhoneNumber)">
+                        @PageLocalizer["PhoneNumberLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" />
+                    <ValidationMessage For="() => model.PhoneNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <label class="form-control-label" for="@nameof(model.EmailAddress)">
+                        @PageLocalizer["EmailAddressLabel"]
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" />
+                    <ValidationMessage For="() => model.EmailAddress" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["SelectCertificatePanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required">
+                        @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+                    <ValidationMessage For="() => model.CertificateType" />
+                </div>
+            </div>
+>>>>>>> develop
+        </div>
+    </section>
 
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -55,11 +112,12 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="form-control-label required" for="@nameof(_model.FileDescription)">
+                <label class="form-control-label required" for="@nameof(model.FileDescription)">
                     @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                 </label>
-                <InputText class="form-control" @bind-Value="@_model.FileDescription" id="@nameof(_model.FileDescription)" />
+                <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" />
 
+<<<<<<< HEAD
 
 
                 <label class="required" for="@nameof(_model.UploadedFiles)">
@@ -72,10 +130,19 @@
 
 
                 @for (var i = 0; i < (_model.UploadedFiles?.Count ?? 0); i++)
+=======
+                <label class="required" for="@nameof(model.UploadedFiles)">
+                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" />
+                <ValidationMessage For="() => model.UploadedFiles" />
+
+                @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
+>>>>>>> develop
                 {
                     var index = i;
                     <p>
-                        @string.Format(PageLocalizer["FileUploadedSuccessText"], _model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @_model.UploadedFiles?[i].Description
+                        @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
 
                         <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
                     </p>
@@ -88,34 +155,58 @@
         </div>
     </section>
 
-    <button class=" btn btn-primary" type="submit">
-        @CommonLocalizer["SubmitButton"]
+    <button class=" btn btn-primary">
+        @PageLocalizer["PrimaryButton"]
+    </button>
+
+    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+        @CommonPageLocalizer["Previous"]
     </button>
 
 </EditForm>
 
 @code {
 
+<<<<<<< HEAD
     private CDNApplication.TCComponents.Stepper.BaseStepper stepper = new CDNApplication.TCComponents.Stepper.BaseStepper();
     private List<CertificateType> _certificateTypes = new List<CertificateType>();
     private int _confirmationGuid;
     private readonly UploadDocumentPageModel _model = new UploadDocumentPageModel();
+=======
+    private List<CertificateType> certificateTypes = new List<CertificateType>();
+
+    private UploadDocumentPageModel model = new UploadDocumentPageModel();
+>>>>>>> develop
 
 
     private void HandleValidSubmit()
     {
-        Console.WriteLine("HandleValidSubmit");
-        Console.WriteLine(_model);
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
+
+        state.UploadDocumentPage = model;
+
+        Console.WriteLine(model);
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+
+    }
+
+    private void HandlePreviousClick()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
+
+        if (string.IsNullOrWhiteSpace(model.FileDescription))
+        {
+            return;
+        }
+
         foreach (var item in files)
         {
-            _model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = _model.FileDescription });
+            model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
 
-            _model.FileDescription = string.Empty;
+            model.FileDescription = string.Empty;
         }
 
         StateHasChanged();
@@ -125,12 +216,12 @@
 
     private void CertificateTypeSelectionChanged(ChangeEventArgs e)
     {
-        _model.CertificateType = e.Value.ToString();
+        model.CertificateType = e.Value.ToString();
     }
 
     void RemoveFile(int index)
     {
-        _model.UploadedFiles.RemoveAt(index);
+        model.UploadedFiles.RemoveAt(index);
 
         StateHasChanged();
     }
@@ -139,8 +230,14 @@
     {
         base.OnInitialized();
 
-        _confirmationGuid = new Random().Next(100000, 9999999);
+        if (state.UploadDocumentPage != null)
+        {
+            model = state.UploadDocumentPage;
 
+            StateHasChanged();
+        }
+
+<<<<<<< HEAD
         _certificateTypes = CertificateType.GetAllCertificateTypes();
 
         var step1 = new CDNApplication.TCComponents.Stepper.BaseStep
@@ -168,6 +265,9 @@
         stepper.AddStep(step1);
         stepper.AddStep(step2);
         stepper.AddStep(step3);
+=======
+        certificateTypes = CertificateType.GetAllCertificateTypes();
+>>>>>>> develop
     }
 
 }

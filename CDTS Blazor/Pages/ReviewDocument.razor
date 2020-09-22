@@ -1,0 +1,129 @@
+﻿@page "/review"
+@page "/{LanguageCode}/review"
+
+@inject IStringLocalizer<ReviewDocument> PageLocalizer
+@inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
+@inject Utilities.SessionState state
+
+@using BlazorInputFile
+@using CDNApplication.Data.Entity
+@using CDNApplication.Models.PageModels
+@inherits BaseComponent
+
+<h1>@PageLocalizer["PageTitle"]</h1>
+
+<p>@PageLocalizer["PageDescription"]</p>
+
+@if (model == null)
+{
+    <button class="btn btn-light" @onclick="GoBack" role="button">
+        @CommonPageLocalizer["Back"]
+    </button>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span id="1">@PageLocalizer["YourInformation"]</span>
+            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">@PageLocalizer["CDNNumber"]:</div>
+                <div class="col-md-8">@model.CdnNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">@PageLocalizer["PhoneNumber"]:</div>
+                <div class="col-md-8">@model.PhoneNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">@PageLocalizer["EmailAddress"]:</div>
+                <div class="col-md-8">@model.EmailAddress</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span id="1">@PageLocalizer["YourCertificateSelection"]</span>
+            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">@PageLocalizer["SelectedCertificate"]:</div>
+                <div class="col-md-8">@model.CertificateType</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-header" id="3">@PageLocalizer["YourDocument"]</span>
+            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
+        </div>
+        <div class="panel-body">
+
+            @for (int i = 0; i < model.UploadedFiles.Count; i++)
+            {
+                int index = i + 1;
+
+                <div>
+                    <span class="wrap-text">@CommonPageLocalizer["Document"] @index:</span>
+                    <div class="wrap-text">@model.UploadedFiles[i].SelectedFile.Name &nbsp; (@model.UploadedFiles[i].SelectedFile.Size bytes)</div>
+                    <div class="wrap-text">@CommonPageLocalizer["Description"]: @model.UploadedFiles[i].Description</div>
+                </div>
+
+                @if (i < model.UploadedFiles.Count - 1)
+                {
+                    <br />
+                }
+
+            }
+
+        </div>
+    </div>
+
+    <button class="btn btn-light" @onclick="GoBack" role="button">
+        @CommonPageLocalizer["Back"]
+    </button>
+
+    <button class="btn btn-primary" @onclick="Submit" role="button">
+        @CommonPageLocalizer["Submit"]
+    </button>
+}
+
+@code {
+
+    private UploadDocumentPageModel model;
+
+    private int _confirmationGuid;
+
+    private void Submit()
+    {
+
+        Console.WriteLine(model);
+
+        state.UploadDocumentPage = null;
+
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
+
+    }
+
+    void GoBack()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/upload");
+    }
+
+    protected override void OnInitialized()
+    {
+
+        base.OnInitialized();
+
+        _confirmationGuid = new Random().Next(100000, 9999999);
+
+        model = state.UploadDocumentPage;
+
+    }
+
+}

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CDNApplication.Resources.Validation {
+namespace CDNApplication.Resources.Pages {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace CDNApplication.Resources.Validation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class UploadDocumentErrorMessages {
+    internal class Common {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal UploadDocumentErrorMessages() {
+        internal Common() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace CDNApplication.Resources.Validation {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CDNApplication.Resources.Validation.UploadDocumentErrorMessages", typeof(UploadDocumentErrorMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CDNApplication.Resources.Pages.Common", typeof(Common).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,65 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN must contain only alphanumeric characters..
+        ///   Looks up a localized string similar to Back.
         /// </summary>
-        internal static string CdnFormatText {
+        internal static string Back {
             get {
-                return ResourceManager.GetString("CdnFormatText", resourceCulture);
+                return ResourceManager.GetString("Back", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN must be 6-7 characters in length..
+        ///   Looks up a localized string similar to Description.
         /// </summary>
-        internal static string CdnLengthText {
+        internal static string Description {
             get {
-                return ResourceManager.GetString("CdnLengthText", resourceCulture);
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN is a required field..
+        ///   Looks up a localized string similar to Document.
         /// </summary>
-        internal static string CdnNumberNotEmptyText {
+        internal static string Document {
             get {
-                return ResourceManager.GetString("CdnNumberNotEmptyText", resourceCulture);
+                return ResourceManager.GetString("Document", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate Type is a required field..
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
-        internal static string CertificateTypeNotEmptyText {
+        internal static string Edit {
             get {
-                return ResourceManager.GetString("CertificateTypeNotEmptyText", resourceCulture);
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email address must be a valid format.
+        ///   Looks up a localized string similar to Next.
         /// </summary>
-        internal static string EmailAddressFormatText {
+        internal static string Next {
             get {
-                return ResourceManager.GetString("EmailAddressFormatText", resourceCulture);
+                return ResourceManager.GetString("Next", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phone number is a required field.
+        ///   Looks up a localized string similar to Required.
         /// </summary>
-        internal static string PhoneNumberNotEmptyText {
+        internal static string Required {
             get {
-                return ResourceManager.GetString("PhoneNumberNotEmptyText", resourceCulture);
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must upload at least 1 file..
+        ///   Looks up a localized string similar to Submit.
         /// </summary>
-        internal static string UploadedFilesNotEmptyText {
+        internal static string Submit {
             get {
-                return ResourceManager.GetString("UploadedFilesNotEmptyText", resourceCulture);
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
     }
