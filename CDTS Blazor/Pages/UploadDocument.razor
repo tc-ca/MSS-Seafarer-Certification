@@ -3,6 +3,7 @@
 
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
+@inject NavigationManager MyNavigationManager  
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -14,6 +15,8 @@
 <h1>@PageLocalizer["PageTitle"]</h1>
 
 <p>@PageLocalizer["PageDescription"]</p>
+
+<p>Uri: @(MyNavigationManager.Uri.Split('/')[MyNavigationManager.Uri.Split('/').Length - 1])</p>
 
 <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
     <FluentValidationValidator />
@@ -144,15 +147,15 @@
         {
             Text = CommonLocalizer["DocumentUpload_Step1"],
             Index = 0,
-            IsComplete = true,
-            IsActive = false
+            IsComplete = false,
+            IsActive = true
         };
         var step2 = new CDNApplication.TCComponents.Stepper.BaseStep
         {
             Text = CommonLocalizer["DocumentUpload_Step2"],
             Index = 1,
             IsComplete = false,
-            IsActive = true
+            IsActive = false
         };
         var step3 = new CDNApplication.TCComponents.Stepper.BaseStep
         {
