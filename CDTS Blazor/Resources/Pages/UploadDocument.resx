@@ -150,4 +150,19 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Add another file</value>
   </data>
+  <data name="EmailAddressLabel" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="EnterYourInformationPanelHeading" xml:space="preserve">
+    <value>Enter your information</value>
+  </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="SelectCertificatePanelHeading" xml:space="preserve">
+    <value>Select your certificate</value>
+  </data>
+  <data name="PrimaryButton" xml:space="preserve">
+    <value>Proceed to review</value>
+  </data>
 </root>

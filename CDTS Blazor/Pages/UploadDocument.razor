@@ -18,26 +18,53 @@
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
     <FluentValidationValidator />
     <ValidationSummary />
-
-    <div class="form-group">
-        <div class="form-control-wrapper">
-            <label class="form-control-label required" for="@nameof(model.CdnNumber)">
-                @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-            </label>
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
-            <ValidationMessage For="() => model.CdnNumber" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["EnterYourInformationPanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                        @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
+                    <ValidationMessage For="() => model.CdnNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.PhoneNumber)">
+                        @PageLocalizer["PhoneNumberLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" />
+                    <ValidationMessage For="() => model.PhoneNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <label class="form-control-label" for="@nameof(model.EmailAddress)">
+                        @PageLocalizer["EmailAddressLabel"]
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" />
+                    <ValidationMessage For="() => model.EmailAddress" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="form-group">
-        <div class="form-control-wrapper">
-            <label class="form-control-label required">
-                @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-            </label>
-            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
-            <ValidationMessage For="() => model.CertificateType" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["SelectCertificatePanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required">
+                        @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+                    <ValidationMessage For="() => model.CertificateType" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -73,7 +100,11 @@
     </section>
 
     <button class=" btn btn-primary">
-        @CommonPageLocalizer["Next"]
+        @PageLocalizer["PrimaryButton"]
+    </button>
+
+    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+        @CommonPageLocalizer["Previous"]
     </button>
 
 </EditForm>
@@ -95,9 +126,14 @@
 
     }
 
+    private void HandlePreviousClick()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
+    }
+
     async void HandleFileSelected(IFileListEntry[] files)
     {
-        
+
         if (string.IsNullOrWhiteSpace(model.FileDescription))
         {
             return;
