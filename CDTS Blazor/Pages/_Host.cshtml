@@ -29,7 +29,6 @@
     <!-- Load closure template scripts -->
     <script type="text/javascript" src="@string.Concat(WebTemplateModel.CDNPath, "soyutils.js")"></script>
     <link href="~/css/aurora.min.css" rel="stylesheet" />
-    <link href="~/css/main.css" rel="stylesheet" />
     <link href="~/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/ErrorMessage.css" rel="stylesheet" />
     <script type="text/javascript" src="@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}wet-{1}.js", WebTemplateModel.CDNPath, WebTemplateModel.TwoLetterCultureLanguage)"></script>
@@ -43,6 +42,7 @@
         document.write(wet.builder.refTop(@WebTemplateModel.Render.RefTop(isApplication : false)));
     </script>
     @WebTemplateModel.Render.HtmlHeaderElements()
+    <link href="~/css/main.css" rel="stylesheet" />
 </head>
 <body vocab="http://schema.org/" typeof="WebPage">
 
