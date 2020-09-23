@@ -30,7 +30,9 @@
                 <h2>What you need before you start</h2>
                 <p>You will need access to digital copies of your documents. Scans, photos, and digital files are all accepted. You can select and add documents from your computer or device.</p>
             </section>
-            <p><a href="/@LanguageCode/upload" class="btn btn-lg btn-primary mrgn-tp-md">Start Submission</a></p>
+            <button class=" btn btn-lg btn-primary mrgn-tp-md" @onclick="HandlePrimaryButton">
+                Start Submission
+            </button>
             <section class="gc-cntct-lst">
                 <h2>Other ways to submit documents</h2>
                 <p><a href="https://tc.canada.ca/en/marine-transportation-regions">How to submit documents in person</a></p>
@@ -107,4 +109,8 @@
 
 @code {
     // TODO: make this page work with handlebars
+    private void HandlePrimaryButton()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/upload");
+    }
 }
