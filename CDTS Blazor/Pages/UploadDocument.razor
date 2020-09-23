@@ -1,6 +1,7 @@
 ﻿@page "/upload"
 @page "/{LanguageCode}/upload"
 
+@inject IJSRuntime JSRuntime;
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
 @inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
@@ -24,14 +25,10 @@
             <label class="form-control-label required" for="@nameof(model.CdnNumber)">
                 @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
-            @*<a tabindex="0" data-trigger="focus" data-toggle="tooltip" data-content="A business name is" data-html="true" data-original-title="" title="">
-                <i class="fa fa-info-circle ml-2"></i>
-            </a>*@
 
-            <a tabindex="0" data-trigger="focus" data-toggle="popover"
-               data-content="Hi there">
+            <p id="testPopup" tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Hi there" data-title="Helper">
                 <i class="fa fa-info-circle ml-2"></i>
-            </a>
+            </p>
 
             <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" placeholder="@PageLocalizer["CandidateDocumentNumberHint"]" />
             <ValidationMessage For="() => model.CdnNumber" />
@@ -86,6 +83,17 @@
     </button>
 
 </EditForm>
+<!--
+<div class="popover popover-medium bs-popover-right show" id="popover317850" style="position: absolute; transform: translate3d(100px, 110px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="right">
+        <div class="arrow"></div>
+        <div class="popover-inner">
+            <h3 class="popover-title">Title</h3>
+            <div class="popover-content">
+                <p>Content content content</p>
+            </div>
+        </div>
+</div>
+    -->
 
 @code {
 
@@ -172,6 +180,12 @@
         }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        await JSRuntime.InvokeVoidAsync("initPopover").ConfigureAwait(false);
     }
 
 }
