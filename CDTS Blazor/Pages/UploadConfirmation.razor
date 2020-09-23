@@ -2,8 +2,13 @@
 @page "/{LanguageCode}/confirmation/{confirmation:int}"
 
 @inject IStringLocalizer<UploadConfirmation> PageLocalizer
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
+@inject Utilities.SessionState state
 
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
+
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <main property="mainContentOfPage" class="container" typeof="WebPageElement">
     <section>
@@ -35,5 +40,12 @@
     public int Confirmation { get; set; }
 
     private bool hideCheckEmailConfirmationText = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(2);
+    }
 
 }

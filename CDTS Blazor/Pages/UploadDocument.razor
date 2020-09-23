@@ -4,18 +4,25 @@
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
 @inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
 
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
+
 <h1>@PageLocalizer["PageTitle"]</h1>
+
+<p>@PageLocalizer["PageDescription"]</p>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
     <FluentValidationValidator />
     <ValidationSummary />
+
     <section class="panel panel-primary">
         <header class="panel-heading">
             <h5 class="panel-title">@PageLocalizer["EnterYourInformationPanelHeading"]</h5>
@@ -51,6 +58,7 @@
         <header class="panel-heading">
             <h5 class="panel-title">@PageLocalizer["SelectCertificatePanelHeading"]</h5>
         </header>
+
         <div class="panel-body">
             <div class="form-group">
                 <div class="form-control-wrapper">
@@ -97,31 +105,29 @@
         </div>
     </section>
 
-    <button class=" btn btn-primary">
-        @PageLocalizer["PrimaryButton"]
-    </button>
-
     <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
         @CommonPageLocalizer["Previous"]
+    </button>
+    <button class=" btn btn-primary">
+        @CommonPageLocalizer["Next"]
     </button>
 
 </EditForm>
 
 @code {
 
+    private BaseStepper stepper = new BaseStepper();
+
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
-
 
     private void HandleValidSubmit()
     {
 
         state.UploadDocumentPage = model;
 
-        Console.WriteLine(model);
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
-
     }
 
     private void HandlePreviousClick()
@@ -165,6 +171,8 @@
     {
         base.OnInitialized();
 
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(0);
+
         if (state.UploadDocumentPage != null)
         {
             model = state.UploadDocumentPage;
@@ -174,5 +182,4 @@
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
     }
-
 }
