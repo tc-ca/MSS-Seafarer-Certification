@@ -4,11 +4,15 @@
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
 @inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
 @inject Utilities.SessionState state
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
+
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
@@ -119,6 +123,8 @@ else
     {
 
         base.OnInitialized();
+
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
 
         _confirmationGuid = new Random().Next(100000, 9999999);
 
