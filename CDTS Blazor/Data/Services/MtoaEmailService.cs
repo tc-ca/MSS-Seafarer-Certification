@@ -21,7 +21,6 @@ namespace CDNApplication.Data.Services
 
         public MtoaEmailService()
         {
-
         }
 
         public EmailNotificationDTO GetEmailTemplateFromPageModel(UploadDocumentPageModel pageModel)
@@ -54,9 +53,6 @@ namespace CDNApplication.Data.Services
 
             template.Parameters = parameters;
 
-            // KeyValuePair
-
-
             #region-- email template parameters
             // We assume that we have following parameters in the given template
             // Confirmation_Number
@@ -66,10 +62,10 @@ namespace CDNApplication.Data.Services
             //Selected_CertificateType
 
             //DOCUMENT
-            //DOCUMENT --needs to be generated at run time.
+            //DOCUMENT --this parameter consists of many document fields combined in one string.
 
             //It is the list of documents in the format of
-            //Document 1,2 FileName.extention
+            //Document 1 FileName.extention
             //Type of document: Document type Entered.
             #endregion--- end of template parameter information
 
@@ -134,9 +130,6 @@ namespace CDNApplication.Data.Services
                 }
             }
         }
-
-
-
 
     }
 }
