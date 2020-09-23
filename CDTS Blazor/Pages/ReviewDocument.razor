@@ -128,6 +128,11 @@ else
 
         _confirmationGuid = new Random().Next(100000, 9999999);
 
+        if (state.UploadDocumentPage == null)
+        {
+            state.UploadDocumentPage = new UploadDocumentPageModel();
+        }
+
         model = state.UploadDocumentPage;
 
         model.ConfirmationNumber = _confirmationGuid.ToString();

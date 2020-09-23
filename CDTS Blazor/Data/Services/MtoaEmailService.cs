@@ -12,8 +12,8 @@ using System.Diagnostics;namespace CDNApplication.Data.Services
 {
     public class MtoaEmailService
     {
-        private string api_key = "Place API Key value here";
-        private string jwt = "Place Jason Web Token in here";
+        private string api_key = "d00bfe90183b42cc8e78627c20db8d64";
+        private string jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJDU0YiLCJ1bmlxdWVfbmFtZSI6IlNlYWZhcmVyIENlcnRpZmljYXRpb24gKENTRikiLCJyb2xlIjoiVXNlciIsIkNvcnJlbGF0aW9uS2V5IjoiNjI3YzIwZGI4ZDY0IiwibmJmIjoxNTk5NTk5OTUyLCJleHAiOjE2NjI2NzE5NTIsImlhdCI6MTU5OTU5OTk1MiwiaXNzIjoiVHJhbnNwb3J0IENhbmFkYSIsImF1ZCI6IlRyYW5zcG9ydCBDYW5hZGEifQ.NpFgM8AgoX0Rq0vMKVF_crLuZPxr1KJHEw-DpvlEwQc";
         private string base_uri_str = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/";
         private string sub_uri = "api/v1/notifications?overrideEmailRecipientsSafeguard=true";
 
@@ -30,9 +30,9 @@ using System.Diagnostics;namespace CDNApplication.Data.Services
             template.NotificationTemplateName = "Seafarers_Document_Submission_Email";
             template.ServiceRequestId = 13844;
             template.UserId = 4536;
-            template.UserName = "aizimum";
+            template.UserName = "Nobody";
             template.Language = "English";
-            template.From = "DoNotReply@tc.gc.ca";
+            template.From = "mansuer.aizimu@tc.gc.ca";
             template.To = pageModel.EmailAddress;
             template.IsHtml = true;
 

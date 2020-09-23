@@ -13,6 +13,10 @@ namespace CDNApplication.Utilities
     {
 
         public UploadDocumentPageModel UploadDocumentPage { get; set; }
+        public SessionState()
+        {
+            UploadDocumentPage = new UploadDocumentPageModel();
+        }
 
     }
 }
