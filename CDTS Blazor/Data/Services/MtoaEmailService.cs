@@ -8,20 +8,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MTOA.DomainObjects.DTO;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Diagnostics;
-
-namespace CDNApplication.Data.Services
+using System.Diagnostics;namespace CDNApplication.Data.Services
 {
     public class MtoaEmailService
     {
-        private string api_key = "d00bfe90183b42cc8e78627c20db8d64";
-        private string jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJDU0YiLCJ1bmlxdWVfbmFtZSI6IlNlYWZhcmVyIENlcnRpZmljYXRpb24gKENTRikiLCJyb2xlIjoiVXNlciIsIkNvcnJlbGF0aW9uS2V5IjoiNjI3YzIwZGI4ZDY0IiwibmJmIjoxNTk5NTk5OTUyLCJleHAiOjE2NjI2NzE5NTIsImlhdCI6MTU5OTU5OTk1MiwiaXNzIjoiVHJhbnNwb3J0IENhbmFkYSIsImF1ZCI6IlRyYW5zcG9ydCBDYW5hZGEifQ.NpFgM8AgoX0Rq0vMKVF_crLuZPxr1KJHEw-DpvlEwQc";
+        private string api_key = "Place API Key value here";
+        private string jwt = "Place Jason Web Token in here";
         private string base_uri_str = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/";
         private string sub_uri = "api/v1/notifications?overrideEmailRecipientsSafeguard=true";
 
         public MtoaEmailService()
         {
         }
+
 
         public EmailNotificationDTO GetEmailTemplateFromPageModel(UploadDocumentPageModel pageModel)
         {
