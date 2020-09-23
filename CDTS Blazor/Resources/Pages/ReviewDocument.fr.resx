@@ -147,4 +147,10 @@
   <data name="YourInformation" xml:space="preserve">
     <value>Vos informations</value>
   </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Adresse électronique</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Numéro de téléphone</value>
+  </data>
 </root>

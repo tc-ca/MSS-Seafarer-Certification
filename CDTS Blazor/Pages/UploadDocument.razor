@@ -5,12 +5,16 @@
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
 @inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
+
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
@@ -20,37 +24,74 @@
     <FluentValidationValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <div class="form-control-wrapper">
-            <section>
-                <label class="form-control-label required" for="@nameof(model.CdnNumber)">
-                    @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["CandidateDocumentNumberHint"]" data-title="" style="width:100px;">
-                    <i class="fa fa-info-circle ml-2"></i>
-                </span>
-            </section>
-
-
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" placeholder="@PageLocalizer["CandidateDocumentNumber"]" />
-            <ValidationMessage For="() => model.CdnNumber" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["EnterYourInformationPanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                            @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["CandidateDocumentNumberHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
+                    <ValidationMessage For="() => model.CdnNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required" for="@nameof(model.PhoneNumber)">
+                            @PageLocalizer["PhoneNumberLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["PhoneNumberHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" />
+                    <ValidationMessage For="() => model.PhoneNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label" for="@nameof(model.EmailAddress)">
+                            @PageLocalizer["EmailAddressLabel"]
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["EmailHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" />
+                    <ValidationMessage For="() => model.EmailAddress" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="form-group">
-        <div class="form-control-wrapper">
-            <section>
-                <label class="form-control-label required">
-                    @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
-                    <i class="fa fa-info-circle ml-2"></i>
-                </span>
-            </section>
-            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
-            <ValidationMessage For="() => model.CertificateType" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["SelectCertificatePanelHeading"]</h5>
+        </header>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required">
+                            @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+                    <ValidationMessage For="() => model.CertificateType" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -88,24 +129,31 @@
     <button class=" btn btn-primary">
         @CommonPageLocalizer["Next"]
     </button>
+    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+        @CommonPageLocalizer["Previous"]
+    </button>
 
 </EditForm>
 
 @code {
 
+    private BaseStepper stepper = new BaseStepper();
+
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
-
 
     private void HandleValidSubmit()
     {
 
         state.UploadDocumentPage = model;
 
-        Console.WriteLine(model);
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+    }
 
+    private void HandlePreviousClick()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
@@ -167,6 +215,8 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(0);
 
         if (state.UploadDocumentPage != null)
         {

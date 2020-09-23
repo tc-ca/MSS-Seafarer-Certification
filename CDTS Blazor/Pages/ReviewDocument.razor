@@ -4,11 +4,15 @@
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
 @inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
 @inject Utilities.SessionState state
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
+
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
@@ -30,8 +34,16 @@ else
 
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">@PageLocalizer["CDNNumber"]:</div>
-                <div class="col-md-3">@model.CdnNumber</div>
+                <div class="col-md-4">@PageLocalizer["CDNNumber"]:</div>
+                <div class="col-md-8">@model.CdnNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">@PageLocalizer["PhoneNumber"]:</div>
+                <div class="col-md-8">@model.PhoneNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">@PageLocalizer["EmailAddress"]:</div>
+                <div class="col-md-8">@model.EmailAddress</div>
             </div>
         </div>
     </div>
@@ -43,8 +55,8 @@ else
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">@PageLocalizer["SelectedCertificate"]:</div>
-                <div class="col-md-3">@model.CertificateType</div>
+                <div class="col-md-4">@PageLocalizer["SelectedCertificate"]:</div>
+                <div class="col-md-8">@model.CertificateType</div>
             </div>
         </div>
     </div>
@@ -111,6 +123,8 @@ else
     {
 
         base.OnInitialized();
+
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
 
         _confirmationGuid = new Random().Next(100000, 9999999);
 

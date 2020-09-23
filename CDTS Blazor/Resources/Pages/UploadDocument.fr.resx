@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -120,9 +120,6 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Saisissez vos informations et ajoutez vos documents</value>
   </data>
-  <data name="PageDescription" xml:space="preserve">
-    <value>Remplissez ce formulaire avec vos informations et ajoutez vos documents.</value>
-  </data>
   <data name="CDNLabel" xml:space="preserve">
     <value>Entrez votre numéro de document de candidat (CDN)</value>
   </data>
@@ -152,5 +149,20 @@
   </data>
   <data name="FileDescriptionHint" xml:space="preserve">
     <value>Ce document contient mes informations personnelles.</value>
+  </data>
+  <data name="EmailAddressLabel" xml:space="preserve">
+    <value>Adresse électronique</value>
+  </data>
+  <data name="EnterYourInformationPanelHeading" xml:space="preserve">
+    <value>Saisissez vos informations</value>
+  </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>Numéro de téléphone</value>
+  </data>
+  <data name="SelectCertificatePanelHeading" xml:space="preserve">
+    <value>Sélectionnez votre certificat</value>
+  </data>
+  <data name="PrimaryButton" xml:space="preserve">
+    <value>Procéder à l'examen</value>
   </data>
 </root>

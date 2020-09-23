@@ -13,6 +13,10 @@ p {
     flex-direction: column;
 }
 
+ul.steps  li {
+    line-height: 1;
+}
+
 /**
     BANNER
 */

@@ -9,6 +9,7 @@ namespace CDNApplication
     using CDNApplication.Models;
     using CDNApplication.Models.PageModels;
     using CDNApplication.PageValidators;
+    using CDNApplication.Services;
     using CDNApplication.Utilities;
     using CDNApplication.Views;
     using FluentValidation;
@@ -72,6 +73,7 @@ namespace CDNApplication
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<SessionState>();
+            services.AddSingleton<UploadDocumentsStepper>();
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -95,12 +97,11 @@ namespace CDNApplication
             services
                 .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
-            
-            //services.AddHttpsRedirection(options =>
-            //{
-            //    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-            //    options.HttpsPort = 443;
-            //});
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                options.HttpsPort = 443;
+            });
         }
 
         /// <summary>
@@ -125,32 +126,30 @@ namespace CDNApplication
                 app.UseExceptionHandler("/Error");
 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
-                //app.UseHttpsRedirection();
+                app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
 
-            //app.Use(next => context =>
-            //{
-            //    var path = context.Request.Path.Value;
+            app.Use(next => context =>
+            {
+                var path = context.Request.Path.Value;
 
-            //    if (string.Equals(path, "/", StringComparison.OrdinalIgnoreCase) ||
-            //        string.Equals(path, "/api", StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        // The request token can be sent as a JavaScript-readable cookie
-            //        var tokens = antiForgery.GetAndStoreTokens(context);
+                if (string.Equals(path, "/", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(path, "/api", StringComparison.OrdinalIgnoreCase))
+                {
+                    // The request token can be sent as a JavaScript-readable cookie
+                    var tokens = antiForgery.GetAndStoreTokens(context);
 
-            //        // Set the antiForgery token
-            //        context.Response.Cookies.Append(
-            //            "XSRF-TOKEN",
-            //            tokens.RequestToken,
-            //            new CookieOptions { HttpOnly = false });
-            //    }
+                    // Set the antiForgery token
+                    context.Response.Cookies.Append(
+                        "XSRF-TOKEN",
+                        tokens.RequestToken,
+                        new CookieOptions { HttpOnly = false });
+                }
 
-            //    return next(context);
-            //});
-
-            
+                return next(context);
+            });
 
             app.UseStaticFiles();
             app.UsePageSettingsMiddleware();

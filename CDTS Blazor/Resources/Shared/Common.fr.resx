@@ -129,10 +129,19 @@
   <data name="Required" xml:space="preserve">
     <value>(obligatoire)</value>
   </data>
-  <data name="SubmitButton" xml:space="preserve">
-    <value>Soumettre</value>
+  <data name="DocumentUpload_Step1" xml:space="preserve">
+    <value>Ajouter votre information et documents</value>
+  </data>
+  <data name="DocumentUpload_Step2" xml:space="preserve">
+    <value>Revoir et soumettre</value>
+  </data>
+  <data name="DocumentUpload_Step3" xml:space="preserve">
+    <value>Merci et confirmation</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Soumettre</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Précédent</value>
   </data>
 </root>

@@ -120,9 +120,6 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Enter your information and add your documents</value>
   </data>
-  <data name="PageDescription" xml:space="preserve">
-    <value>Fill in this form with your information and add your documents.</value>
-  </data>
   <data name="CDNLabel" xml:space="preserve">
     <value>Enter your Candidate Document Number (CDN)</value>
   </data>
@@ -150,6 +147,7 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Add another file</value>
   </data>
+
   <data name="CandidateDocumentNumberHint" xml:space="preserve">
     <value>Your Candidate Document Number (CDN) is a combination of 6 or 7 numbers and letters.</value>
   </data>
@@ -167,5 +165,20 @@
   </data>
   <data name="SelectCertificateHint" xml:space="preserve">
     <value>If you are unsure of what certificate you want, check the Marine Personnel Regulations or contact your local Transport Canada Service Centre.</value>
+  </data>
+   <data name="EmailAddressLabel" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="EnterYourInformationPanelHeading" xml:space="preserve">
+    <value>Enter your information</value>
+  </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="SelectCertificatePanelHeading" xml:space="preserve">
+    <value>Select your certificate</value>
+  </data>
+  <data name="PrimaryButton" xml:space="preserve">
+    <value>Proceed to review</value>
   </data>
 </root>
