@@ -147,8 +147,8 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Ajoutez un autre fichier</value>
   </data>
-  <data name="FileDescriptionHint" xml:space="preserve">
-    <value>Ce document contient mes informations personnelles.</value>
+  <data name="FileDescriptionPlaceholder" xml:space="preserve">
+    <value>Exemple : Journal de bord en temps de mer</value>
   </data>
   <data name="EmailAddressLabel" xml:space="preserve">
     <value>Adresse électronique</value>
@@ -164,5 +164,17 @@
   </data>
   <data name="PrimaryButton" xml:space="preserve">
     <value>Procéder à l'examen</value>
+  </data>
+  <data name="CDNPlaceholder" xml:space="preserve">
+    <value>Exemple : 123456A</value>
+  </data>
+  <data name="EmailAddressPlaceholder" xml:space="preserve">
+    <value>Exemple : jeansmith@gmail.com</value>
+  </data>
+  <data name="PhoneNumberPlaceholder" xml:space="preserve">
+    <value>Exemple : XXX-XXX-XXXX</value>
+  </data>
+  <data name="SelectCertificatePlaceholder" xml:space="preserve">
+    <value>Exemple : Deuxième ingénieur, navire à vapeur</value>
   </data>
 </root>

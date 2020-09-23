@@ -39,7 +39,7 @@
                             <i class="fa fa-info-circle ml-2"></i>
                         </span>
                     </section>
-                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" placeholder="@PageLocalizer["CDNPlaceholder"]" />
                     <ValidationMessage For="() => model.CdnNumber" />
                 </div>
                 <div class="form-control-wrapper">
@@ -51,7 +51,7 @@
                             <i class="fa fa-info-circle ml-2"></i>
                         </span>
                     </section>
-                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" />
+                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" placeholder="@PageLocalizer["PhoneNumberPlaceholder"]" />
                     <ValidationMessage For="() => model.PhoneNumber" />
                 </div>
                 <div class="form-control-wrapper">
@@ -63,7 +63,7 @@
                             <i class="fa fa-info-circle ml-2"></i>
                         </span>
                     </section>
-                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" />
+                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" placeholder="@PageLocalizer["EmailAddressPlaceholder"]" />
                     <ValidationMessage For="() => model.EmailAddress" />
                 </div>
             </div>
@@ -99,18 +99,19 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="form-control-label required" for="@nameof(model.FileDescription)">
-                    @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionHint"]" />
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.FileDescription)">
+                        @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionPlaceholder"]" />
 
-                <label class="required" for="@nameof(model.UploadedFiles)">
-                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
-                <ValidationMessage For="() => model.UploadedFiles" />
+                    <label class="required" for="@nameof(model.UploadedFiles)">
+                        @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                    <ValidationMessage For="() => model.UploadedFiles" />
 
-                @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
+                    @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
                 {
                     var index = i;
                     <p>
@@ -119,18 +120,16 @@
                         <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
                     </p>
                 }
-                <br />
-                <button id="add_another_file" type="button" class="btn btn-light" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
+                    <br />
+                    <button id="add_another_file" type="button" class="btn btn-light" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
+                </div>
             </div>
         </div>
     </section>
 
     <button class=" btn btn-primary">
         @CommonPageLocalizer["Next"]
-    </button>
-    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
-        @CommonPageLocalizer["Previous"]
     </button>
 
     <button class=" btn btn-secondary" @onclick="HandlePreviousClick">

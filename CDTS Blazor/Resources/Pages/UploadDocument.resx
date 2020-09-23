@@ -147,15 +147,14 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Add another file</value>
   </data>
-
   <data name="CandidateDocumentNumberHint" xml:space="preserve">
     <value>Your Candidate Document Number (CDN) is a combination of 6 or 7 numbers and letters.</value>
   </data>
-  <data name="FileDescriptionHint" xml:space="preserve">
-    <value>This document contains my personal information.</value>
+  <data name="FileDescriptionPlaceholder" xml:space="preserve">
+    <value>Example: Seatime Logbook</value>
   </data>
-  <data name="CandidateDocumentNumber" xml:space="preserve">
-    <value>1234567</value>
+  <data name="CDNPlaceholder" xml:space="preserve">
+    <value>Example: 123456A</value>
   </data>
   <data name="EmailHint" xml:space="preserve">
     <value>We’ll use this email address to send a confirmation message after you submit.   We’ll also use it to contact you if needed.</value>
@@ -166,7 +165,7 @@
   <data name="SelectCertificateHint" xml:space="preserve">
     <value>If you are unsure of what certificate you want, check the Marine Personnel Regulations or contact your local Transport Canada Service Centre.</value>
   </data>
-   <data name="EmailAddressLabel" xml:space="preserve">
+  <data name="EmailAddressLabel" xml:space="preserve">
     <value>Email address</value>
   </data>
   <data name="EnterYourInformationPanelHeading" xml:space="preserve">
@@ -180,5 +179,14 @@
   </data>
   <data name="PrimaryButton" xml:space="preserve">
     <value>Proceed to review</value>
+  </data>
+  <data name="EmailAddressPlaceholder" xml:space="preserve">
+    <value>Example: johnsmith@gmail.com</value>
+  </data>
+  <data name="PhoneNumberPlaceholder" xml:space="preserve">
+    <value>Example: XXX-XXX-XXXX</value>
+  </data>
+  <data name="SelectCertificatePlaceholder" xml:space="preserve">
+    <value>Example: Second Engineer, Steamship</value>
   </data>
 </root>
