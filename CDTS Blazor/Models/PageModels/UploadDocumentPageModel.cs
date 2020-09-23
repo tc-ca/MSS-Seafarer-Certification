@@ -15,15 +15,19 @@
         public string CdnNumber { get; set; }
 
         /// <summary>
-        ///  Gets or sets phone number.
+        ///     Gets or sets Email Address.
+        /// </summary>
+        public string EmailAddress { get; set; }
+
+        /// <summary>
+        ///     Gets or sets PhoneNumber.
         /// </summary>
         public string PhoneNumber { get; set; }
 
         /// <summary>
-        ///  Gets or sets email address.
+        ///     Gets or sets Confirmation Number.
         /// </summary>
-        public string EmailAddress { get; set; }
-
+        public string ConfirmationNumber { get; set; }
         /// <summary>
         ///     Gets or sets the certificate type.
         /// </summary>
