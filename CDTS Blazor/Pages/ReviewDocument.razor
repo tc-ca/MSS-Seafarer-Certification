@@ -89,12 +89,12 @@ else
         </div>
     </div>
 
-    <button class="btn btn-light" @onclick="GoBack" role="button">
-        @CommonPageLocalizer["Back"]
-    </button>
-
     <button class="btn btn-primary" @onclick="Submit" role="button">
         @CommonPageLocalizer["Submit"]
+    </button>
+
+    <button class="btn btn-light" @onclick="GoBack" role="button">
+        @CommonPageLocalizer["Previous"]
     </button>
 }
 
@@ -111,7 +111,7 @@ else
 
         state.UploadDocumentPage = null;
 
-        if(! String.IsNullOrEmpty(model.EmailAddress) )
+        if (!String.IsNullOrEmpty(model.EmailAddress))
         {
             emailService.SendEmailToApplicant(model).Wait();
         }
