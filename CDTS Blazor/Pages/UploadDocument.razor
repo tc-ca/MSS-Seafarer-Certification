@@ -26,11 +26,11 @@
                 @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
 
-            <p id="testPopup" tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Hi there" data-title="Helper" style="width:100px;">
+            <p tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["CandidateDocumentNumberHint"]" data-title="" style="width:100px;">
                 <i class="fa fa-info-circle ml-2"></i>
             </p>
 
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" placeholder="@PageLocalizer["CandidateDocumentNumberHint"]" />
+            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" placeholder="@PageLocalizer["CandidateDocumentNumber"]" />
             <ValidationMessage For="() => model.CdnNumber" />
         </div>
     </div>
@@ -40,6 +40,9 @@
             <label class="form-control-label required">
                 @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
             </label>
+            <p tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
+                <i class="fa fa-info-circle ml-2"></i>
+            </p>
             <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
             <ValidationMessage For="() => model.CertificateType" />
         </div>
@@ -72,7 +75,7 @@
                     </p>
                 }
                 <br />
-                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
+                <button id="add_another_file" type="button" class="btn btn-light" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
             </div>
         </div>
