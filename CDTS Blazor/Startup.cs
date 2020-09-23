@@ -54,7 +54,7 @@ namespace CDNApplication
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             // Enable anti-forgery
-            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            //services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
             var supportedCultures = new List<CultureInfo>
             {
