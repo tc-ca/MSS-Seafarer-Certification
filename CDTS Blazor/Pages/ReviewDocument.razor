@@ -8,6 +8,7 @@
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using Data.Services;
 @inherits BaseComponent
 
 <h1>@PageLocalizer["PageTitle"]</h1>
@@ -91,6 +92,8 @@ else
 
     private int _confirmationGuid;
 
+    private MtoaEmailService emailService;
+
     private void Submit()
     {
 
@@ -98,7 +101,13 @@ else
 
         state.UploadDocumentPage = null;
 
+
+        emailService.SendEmailToApplicant(model).Wait();
+
+
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
+
+
 
     }
 
@@ -114,8 +123,16 @@ else
 
         _confirmationGuid = new Random().Next(100000, 9999999);
 
+
+
         model = state.UploadDocumentPage;
 
+        if (model == null)
+            model = new UploadDocumentPageModel();
+        model.EmailAddress = "TeamTurtle-EquipeTortue@tc.gc.ca";
+        model.PhoneNumber = "613-123-4567";
+        model.ConfirmationNumber = _confirmationGuid.ToString();
+        emailService = new MtoaEmailService();
     }
 
 }

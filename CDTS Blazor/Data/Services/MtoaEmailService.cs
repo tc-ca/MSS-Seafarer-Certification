@@ -19,79 +19,64 @@ namespace CDNApplication.Data.Services
         private string base_uri_str = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/";
         private string sub_uri = "api/v1/notifications?overrideEmailRecipientsSafeguard=true";
 
-
-
         public MtoaEmailService()
         {
 
         }
 
-
-        public EmailNotificationDTO GetEmailTemplateFromPageModel(UploadDocumentPageModel pageModel, string emailTemplateName)
+        public EmailNotificationDTO GetEmailTemplateFromPageModel(UploadDocumentPageModel pageModel)
         {
-            EmailNotificationDTO template = new EmailNotificationDTO();
-            //template.NotificationTemplateName = "SF_TEST_1_NO_PARAMS";
-            //template.NotificationTemplateName = "Seafarers_Document_Submission_Email";
+            // this method uses the email template: "Seafarers_Document_Submission_Email"
 
-            template.NotificationTemplateName = emailTemplateName;
+            EmailNotificationDTO template = new EmailNotificationDTO();
+            template.NotificationTemplateName = "Seafarers_Document_Submission_Email";
             template.ServiceRequestId = 13844;
             template.UserId = 4536;
             template.UserName = "aizimum";
             template.Language = "English";
-            template.From = "mansuer.aizimu@tc.gc.ca";
+            template.From = "DoNotReply@tc.gc.ca";
             template.To = pageModel.EmailAddress;
             template.IsHtml = true;
 
             template.Attachements = new List<EmailAttachmentDTO>(); // in our email currently, we do not have attachments. But this field can not be null
 
-            List<Dictionary<string, string>> parameters = new List<Dictionary<string, string>>();
+            var parameters = new List<KeyValuePair<string, string>>();
 
-            Dictionary<string, string> confirmationNumber_param = new Dictionary<string, string>();
-            confirmationNumber_param.Add("Confirmation_Number", pageModel.ConfirmationNumber);
-            parameters.Add(confirmationNumber_param);
-
-            Dictionary<string, string> CDN_Number_param = new Dictionary<string, string>();
-            confirmationNumber_param.Add("CDN_Number", pageModel.CdnNumber);
-            parameters.Add(CDN_Number_param);
-
-            Dictionary<string, string> Phone_Number_param = new Dictionary<string, string>();
-            confirmationNumber_param.Add("Phone_Number", pageModel.PhoneNumber);
-            parameters.Add(Phone_Number_param);
-
-            Dictionary<string, string> Email_Address_param = new Dictionary<string, string>();
-            confirmationNumber_param.Add("Email_Address", pageModel.EmailAddress);
-            parameters.Add(Email_Address_param);
-
-            Dictionary<string, string> Selected_CertificateType_param = new Dictionary<string, string>();
-            confirmationNumber_param.Add("Selected_CertificateType", pageModel.CertificateType);
-            parameters.Add(Selected_CertificateType_param);
+            parameters.Add(new KeyValuePair<string, string>("Confirmation_Number", pageModel.ConfirmationNumber));
+            parameters.Add(new KeyValuePair<string, string>("CDN_Number", pageModel.CdnNumber));
+            parameters.Add(new KeyValuePair<string, string>("Phone_Number", pageModel.PhoneNumber));
+            parameters.Add(new KeyValuePair<string, string>("Email_Address", pageModel.EmailAddress));
+            parameters.Add(new KeyValuePair<string, string>("Selected_CertificateType", pageModel.CertificateType));
+            parameters.Add(new KeyValuePair<string, string>("Confirmation_Number", pageModel.ConfirmationNumber));
 
             var document_param = GetDocumentParameters(pageModel);
             parameters.Add(document_param);
 
+            template.Parameters = parameters;
 
+            // KeyValuePair
+
+
+            #region-- email template parameters
             // We assume that we have following parameters in the given template
-            // Confirmation_Number 2 times.
-            //CDN_Number 1
+            // Confirmation_Number
+            //CDN_Number
             //Phone_Number
             //Email_Address
             //Selected_CertificateType
 
-            //DOCUMENTS
-            //DOCUMENTS --needs to be generated at run time.
+            //DOCUMENT
+            //DOCUMENT --needs to be generated at run time.
 
             //It is the list of documents in the format of
             //Document 1,2 FileName.extention
             //Type of document: Document type Entered.
-
-            //    template.Parameters = parameters;
-
+            #endregion--- end of template parameter information
 
             return template;
-
         }
 
-        private Dictionary<string, string> GetDocumentParameters(UploadDocumentPageModel pageModel)
+        private KeyValuePair<string, string> GetDocumentParameters(UploadDocumentPageModel pageModel)
         {
             // We assume that there is a parameter in the email template called "DOCUMENT"
             // DOCUMENT paremeter value will show up like the following:
@@ -102,21 +87,22 @@ namespace CDNApplication.Data.Services
             // Type of document: Personal Photo
 
 
-            Dictionary<string, string> document_parameter = null;
+            KeyValuePair<string, string> document_parameter = new KeyValuePair<string, string>();
             string documentValueStr = null;
             int counter = 1;
 
             if (pageModel.UploadedFiles.Count > 0)
             {
-                document_parameter = new Dictionary<string, string>();
+                document_parameter = new KeyValuePair<string, string>();
 
                 foreach (var document in pageModel.UploadedFiles)
                 {
-                    documentValueStr = "Document " + counter.ToString() + " " + document.SelectedFile.Name + "<br/>" +
-                                        "Type of document: " + document.Description + "<br/><br/>" + documentValueStr;
+                    documentValueStr = documentValueStr +"<br><br>" +
+                                       "Document " + counter.ToString() + " " + document.SelectedFile.Name + "<br/>" +
+                                       "Type of document: " + document.Description ;
                     counter++;
                 }
-                document_parameter.Add("DOCUMENT", documentValueStr);
+                document_parameter= new KeyValuePair<string, string>("DOCUMENT", documentValueStr);
             }
 
             return document_parameter;
@@ -132,13 +118,12 @@ namespace CDNApplication.Data.Services
 
                 client.BaseAddress = new Uri(base_uri_str);
 
-                string templateName = "TemplateName";
-                var emailTemplate = GetEmailTemplateFromPageModel(pageModel , templateName);
+                var emailTemplate = GetEmailTemplateFromPageModel(pageModel );
                 HttpResponseMessage response = null;
 
                 try
                 {
-                    response = await client.PostAsJsonAsync<EmailNotificationDTO>(sub_uri, emailTemplate);
+                    response = await client.PostAsJsonAsync<EmailNotificationDTO>(sub_uri, emailTemplate).ConfigureAwait(false);
                     response.EnsureSuccessStatusCode();
                     var status = response.StatusCode;
                 }
