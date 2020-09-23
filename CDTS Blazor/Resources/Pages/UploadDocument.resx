@@ -157,9 +157,9 @@
     <value>Example: 123456A</value>
   </data>
   <data name="EmailAddressHint" xml:space="preserve">
-    <value>&lt;p&gt;We’ll use this email address to send a confirmation message after you submit.&lt;/p&gt;
+    <value>&lt;p&gt;If you enter an email address, we’ll use it to send a record of your submission after you submit. We’ll also use it to contact you if needed.&lt;/p&gt;
 
-&lt;p&gt;We’ll also use it to contact you if needed.&lt;/p&gt;</value>
+&lt;p&gt;If you don’t enter an email address, we’ll simply show you a confirmation notice on screen after you submit.&lt;/p&gt;</value>
   </data>
   <data name="PhoneNumberHint" xml:space="preserve">
     <value>We’ll use this phone number to contact you if needed.</value>

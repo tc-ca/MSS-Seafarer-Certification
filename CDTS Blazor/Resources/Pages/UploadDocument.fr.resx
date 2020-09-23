@@ -172,9 +172,9 @@
     <value>Exemple : 123456A</value>
   </data>
   <data name="EmailAddressHint" xml:space="preserve">
-    <value>&lt;p&gt;Nous utiliserons cette adresse électronique pour envoyer un message de confirmation après votre envoi.&lt;/p&gt;
+    <value>&lt;p&gt;Si vous saisissez une adresse électronique, nous l'utiliserons pour envoyer un enregistrement de votre demande après l'avoir soumise. Nous l'utiliserons également pour vous contacter si nécessaire.&lt;/p&gt;
 
-&lt;p&gt;Nous l'utiliserons également pour vous contacter si nécessaire.&lt;/p&gt;</value>
+&lt;p&gt;Si vous n'entrez pas d'adresse électronique, nous vous montrerons simplement un avis de confirmation à l'écran après que vous aurez soumis votre demande.&lt;/p&gt;</value>
   </data>
   <data name="EmailAddressPlaceholder" xml:space="preserve">
     <value>Exemple : jeansmith@gmail.com</value>
