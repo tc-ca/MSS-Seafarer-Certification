@@ -147,7 +147,7 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Add another file</value>
   </data>
-  <data name="CandidateDocumentNumberHint" xml:space="preserve">
+  <data name="CDNHint" xml:space="preserve">
     <value>Your Candidate Document Number (CDN) is a combination of 6 or 7 numbers and letters.</value>
   </data>
   <data name="FileDescriptionPlaceholder" xml:space="preserve">
@@ -156,14 +156,17 @@
   <data name="CDNPlaceholder" xml:space="preserve">
     <value>Example: 123456A</value>
   </data>
-  <data name="EmailHint" xml:space="preserve">
-    <value>We’ll use this email address to send a confirmation message after you submit.   We’ll also use it to contact you if needed.</value>
+  <data name="EmailAddressHint" xml:space="preserve">
+    <value>&lt;p&gt;We’ll use this email address to send a confirmation message after you submit.&lt;/p&gt;
+
+&lt;p&gt;We’ll also use it to contact you if needed.&lt;/p&gt;</value>
   </data>
   <data name="PhoneNumberHint" xml:space="preserve">
     <value>We’ll use this phone number to contact you if needed.</value>
   </data>
   <data name="SelectCertificateHint" xml:space="preserve">
-    <value>If you are unsure of what certificate you want, check the Marine Personnel Regulations or contact your local Transport Canada Service Centre.</value>
+    <value>If you are unsure of what certificate you want, check the &lt;a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/"&gt;Marine Personnel Regulations&lt;/a&gt; or contact your local &lt;a href="https://tc.canada.ca/en/marine-transportation-regions"&gt;Transport Canada Service Centre&lt;/a&gt;.
+&lt;a href="http://www.google.com"&gt;link text&lt;/a&gt;</value>
   </data>
   <data name="EmailAddressLabel" xml:space="preserve">
     <value>Email address</value>
