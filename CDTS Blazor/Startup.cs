@@ -9,6 +9,7 @@ namespace CDNApplication
     using CDNApplication.Models;
     using CDNApplication.Models.PageModels;
     using CDNApplication.PageValidators;
+    using CDNApplication.Services;
     using CDNApplication.Utilities;
     using CDNApplication.Views;
     using FluentValidation;
@@ -53,7 +54,7 @@ namespace CDNApplication
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             // Enable anti-forgery
-            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            //services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
             var supportedCultures = new List<CultureInfo>
             {
@@ -72,6 +73,7 @@ namespace CDNApplication
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<SessionState>();
+            services.AddSingleton<UploadDocumentsStepper>();
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");

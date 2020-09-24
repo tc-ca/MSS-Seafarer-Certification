@@ -136,7 +136,9 @@
     <value>Submit</value>
   </data>
   <data name="PageDescription" xml:space="preserve">
-    <value>Review your details. Make any edits or submit when you are ready.</value>
+    <value>Review your details. Make any edits or submit when you are ready.
+
+If you provided an email address, we will send you a copy of this page for your records after you submit.</value>
   </data>
   <data name="YourCertificateSelection" xml:space="preserve">
     <value>Your certificate selection</value>

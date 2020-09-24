@@ -130,7 +130,7 @@
     <value>Our team will review your documents within the next _X_ days. We will ensure they meet the requirements for your selected certificate.</value>
   </data>
   <data name="CheckEmailConfirmationText" xml:space="preserve">
-    <value>Check your email for a confirmation message with this number and a copy of your submission.</value>
+    <value>(If you provided an email address) Check your email for a confirmation message with this number and a copy of your submission.</value>
   </data>
   <data name="ContactUsHeader" xml:space="preserve">
     <value>Contact us</value>
