@@ -165,4 +165,7 @@
   <data name="PrimaryButton" xml:space="preserve">
     <value>Procéder à l'examen</value>
   </data>
+  <data name="FilesAccepted" xml:space="preserve">
+    <value>Nous acceptons les fichiers JPG, PNG, GIF et PDF.</value>
+  </data>
 </root>

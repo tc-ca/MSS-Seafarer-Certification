@@ -108,6 +108,9 @@
                     @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                 </label>
                 <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                <label class="form-control-label">
+                    @PageLocalizer["FilesAccepted"]
+                </label>
                 <ValidationMessage For="() => model.UploadedFiles" />
 
                 @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)

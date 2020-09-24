@@ -147,7 +147,6 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Add another file</value>
   </data>
-
   <data name="CandidateDocumentNumberHint" xml:space="preserve">
     <value>Your Candidate Document Number (CDN) is a combination of 6 or 7 numbers and letters.</value>
   </data>
@@ -166,7 +165,7 @@
   <data name="SelectCertificateHint" xml:space="preserve">
     <value>If you are unsure of what certificate you want, check the Marine Personnel Regulations or contact your local Transport Canada Service Centre.</value>
   </data>
-   <data name="EmailAddressLabel" xml:space="preserve">
+  <data name="EmailAddressLabel" xml:space="preserve">
     <value>Email address</value>
   </data>
   <data name="EnterYourInformationPanelHeading" xml:space="preserve">
@@ -180,5 +179,8 @@
   </data>
   <data name="PrimaryButton" xml:space="preserve">
     <value>Proceed to review</value>
+  </data>
+  <data name="FilesAccepted" xml:space="preserve">
+    <value>We accept  JPG, PNG, GIF, and PDF files.</value>
   </data>
 </root>
