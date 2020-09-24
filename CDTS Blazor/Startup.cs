@@ -72,7 +72,6 @@ namespace CDNApplication
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
             services.AddSingleton<SessionState>();
             services.AddSingleton<UploadDocumentsStepper>();
             services.AddTransient<LayoutViewModel>();
@@ -87,6 +86,7 @@ namespace CDNApplication
                 options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
             });
 
+            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
@@ -95,7 +95,8 @@ namespace CDNApplication
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddHttpContextAccessor();
             services.AddModelAccessor();
-            services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+            services
+                .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
             services.AddHttpsRedirection(options =>
             {
