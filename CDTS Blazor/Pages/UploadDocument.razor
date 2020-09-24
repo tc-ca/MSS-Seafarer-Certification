@@ -103,24 +103,24 @@
                     </label>
                     <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionPlaceholder"]" />
 
-                <label class="required" for="@nameof(model.UploadedFiles)">
-                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
-                <label class="form-control-label">
+                    <label class="required" for="@nameof(model.UploadedFiles)">
+                        @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+
                     @PageLocalizer["FilesAccepted"]
-                </label>
-                <ValidationMessage For="() => model.UploadedFiles" />
+
+                    <ValidationMessage For="() => model.UploadedFiles" />
 
                     @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
-                {
-                    var index = i;
-                    <p>
-                        @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
+                    {
+                        var index = i;
+                        <p>
+                            @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
 
-                        <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
-                    </p>
-                }
+                            <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
+                        </p>
+                    }
                     <br />
                     <button id="add_another_file" type="button" class="btn btn-light" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
