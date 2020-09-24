@@ -105,11 +105,14 @@
                     </label>
                     <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionPlaceholder"]" />
 
-                    <label class="required" for="@nameof(model.UploadedFiles)">
-                        @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                    </label>
-                    <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
-                    <ValidationMessage For="() => model.UploadedFiles" />
+                <label class="required" for="@nameof(model.UploadedFiles)">
+                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                </label>
+                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                <label class="form-control-label">
+                    @PageLocalizer["FilesAccepted"]
+                </label>
+                <ValidationMessage For="() => model.UploadedFiles" />
 
                     @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
                 {
