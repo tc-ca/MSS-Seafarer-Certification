@@ -186,7 +186,7 @@
     <value>Exemple : XXX-XXX-XXXX</value>
   </data>
   <data name="SelectCertificateHint" xml:space="preserve">
-    <value>Si vous n'êtes pas sûr du certificat que vous voulez, consultez le &lt;a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/"&gt;Règlement sur le personnel maritime&lt;/a&gt; ou contactez le &lt;a href="https://tc.canada.ca/en/marine-transportation-regions"&gt;Centre de service de Transports Canada&lt;/a&gt; de votre localité.</value>
+    <value>Si vous n'êtes pas sûr du certificat que vous voulez, consultez le &lt;a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/" target="_blank"&gt;Règlement sur le personnel maritime&lt;/a&gt; ou contactez le &lt;a href="https://tc.canada.ca/en/marine-transportation-regions" target="_blank"&gt;Centre de service de Transports Canada&lt;/a&gt; de votre localité.</value>
   </data>
   <data name="SelectCertificatePlaceholder" xml:space="preserve">
     <value>Exemple : Deuxième ingénieur, navire à vapeur</value>
