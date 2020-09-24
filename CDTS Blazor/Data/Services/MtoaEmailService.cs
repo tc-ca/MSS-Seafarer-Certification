@@ -92,9 +92,9 @@ using System.Diagnostics;namespace CDNApplication.Data.Services
 
                 foreach (var document in pageModel.UploadedFiles)
                 {
-                    documentValueStr = documentValueStr +"<br><br>" +
+                    documentValueStr = documentValueStr  +
                                        "Document " + counter.ToString() + " " + document.SelectedFile.Name + "<br/>" +
-                                       "Type of document: " + document.Description ;
+                                       "Type of document: " + document.Description + "<br><br>";
                     counter++;
                 }
                 document_parameter= new KeyValuePair<string, string>("DOCUMENT", documentValueStr);

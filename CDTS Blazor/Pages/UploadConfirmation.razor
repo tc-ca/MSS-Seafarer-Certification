@@ -2,6 +2,7 @@
 @page "/{LanguageCode}/confirmation/{confirmation:int}"
 
 @inject IStringLocalizer<UploadConfirmation> PageLocalizer
+@inject Utilities.SessionState state
 
 @inherits BaseComponent
 
