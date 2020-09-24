@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CheckEmailConfirmationText" xml:space="preserve">
-    <value>Vérifiez votre courriel pour un message de confirmation avec ce numéro et une copie de votre soumission.</value>
+    <value>(Si vous avez fourni une adresse électronique) Vérifiez si votre courriel contient un message de confirmation avec ce numéro et une copie de votre soumission.</value>
   </data>
   <data name="ConfirmationNumberText" xml:space="preserve">
     <value>Numéro de confirmation : {0}</value>
