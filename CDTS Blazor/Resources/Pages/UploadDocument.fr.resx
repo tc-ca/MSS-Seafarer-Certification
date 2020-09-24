@@ -191,4 +191,7 @@
   <data name="SelectCertificatePlaceholder" xml:space="preserve">
     <value>Exemple : Deuxième ingénieur, navire à vapeur</value>
   </data>
+  <data name="FilesAccepted" xml:space="preserve">
+    <value>Nous acceptons les fichiers JPG, PNG, GIF et PDF.</value>
+  </data>
 </root>
