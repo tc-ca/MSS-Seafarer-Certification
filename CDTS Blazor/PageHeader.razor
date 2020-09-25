@@ -1,15 +1,28 @@
 ﻿@using Microsoft.Extensions.Configuration
+@using CDNApplication.Utilities
+@using System.Configuration
 @inject IConfiguration Configuration
 
-<CDNApplication.Components.Banners.Banner 
-    ShowBanner="@(Configuration.GetSection("Banners:AlphaBanner").GetValue<bool>("ShowAlphaBanner"))" 
-    State="@CDNApplication.Components.Banners.BannerState.ALPHA" 
-    Message="@(Configuration.GetSection("Banners:AlphaBanner").GetValue<string>("AlphaBannerMessage"))" />
-<CDNApplication.Components.Banners.Banner 
-    ShowBanner="@(Configuration.GetSection("Banners:BetaBanner").GetValue<bool>("ShowBetaBanner"))"
-    State="@CDNApplication.Components.Banners.BannerState.BETA"
-    Message="@(Configuration.GetSection("Banners:BetaBanner").GetValue<string>("BetaBannerMessage"))" />
-<CDNApplication.Components.Banners.Banner 
-    ShowBanner="@(Configuration.GetSection("Banners:WarningBanner").GetValue<bool>("ShowWarningBanner"))" 
-    State="@CDNApplication.Components.Banners.BannerState.WARNING" 
-    Message="@(Configuration.GetSection("Banners:WarningBanner").GetValue<string>("WarningBannerMessage"))" />
+<CDNApplication.Components.Banners.Banner ShowBanner="@alphaBannerOptions.ShowBanner" 
+                                          State="@CDNApplication.Components.Banners.BannerState.ALPHA" 
+                                          Message="@alphaBannerOptions.BannerMessage" />
+<CDNApplication.Components.Banners.Banner ShowBanner="@betaBannerOptions.ShowBanner"
+                                          State="@CDNApplication.Components.Banners.BannerState.BETA"
+                                          Message="@betaBannerOptions.BannerMessage" />
+<CDNApplication.Components.Banners.Banner ShowBanner="@warningBannerOptions.ShowBanner"
+                                          State="@CDNApplication.Components.Banners.BannerState.WARNING"
+                                          Message="@warningBannerOptions.BannerMessage" />
+
+@code
+{
+    private BannerOptions alphaBannerOptions = new BannerOptions();
+    private BannerOptions betaBannerOptions = new BannerOptions();
+    private BannerOptions warningBannerOptions = new BannerOptions();
+
+    protected override void OnInitialized()
+    {
+        Configuration.GetSection(BannerOptions.AlphaBanner).Bind(alphaBannerOptions);
+        Configuration.GetSection(BannerOptions.BetaBanner).Bind(betaBannerOptions);
+        Configuration.GetSection(BannerOptions.WarningBanner).Bind(warningBannerOptions);
+    }
+}
