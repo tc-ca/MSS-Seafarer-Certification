@@ -1,2 +1,15 @@
-﻿<CDNApplication.Components.Banners.Banner State="@CDNApplication.Components.Banners.BannerState.ALPHA" Message="This version can change at any moment." />
-<CDNApplication.Components.Banners.Banner State="@CDNApplication.Components.Banners.BannerState.WARNING" Message="Warning! This is a prototype. It won’t actually submit your report to TC." />
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<CDNApplication.Components.Banners.Banner 
+    ShowBanner="@(Configuration.GetSection("Banners:AlphaBanner").GetValue<bool>("ShowAlphaBanner"))" 
+    State="@CDNApplication.Components.Banners.BannerState.ALPHA" 
+    Message="@(Configuration.GetSection("Banners:AlphaBanner").GetValue<string>("AlphaBannerMessage"))" />
+<CDNApplication.Components.Banners.Banner 
+    ShowBanner="@(Configuration.GetSection("Banners:BetaBanner").GetValue<bool>("ShowBetaBanner"))"
+    State="@CDNApplication.Components.Banners.BannerState.BETA"
+    Message="@(Configuration.GetSection("Banners:BetaBanner").GetValue<string>("BetaBannerMessage"))" />
+<CDNApplication.Components.Banners.Banner 
+    ShowBanner="@(Configuration.GetSection("Banners:WarningBanner").GetValue<bool>("ShowWarningBanner"))" 
+    State="@CDNApplication.Components.Banners.BannerState.WARNING" 
+    Message="@(Configuration.GetSection("Banners:WarningBanner").GetValue<string>("WarningBannerMessage"))" />

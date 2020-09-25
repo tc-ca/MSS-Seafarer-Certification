@@ -50,5 +50,11 @@
         /// </summary>
         [Parameter]
         public BannerState State { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the banner should be shown or not.
+        /// </summary>
+        [Parameter]
+        public bool ShowBanner { get; set; } = false;
     }
 }
