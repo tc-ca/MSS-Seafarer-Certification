@@ -48,7 +48,7 @@ namespace CDNApplication
         /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
         /// </summary>
         /// <param name="services">Use to set services used by application.</param>
-        public static void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -86,7 +86,7 @@ namespace CDNApplication
                 options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
             });
 
-            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
+            services.AddSingleton(new AzureKeyVaultService(this.Configuration.GetSection("AzurePublicUrlEndpoints")["KeyVaultService"]));
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
@@ -110,7 +110,7 @@ namespace CDNApplication
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
         /// <param name="antiForgery">Anti Forgery settings.</param>
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
         {
             if (app == null)
             {
