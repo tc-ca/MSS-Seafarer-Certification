@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -147,6 +147,9 @@
   <data name="AddAnotherFileText" xml:space="preserve">
     <value>Ajoutez un autre fichier</value>
   </data>
+  <data name="FileDescriptionHint" xml:space="preserve">
+    <value>Ce document contient mes informations personnelles.</value>
+  </data>
   <data name="EmailAddressLabel" xml:space="preserve">
     <value>Adresse électronique</value>
   </data>
@@ -161,5 +164,8 @@
   </data>
   <data name="PrimaryButton" xml:space="preserve">
     <value>Procéder à l'examen</value>
+  </data>
+  <data name="FilesAccepted" xml:space="preserve">
+    <value>Nous acceptons les fichiers JPG, PNG, GIF et PDF.</value>
   </data>
 </root>

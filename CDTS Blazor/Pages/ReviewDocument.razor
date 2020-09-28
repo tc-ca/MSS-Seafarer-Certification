@@ -4,11 +4,15 @@
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
 @inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
 @inject Utilities.SessionState state
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
+
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
@@ -24,7 +28,7 @@ else
 {
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span id="1">@PageLocalizer["YourInformation"]</span>
+            <span id="1"><strong>@PageLocalizer["YourInformation"]</strong></span>
             @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
 
@@ -46,7 +50,7 @@ else
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span id="1">@PageLocalizer["YourCertificateSelection"]</span>
+            <span id="1"><strong>@PageLocalizer["YourCertificateSelection"]</strong></span>
             @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
@@ -59,7 +63,7 @@ else
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span class="panel-header" id="3">@PageLocalizer["YourDocument"]</span>
+            <span class="panel-header" id="3"><strong>@PageLocalizer["YourDocument"]</strong></span>
             @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
@@ -119,6 +123,8 @@ else
     {
 
         base.OnInitialized();
+
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
 
         _confirmationGuid = new Random().Next(100000, 9999999);
 
