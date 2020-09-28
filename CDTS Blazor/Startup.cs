@@ -18,6 +18,7 @@ namespace CDNApplication
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -102,6 +103,15 @@ namespace CDNApplication
             //    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
             //    options.HttpsPort = 443;
             //});
+            services.Configure<ForwardedHeadersOptions>(options =>
+                {
+                    options.ForwardedHeaders =
+                        ForwardedHeaders.XForwardedFor |
+                        ForwardedHeaders.XForwardedProto;
+
+                    options.KnownNetworks.Clear();
+                    options.KnownProxies.Clear();
+                });
         }
 
         /// <summary>
