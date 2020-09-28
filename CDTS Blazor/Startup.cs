@@ -62,14 +62,6 @@ namespace CDNApplication
                 new CultureInfo("fr-CA"),
             };
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en-CA");
-
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<SessionState>();
@@ -90,7 +82,6 @@ namespace CDNApplication
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
-            services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddHttpContextAccessor();
             services.AddModelAccessor();
@@ -153,8 +144,8 @@ namespace CDNApplication
 
             app.UseStaticFiles();
             app.UsePageSettingsMiddleware();
-            app.UseRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
             app.UseRouting();
+            app.UseRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
             app.UseEndpoints(endpoints =>
             {
