@@ -18,7 +18,7 @@
         }
 
         [Fact]
-        public async void UploadFileAsync_UploadTestFile_ReturnsNotNull(string fileName)
+        public async void UploadFileAsync_UploadTestFile_ReturnsNotNull()
         {
             FormFile uploadTestFile;
             using (var memoryStream = new MemoryStream())
