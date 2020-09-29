@@ -1,10 +1,10 @@
 ﻿using CDNApplication.Data.Services;
-using CDNApplication.Test.Services;
+using CDNApplication.Tests.Integration.Services;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Xunit;
 
-namespace CDNApplication.Test
+namespace CDNApplication.Tests.Integration
 {
     public class AzureBlobStorageTests
     {

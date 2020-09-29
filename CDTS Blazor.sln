@@ -4,7 +4,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDNApplication", "CDTS Blazor\CDNApplication.csproj", "{168E2034-EEE5-4709-9DF1-BF9C6DEF97FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDNApplication.Test", "CDNApplication.Test\CDNApplication.Test.csproj", "{C7A2902C-5052-4CFA-8172-088AE2E09E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDNApplication.Tests.Integration", "CDNApplication.Test\CDNApplication.Tests.Integration.csproj", "{C7A2902C-5052-4CFA-8172-088AE2E09E06}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Components.Testing", "Microsoft.AspNetCore.Components.Testing\Microsoft.AspNetCore.Components.Testing.csproj", "{AD4419C5-7154-4078-A21A-4A60D2EC7C0D}"
 EndProject

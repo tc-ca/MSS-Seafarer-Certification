@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CDNApplication.Test.Services
+namespace CDNApplication.Tests.Integration.Services
 {
     public class InitializeServices
     {

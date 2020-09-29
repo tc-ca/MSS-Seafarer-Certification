@@ -1,8 +1,8 @@
 ﻿using CDNApplication.Data.Services;
-using CDNApplication.Test.Services;
+using CDNApplication.Tests.Integration.Services;
 using Xunit;
 
-namespace CDNApplication.Test
+namespace CDNApplication.Tests.Integration
 {
     public class AzureKeyVaultTests
     {
