@@ -20,14 +20,13 @@
         [Fact]
         public async void UploadFileAsync_UploadTestFile_ReturnsNotNull()
         {
-            FormFile uploadTestFile;
             using (var memoryStream = new MemoryStream())
             {
                 // Arrange
                 byte[] buffer = Encoding.Default.GetBytes(
                     "Test file for UploadFileAsync_UploadTestFile_ReturnsNotNull() method.");
                 memoryStream.Write(buffer, 0, buffer.Length);
-                uploadTestFile =
+                FormFile uploadTestFile =
                     new FormFile(
                         memoryStream,
                         0,
