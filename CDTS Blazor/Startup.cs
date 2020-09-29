@@ -103,8 +103,7 @@ namespace CDNApplication
         /// </summary>
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
-        /// <param name="antiForgery">Anti Forgery settings.</param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (app == null)
             {
