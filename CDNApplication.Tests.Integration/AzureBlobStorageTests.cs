@@ -32,7 +32,7 @@
                         0,
                         memoryStream.Length,
                         null,
-                        string.Format("uploadtestfile_{0}", new Random().Next().ToString()))
+                        string.Format("uploadTestFile_{0}", new Random().Next().ToString()))
                         {
                             Headers = new HeaderDictionary(), ContentType = "application/txt"
                         };
