@@ -1,42 +1,49 @@
-﻿using CDNApplication.Data.Services;
-using CDNApplication.Tests.Integration.Services;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using Xunit;
-
-namespace CDNApplication.Tests.Integration
+﻿namespace CDNApplication.Tests.Integration
 {
+    using System;
+    using System.IO;
+    using System.Text;
+    using CDNApplication.Data.Services;
+    using CDNApplication.Tests.Integration.Services;
+    using Microsoft.AspNetCore.Http;
+    using Xunit;
+
     public class AzureBlobStorageTests
     {
         private readonly AzureBlobService azureBlobService;
 
         public AzureBlobStorageTests()
         {
-            azureBlobService = InitializeServices.GetAzureBlobService();
+            this.azureBlobService = InitializeServices.GetAzureBlobService();
         }
 
-        [Theory]
-        [InlineData("random-text.txt")]
-        public async void UploadFileAsync_UploadTextFile_ReturnsNotNull(string fileName)
+        [Fact]
+        public async void UploadFileAsync_UploadTestFile_ReturnsNotNull(string fileName)
         {
-            // Arrange
-            var root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
-
-            string newPath = Path.GetFullPath(Path.Combine(root.FullName, @"..\DummyData\", fileName));
-
-            using var stream = File.OpenRead(newPath);
-
-            var file = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name))
+            FormFile uploadTestFile;
+            using (var memoryStream = new MemoryStream())
             {
-                Headers = new HeaderDictionary(),
-                ContentType = "application/" + Path.GetExtension(newPath).Replace(".", "")
-            };
+                // Arrange
+                byte[] buffer = Encoding.Default.GetBytes(
+                    "Test file for UploadFileAsync_UploadTestFile_ReturnsNotNull() method.");
+                memoryStream.Write(buffer, 0, buffer.Length);
+                uploadTestFile =
+                    new FormFile(
+                        memoryStream,
+                        0,
+                        memoryStream.Length,
+                        null,
+                        string.Format("uploadtestfile_{0}", new Random().Next().ToString()))
+                        {
+                            Headers = new HeaderDictionary(), ContentType = "application/txt"
+                        };
 
-            // Act
-            var result = await azureBlobService.UploadFileAsync(file, "unittests");
+                // Act
+                var result = await this.azureBlobService.UploadFileAsync(uploadTestFile);
 
-            // Assert
-            Assert.NotNull(result);
+                // Assert
+                Assert.NotNull(result);
+            }
         }
     }
 }
