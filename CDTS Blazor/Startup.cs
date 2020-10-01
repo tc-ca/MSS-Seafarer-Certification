@@ -18,6 +18,7 @@ namespace CDNApplication
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -52,9 +53,6 @@ namespace CDNApplication
         {
             services.AddControllers();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            // Enable anti-forgery
-            //services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
             var supportedCultures = new List<CultureInfo>
             {
@@ -101,15 +99,20 @@ namespace CDNApplication
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
 
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-                options.HttpsPort = 443;
-            });
+            services.Configure<ForwardedHeadersOptions>(options =>
+                {
+                    options.ForwardedHeaders =
+                        ForwardedHeaders.XForwardedFor |
+                        ForwardedHeaders.XForwardedProto;
+
+                    options.KnownNetworks.Clear();
+                    options.KnownProxies.Clear();
+                });
         }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// Refer to this article for correct order of middleware calls: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-3.1.
         /// </summary>
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
@@ -131,29 +134,10 @@ namespace CDNApplication
 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-                app.UseHttpsRedirection();
             }
 
-
-            app.Use(next => context =>
-            {
-                var path = context.Request.Path.Value;
-
-                if (string.Equals(path, "/", StringComparison.OrdinalIgnoreCase) ||
-                    string.Equals(path, "/api", StringComparison.OrdinalIgnoreCase))
-                {
-                    // The request token can be sent as a JavaScript-readable cookie
-                    var tokens = antiForgery.GetAndStoreTokens(context);
-
-                    // Set the antiForgery token
-                    context.Response.Cookies.Append(
-                        "XSRF-TOKEN",
-                        tokens.RequestToken,
-                        new CookieOptions { HttpOnly = false });
-                }
-
-                return next(context);
-            });
+            app.UseForwardedHeaders();
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
             app.UsePageSettingsMiddleware();
