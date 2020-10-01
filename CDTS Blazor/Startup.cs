@@ -73,7 +73,7 @@ namespace CDNApplication
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
-            services.AddSingleton<SessionState>();
+            services.AddScoped<SessionState>();
             services.AddSingleton<UploadDocumentsStepper>();
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
