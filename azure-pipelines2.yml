@@ -36,5 +36,5 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: 
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)'
     reportDirectory: '$(System.DefaultWorkingDirectory)'
