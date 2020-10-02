@@ -32,8 +32,9 @@ steps:
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      **\CDNApplication.Test.dll
-      **\Microsoft.AspNetCore.Components.Testing.dll
+      **\cdnapplication.dll
+      **\cdnapplication.test.dll
+      **\microsoft.aspnetcore.components.testing.dll
       !**\*TestAdapter.dll
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
