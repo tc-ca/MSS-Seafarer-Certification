@@ -37,4 +37,4 @@ steps:
   inputs:
     codeCoverageTool: 'JaCoCo'
     summaryFileLocation: 
-    failIfCoverageEmpty: true
+    reportDirectory: '$(System.DefaultWorkingDirectory)'
