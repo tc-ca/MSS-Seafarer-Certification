@@ -38,8 +38,8 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
       **\cdnapplication.dll
-      **\cdnapplication.test.dll
-      **\microsoft.aspnetcore.components.testing.dll
+      **\cdnapplication.test*.dll
+      **\microsoft.aspnetcore.components.test*.dll
       !**\*TestAdapter.dll
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
