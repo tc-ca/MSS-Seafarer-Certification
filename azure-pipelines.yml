@@ -29,6 +29,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: 'Server Unit Tests'
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -40,3 +41,5 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     runTestsInIsolation: true
     codeCoverageEnabled: true
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
