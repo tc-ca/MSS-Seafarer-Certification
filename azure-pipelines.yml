@@ -32,7 +32,6 @@ steps:
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      **\*test*.dll
       **\CDNApplication.Test.dll
       **\Microsoft.AspNetCore.Components.Testing.dll
       !**\*TestAdapter.dll
