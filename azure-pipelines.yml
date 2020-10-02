@@ -37,11 +37,7 @@ steps:
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      **\cdnapplication.dll
       **\cdnapplication.test*.dll
-      **\microsoft.aspnetcore.components.test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
     runTestsInIsolation: true
     codeCoverageEnabled: true
