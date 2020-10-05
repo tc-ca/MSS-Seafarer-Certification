@@ -2,7 +2,6 @@ namespace CDNApplication
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Globalization;
     using CDNApplication.Data.Services;
     using CDNApplication.Middleware;
@@ -17,12 +16,12 @@ namespace CDNApplication
     using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
     using CustomRequestCultureProvider = CDNApplication.Utilities.CustomRequestCultureProvider;
 
     /// <summary>
@@ -43,68 +42,6 @@ namespace CDNApplication
         ///     Gets the configuration options.
         /// </summary>
         public IConfiguration Configuration { get; }
-
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container.
-        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
-        /// </summary>
-        /// <param name="services">Use to set services used by application.</param>
-        public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            var supportedCultures = new List<CultureInfo>
-            {
-                new CultureInfo("en-CA"),
-                new CultureInfo("fr-CA"),
-            };
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en-CA");
-
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
-
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddSingleton<SessionState>();
-            services.AddSingleton<UploadDocumentsStepper>();
-            services.AddTransient<LayoutViewModel>();
-            services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en-CA");
-                options.SupportedUICultures = supportedCultures;
-                options.SupportedCultures = supportedCultures;
-                options.RequestCultureProviders.Clear();
-                options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
-            });
-
-            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
-            services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
-            services.AddScoped<IAzureBlobService, AzureBlobService>();
-            services.AddSingleton<SessionStateModel>();
-            services.AddHttpContextAccessor();
-            services.AddScoped<ISessionManager, SessionManager>();
-            services.AddHttpContextAccessor();
-            services.AddModelAccessor();
-            services
-                .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
-
-            services.Configure<ForwardedHeadersOptions>(options =>
-                {
-                    options.ForwardedHeaders =
-                        ForwardedHeaders.XForwardedFor |
-                        ForwardedHeaders.XForwardedProto;
-
-                    options.KnownNetworks.Clear();
-                    options.KnownProxies.Clear();
-                });
-        }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,19 +69,67 @@ namespace CDNApplication
                 app.UseHsts();
             }
 
-            app.UseForwardedHeaders();
-            app.UseHttpsRedirection();
-
             app.UseStaticFiles();
             app.UsePageSettingsMiddleware();
             app.UseRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
-            });
+            app.UseEndpoints(
+                endpoints =>
+                    {
+                        endpoints.MapBlazorHub();
+                        endpoints.MapFallbackToPage("/_Host");
+                    });
+        }
+
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
+        /// </summary>
+        /// <param name="services">Use to set services used by application.</param>
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            var supportedCultures = new List<CultureInfo> { new CultureInfo("en-CA"), new CultureInfo("fr-CA"), };
+
+            services.Configure<RequestLocalizationOptions>(
+                options =>
+                    {
+                        options.DefaultRequestCulture = new RequestCulture("en-CA");
+
+                        options.SupportedCultures = supportedCultures;
+                        options.SupportedUICultures = supportedCultures;
+                    });
+
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddSingleton<SessionState>();
+            services.AddSingleton<UploadDocumentsStepper>();
+            services.AddTransient<LayoutViewModel>();
+            services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(
+                options =>
+                    {
+                        options.DefaultRequestCulture = new RequestCulture("en-CA");
+                        options.SupportedUICultures = supportedCultures;
+                        options.SupportedCultures = supportedCultures;
+                        options.RequestCultureProviders.Clear();
+                        options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
+                    });
+
+            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
+            services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
+            services.AddScoped<IAzureBlobService, AzureBlobService>();
+            services.AddSingleton<SessionStateModel>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<ISessionManager, SessionManager>();
+            services.AddHttpContextAccessor();
+            services.AddModelAccessor();
+            services
+                .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
         }
     }
 }
