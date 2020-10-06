@@ -136,7 +136,9 @@
     <value>Pièce jointe</value>
   </data>
   <data name="PageDescription" xml:space="preserve">
-    <value>Vérifiez vos coordonnées. Faites les modifications nécessaires ou soumettez-les lorsque vous êtes prêt.</value>
+    <value>Vérifiez vos coordonnées. Faites les modifications nécessaires ou soumettez-les lorsque vous êtes prêt.
+
+Si vous avez fourni une adresse électronique, nous vous enverrons une copie de cette page pour vos dossiers après que vous l'aurez soumise.</value>
   </data>
   <data name="YourCertificateSelection" xml:space="preserve">
     <value>Votre sélection de certificats</value>

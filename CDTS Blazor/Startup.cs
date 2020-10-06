@@ -105,31 +105,84 @@ namespace CDNApplication
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<SessionState>();
-            services.AddSingleton<UploadDocumentsStepper>();
+            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
+
+            services.AddScoped<UploadDocumentsStepper>();
+            services.AddScoped<UploadDocumentPageModel>();
+            services.AddScoped<SessionState>();
+            
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(
-                options =>
-                    {
-                        options.DefaultRequestCulture = new RequestCulture("en-CA");
-                        options.SupportedUICultures = supportedCultures;
-                        options.SupportedCultures = supportedCultures;
-                        options.RequestCultureProviders.Clear();
-                        options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
-                    });
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("en-CA");
+                options.SupportedUICultures = supportedCultures;
+                options.SupportedCultures = supportedCultures;
+                options.RequestCultureProviders.Clear();
+                options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
+            });
 
-            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
+            services.AddSingleton<MtoaEmailService>();
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddHttpContextAccessor();
             services.AddModelAccessor();
-            services
-                .ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+            services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+                {
+                    options.ForwardedHeaders =
+                        ForwardedHeaders.XForwardedFor |
+                        ForwardedHeaders.XForwardedProto;
+
+                    options.KnownNetworks.Clear();
+                    options.KnownProxies.Clear();
+                });
+        }
+
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// Refer to this article for correct order of middleware calls: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-3.1.
+        /// </summary>
+        /// <param name="app">This object corresponds to the current running application.</param>
+        /// <param name="env">Our web hosting environment.</param>
+        /// <param name="antiForgery">Anti Forgery settings.</param>
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
+        {
+            if (app == null)
+            {
+                throw new ArgumentNullException(nameof(app));
+            }
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseForwardedHeaders();
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+            app.UsePageSettingsMiddleware();
+            app.UseRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
+            });
         }
     }
 }

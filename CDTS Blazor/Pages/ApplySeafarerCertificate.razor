@@ -13,27 +13,26 @@
             <p>Save time and submit online for your certificate application. Select the certificate you want and add your required documents. We will review what you submit as part of your application.</p>
             <section>
                 <h2>What you need before you start</h2>
-                <p>To be eligible to submit your documents online, you will need to know:</p>
+                <p>To be eligible to submit your documents online, you will need:</p>
                 <ul>
                     <li>
                         <strong>Your Candidate Document Number (CDN).</strong>
-                        <p>If you do not have a CDN, check our <a href="https://tc.canada.ca/en/marine-transportation/marine-safety/questions-frequently-asked-regarding-certification-training" target="_blank">Frequently Asked Questions</a> for how to get one.</p>
+                        <p>If you do not have a CDN, check our <a href="https://tc.canada.ca/en/marine-transportation/marine-safety/questions-frequently-asked-regarding-certification-training#qt1" target="_blank">Frequently Asked Questions</a> for how to get one.</p>
                     </li>
                     <li>
                         <strong>The name of the certificate that you want.</strong>
-                        <p>If you are unsure of what certificate you want, check the <a href="/">Marine Personnel Regulations</a> or contact your local <a href="/">Transport Canada Service Centre</a>.</p>
+                        <p>If you are unsure of what certificate you want, check the <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/" target="_blank">Marine Personnel Regulations</a> or contact your local <a href="https://tc.canada.ca/en/marine-transportation-regions" target="_blank">Transport Canada Service Centre</a>.</p>
                     </li>
                     <li>
-                        <strong>The required documents for the certificate you want.</strong>
-                        <p>If you are unsure of what is required, check the <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/" target="_blank">Marine Personnel Regulations</a>.</p>
+                        <strong>The required documents for your selected certificate.</strong>
+                        <p>If you are unsure of what documents are required, check the <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/" target="_blank">Marine Personnel Regulations</a> or contact your local <a href="https://tc.canada.ca/en/marine-transportation-regions" target="_blank">Transport Canada Service Centre</a>.</p>
+                        <p>You will need access to digital copies of your documents. We accept JPG, PNG, GIF, and PDF files. You can select and add documents from your computer or device.</p>
                     </li>
                 </ul>
             </section>
-            <section>
-                <h2>What you need before you start</h2>
-                <p>You will need access to digital copies of your documents. Scans, photos, and digital files are all accepted. You can select and add documents from your computer or device.</p>
-            </section>
-            <p><a href="/@LanguageCode/upload" class="btn btn-lg btn-primary mrgn-tp-md">Start Submission</a></p>
+            <button class=" btn btn-lg btn-primary mrgn-tp-md" @onclick="HandlePrimaryButton">
+                Start Submission
+            </button>
             <section class="gc-cntct-lst">
                 <h2>Other ways to submit documents</h2>
                 <p><a href="https://tc.canada.ca/en/marine-transportation-regions" target="_blank">How to submit documents in person</a></p>
@@ -110,4 +109,8 @@
 
 @code {
     // TODO: make this page work with handlebars
+    private void HandlePrimaryButton()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/upload");
+    }
 }

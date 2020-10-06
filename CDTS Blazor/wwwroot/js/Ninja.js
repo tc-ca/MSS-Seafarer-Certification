@@ -5,6 +5,7 @@
 
 window.initPopover = () => {
     $('[data-toggle="popover"]').popover({
+        html:true,
         placement: 'right',
         toggle: "popover",
         container: 'body',
