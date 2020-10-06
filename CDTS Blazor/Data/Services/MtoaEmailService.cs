@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using CDNApplication.Models.PageModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MTOA.DomainObjects.DTO;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Diagnostics;namespace CDNApplication.Data.Services
+using System.Diagnostics;
+using CDNApplication.Data.DTO.MTAPI;
+
+namespace CDNApplication.Data.Services
 {
     public class MtoaEmailService
     {

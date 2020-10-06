@@ -37,7 +37,6 @@
     </PackageReference>
     <PackageReference Include="BuildTools.FxCop" Version="1.0.1" />
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
-    <PackageReference Include="MTOA.DomainObjects" Version="0.14.8" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
