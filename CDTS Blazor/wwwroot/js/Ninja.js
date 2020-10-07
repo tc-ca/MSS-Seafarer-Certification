@@ -1,7 +1,20 @@
 ﻿function trigerInputFileButton()
 {
-    document.getElementById("Document").click();
+    document.getElementById("UploadedFiles").click();
+    var fileDescriptionText = document.getElementById("FileDescription");
+    fileDescriptionText.focus();
 }
+
+function changeCursorToBusy()
+{
+    document.body.style.cursor = 'wait';
+}
+
+function changeCursorToDefault()
+{
+    document.body.style.cursor = 'default';
+}
+
 
 window.initPopover = () => {
     $('[data-toggle="popover"]').popover({

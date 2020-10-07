@@ -6,6 +6,7 @@
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaEmailService emailService
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
+@inject IJSRuntime JSRuntime
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -113,7 +114,11 @@ else
 
         if (!String.IsNullOrEmpty(model.EmailAddress))
         {
-            emailService.SendEmailToApplicant(model).Wait();
+            JSRuntime.InvokeVoidAsync("changeCursorToBusy", null); // changes cursor to busy
+
+            emailService.SendEmailToApplicant(model).ConfigureAwait(false);
+
+            JSRuntime.InvokeVoidAsync("changeCursorToDefault", null); // changes cursor to default
         }
 
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
