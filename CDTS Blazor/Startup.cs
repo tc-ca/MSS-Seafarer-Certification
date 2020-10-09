@@ -89,7 +89,6 @@ namespace CDNApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             var supportedCultures = new List<CultureInfo>
             {
