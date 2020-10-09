@@ -1,7 +1,7 @@
 ﻿@inherits BannerBase
 @using CDNApplication.Components.Banners
 
-<section class="banner-container @this.ClassName">
+<section hidden="@(!this.ShowBanner)" class="banner-container @this.ClassName">
     <section class="banner">
         <section class="banner-text-container">
             @if (this.State == BannerState.BETA)

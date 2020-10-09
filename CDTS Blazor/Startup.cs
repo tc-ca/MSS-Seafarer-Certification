@@ -49,8 +49,7 @@ namespace CDNApplication
         /// </summary>
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
-        /// <param name="antiForgery">Anti Forgery settings.</param>
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (app == null)
             {
@@ -87,26 +86,19 @@ namespace CDNApplication
         /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
         /// </summary>
         /// <param name="services">Use to set services used by application.</param>
-        public static void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            var supportedCultures = new List<CultureInfo> { new CultureInfo("en-CA"), new CultureInfo("fr-CA"), };
-
-            services.Configure<RequestLocalizationOptions>(
-                options =>
-                    {
-                        options.DefaultRequestCulture = new RequestCulture("en-CA");
-
-                        options.SupportedCultures = supportedCultures;
-                        options.SupportedUICultures = supportedCultures;
-                    });
+            var supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-CA"),
+                new CultureInfo("fr-CA"),
+            };
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
-
+            
             services.AddScoped<UploadDocumentsStepper>();
             services.AddScoped<UploadDocumentPageModel>();
             services.AddScoped<SessionState>();
@@ -123,25 +115,15 @@ namespace CDNApplication
                 options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
             });
 
+            services.AddSingleton(new AzureKeyVaultService(this.Configuration.GetSection("AzurePublicUrlEndpoints")["KeyVaultService"]));
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
             services.AddSingleton<MtoaEmailService>();
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
-            services.AddHttpContextAccessor();
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
-
-            services.Configure<ForwardedHeadersOptions>(options =>
-                {
-                    options.ForwardedHeaders =
-                        ForwardedHeaders.XForwardedFor |
-                        ForwardedHeaders.XForwardedProto;
-
-                    options.KnownNetworks.Clear();
-                    options.KnownProxies.Clear();
-                });
         }
 
     }
