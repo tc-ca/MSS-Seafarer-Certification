@@ -13,10 +13,8 @@ namespace CDNApplication
     using CDNApplication.Views;
     using FluentValidation;
     using GoC.WebTemplate.Components.Core.Services;
-    using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -49,8 +47,7 @@ namespace CDNApplication
         /// </summary>
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
-        /// <param name="antiForgery">Anti Forgery settings.</param>
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiForgery)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (app == null)
             {
@@ -94,15 +91,6 @@ namespace CDNApplication
 
             var supportedCultures = new List<CultureInfo> { new CultureInfo("en-CA"), new CultureInfo("fr-CA"), };
 
-            services.Configure<RequestLocalizationOptions>(
-                options =>
-                    {
-                        options.DefaultRequestCulture = new RequestCulture("en-CA");
-
-                        options.SupportedCultures = supportedCultures;
-                        options.SupportedUICultures = supportedCultures;
-                    });
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton(new AzureKeyVaultService("https://kv-seafarer-dev.vault.azure.net/"));
@@ -129,19 +117,8 @@ namespace CDNApplication
             services.AddSingleton<MtoaEmailService>();
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
-            services.AddHttpContextAccessor();
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
-
-            services.Configure<ForwardedHeadersOptions>(options =>
-                {
-                    options.ForwardedHeaders =
-                        ForwardedHeaders.XForwardedFor |
-                        ForwardedHeaders.XForwardedProto;
-
-                    options.KnownNetworks.Clear();
-                    options.KnownProxies.Clear();
-                });
         }
 
     }
