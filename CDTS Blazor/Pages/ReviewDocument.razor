@@ -4,6 +4,7 @@
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
 @inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
 @inject Utilities.SessionState state
+@inject Data.Services.MtoaEmailService emailService
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
 @using BlazorInputFile
@@ -88,12 +89,12 @@ else
         </div>
     </div>
 
-    <button class="btn btn-light" @onclick="GoBack" role="button">
-        @CommonPageLocalizer["Back"]
-    </button>
-
     <button class="btn btn-primary" @onclick="Submit" role="button">
         @CommonPageLocalizer["Submit"]
+    </button>
+
+    <button class="btn btn-secondary" @onclick="GoBack" role="button">
+        @CommonPageLocalizer["Previous"]
     </button>
 }
 
@@ -109,6 +110,11 @@ else
         Console.WriteLine(model);
 
         state.UploadDocumentPage = null;
+
+        if (!String.IsNullOrEmpty(model.EmailAddress))
+        {
+            emailService.SendEmailToApplicant(model).Wait();
+        }
 
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
 
@@ -128,8 +134,14 @@ else
 
         _confirmationGuid = new Random().Next(100000, 9999999);
 
+        if (state.UploadDocumentPage == null)
+        {
+            state.UploadDocumentPage = new UploadDocumentPageModel();
+        }
+
         model = state.UploadDocumentPage;
 
+        model.ConfirmationNumber = _confirmationGuid.ToString();
     }
 
 }
