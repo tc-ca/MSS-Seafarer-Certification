@@ -6,7 +6,7 @@ This document will show you how to install this Git Hook and what it does.
 
 ## Windows
 
-Close this repo locally and run `docs\GitHooks\copy-git-hook.bat`.
+Clone this repo locally and run `docs\GitHooks\copy-git-hook.bat`.
 
 This will copy `prepare-commit-msg` to the `.git\hooks` folder.
 
