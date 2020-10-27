@@ -124,7 +124,7 @@
     <value>Comment nous joindre</value>
   </data>
   <data name="DocumentsSubmittedBody" xml:space="preserve">
-    <value>&lt;p&gt;Sauvegardez votre numéro de confirmation dans un endroit sûr. Vous aurez besoin de ce numéro si vous nous contactez au sujet de votre soumission.
+    <value>&lt;p&gt;Veuillez prendre en note votre numéro de confirmation. Vous aurez besoin de ce numéro si vous nous contactez au sujet de votre soumission.
 &lt;p&gt;(Si vous avez fourni une adresse électronique) Vérifiez si votre adresse électronique contient un message de confirmation avec ce numéro et une copie de votre soumission.</value>
   </data>
   <data name="DocumentsSubmittedHeader" xml:space="preserve">
