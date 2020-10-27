@@ -124,7 +124,7 @@
     <value>Soumettre</value>
   </data>
   <data name="SelectedCertificate" xml:space="preserve">
-    <value>Certificat sélectionné</value>
+    <value>Brevet sélectionné</value>
   </data>
   <data name="Attachments" xml:space="preserve">
     <value>Annexe(s)</value>
@@ -141,7 +141,7 @@
 Si vous avez fourni une adresse électronique, nous vous enverrons une copie de cette page pour vos dossiers.</value>
   </data>
   <data name="YourCertificateSelection" xml:space="preserve">
-    <value>Votre sélection de certificats</value>
+    <value>Votre brevet</value>
   </data>
   <data name="YourDocument" xml:space="preserve">
     <value>Votre/vos document(s)</value>
