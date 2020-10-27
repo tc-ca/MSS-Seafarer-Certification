@@ -137,7 +137,7 @@
     <value>Merci</value>
   </data>
   <data name="WhatHappensNextBody" xml:space="preserve">
-    <value>&lt;p&gt;Notre équipe examinera vos documents dans les dix prochains jours ouvrables. Nous nous assurerons qu'ils répondent aux exigences du certificat que vous avez choisi.&lt;/p&gt;
+    <value>&lt;p&gt;Notre équipe examinera vos documents dans les dix prochains jours ouvrables. Nous vérifierons s’ils répondent aux exigences du certificat que vous avez choisi.&lt;/p&gt;
 &lt;p&gt;Si vous remplissez les conditions requises, vous pouvez vous attendre à recevoir votre certificat:&lt;/p&gt;
         &lt;ul&gt;
             &lt;li&gt;Dans les 10 jours ouvrables pour un certificat d'examinateur&lt;/li&gt;
