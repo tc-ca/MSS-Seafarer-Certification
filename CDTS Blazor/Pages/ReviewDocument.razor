@@ -2,7 +2,7 @@
 @page "/{LanguageCode}/review"
 
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
-@inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
+@inject IStringLocalizer<Common> CommonPageLocalizer
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaEmailService emailService
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
@@ -35,16 +35,16 @@ else
 
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-4">@PageLocalizer["CDNNumber"]:</div>
-                <div class="col-md-8">@model.CdnNumber</div>
+                <div class="col-md-5">@PageLocalizer["CDNNumber"]:</div>
+                <div class="col-md-7">@model.CdnNumber</div>
             </div>
             <div class="row">
-                <div class="col-md-4">@PageLocalizer["PhoneNumber"]:</div>
-                <div class="col-md-8">@model.PhoneNumber</div>
+                <div class="col-md-5">@PageLocalizer["PhoneNumber"]:</div>
+                <div class="col-md-7">@model.PhoneNumber</div>
             </div>
             <div class="row">
-                <div class="col-md-4">@PageLocalizer["EmailAddress"]:</div>
-                <div class="col-md-8">@model.EmailAddress</div>
+                <div class="col-md-5">@PageLocalizer["EmailAddress"]:</div>
+                <div class="col-md-7">@model.EmailAddress</div>
             </div>
         </div>
     </div>
@@ -56,8 +56,8 @@ else
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-4">@PageLocalizer["SelectedCertificate"]:</div>
-                <div class="col-md-8">@model.CertificateType</div>
+                <div class="col-md-5">@PageLocalizer["SelectedCertificate"]:</div>
+                <div class="col-md-7">@model.CertificateType</div>
             </div>
         </div>
     </div>

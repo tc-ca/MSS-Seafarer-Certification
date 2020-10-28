@@ -151,7 +151,7 @@
     <value>Your Candidate Document Number (CDN) is a combination of 6 or 7 numbers and letters.</value>
   </data>
   <data name="FileDescriptionPlaceholder" xml:space="preserve">
-    <value>Example: Seatime Logbook</value>
+    <value>Example: Record of Sea Service</value>
   </data>
   <data name="CDNPlaceholder" xml:space="preserve">
     <value>Example: 123456A</value>

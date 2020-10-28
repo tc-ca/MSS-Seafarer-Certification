@@ -124,7 +124,7 @@
     <value>Soumettre</value>
   </data>
   <data name="SelectedCertificate" xml:space="preserve">
-    <value>Certificat sélectionné</value>
+    <value>Brevet sélectionné</value>
   </data>
   <data name="Attachments" xml:space="preserve">
     <value>Annexe(s)</value>
@@ -136,12 +136,12 @@
     <value>Pièce jointe</value>
   </data>
   <data name="PageDescription" xml:space="preserve">
-    <value>Vérifiez vos coordonnées. Faites les modifications nécessaires ou soumettez-les lorsque vous êtes prêt.
+    <value>Vérifiez vos coordonnées. Apportez les modifications nécessaires ou soumettez la demande si elle est complète.
 
-Si vous avez fourni une adresse électronique, nous vous enverrons une copie de cette page pour vos dossiers après que vous l'aurez soumise.</value>
+Si vous avez fourni une adresse électronique, nous vous enverrons une copie de cette page pour vos dossiers.</value>
   </data>
   <data name="YourCertificateSelection" xml:space="preserve">
-    <value>Votre sélection de certificats</value>
+    <value>Votre brevet</value>
   </data>
   <data name="YourDocument" xml:space="preserve">
     <value>Votre/vos document(s)</value>
