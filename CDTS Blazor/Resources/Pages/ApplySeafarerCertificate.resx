@@ -123,6 +123,12 @@
   <data name="ExplanationParagraph" xml:space="preserve">
     <value>Save time and submit online for your certificate application. Select the certificate you want and add your required documents. We will review what you submit as part of your application.</value>
   </data>
+  <data name="HowToSubmitDocumentLinkText" xml:space="preserve">
+    <value>How to submit documents in person</value>
+  </data>
+  <data name="OtherWaysToSubmit" xml:space="preserve">
+    <value>Other ways to submit documents</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Submit your documents online for seafarer certification</value>
   </data>

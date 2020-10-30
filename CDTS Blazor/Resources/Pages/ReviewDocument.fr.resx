@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PageTitle" xml:space="preserve">
-    <value>Examiner et soumettre</value>
+    <value>Vérifier et soumettre</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Soumettre</value>
@@ -130,24 +130,24 @@
     <value>Annexe(s)</value>
   </data>
   <data name="CDNNumber" xml:space="preserve">
-    <value>Numéro de document du candidat</value>
+    <value>Numéro de candidat (CDN) </value>
   </data>
   <data name="Attachment" xml:space="preserve">
     <value>Pièce jointe</value>
   </data>
   <data name="PageDescription" xml:space="preserve">
-    <value>Vérifiez vos coordonnées. Apportez les modifications nécessaires ou soumettez la demande si elle est complète.
-
-Si vous avez fourni une adresse électronique, nous vous enverrons une copie de cette page pour vos dossiers.</value>
+    <value>&lt;p&gt;Vérifiez vos coordonnées. Apportez les modifications nécessaires ou soumettez la demande si elle est complète.&lt;/p&gt; 
+ 
+&lt;p&gt;Si vous avez fourni une adresse électronique, nous vous enverrons une copie de cette page pour vos documents.&lt;/p&gt;</value>
   </data>
   <data name="YourCertificateSelection" xml:space="preserve">
     <value>Votre brevet</value>
   </data>
   <data name="YourDocument" xml:space="preserve">
-    <value>Votre/vos document(s)</value>
+    <value>Vos documents</value>
   </data>
   <data name="YourInformation" xml:space="preserve">
-    <value>Vos informations</value>
+    <value>Vos renseignements</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
     <value>Adresse électronique</value>
