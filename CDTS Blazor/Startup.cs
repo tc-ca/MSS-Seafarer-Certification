@@ -123,7 +123,8 @@ namespace CDNApplication
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddModelAccessor();
-            services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+            services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1            
+            services.AddApplicationInsightsTelemetry();
         }
 
     }
