@@ -5,12 +5,14 @@
 @inject IStringLocalizer<Common> CommonPageLocalizer
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaEmailService emailService
+@inject Data.Services.MtoaFileService fileService
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
 @using CDNApplication.TCComponents.Stepper
+@using Data.Services;
 @inherits BaseComponent
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -113,6 +115,9 @@ else
 
         if (!String.IsNullOrEmpty(model.EmailAddress))
         {
+
+            fileService.UploadFilesInPageModelAsync(model);
+
             emailService.SendEmailToApplicant(model).Wait();
         }
 

@@ -120,6 +120,7 @@ namespace CDNApplication
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
             services.AddSingleton<MtoaEmailService>();
+            services.AddSingleton<MtoaFileService>();
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddModelAccessor();
