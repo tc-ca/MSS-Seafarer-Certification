@@ -1,6 +1,7 @@
 ﻿namespace CDNApplication.Views
 {
     using System;
+    using System.Linq;
     using CDNApplication.Utilities;
     using GoC.WebTemplate.Components.Core.Services;
     using Microsoft.AspNetCore.Http;
