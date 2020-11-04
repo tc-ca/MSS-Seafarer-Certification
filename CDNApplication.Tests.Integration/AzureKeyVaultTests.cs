@@ -1,5 +1,4 @@
 ﻿using CDNApplication.Data.Services;
-using CDNApplication.Test.Services;
 using Xunit;
 
 namespace CDNApplication.Test
@@ -10,7 +9,7 @@ namespace CDNApplication.Test
 
         public AzureKeyVaultTests()
         {
-            azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
+            //azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
         }
 
         [Theory]

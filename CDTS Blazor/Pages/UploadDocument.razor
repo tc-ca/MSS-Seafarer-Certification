@@ -1,43 +1,94 @@
 ﻿@page "/upload"
 @page "/{LanguageCode}/upload"
 
+@inject IJSRuntime JSRuntime;
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
-@inject IStringLocalizer<CDNApplication.Resources.Pages.Common> CommonPageLocalizer
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
 
-<h1>@PageLocalizer["PageTitle"]</h1>
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
-<p>@PageLocalizer["PageDescription"]</p>
+<h1>@PageLocalizer["PageTitle"]</h1>
 
 <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
     <FluentValidationValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <div class="form-control-wrapper">
-            <label class="form-control-label required" for="@nameof(model.CdnNumber)">
-                @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-            </label>
-            <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" />
-            <ValidationMessage For="() => model.CdnNumber" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["EnterYourInformationPanelHeading"]</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required" for="@nameof(model.CdnNumber)">
+                            @PageLocalizer["CDNLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["CDNHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <InputText class="form-control" @bind-Value="@model.CdnNumber" id="@nameof(model.CdnNumber)" placeholder="@PageLocalizer["CDNPlaceholder"]" />
+                    <ValidationMessage For="() => model.CdnNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required" for="@nameof(model.PhoneNumber)">
+                            @PageLocalizer["PhoneNumberLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["PhoneNumberHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <InputText class="form-control" @bind-Value="@model.PhoneNumber" id="@nameof(model.PhoneNumber)" type="tel" placeholder="@PageLocalizer["PhoneNumberPlaceholder"]" />
+                    <ValidationMessage For="() => model.PhoneNumber" />
+                </div>
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label" for="@nameof(model.EmailAddress)">
+                            @PageLocalizer["EmailAddressLabel"]
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["EmailAddressHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <InputText class="form-control" @bind-Value="@model.EmailAddress" id="@nameof(model.EmailAddress)" type="email" placeholder="@PageLocalizer["EmailAddressPlaceholder"]" />
+                    <ValidationMessage For="() => model.EmailAddress" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="form-group">
-        <div class="form-control-wrapper">
-            <label class="form-control-label required">
-                @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-            </label>
-            <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
-            <ValidationMessage For="() => model.CertificateType" />
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h5 class="panel-title">@PageLocalizer["SelectCertificatePanelHeading"]</h5>
+        </header>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required">
+                            @PageLocalizer["SelectCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+                    </section>
+                    <TSelect Items="@certificateTypes" FieldName="EnglishName" OnSelectChangeFromChildEvent="CertificateTypeSelectionChanged" />
+                    <ValidationMessage For="() => model.CertificateType" />
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -45,59 +96,72 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="form-control-label required" for="@nameof(model.FileDescription)">
-                    @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" />
+                <div class="form-control-wrapper">
+                    <label class="form-control-label required" for="@nameof(model.FileDescription)">
+                        @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionPlaceholder"]" />
 
-                <label class="required" for="@nameof(model.UploadedFiles)">
-                    @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                </label>
-                <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" />
-                <ValidationMessage For="() => model.UploadedFiles" />
+                    <label class="required" for="@nameof(model.UploadedFiles)">
+                        @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                    </label>
+                    <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
 
-                @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
-                {
-                    var index = i;
-                    <p>
-                        @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
+                    @PageLocalizer["FilesAccepted"]
 
-                        <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
-                    </p>
-                }
-                <br />
-                <button id="add_another_file" type="button" class=" btn" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
+                    <ValidationMessage For="() => model.UploadedFiles" />
 
+                    @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
+                    {
+                        var index = i;
+                        <p>
+                            @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
+
+                            <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
+                        </p>
+                    }
+                    <br />
+                    <button id="add_another_file" type="button" class="btn btn-light" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
+
+                </div>
             </div>
         </div>
     </section>
 
     <button class=" btn btn-primary">
-        @CommonPageLocalizer["Next"]
+        @PageLocalizer["Next"]
+    </button>
+
+    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+        @CommonLocalizer["Previous"]
     </button>
 
 </EditForm>
 
 @code {
 
+    private BaseStepper stepper = new BaseStepper();
+
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
-
 
     private void HandleValidSubmit()
     {
 
         state.UploadDocumentPage = model;
 
-        Console.WriteLine(model);
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+    }
 
+    private void HandlePreviousClick()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
     async void HandleFileSelected(IFileListEntry[] files)
     {
-        
+
         if (string.IsNullOrWhiteSpace(model.FileDescription))
         {
             return;
@@ -105,6 +169,12 @@
 
         foreach (var item in files)
         {
+
+            if (!ExtensionIsValid(item.Name))
+            {
+                return;
+            }
+
             model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
 
             model.FileDescription = string.Empty;
@@ -120,6 +190,24 @@
         model.CertificateType = e.Value.ToString();
     }
 
+    bool ExtensionIsValid(string path)
+    {
+
+        string ext = System.IO.Path.GetExtension(path);
+
+        if (string.Equals(".jpg", ext, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(".png", ext, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(".gif", ext, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(".pdf", ext, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
     void RemoveFile(int index)
     {
         model.UploadedFiles.RemoveAt(index);
@@ -131,6 +219,8 @@
     {
         base.OnInitialized();
 
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(0);
+
         if (state.UploadDocumentPage != null)
         {
             model = state.UploadDocumentPage;
@@ -139,6 +229,12 @@
         }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        await JSRuntime.InvokeVoidAsync("initPopover").ConfigureAwait(false);
     }
 
 }

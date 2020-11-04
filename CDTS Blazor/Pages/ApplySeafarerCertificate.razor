@@ -1,39 +1,44 @@
 ﻿@page "/apply-seafarer-certificate"
 @page "/{LanguageCode}/apply-seafarer-certificate"
 @page "/fr/demander-certificat-marin"
+
+@inject IStringLocalizer<ApplySeafarerCertificate> PageLocalizer
+@inject IStringLocalizer<Common> CommonPageLocalizer
 <!--/* Template here: https://wet-boew.github.io/themes-dist/GCWeb/service-en.html /*-->
 
 @inherits BaseComponent
 
 <main property="mainContentOfPage" class="container" typeof="WebPageElement">
-    <h1 property="name" id="wb-cont">Submit your documents online for seafarer certification</h1>
-    <p class="gc-byline"><strong>From <a href="https://tc.canada.ca/en">Transport Canada</a></strong></p>
+    <h1 property="name" id="wb-cont">@PageLocalizer["PageTitle"]</h1>
+    <p class="gc-byline"><strong>@CommonPageLocalizer["From"] <a href="@CommonPageLocalizer["TCWebsiteLink"]" target="_blank">Transport Canada</a></strong></p>
     <div class="row">
         <div class="col-md-12">
-            <p>Save time and submit online for your certificate application. Select the certificate you want and add your required documents. We will review what you submit as part of your application.</p>
+            <p>@PageLocalizer["ExplanationParagraph"]</p>
             <section>
-                <h2>Eligibility</h2>
-                <p>To be eligible to submit your documents online, you will need to know:</p>
+                <h2>@PageLocalizer["WhatYouNeedTitle"]</h2>
+                <p>@PageLocalizer["WhatYouNeedEligibility"]</p>
                 <ul>
                     <li>
-                        <strong>Your Candidate Document Number (CDN).</strong>
-                        <p>If you do not have a CDN, check our <a href="https://tc.canada.ca/en/marine-transportation/marine-safety/questions-frequently-asked-regarding-certification-training">Frequently Asked Questions</a> for how to get one.</p>
+                        <strong>@PageLocalizer["WhatYouNeedCDNSubtitle"]</strong>
+                        <p>@PageLocalizer["WhatYouNeedCDNWhereToFind-Part1"] <a href="@CommonPageLocalizer["TCQuestionRegardingCertificationLink"]" target="_blank">@CommonPageLocalizer["FAQ"]</a> @PageLocalizer["WhatYouNeedCDNWhereToFind-Part2"]</p>
                     </li>
-                    <li><strong>The name of the certificate that you want.</strong></li>
                     <li>
-                        <strong>The required documents for the certificate you want.</strong>
-                        <p>If you are unsure of what is required, check the <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/">Marine Personnel Regulations</a>.</p>
+                        <strong>@PageLocalizer["WhatYouNeedCertificateSubtitle"]</strong>
+                        <p>@PageLocalizer["WhatYouNeedCertificate-Part1"] <a href="@CommonPageLocalizer["MPRLink"]" target="_blank">@CommonPageLocalizer["MPR"]</a> @PageLocalizer["WhatYouNeedCertificate-Part2"] <a href="@CommonPageLocalizer["TCRegionLink"]" target="_blank">@CommonPageLocalizer["TCServiceCentre"]</a> @PageLocalizer["WhatYouNeedCertificate-Part3"]</p>
+                    </li>
+                    <li>
+                        <strong>@PageLocalizer["WhatYouNeedDocumentSubtitle"]</strong>
+                        <p>@PageLocalizer["WhatYouNeedDocument-Part1"] <a href="@CommonPageLocalizer["MPRLink"]" target="_blank">@CommonPageLocalizer["MPR"]</a> @PageLocalizer["WhatYouNeedCertificate-Part2"] <a href="@CommonPageLocalizer["TCRegionLink"]" target="_blank">@CommonPageLocalizer["TCServiceCentre"]</a> @PageLocalizer["WhatYouNeedCertificate-Part3"]</p>
+                        <p>@PageLocalizer["DocumentSubmissionAcceptedFiles"]</p>
                     </li>
                 </ul>
             </section>
-            <section>
-                <h2>What you need before you start</h2>
-                <p>You will need access to digital copies of your documents. Scans, photos, and digital files are all accepted. You can select and add documents from your computer or device.</p>
-            </section>
-            <p><a href="/@LanguageCode/upload" class="btn btn-lg btn-primary mrgn-tp-md">Start Submission</a></p>
+            <button class=" btn btn-lg btn-primary mrgn-tp-md" @onclick="HandlePrimaryButton">
+                @PageLocalizer["StartSubmissionButton"]
+            </button>
             <section class="gc-cntct-lst">
-                <h2>Other ways to submit documents</h2>
-                <p><a href="https://tc.canada.ca/en/marine-transportation-regions">How to submit documents in person</a></p>
+                <h2>@PageLocalizer["OtherWaysToSubmit"]</h2>
+                <p><a href="@CommonPageLocalizer["TCRegionLink"]" target="_blank">@CommonPageLocalizer["HowToSubmitDocumentLinkText"]</a></p>
             </section>
         </div>
     </div>
@@ -90,7 +95,7 @@
                             </div>
                             <div class="gc-rprt-prblm-thnk gc-rprt-prblm-tggl hide" id="wb-auto-5">
                                 <h3>Thank you for your help!</h3>
-                                <p>You will not receive a reply. For enquiries, please <a href="https://www.canada.ca/en/contact.html">contact us</a>.</p>
+                                <p>You will not receive a reply. For enquiries, please <a href="https://www.canada.ca/en/contact.html" target="_blank">contact us</a>.</p>
                             </div>
                         </div>
                     </div>
@@ -107,4 +112,8 @@
 
 @code {
     // TODO: make this page work with handlebars
+    private void HandlePrimaryButton()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/upload");
+    }
 }

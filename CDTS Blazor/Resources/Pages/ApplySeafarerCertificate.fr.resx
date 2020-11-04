@@ -117,25 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
+  <data name="DocumentSubmissionAcceptedFiles" xml:space="preserve">
+    <value>Vous devez avoir accès à des copies numériques de vos documents. Nous acceptons les fichiers JPG, PNG, GIF et PDF. Vous pouvez sélectionner et ajouter des documents à partir de votre ordinateur ou de votre appareil cellulaire.</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="ExplanationParagraph" xml:space="preserve">
+    <value>Économisez du temps et soumettez en ligne votre demande de brevet de capacité. Sélectionnez le brevet que vous souhaitez obtenir et ajoutez les documents requis. Nous examinerons ce que vous soumettez dans le cadre de votre demande.</value>
   </data>
-  <data name="Document" xml:space="preserve">
-    <value>Document</value>
+  <data name="HowToSubmitDocumentLinkText" xml:space="preserve">
+    <value>Comment soumettre des documents en personne</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="OtherWaysToSubmit" xml:space="preserve">
+    <value>Autres moyens de soumettre des documents</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Next</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Soumettre vos documents en ligne pour la certification des gens de mer</value>
   </data>
-  <data name="Required" xml:space="preserve">
-    <value>Required</value>
+  <data name="StartSubmissionButton" xml:space="preserve">
+    <value>Commencer la soumission</value>
   </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
+  <data name="WhatYouNeedCDNSubtitle" xml:space="preserve">
+    <value>Votre numéro de candidat (CDN).</value>
+  </data>
+  <data name="WhatYouNeedCDNWhereToFind-Part1" xml:space="preserve">
+    <value>Si vous n’avez pas de CDN, consultez notre</value>
+  </data>
+  <data name="WhatYouNeedCDNWhereToFind-Part2" xml:space="preserve">
+    <value>pour savoir comment en obtenir un.</value>
+  </data>
+  <data name="WhatYouNeedCertificate-Part1" xml:space="preserve">
+    <value>Si vous avez des doutes au sujet du brevet que vous souhaitez obtenir, consultez le</value>
+  </data>
+  <data name="WhatYouNeedCertificate-Part2" xml:space="preserve">
+    <value>ou communiquez avec le</value>
+  </data>
+  <data name="WhatYouNeedCertificate-Part3" xml:space="preserve">
+    <value>De vote region</value>
+  </data>
+  <data name="WhatYouNeedCertificateSubtitle" xml:space="preserve">
+    <value>Le nom du brevet que vous souhaitez obtenir.</value>
+  </data>
+  <data name="WhatYouNeedDocument-Part1" xml:space="preserve">
+    <value>Si vous avez des doutes au sujet des documents que vous devez fournir, consultez le</value>
+  </data>
+  <data name="WhatYouNeedDocumentSubtitle" xml:space="preserve">
+    <value>Les documents requis pour le brevet que vous avez sélectionné.</value>
+  </data>
+  <data name="WhatYouNeedEligibility" xml:space="preserve">
+    <value>Pour pouvoir soumettre vos documents en ligne, vous avez besoin des éléments suivants:</value>
+  </data>
+  <data name="WhatYouNeedTitle" xml:space="preserve">
+    <value>Ce dont vous avez besoin avant de commencer</value>
   </data>
 </root>

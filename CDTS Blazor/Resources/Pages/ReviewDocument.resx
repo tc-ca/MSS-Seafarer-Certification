@@ -124,7 +124,7 @@
     <value>Selected certificate</value>
   </data>
   <data name="CDNNumber" xml:space="preserve">
-    <value>Candidate Document Number</value>
+    <value>Candidate Document Number (CDN)</value>
   </data>
   <data name="Attachment" xml:space="preserve">
     <value>Attachment</value>
@@ -136,7 +136,9 @@
     <value>Submit</value>
   </data>
   <data name="PageDescription" xml:space="preserve">
-    <value>Review your details. Make any edits or submit when you are ready.</value>
+    <value>Review your details. Make any edits or submit when you are ready.
+
+If you provided an email address, we will send you a copy of this page for your records after you submit.</value>
   </data>
   <data name="YourCertificateSelection" xml:space="preserve">
     <value>Your certificate selection</value>
@@ -146,5 +148,11 @@
   </data>
   <data name="YourInformation" xml:space="preserve">
     <value>Your information</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
   </data>
 </root>

@@ -2,13 +2,18 @@
 @page "/{LanguageCode}/review"
 
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
-@inject IStringLocalizer<Resources.Pages.Common> CommonPageLocalizer
+@inject IStringLocalizer<Common> CommonPageLocalizer
 @inject Utilities.SessionState state
+@inject Data.Services.MtoaEmailService emailService
+@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
+@using CDNApplication.TCComponents.Stepper
 @inherits BaseComponent
+
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
@@ -24,34 +29,42 @@ else
 {
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span id="1">@PageLocalizer["YourInformation"]</span>
+            <span id="1"><strong>@PageLocalizer["YourInformation"]</strong></span>
             @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
 
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">@PageLocalizer["CDNNumber"]:</div>
-                <div class="col-md-3">@model.CdnNumber</div>
+                <div class="col-md-5">@PageLocalizer["CDNNumber"]:</div>
+                <div class="col-md-7">@model.CdnNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">@PageLocalizer["PhoneNumber"]:</div>
+                <div class="col-md-7">@model.PhoneNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">@PageLocalizer["EmailAddress"]:</div>
+                <div class="col-md-7">@model.EmailAddress</div>
             </div>
         </div>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span id="1">@PageLocalizer["YourCertificateSelection"]</span>
+            <span id="1"><strong>@PageLocalizer["YourCertificateSelection"]</strong></span>
             @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">@PageLocalizer["SelectedCertificate"]:</div>
-                <div class="col-md-3">@model.CertificateType</div>
+                <div class="col-md-5">@PageLocalizer["SelectedCertificate"]:</div>
+                <div class="col-md-7">@model.CertificateType</div>
             </div>
         </div>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span class="panel-header" id="3">@PageLocalizer["YourDocument"]</span>
+            <span class="panel-header" id="3"><strong>@PageLocalizer["YourDocument"]</strong></span>
             @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
@@ -76,12 +89,12 @@ else
         </div>
     </div>
 
-    <button class="btn btn-light" @onclick="GoBack" role="button">
-        @CommonPageLocalizer["Back"]
-    </button>
-
     <button class="btn btn-primary" @onclick="Submit" role="button">
         @CommonPageLocalizer["Submit"]
+    </button>
+
+    <button class="btn btn-secondary" @onclick="GoBack" role="button">
+        @CommonPageLocalizer["Previous"]
     </button>
 }
 
@@ -98,6 +111,11 @@ else
 
         state.UploadDocumentPage = null;
 
+        if (!String.IsNullOrEmpty(model.EmailAddress))
+        {
+            emailService.SendEmailToApplicant(model).Wait();
+        }
+
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
 
     }
@@ -112,10 +130,18 @@ else
 
         base.OnInitialized();
 
+        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
+
         _confirmationGuid = new Random().Next(100000, 9999999);
+
+        if (state.UploadDocumentPage == null)
+        {
+            state.UploadDocumentPage = new UploadDocumentPageModel();
+        }
 
         model = state.UploadDocumentPage;
 
+        model.ConfirmationNumber = _confirmationGuid.ToString();
     }
 
 }

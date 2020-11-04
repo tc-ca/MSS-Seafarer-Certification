@@ -129,10 +129,43 @@
   <data name="Required" xml:space="preserve">
     <value>(required)</value>
   </data>
-  <data name="SubmitButton" xml:space="preserve">
-    <value>Submit</value>
+  <data name="DocumentUpload_Step1" xml:space="preserve">
+    <value>Add information and documents</value>
+  </data>
+  <data name="DocumentUpload_Step2" xml:space="preserve">
+    <value>Review and submit</value>
+  </data>
+  <data name="DocumentUpload_Step3" xml:space="preserve">
+    <value>Thank you and confirmation</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>Frequently Asked Questions</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="MPR" xml:space="preserve">
+    <value>Marine Personnel Regulations</value>
+  </data>
+  <data name="MPRLink" xml:space="preserve">
+    <value>https://laws-lois.justice.gc.ca/eng/regulations/SOR-2007-115/</value>
+  </data>
+  <data name="TCQuestionRegardingCertificationLink" xml:space="preserve">
+    <value>https://tc.canada.ca/en/marine-transportation/marine-safety/questions-frequently-asked-regarding-certification-training#qt1</value>
+  </data>
+  <data name="TCRegionLink" xml:space="preserve">
+    <value>https://tc.canada.ca/en/marine-transportation-regions</value>
+  </data>
+  <data name="TCServiceCentre" xml:space="preserve">
+    <value>Transport Canada Service Centre</value>
+  </data>
+  <data name="TCWebsiteLink" xml:space="preserve">
+    <value>https://tc.canada.ca/en</value>
   </data>
 </root>
