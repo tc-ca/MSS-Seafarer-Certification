@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PageTitle" xml:space="preserve">
-    <value>Saisissez vos informations et ajoutez vos documents</value>
+    <value>Ajouter vos renseignements et documents</value>
   </data>
   <data name="CDNLabel" xml:space="preserve">
-    <value>Entrez votre numéro de document de candidat (CDN)</value>
+    <value>Numéro de candidat (CDN)</value>
   </data>
   <data name="SelectCertificateLabel" xml:space="preserve">
-    <value>Sélectionnez le certificat que vous souhaitez</value>
+    <value>Sélectionnez le brevet que vous souhaitez obtenir</value>
   </data>
   <data name="SelectCertificateDropDown" xml:space="preserve">
     <value>Sélectionnez le certificat</value>
   </data>
   <data name="SelectFileLabel" xml:space="preserve">
-    <value>Sélectionnez votre dossier</value>
+    <value>Sélectionnez votre document</value>
   </data>
   <data name="FileUploadedSuccessText" xml:space="preserve">
     <value>Le fichier {0} a été téléchargé</value>
@@ -145,54 +145,57 @@
     <value>Ajoutez vos documents</value>
   </data>
   <data name="AddAnotherFileText" xml:space="preserve">
-    <value>Ajoutez un autre fichier</value>
+    <value>Ajoutez un autre document</value>
   </data>
   <data name="FileDescriptionPlaceholder" xml:space="preserve">
-    <value>Exemple : Journal de bord en temps de mer</value>
+    <value>Exemple: Registre de service en mer</value>
   </data>
   <data name="EmailAddressLabel" xml:space="preserve">
     <value>Adresse électronique</value>
   </data>
   <data name="EnterYourInformationPanelHeading" xml:space="preserve">
-    <value>Saisissez vos informations</value>
+    <value>Entrez vos renseignements</value>
   </data>
   <data name="PhoneNumberLabel" xml:space="preserve">
     <value>Numéro de téléphone</value>
   </data>
   <data name="SelectCertificatePanelHeading" xml:space="preserve">
-    <value>Sélectionnez votre certificat</value>
+    <value>Sélectionnez votre brevet</value>
   </data>
   <data name="PrimaryButton" xml:space="preserve">
     <value>Procéder à l'examen</value>
   </data>
   <data name="CDNHint" xml:space="preserve">
-    <value>Votre numéro de document de candidat (CDN) est une combinaison de 6 ou 7 chiffres et lettres.</value>
+    <value>Votre numéro de candidat (CDN) est une combinaison de 6 ou 7 chiffres et lettres.</value>
   </data>
   <data name="CDNPlaceholder" xml:space="preserve">
     <value>Exemple : 123456A</value>
   </data>
   <data name="EmailAddressHint" xml:space="preserve">
-    <value>&lt;p&gt;Si vous saisissez une adresse électronique, nous l'utiliserons pour envoyer un enregistrement de votre demande après l'avoir soumise. Nous l'utiliserons également pour vous contacter si nécessaire.&lt;/p&gt;
+    <value>&lt;p&gt;Si vous saisissez une adresse électronique, nous l’utiliserons pour vous envoyer un accusé de réception de votre demande. Nous l’utiliserons également pour communiquer avec vous en cas de besoin. &lt;/p&gt;
 
-&lt;p&gt;Si vous n'entrez pas d'adresse électronique, nous vous montrerons simplement un avis de confirmation à l'écran après que vous ayez soumis votre demande.&lt;/p&gt;</value>
+&lt;p&gt;Si vous n’entrez pas d’adresse électronique, nous afficherons simplement un avis de confirmation à l’écran après que vous ayez soumis votre demande.&lt;/p&gt;</value>
   </data>
   <data name="EmailAddressPlaceholder" xml:space="preserve">
     <value>Exemple : jeansmith@gmail.com</value>
   </data>
   <data name="PhoneNumberHint" xml:space="preserve">
-    <value>Nous utiliserons ce numéro de téléphone pour vous contacter en cas de besoin.</value>
+    <value>Nous utiliserons ce numéro de téléphone pour communiquer avec vous au besoin.</value>
   </data>
   <data name="PhoneNumberPlaceholder" xml:space="preserve">
     <value>Exemple : XXX-XXX-XXXX</value>
   </data>
   <data name="SelectCertificateHint" xml:space="preserve">
-    <value>Si vous n'êtes pas sûr du certificat que vous voulez, consultez le &lt;a href="https://laws-lois.justice.gc.ca/fra/reglements/DORS-2007-115/" target="_blank"&gt;Règlement sur le personnel maritime&lt;/a&gt; ou contactez le &lt;a href="https://tc.canada.ca/fr/transport-maritime-dans-regions" target="_blank"&gt;Centre de service de Transports Canada&lt;/a&gt; de votre localité.</value>
+    <value>Si vous avez des doutes au sujet du brevet que vous souhaitez obtenir, consultez le &lt;a href="https://laws-lois.justice.gc.ca/fra/reglements/DORS-2007-115/" target="_blank"&gt;Règlement sur le personnel maritime&lt;/a&gt; ou communiquez avec le &lt;a href="https://tc.canada.ca/fr/transport-maritime-dans-regions" target="_blank"&gt;Centre de service de Transports Canada&lt;/a&gt; de votre région.</value>
   </data>
   <data name="SelectCertificatePlaceholder" xml:space="preserve">
     <value>Exemple : Deuxième ingénieur, navire à vapeur</value>
   </data>
   <data name="FilesAccepted" xml:space="preserve">
-    <value>Nous acceptons les fichiers JPG, PNG, GIF et PDF.</value>
+    <value>Nous acceptons JPG, PNG, GIF et PDF.</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Procéder à la révision</value>
   </data>
   <data name="AddDocument" xml:space="preserve">
     <value>Ajouter un document</value>

@@ -110,7 +110,7 @@
 
                         <div class="col-md-2">
                             <button class=" btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @if (model.UploadedFiles.Any())
+                                @if (model.UploadedFiles != null && model.UploadedFiles.Any())
                                 {
                                     @PageLocalizer["AddNewDocument"]
                                 }
@@ -149,7 +149,7 @@
     </section>
 
     <button class=" btn btn-primary">
-        @CommonLocalizer["Next"]
+        @PageLocalizer["Next"]
     </button>
 
     <button class=" btn btn-secondary" @onclick="HandlePreviousClick">

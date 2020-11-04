@@ -194,6 +194,9 @@
   <data name="FilesAccepted" xml:space="preserve">
     <value>We accept  JPG, PNG, GIF, and PDF files.</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="AddDocument" xml:space="preserve">
     <value>Add Document</value>
   </data>
