@@ -12,12 +12,14 @@ namespace CDNApplication.Test
 
         public AzureBlobStorageTests()
         {
-            azureBlobService = InitializeServices.GetAzureBlobService();
+            //azureBlobService = InitializeServices.GetAzureBlobService();
         }
 
-        [Theory]
-        [InlineData("random-text.txt")]
-        public async void UploadFileAsync_UploadTextFile_ReturnsNotNull(string fileName)
+        [Fact]
+        //[Theory]
+        //[InlineData("random-text.txt")]
+        //public async void UploadFileAsync_UploadTextFile_ReturnsNotNull(string fileName)
+        public async void UploadFileAsync_UploadTextFile_ReturnsNotNull()
         {
             /*
             // Arrange
