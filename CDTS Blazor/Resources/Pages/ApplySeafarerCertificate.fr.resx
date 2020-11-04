@@ -123,6 +123,12 @@
   <data name="ExplanationParagraph" xml:space="preserve">
     <value>Économisez du temps et soumettez en ligne votre demande de brevet de capacité. Sélectionnez le brevet que vous souhaitez obtenir et ajoutez les documents requis. Nous examinerons ce que vous soumettez dans le cadre de votre demande.</value>
   </data>
+  <data name="HowToSubmitDocumentLinkText" xml:space="preserve">
+    <value>Comment soumettre des documents en personne</value>
+  </data>
+  <data name="OtherWaysToSubmit" xml:space="preserve">
+    <value>Autres moyens de soumettre des documents</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Soumettre vos documents en ligne pour la certification des gens de mer</value>
   </data>
@@ -151,7 +157,7 @@
     <value>Le nom du brevet que vous souhaitez obtenir.</value>
   </data>
   <data name="WhatYouNeedDocument-Part1" xml:space="preserve">
-    <value>Si vous avez des doutes au sujet du brevet que vous souhaitez obtenir, consultez le</value>
+    <value>Si vous avez des doutes au sujet des documents que vous devez fournir, consultez le</value>
   </data>
   <data name="WhatYouNeedDocumentSubtitle" xml:space="preserve">
     <value>Les documents requis pour le brevet que vous avez sélectionné.</value>
