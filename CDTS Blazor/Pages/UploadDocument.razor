@@ -105,7 +105,28 @@
                     <label class="required" for="@nameof(model.UploadedFiles)">
                         @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                     </label>
-                    <InputFile class="form-control" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <button class=" btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
+                                @if (model.UploadedFiles.Any())
+                                {
+                                    @PageLocalizer["AddNewDocument"]
+                                }
+                                else
+                                {
+                                    @PageLocalizer["AddDocument"]
+                                }
+                            </button>
+
+                            <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                        </div>
+
+                        <div class="col-md-10">
+                            <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
+                        </div>
+
+                    </div>
 
                     @PageLocalizer["FilesAccepted"]
 
@@ -120,8 +141,6 @@
                             <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
                         </p>
                     }
-                    <br />
-                    <button id="add_another_file" type="button" class="btn btn-light" onclick="trigerInputFileButton()">@PageLocalizer["AddAnotherFileText"]</button>
 
                 </div>
             </div>
@@ -145,6 +164,10 @@
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
+
+    private IFileListEntry singleFile = null;
+
+    private string currentFileName = "";
 
     private void HandleValidSubmit()
     {
@@ -175,6 +198,10 @@
                 return;
             }
 
+            singleFile = item;
+
+            currentFileName = item.Name;
+
             model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
 
             model.FileDescription = string.Empty;
@@ -182,7 +209,7 @@
 
         StateHasChanged();
 
-        await Task.Delay(100);
+        await Task.Delay(0);
     }
 
     private void CertificateTypeSelectionChanged(ChangeEventArgs e)
