@@ -1,6 +1,7 @@
 ﻿namespace CDNApplication.Views
 {
     using System;
+    using System.Linq;
     using CDNApplication.Utilities;
     using GoC.WebTemplate.Components.Core.Services;
     using Microsoft.AspNetCore.Http;
@@ -40,13 +41,15 @@
         /// </summary>
         public void InitializePage()
         {
+            var encodedUrl = Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedPathAndQuery(this.httpContextAccessor.HttpContext.Request).Split('/');
+            var urlPath = string.Join("/", encodedUrl.SkipLast(2).Skip(1));
             GoC.WebTemplate.Components.Model webTemplateModel;
             webTemplateModel = this.modelAccessor.Model;
             var currentLanguage = SessionHelper.GetLanguageFromContext(this.httpContextAccessor.HttpContext);
             var toggleLanguage = currentLanguage.Equals("en", StringComparison.OrdinalIgnoreCase) ? "/fr" : "/en"; // flip
             this.logger.LogTrace($"current Language: {currentLanguage} | toggle Language: {toggleLanguage}");
-            string baseUrl = $"{this.httpContextAccessor.HttpContext.Request.Scheme}://{this.httpContextAccessor.HttpContext.Request.Host.Value}{this.config["BaseUrl"]}";
-            webTemplateModel.LanguageLink.Href = $"{baseUrl}{toggleLanguage}/langtoggle";
+            string baseUrl = $"{this.httpContextAccessor.HttpContext.Request.Scheme}://{this.httpContextAccessor.HttpContext.Request.Host.Value}/{urlPath}";
+            webTemplateModel.LanguageLink.Href = $"{baseUrl}/{toggleLanguage}/langtoggle";
             webTemplateModel.ApplicationTitle.Href = "/";
             webTemplateModel.ApplicationTitle.NewWindow = true;
             webTemplateModel.DateModified = new DateTime(2020, 04, 29);
