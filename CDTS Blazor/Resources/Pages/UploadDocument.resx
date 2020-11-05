@@ -200,7 +200,7 @@
   <data name="AddDocument" xml:space="preserve">
     <value>Add Document</value>
   </data>
-  <data name="AddNewDocument" xml:space="preserve">
-    <value>Add new document</value>
+  <data name="AddAnotherDocument" xml:space="preserve">
+    <value>Add another document</value>
   </data>
 </root>

@@ -108,11 +108,11 @@
 
                     <div class="form-row">
 
-                        <div class="col-md-2">
-                            <button class=" btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
+                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
+                            <button class="btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
                                 @if (model.UploadedFiles != null && model.UploadedFiles.Any())
                                 {
-                                    @PageLocalizer["AddNewDocument"]
+                                    @PageLocalizer["AddAnotherDocument"]
                                 }
                                 else
                                 {
@@ -123,7 +123,7 @@
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
                         </div>
 
-                        <div class="col-md-10">
+                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-10"))">
                             <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
                         </div>
 
@@ -166,8 +166,6 @@
 
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
-    private IFileListEntry singleFile = null;
-
     private string currentFileName = "";
 
     private void HandleValidSubmit()
@@ -183,7 +181,7 @@
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
-    async void HandleFileSelected(IFileListEntry[] files)
+    void HandleFileSelected(IFileListEntry[] files)
     {
 
         if (string.IsNullOrWhiteSpace(model.FileDescription))
@@ -199,8 +197,6 @@
                 return;
             }
 
-            singleFile = item;
-
             currentFileName = item.Name;
 
             model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
@@ -210,7 +206,6 @@
 
         StateHasChanged();
 
-        await Task.Delay(0);
     }
 
     private void CertificateTypeSelectionChanged(ChangeEventArgs e)
