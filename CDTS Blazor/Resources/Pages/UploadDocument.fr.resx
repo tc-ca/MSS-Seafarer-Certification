@@ -197,4 +197,10 @@
   <data name="Next" xml:space="preserve">
     <value>Procéder à la révision</value>
   </data>
+  <data name="AddDocument" xml:space="preserve">
+    <value>Ajouter un document</value>
+  </data>
+  <data name="AddAnotherDocument" xml:space="preserve">
+    <value>Ajouter un autre document</value>
+  </data>
 </root>
