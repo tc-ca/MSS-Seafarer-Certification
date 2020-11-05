@@ -8,111 +8,143 @@
     using CDNApplication.Data.Services;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Rest client that can be used by the application to make API calls.
+    /// </summary>
     public class RestClient : IRestClient
     {
         /// <summary>
         /// Best practice: Make HttpClient static and reuse.
         /// Creating a new instance for each request is an antipattern that can result in socket exhaustion.
         /// </summary>
-        private static readonly HttpClient _client;
+        private static readonly HttpClient Client = new HttpClient();
+        private readonly string mtoaApiKey;
+        private readonly string mtoaJwtToken;
+        private readonly IServiceLocator serviceLocator;
 
         /// <summary>
-        /// Api key for MTOA.
+        /// Initializes a new instance of the <see cref="RestClient"/> class.
         /// </summary>
-        private readonly string _mtoaApiKey;
-
-        /// <summary>
-        /// JWT token for MTOA API.
-        /// </summary>
-        private readonly string _mtoaJwtToken;
-
-        private readonly IServiceLocator _serviceLocator;
-
-        static RestClient()
-        {
-            _client = new HttpClient(); 
-        }
-
+        /// <param name="serviceLocator">Service locator.</param>
+        /// <param name="azureKeyVaultService">Azure Key Vault instance for the application.</param>
         public RestClient(IServiceLocator serviceLocator, AzureKeyVaultService azureKeyVaultService)
         {
-            this._serviceLocator = serviceLocator;
-            this._mtoaApiKey = azureKeyVaultService.GetSecretByName("MtoaApiKey");
-            this._mtoaJwtToken = azureKeyVaultService.GetSecretByName("MtoaJwt");
+            this.serviceLocator = serviceLocator;
 
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", this._mtoaJwtToken);
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", this._mtoaApiKey);
+            if (azureKeyVaultService != null)
+            {
+            this.mtoaApiKey = azureKeyVaultService.GetSecretByName("MtoaApiKey");
+            this.mtoaJwtToken = azureKeyVaultService.GetSecretByName("MtoaJwt");
+            }
+
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", this.mtoaJwtToken);
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", this.mtoaApiKey);
         }
 
-        public async Task<TReturnMessage> GetAsync<TReturnMessage>(ServiceDomain serviceName, string path)
+        /// <summary>
+        /// Makes a GET call to the specified API.
+        /// </summary>
+        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
+        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
+        /// <param name="path">Path to the API being called on the service.</param>
+        /// <returns>Return bject as specified by the API.</returns>
+        public async Task<TReturnMessage> GetAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path)
             where TReturnMessage : class, new()
         {
             HttpResponseMessage response;
 
-            var uri = new Uri($"{_serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
-            // Here is actual call to target service              
-            response = await _client.GetAsync(uri);
+            // Here is actual call to target service
+            response = await Client.GetAsync(uri).ConfigureAwait(true);
 
             if (!response.IsSuccessStatusCode)
             {
                 var ex = new HttpRequestException($"{response.StatusCode} -- {response.ReasonPhrase}");
-                
+
                 // Stuff the Http StatusCode in the Data collection with key 'StatusCode'
                 ex.Data.Add("StatusCode", response.StatusCode);
                 throw ex;
             }
 
-            var result = await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
 
             return JsonConvert.DeserializeObject<TReturnMessage>(result);
         }
 
-        public async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceDomain serviceName, string path, object dataObject = null)
+        /// <summary>
+        /// Makes a POST call to the specified API.
+        /// </summary>
+        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
+        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
+        /// <param name="path">Path to the API being called on the service.</param>
+        /// <param name="dataObject">Object to post to the API.</param>
+        /// <returns>Return bject as specified by the API.</returns>
+        public async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
-
         {
-            var uri = new Uri($"{_serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
             var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
 
-            var response = await _client.PostAsync(uri, new StringContent(content, Encoding.UTF8, "application/json"));
-            response.EnsureSuccessStatusCode();
-
-            if (!response.IsSuccessStatusCode)
+            using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
-                return await Task.FromResult(new TReturnMessage());
-            }
+                var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(true);
+                response.EnsureSuccessStatusCode();
 
-            var result = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TReturnMessage>(result);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(true);
+                }
+
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                return JsonConvert.DeserializeObject<TReturnMessage>(result);
+            }
         }
 
-        public async Task<TReturnMessage> PutAsync<TReturnMessage>(ServiceDomain serviceName, string path, object dataObject = null)
+        /// <summary>
+        /// Makes a PUT call to the specified API.
+        /// </summary>
+        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
+        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
+        /// <param name="path">Path to the API being called on the service.</param>
+        /// <param name="dataObject">Object to put to the API.</param>
+        /// <returns>Return bject as specified by the API.</returns>
+        public async Task<TReturnMessage> PutAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
         {
-            var uri = new Uri($"{_serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
             var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
 
-            var response = await _client.PutAsync(uri, new StringContent(content, Encoding.UTF8, "application/json"));
-            response.EnsureSuccessStatusCode();
-
-            if (!response.IsSuccessStatusCode)
+            using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
-                return await Task.FromResult(new TReturnMessage());
-            }
+                var response = await Client.PutAsync(uri, stringContent).ConfigureAwait(true);
+                response.EnsureSuccessStatusCode();
 
-            var result = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TReturnMessage>(result);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(true);
+                }
+
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                return JsonConvert.DeserializeObject<TReturnMessage>(result);
+            }
         }
 
-        public async Task<bool> DeleteAsync(ServiceDomain serviceName, string path)
+        /// <summary>
+        /// Makes a DELETE call to the specified API.
+        /// </summary>
+        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
+        /// <param name="path">Path to the API being called on the service.</param>
+        /// <returns>A boolean value representing result of operation.</returns>
+        public async Task<bool> DeleteAsync(ServiceLocatorDomain serviceName, string path)
         {
-            var uri = new Uri($"{_serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
-            var response = await _client.DeleteAsync(uri);
+            var response = await Client.DeleteAsync(uri).ConfigureAwait(true);
             response.EnsureSuccessStatusCode();
 
             return response.IsSuccessStatusCode;

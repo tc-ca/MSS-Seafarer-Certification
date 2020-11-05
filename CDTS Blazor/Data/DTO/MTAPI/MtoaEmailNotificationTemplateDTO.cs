@@ -6,7 +6,7 @@
     /// <summary>
     /// Payload for the MTOA EmailNotification template.
     /// </summary>
-    public class MtoaEmailNotificationTemplateDTO
+    public class MtoaEmailNotificationTemplateDto
     {
         /// <summary>
         /// Gets or sets the name for the email template as stored in MTOA.
@@ -15,7 +15,7 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the service name as defined in MTOA.
+        /// Gets or sets the seafarer service name as defined in MTOA.
         /// </summary>
         [JsonPropertyName("ServiceName")]
         public string ServiceName { get; set; }

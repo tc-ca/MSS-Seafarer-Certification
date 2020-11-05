@@ -49,7 +49,7 @@ namespace CDNApplication
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
         /// <param name="mtoaServices">Mtoa services to initialize application settings.</param>
-        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env, IMtoaServices mtoaServices)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMtoaServices mtoaServices)
         {
             if (app == null)
             {
@@ -83,7 +83,7 @@ namespace CDNApplication
             // update/create the MTOA submission email template
             if (mtoaServices != null)
             {
-                await mtoaServices.PostSubmissionEmailNotificationTemplateAsync().ConfigureAwait(false);
+                InitializeMtoaEmailTemplatesAsync(mtoaServices);
             }
         }
 
@@ -134,6 +134,11 @@ namespace CDNApplication
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+        }
+
+        private static async Task InitializeMtoaEmailTemplatesAsync(IMtoaServices mtoaServices)
+        {
+            await mtoaServices.PostSubmissionEmailNotificationTemplateAsync().ConfigureAwait(false);
         }
     }
 }

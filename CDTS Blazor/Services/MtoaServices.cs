@@ -1,5 +1,6 @@
 ﻿namespace CDNApplication.Services
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
@@ -7,23 +8,26 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
+    /// <summary>
+    /// Class containing all MTOA service calls needed by the application.
+    /// </summary>
     public class MtoaServices : IMtoaServices
     {
-        private readonly IConfiguration _configuration;
-        private readonly IRestClient _restClient;
-        private readonly ILogger<MtoaServices> _logger;
+        private readonly IConfiguration configuration;
+        private readonly IRestClient restClient;
+        private readonly ILogger<MtoaServices> logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MtoaServices"/> class.
         /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="restClient"></param>
-        /// <param name="logger"></param>
+        /// <param name="configuration">Application configuration service.</param>
+        /// <param name="restClient">REST client service.</param>
+        /// <param name="logger">Application logger service.</param>
         public MtoaServices(IConfiguration configuration, IRestClient restClient, ILogger<MtoaServices> logger)
         {
-            this._configuration = configuration;
-            this._restClient = restClient;
-            this._logger = logger;
+            this.configuration = configuration;
+            this.restClient = restClient;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -32,27 +36,27 @@
         /// <returns>Returns nothing (void).</returns>
         public async Task PostSubmissionEmailNotificationTemplateAsync()
         {
-            string emailNotificationServicePath = this._configuration.GetSection("MtoaServiceSettings")["EmailNotificationTemplatePath"];
+            string emailNotificationServicePath = this.configuration.GetSection("MtoaServiceSettings")["EmailNotificationTemplatePath"];
 
-            MtoaEmailNotificationTemplateDTO mtoaEmailNotificationTemplate = this.GetSubmissionEmailNotificationTemplate();
+            MtoaEmailNotificationTemplateDto mtoaEmailNotificationTemplate = this.GetSubmissionEmailNotificationTemplate();
 
             try
             {
-                var result = await this._restClient.PostAsync<MtoaEmailNotificationTemplateDTO>(ServiceDomain.Mtoa, emailNotificationServicePath, mtoaEmailNotificationTemplate);
+                await this.restClient.PostAsync<MtoaEmailNotificationTemplateDto>(ServiceLocatorDomain.Mtoa, emailNotificationServicePath, mtoaEmailNotificationTemplate).ConfigureAwait(true);
             }
-            catch
+            catch (Exception e)
             {
-                // TODO: Log the error and continue
-                return;
+                this.logger.LogError($"{System.Reflection.MethodInfo.GetCurrentMethod()}: {e.Message}");
+                throw;
             }
         }
 
-        private MtoaEmailNotificationTemplateDTO GetSubmissionEmailNotificationTemplate()
+        private MtoaEmailNotificationTemplateDto GetSubmissionEmailNotificationTemplate()
         {
-            MtoaEmailNotificationTemplateDTO mtoaEmailNotificationTemplate = new MtoaEmailNotificationTemplateDTO();
+            MtoaEmailNotificationTemplateDto mtoaEmailNotificationTemplate = new MtoaEmailNotificationTemplateDto();
 
-            mtoaEmailNotificationTemplate.Name = this._configuration.GetSection("MtoaServiceSettings")["EmailSubmissionTemplateName"];
-            mtoaEmailNotificationTemplate.ServiceName = this._configuration.GetSection("MtoaServiceSettings")["SeafarerCertificationServiceName"];
+            mtoaEmailNotificationTemplate.Name = this.configuration.GetSection("MtoaServiceSettings")["EmailSubmissionTemplateName"];
+            mtoaEmailNotificationTemplate.ServiceName = this.configuration.GetSection("MtoaServiceSettings")["SeafarerCertificationServiceName"];
             mtoaEmailNotificationTemplate.HasSubjectParameters = true;
             mtoaEmailNotificationTemplate.SubjectTextEnglish = File.ReadAllText($"Resources/EmailTemplates/SubmissionEmailTemplateSubjectTextEnglish.html");
             mtoaEmailNotificationTemplate.SubjectTextFrench = File.ReadAllText($"Resources/EmailTemplates/SubmissionEmailTemplateSubjectTextFrench.html");
