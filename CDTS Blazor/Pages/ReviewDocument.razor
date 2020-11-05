@@ -17,7 +17,7 @@
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
-<p>@PageLocalizer["PageDescription"]</p>
+@((MarkupString)@PageLocalizer["PageDescription"].Value)
 
 @if (model == null)
 {
