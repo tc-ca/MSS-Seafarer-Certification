@@ -3,6 +3,7 @@ namespace CDNApplication
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Threading.Tasks;
     using CDNApplication.Data.Services;
     using CDNApplication.Middleware;
     using CDNApplication.Models;
@@ -13,10 +14,8 @@ namespace CDNApplication
     using CDNApplication.Views;
     using FluentValidation;
     using GoC.WebTemplate.Components.Core.Services;
-    using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -49,7 +48,8 @@ namespace CDNApplication
         /// </summary>
         /// <param name="app">This object corresponds to the current running application.</param>
         /// <param name="env">Our web hosting environment.</param>
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <param name="mtoaServices">Mtoa services to initialize application settings.</param>
+        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env, IMtoaServices mtoaServices)
         {
             if (app == null)
             {
@@ -79,6 +79,12 @@ namespace CDNApplication
                         endpoints.MapBlazorHub();
                         endpoints.MapFallbackToPage("/_Host");
                     });
+
+            // update/create the MTOA submission email template
+            if (mtoaServices != null)
+            {
+                await mtoaServices.PostSubmissionEmailNotificationTemplateAsync().ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -98,13 +104,17 @@ namespace CDNApplication
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            
+
+            services.AddSingleton<IServiceLocator, ServiceLocator>();
+            services.AddScoped<IRestClient, RestClient>();
+
             services.AddScoped<UploadDocumentsStepper>();
             services.AddScoped<UploadDocumentPageModel>();
             services.AddScoped<SessionState>();
-            
+
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
+            services.AddTransient<IMtoaServices, MtoaServices>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -125,6 +135,5 @@ namespace CDNApplication
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
         }
-
     }
 }
