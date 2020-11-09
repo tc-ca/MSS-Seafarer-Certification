@@ -134,6 +134,7 @@ namespace CDNApplication
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddModelAccessor();
             services.ConfigureGoCTemplateRequestLocalization(); // if GoC.WebTemplate-Components.Core (in NuGet) >= v2.1.1
+            services.AddApplicationInsightsTelemetry();
         }
 
         private static async Task InitializeMtoaEmailTemplatesAsync(IMtoaServices mtoaServices)
