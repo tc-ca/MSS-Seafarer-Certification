@@ -13,13 +13,19 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
 using System.Threading.Tasks;
 
 namespace CDNApplication.Data.Services
 {
     public class MtoaFileService
     {
+
         private readonly string baseURL = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/api/v1/"; //This is for Dev only works within organizational network.
+
+        // Kanga INT . Tested but did not work. 11-04
+        //private string base_uri_str = "https://wwwappstestext.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/api/v1/";
+
 
         private string api_key;
         private string jwt;
@@ -32,14 +38,14 @@ namespace CDNApplication.Data.Services
         }
 
 
-         /// <summary> 
-            ///following method uploads files after getting files from pageModel.
-            // this method returns a list of attachment IDs after storing files on MTOA storage. These IDs can be used to retrieving those file at later time.
-            // if there is a null value in the List<int>, it means that the corresponding file was not uploaded successfully. Like for a virus issue.
-        /// </summary>
+        /// <summary> 
+        ///following method uploads files after getting files from pageModel.
+        // this method returns a list of attachment IDs after storing files on MTOA storage. These IDs can be used to retrieving those file at later time.
+        // if there is a null value in the List<int>, it means that the corresponding file was not uploaded successfully. Like for a virus issue.
         /// <param name="pageModel"></param>
-        /// <returns></returns>
-        public  List<int> UploadFilesInPageModelAsync(UploadDocumentPageModel pageModel)
+        /// <returns> List<int> which represent the Mtoa file attachment IDs </returns>
+        /// </summary>     
+        public List<int> UploadFilesInPageModelAsync(UploadDocumentPageModel pageModel)
         {
             List<int> fileAttachmentIDs = null;
             // Following is a temporary static serviceRequestId.
@@ -53,7 +59,7 @@ namespace CDNApplication.Data.Services
                 fileAttachmentIDs = new List<int>();
                 foreach (var file in fileAttachments)
                 {
-                    var storedFileAttachment = this.UploadFile(serviceRequestId, file, this.api_key, this.jwt, this.baseURL); //Try logging or adding to the Azure telemetry
+                    var storedFileAttachment = this.UploadFile(serviceRequestId, file); //Try logging or adding to the Azure telemetry
                     fileAttachmentIDs.Add( storedFileAttachment.Id);
                 }
             }
@@ -61,7 +67,7 @@ namespace CDNApplication.Data.Services
             return fileAttachmentIDs;
         }
 
-        //TODO: there is a bit of a problem to investigage to see how the byte[] needs to be retrieved from uploaded file through 'BlazorInputFile'
+
         private List<FileAttachment> GetFileAttachmentsFromPageModelAsync(UploadDocumentPageModel pageModel, int serviceRequestId)
         {
             List<FileAttachment> attachments = null;
@@ -72,11 +78,8 @@ namespace CDNApplication.Data.Services
 
                 foreach (var file in pageModel.UploadedFiles)
                 {
-                    Stream streamData =(Stream) file.SelectedFile.Data;
-                    int byteSize = (int)streamData.Length;
-                    byte[] byteData= new byte[byteSize];
 
-                    streamData.ReadAsync(byteData, 0, (int)streamData.Length, System.Threading.CancellationToken.None).Wait(100);
+                    byte[] byteData=file.SelectedFileWithMemoryData.MemoryData.ToArray();
 
                     var fileName = file.SelectedFile.Name;
 
@@ -84,7 +87,7 @@ namespace CDNApplication.Data.Services
                     {
                         ContentType = "testing",
                         Data = byteData,
-                        Name = "FirstName.txt",
+                        Name = file.SelectedFile.Name,
                         ServiceRequestId = serviceRequestId,
                         Size = byteData.Length
                     };
@@ -104,49 +107,38 @@ namespace CDNApplication.Data.Services
 
             if(file != null)
             {
-                var selectedFile = file.SelectedFile;
-
-                var streamData = selectedFile.Data;
-                byte[] byteData; // we need to get byte[] from memory stream which came from file.SelectedFile.Data
-
-                using (var memoryStream = new MemoryStream())
-                {
-                    streamData.CopyTo(memoryStream);
-                    byteData = memoryStream.ToArray();
-                }
-
+                byte[] byteData = file.SelectedFileWithMemoryData.MemoryData.ToArray();
 
                 var attachment = new FileAttachment
                                         {
-                                            ContentType = selectedFile.Type,
+                                            ContentType = "testing",
                                             Data = byteData,
-                                            Name = selectedFile.Name,
+                                            Name = file.SelectedFile.Name,
                                             ServiceRequestId = serviceRequestId,
                                             Size = byteData.Length
                                         };
 
-                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment, api_key, jwt, baseURL);
-
+                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment);
             }
 
-
             return uploadedFileAttachment;
-
         }
 
-        //TODO: the following methods needs to be hooked up to the Data storage api project to save the FileAttachmentId
-        public async Task<FileAttachment> UploadFile(int serviceRequestId, FileAttachment fileAttachment, string apiKey, string jwt, string baseURL)
+
+        public async Task<FileAttachment> UploadFile(int serviceRequestId, FileAttachment fileAttachment)
         {
-            FileAttachment uploadedAttachment = null;
+            FileAttachment uploadedFileAttachment = null;
+
 
             using (var client = new HttpClient())
             {
+
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "application/json");
-                client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", jwt);
-                client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", apiKey);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", this.jwt);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", this.api_key);
 
-                client.BaseAddress = new Uri(baseURL);
-
+                client.BaseAddress = new Uri(this.baseURL);
+                
                 ByteArrayContent content = new ByteArrayContent(fileAttachment.Data);
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
@@ -156,13 +148,14 @@ namespace CDNApplication.Data.Services
 
                 try
                 {
-                    var response = await client.PostAsync(subUrl, (HttpContent)content);
-                    FileAttachment uploadedFileAttachment;
+                    System.Net.ServicePointManager.SecurityProtocol =  SecurityProtocolType.Tls12  ;
+                    System.Net.ServicePointManager.Expect100Continue = false;
+
+                    HttpResponseMessage response = client.PostAsync(subUrl, (HttpContent)content).GetAwaiter().GetResult();
 
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         uploadedFileAttachment = await (Task<FileAttachment>)HttpContentExtensions.ReadAsAsync<FileAttachment>(response.Content);
-
                     }
 
                     if (response.StatusCode == HttpStatusCode.BadRequest)
@@ -172,21 +165,26 @@ namespace CDNApplication.Data.Services
                         uploadedFileAttachment.Id = -1;
                     }
 
-
                     response.EnsureSuccessStatusCode();
                     var status = response.StatusCode;
+                }
+                catch(WebException ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.InnerException);
+                    Debug.WriteLine(ex.StackTrace);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.InnerException);
                     Debug.WriteLine(ex.StackTrace);
                 }
 
-                return uploadedAttachment;
+                return uploadedFileAttachment;
             }
 
 
-        }
-    
+        }   
     }
 }

@@ -167,18 +167,22 @@
             return;
         }
 
-        foreach (var item in files)
-        {
 
-            if (!ExtensionIsValid(item.Name))
+        var file = files.FirstOrDefault();
+        if (file != null)
+        {
+            if (!ExtensionIsValid(file.Name))
             {
                 return;
             }
 
-            model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
+            var memoryStream = new System.IO.MemoryStream();
+            await file.Data.CopyToAsync(memoryStream);
 
+            model.UploadedFiles.Add(new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) });
             model.FileDescription = string.Empty;
         }
+
 
         StateHasChanged();
 

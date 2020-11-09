@@ -13,6 +13,11 @@
         public IFileListEntry SelectedFile { get; set; }
 
         /// <summary>
+        /// Gets or sets SelectedFileWithMemoryData
+        /// </summary>
+        public FileListEntryImplExtension SelectedFileWithMemoryData { get; set; }
+
+        /// <summary>
         /// Gets or sets the file description.
         /// </summary>
         public string Description { get; set; }
