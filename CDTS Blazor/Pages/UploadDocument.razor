@@ -181,7 +181,7 @@
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
-    void HandleFileSelected(IFileListEntry[] files)
+    private async Task  HandleFileSelected(IFileListEntry[] files)
     {
 
         if (string.IsNullOrWhiteSpace(model.FileDescription))
@@ -205,7 +205,7 @@
             model.FileDescription = string.Empty;
         }
 
-
+        currentFileName = file.Name;
         StateHasChanged();
 
     }
