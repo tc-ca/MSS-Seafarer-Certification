@@ -108,22 +108,15 @@
 
                     <div class="form-row">
 
-                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-3"))">
+                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
                             <button class="btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @if (model.UploadedFiles != null && model.UploadedFiles.Any())
-                                {
-                                    @PageLocalizer["AddAnotherDocument"]
-                                }
-                                else
-                                {
                                     @PageLocalizer["AddDocument"]
-                                }
                             </button>
 
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
                         </div>
 
-                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-9"))">
+                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-10"))">
                             <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
                         </div>
 
@@ -143,7 +136,7 @@
                         </p>
                     }
 
-                <button id="add_another_file" type="button" class="btn btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
+                <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
 
             </div>
         </div>
