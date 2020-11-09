@@ -125,7 +125,7 @@ namespace CDNApplication
                 options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
             });
 
-            services.AddSingleton(new AzureKeyVaultService(this.Configuration.GetSection("AzurePublicUrlEndpoints")["KeyVaultService"]));
+            services.AddSingleton(new AzureKeyVaultService(this.Configuration.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"]));
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();

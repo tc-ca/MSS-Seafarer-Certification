@@ -46,7 +46,7 @@
             }
             catch (Exception e)
             {
-                this.logger.LogError($"{System.Reflection.MethodInfo.GetCurrentMethod()}: {e.Message}");
+                this.logger.LogError(e.Message);
                 throw;
             }
         }

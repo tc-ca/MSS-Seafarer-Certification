@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using CDNApplication.Data.Services;
+    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -25,22 +26,18 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="RestClient"/> class.
         /// </summary>
+        /// <param name="configuration">Application configuration.</param>
         /// <param name="serviceLocator">Service locator.</param>
         /// <param name="azureKeyVaultService">Azure Key Vault instance for the application.</param>
-        public RestClient(IServiceLocator serviceLocator, AzureKeyVaultService azureKeyVaultService)
+        public RestClient(IConfiguration configuration, IServiceLocator serviceLocator, AzureKeyVaultService azureKeyVaultService)
         {
             this.serviceLocator = serviceLocator;
 
-            if (azureKeyVaultService != null)
+            if (configuration != null && azureKeyVaultService != null)
             {
-            this.mtoaApiKey = azureKeyVaultService.GetSecretByName("MtoaApiKey");
-            this.mtoaJwtToken = azureKeyVaultService.GetSecretByName("MtoaJwt");
+                this.mtoaApiKey = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaApiKey"]);
+                this.mtoaJwtToken = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaJwtToken"]);
             }
-
-            Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            Client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", this.mtoaJwtToken);
-            Client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", this.mtoaApiKey);
         }
 
         /// <summary>
@@ -58,6 +55,7 @@
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
             // Here is actual call to target service
+            this.ResetRestClientHeaders();
             response = await Client.GetAsync(uri).ConfigureAwait(true);
 
             if (!response.IsSuccessStatusCode)
@@ -91,6 +89,7 @@
 
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
+                this.ResetRestClientHeaders();
                 var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(true);
                 response.EnsureSuccessStatusCode();
 
@@ -121,6 +120,7 @@
 
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
+                this.ResetRestClientHeaders();
                 var response = await Client.PutAsync(uri, stringContent).ConfigureAwait(true);
                 response.EnsureSuccessStatusCode();
 
@@ -144,10 +144,19 @@
         {
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
+            this.ResetRestClientHeaders();
             var response = await Client.DeleteAsync(uri).ConfigureAwait(true);
             response.EnsureSuccessStatusCode();
 
             return response.IsSuccessStatusCode;
+        }
+
+        private void ResetRestClientHeaders()
+        {
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", this.mtoaJwtToken);
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", this.mtoaApiKey);
         }
     }
 }
