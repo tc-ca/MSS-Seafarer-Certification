@@ -109,7 +109,7 @@
                     <div class="form-row">
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
-                            <button class="btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
+                            <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
                                     @PageLocalizer["AddDocument"]
                             </button>
 
@@ -143,19 +143,19 @@
     </div>
 </section>
 
-<button class=" btn btn-primary">
-    @PageLocalizer["Next"]
-</button>
+<input type="submit" class="btn btn-primary" value="@PageLocalizer["Next"]" />
 
-<button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+<a class=" btn btn-secondary" href="@previousLink">
     @CommonLocalizer["Previous"]
-</button>
+</a>
 
 </EditForm>
 
 @code {
 
     private BaseStepper stepper = new BaseStepper();
+
+    private string previousLink => NavigationManager.BaseUri + "" + LanguageCode;
 
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
