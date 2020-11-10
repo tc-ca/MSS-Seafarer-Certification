@@ -155,7 +155,7 @@
 
 @code {
 
-private BaseStepper stepper = new BaseStepper();
+    private BaseStepper stepper = new BaseStepper();
 
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
@@ -224,8 +224,6 @@ private BaseStepper stepper = new BaseStepper();
         return false;
     }
 
-
-
     void RemoveFile(int index)
     {
         model.UploadedFiles.RemoveAt(index);
@@ -247,6 +245,8 @@ private BaseStepper stepper = new BaseStepper();
         }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
+
+        currentFileName = PageLocalizer["FileNamePlaceholder"];
     }
 
     protected override async void OnAfterRender(bool firstRender)
