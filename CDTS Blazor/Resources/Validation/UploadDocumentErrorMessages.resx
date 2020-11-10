@@ -118,24 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CdnFormatText" xml:space="preserve">
-    <value>CDN must contain only alphanumeric characters.</value>
+    <value>CDN must contain only alphanumeric characters</value>
   </data>
   <data name="CdnLengthText" xml:space="preserve">
-    <value>CDN must be 6-7 characters in length.</value>
+    <value>CDN must be 6-7 characters in length</value>
   </data>
   <data name="CdnNumberNotEmptyText" xml:space="preserve">
-    <value>CDN is a required field.</value>
+    <value>CDN is a required field</value>
   </data>
   <data name="CertificateTypeNotEmptyText" xml:space="preserve">
-    <value>Certificate Type is a required field.</value>
+    <value>Certificate Type is a required field</value>
   </data>
   <data name="EmailAddressFormatText" xml:space="preserve">
     <value>Email address must be a valid format</value>
+  </data>
+  <data name="EmailAddressNotEmptyText" xml:space="preserve">
+    <value>Email address is a required field</value>
   </data>
   <data name="PhoneNumberNotEmptyText" xml:space="preserve">
     <value>Phone number is a required field</value>
   </data>
   <data name="UploadedFilesNotEmptyText" xml:space="preserve">
-    <value>You must upload at least 1 file.</value>
+    <value>You must upload at least 1 file</value>
   </data>
 </root>
