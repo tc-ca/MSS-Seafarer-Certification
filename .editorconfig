@@ -1,4 +1,5 @@
 ﻿[*.cs]
 
 # Default severity for all analyzer diagnostics
+# Warning: when the line below is not commented, ALL code quality and styling warnings and errors will be disabled
 # dotnet_analyzer_diagnostic.severity = none
