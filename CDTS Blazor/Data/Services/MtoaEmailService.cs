@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Diagnostics;
 using CDNApplication.Data.DTO.MTAPI;
+using CDNApplication.Services;
 
 namespace CDNApplication.Data.Services
 {
@@ -38,7 +39,7 @@ namespace CDNApplication.Data.Services
             template.UserId = 4536;
             template.UserName = "Nobody";
             template.Language = "English";
-            template.From = "mansuer.aizimu@tc.gc.ca";
+            template.From = "donotreply-nepasrepondre@tc.gc.ca";
             template.To = pageModel.EmailAddress;
             template.IsHtml = true;
 

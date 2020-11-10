@@ -203,4 +203,7 @@
   <data name="AddAnotherDocument" xml:space="preserve">
     <value>Ajouter un autre document</value>
   </data>
+  <data name="FileNamePlaceholder" xml:space="preserve">
+    <value>Aucun document sélectionné</value>
+  </data>
 </root>

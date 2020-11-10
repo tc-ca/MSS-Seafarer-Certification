@@ -130,7 +130,7 @@
     <value>Select the certificate</value>
   </data>
   <data name="SelectFileLabel" xml:space="preserve">
-    <value>Select your file</value>
+    <value>Select your document</value>
   </data>
   <data name="FileUploadedSuccessText" xml:space="preserve">
     <value>File {0} has been uploaded</value>
@@ -202,5 +202,8 @@
   </data>
   <data name="AddAnotherDocument" xml:space="preserve">
     <value>Add another document</value>
+  </data>
+  <data name="FileNamePlaceholder" xml:space="preserve">
+    <value>No document selected</value>
   </data>
 </root>
