@@ -59,7 +59,7 @@ namespace CDNApplication.Data.Services
                 fileAttachmentIDs = new List<int>();
                 foreach (var file in fileAttachments)
                 {
-                    var storedFileAttachment = this.UploadFile(serviceRequestId, file); //Try logging or adding to the Azure telemetry
+                    var storedFileAttachment = this.UploadFile(serviceRequestId, file); 
                     fileAttachmentIDs.Add( storedFileAttachment.Id);
                 }
             }
@@ -100,28 +100,56 @@ namespace CDNApplication.Data.Services
         }
 
 
-        public Task<FileAttachment> UploadSingleFileFromPage(UploadedFile file)
+        public FileAttachment UploadSingleFileFromPage(UploadedFile file)
         {
-            Task<FileAttachment> uploadedFileAttachment = null;
+            FileAttachment uploadedFileAttachment = null;
             int serviceRequestId = 13844; // this is used for Dev
 
-            if(file != null)
+            if (file != null)
             {
                 byte[] byteData = file.SelectedFileWithMemoryData.MemoryData.ToArray();
 
                 var attachment = new FileAttachment
-                                        {
-                                            ContentType = "testing",
-                                            Data = byteData,
-                                            Name = file.SelectedFile.Name,
-                                            ServiceRequestId = serviceRequestId,
-                                            Size = byteData.Length
-                                        };
+                {
+                    ContentType = "testing",
+                    Data = byteData,
+                    Name = file.SelectedFile.Name,
+                    ServiceRequestId = serviceRequestId,
+                    Size = byteData.Length
+                };
 
-                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment);
+                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment).GetAwaiter().GetResult();
+                file.MtoaFileAttachment = uploadedFileAttachment;
             }
 
             return uploadedFileAttachment;
+        }
+
+        public UploadedFile UploadSingleFileFromPageAsUpload(UploadedFile file)
+        {
+            UploadedFile uploadedFile = null;
+
+            FileAttachment uploadedFileAttachment = null;
+            int serviceRequestId = 13844; // this is used for Dev
+
+            if (file != null)
+            {
+                byte[] byteData = file.SelectedFileWithMemoryData.MemoryData.ToArray();
+
+                var attachment = new FileAttachment
+                {
+                    ContentType = "testing",
+                    Data = byteData,
+                    Name = file.SelectedFile.Name,
+                    ServiceRequestId = serviceRequestId,
+                    Size = byteData.Length
+                };
+
+                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment).GetAwaiter().GetResult();
+            }
+
+
+            return uploadedFile;
         }
 
 

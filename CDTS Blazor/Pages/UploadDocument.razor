@@ -6,6 +6,7 @@
 @inject IStringLocalizer<UploadDocument> PageLocalizer
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
+@inject Data.Services.MtoaFileService fileService
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -167,6 +168,7 @@
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
     private string currentFileName = "";
+    private bool test;
 
     private void HandleValidSubmit()
     {
@@ -181,7 +183,7 @@
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
-    private async Task  HandleFileSelected(IFileListEntry[] files)
+    private async Task HandleFileSelected(IFileListEntry[] files)
     {
 
         if (string.IsNullOrWhiteSpace(model.FileDescription))
@@ -201,7 +203,22 @@
             var memoryStream = new System.IO.MemoryStream();
             await file.Data.CopyToAsync(memoryStream);
 
-            model.UploadedFiles.Add(new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) });
+
+            var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
+
+
+            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload); // uploadedFile will have Mtoa file attachment ID for the later retrieval.
+
+            if(uploadedMtoaAttachment.Id > 0)
+            {
+                test = true;
+            }
+            else
+            {
+                test = false;
+            }
+
+            model.UploadedFiles.Add(fileToUpload);
             model.FileDescription = string.Empty;
         }
 
