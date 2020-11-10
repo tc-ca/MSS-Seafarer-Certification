@@ -61,7 +61,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN must contain only alphanumeric characters..
+        ///   Looks up a localized string similar to CDN must contain only alphanumeric characters.
         /// </summary>
         internal static string CdnFormatText {
             get {
@@ -70,7 +70,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN must be 6-7 characters in length..
+        ///   Looks up a localized string similar to CDN must be 6-7 characters in length.
         /// </summary>
         internal static string CdnLengthText {
             get {
@@ -79,7 +79,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CDN is a required field..
+        ///   Looks up a localized string similar to CDN is a required field.
         /// </summary>
         internal static string CdnNumberNotEmptyText {
             get {
@@ -88,7 +88,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate Type is a required field..
+        ///   Looks up a localized string similar to Certificate Type is a required field.
         /// </summary>
         internal static string CertificateTypeNotEmptyText {
             get {
@@ -106,6 +106,15 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email address is a required field.
+        /// </summary>
+        internal static string EmailAddressNotEmptyText {
+            get {
+                return ResourceManager.GetString("EmailAddressNotEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone number is a required field.
         /// </summary>
         internal static string PhoneNumberNotEmptyText {
@@ -115,7 +124,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must upload at least 1 file..
+        ///   Looks up a localized string similar to You must upload at least 1 file.
         /// </summary>
         internal static string UploadedFilesNotEmptyText {
             get {
