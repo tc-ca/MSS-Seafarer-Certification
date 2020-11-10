@@ -4,6 +4,7 @@
 @inject IJSRuntime JSRuntime;
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
+@inject IStringLocalizer<Common> PageCommonLocalizer
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 
@@ -129,6 +130,24 @@
 
                     </div>
 
+                    <br />
+
+                    <div class="form-row">
+
+                        <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
+                            <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
+
+                            <p class="mb-4">
+                                @PageLocalizer["DocumentType"]: RecordHardcore
+                            </p>
+
+                            <p>
+                                @PageCommonLocalizer["Document"]: hardcored.pdf
+                            </p>
+                        </div>
+
+                    </div>
+
                     @PageLocalizer["FilesAccepted"]
 
                     <ValidationMessage For="() => model.UploadedFiles" />
@@ -167,6 +186,8 @@
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
     private string currentFileName = "";
+
+    bool success = false;
 
     private void HandleValidSubmit()
     {
