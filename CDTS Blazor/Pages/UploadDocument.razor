@@ -110,14 +110,7 @@
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
                             <button class="btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @if (model.UploadedFiles != null && model.UploadedFiles.Any())
-                                {
-                                    @PageLocalizer["AddAnotherDocument"]
-                                }
-                                else
-                                {
                                     @PageLocalizer["AddDocument"]
-                                }
                             </button>
 
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
@@ -143,18 +136,20 @@
                         </p>
                     }
 
-                </div>
+                <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <button class=" btn btn-primary">
-        @PageLocalizer["Next"]
-    </button>
+<button class=" btn btn-primary">
+    @PageLocalizer["Next"]
+</button>
 
-    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
-        @CommonLocalizer["Previous"]
-    </button>
+<button class=" btn btn-secondary" @onclick="HandlePreviousClick">
+    @CommonLocalizer["Previous"]
+</button>
 
 </EditForm>
 
@@ -229,8 +224,6 @@
         return false;
     }
 
-
-
     void RemoveFile(int index)
     {
         model.UploadedFiles.RemoveAt(index);
@@ -252,6 +245,8 @@
         }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
+
+        currentFileName = PageLocalizer["FileNamePlaceholder"];
     }
 
     protected override async void OnAfterRender(bool firstRender)
