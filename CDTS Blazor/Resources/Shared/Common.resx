@@ -168,4 +168,7 @@
   <data name="TCWebsiteLink" xml:space="preserve">
     <value>https://tc.canada.ca/en</value>
   </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
 </root>
