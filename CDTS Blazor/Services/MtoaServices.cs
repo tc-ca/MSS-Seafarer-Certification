@@ -53,17 +53,6 @@
         {
             string sendEmailNotificationPath = this.configuration.GetSection("MtoaServiceSettings")["EmailNotificationPath"];
 
-            /*
-            mtoaEmailNotification.NotificationTemplateName = "Seafarers_Document_Submission_Email";
-            mtoaEmailNotification.ServiceRequestId = int.Parse(this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"]);
-            mtoaEmailNotification.UserId = int.Parse(this.configuration.GetSection("MtoaServiceSettings")["UserId"]);
-            mtoaEmailNotification.UserName = "Nobody";
-            mtoaEmailNotification.Language = "English";
-            mtoaEmailNotification.From = this.configuration.GetSection("MtoaServiceSettings")["ReplyEmail"];
-            mtoaEmailNotification.To = "here";
-            mtoaEmailNotification.IsHtml = true;
-            */
-
             try
             {
                 await this.restClient.PostAsync<MtoaEmailNotificationDto>(ServiceLocatorDomain.Mtoa, sendEmailNotificationPath, mtoaEmailNotification).ConfigureAwait(true);

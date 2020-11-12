@@ -76,23 +76,5 @@
         /// </summary>
         [JsonPropertyName("Parameters")]
         public List<KeyValuePair<string, string>> Parameters { get; }
-
-        /// <summary>
-        /// Adda an email attachment to the Mtoa email notifation template.
-        /// </summary>
-        /// <param name="emailAttachment">The email attachment.</param>
-        public void AddEmailAttachment(EmailAttachmentDTO emailAttachment)
-        {
-            this.Attachements.Add(emailAttachment);
-        }
-
-        /// <summary>
-        /// Adds a parameter to the Mtoa email notifcation template.
-        /// </summary>
-        /// <param name="keyValuePair">They keyvalue pair to add.</param>
-        public void AddParameter(KeyValuePair<string, string> keyValuePair)
-        {
-            this.Parameters.Add(keyValuePair);
-        }
     }
 }
