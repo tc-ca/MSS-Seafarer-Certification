@@ -9,7 +9,7 @@
         }
 
         [Fact]
-        public void RequestEmailText_Englisg_ReturnsEnglishTextFirst()
+        public void RequestEmailText_English_ReturnsEnglishTextFirst()
         {
             // Arrange
 

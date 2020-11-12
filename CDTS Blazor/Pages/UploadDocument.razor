@@ -155,7 +155,7 @@
 
     private BaseStepper stepper = new BaseStepper();
 
-    private string previousLink => NavigationManager.BaseUri + "" + LanguageCode;
+    private string previousLink => String.Format("{0}{1}", NavigationManager.BaseUri, LanguageCode);
 
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 

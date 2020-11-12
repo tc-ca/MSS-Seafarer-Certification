@@ -25,4 +25,7 @@
   <ItemGroup>
     <Folder Include="Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CDTS Blazor\CDNApplication.csproj" />
+  </ItemGroup>
 </Project>

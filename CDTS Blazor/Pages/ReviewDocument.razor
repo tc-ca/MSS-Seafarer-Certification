@@ -3,15 +3,9 @@
 
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
 @inject IStringLocalizer<Common> CommonPageLocalizer
-@inject Utilities.SessionState state
-@inject Data.Services.MtoaEmailService emailService
-@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
-@using BlazorInputFile
-@using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
-@using CDNApplication.TCComponents.Stepper
-@inherits BaseComponent
+@inherits ReviewDocumentPageModel
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
@@ -96,49 +90,4 @@ else
     <a class="btn btn-secondary" href="@previousPage">
         @CommonPageLocalizer["Previous"]
     </a>
-}
-
-@code {
-
-    private UploadDocumentPageModel model;
-
-    private string previousPage => NavigationManager.BaseUri + "" + LanguageCode + "/upload";
-
-    private int _confirmationGuid;
-
-    private void Submit()
-    {
-
-        Console.WriteLine(model);
-
-        state.UploadDocumentPage = null;
-
-        if (!String.IsNullOrEmpty(model.EmailAddress))
-        {
-            emailService.SendEmailToApplicant(model).Wait();
-        }
-
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
-
-    }
-
-    protected override void OnInitialized()
-    {
-
-        base.OnInitialized();
-
-        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
-
-        _confirmationGuid = new Random().Next(100000, 9999999);
-
-        if (state.UploadDocumentPage == null)
-        {
-            state.UploadDocumentPage = new UploadDocumentPageModel();
-        }
-
-        model = state.UploadDocumentPage;
-
-        model.ConfirmationNumber = _confirmationGuid.ToString();
-    }
-
 }

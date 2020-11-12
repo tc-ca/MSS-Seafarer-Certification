@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CDNApplication.Models.PageModels;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Diagnostics;
-using CDNApplication.Data.DTO.MTAPI;
-using CDNApplication.Services;
-
-namespace CDNApplication.Data.Services
+﻿namespace CDNApplication.Data.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using CDNApplication.Models.PageModels;
+    using System.Net.Http;
+    using System.Diagnostics;
+    using CDNApplication.Data.DTO.MTAPI;
+
     public class MtoaEmailService
     {
         private string api_key;
@@ -46,6 +41,7 @@ namespace CDNApplication.Data.Services
             template.Attachements = new List<EmailAttachmentDTO>(); // in our email currently, we do not have attachments. But this field can not be null
 
             var parameters = new List<KeyValuePair<string, string>>();
+
 
             parameters.Add(new KeyValuePair<string, string>("Confirmation_Number", pageModel.ConfirmationNumber));
             parameters.Add(new KeyValuePair<string, string>("CDN_Number", pageModel.CdnNumber));
