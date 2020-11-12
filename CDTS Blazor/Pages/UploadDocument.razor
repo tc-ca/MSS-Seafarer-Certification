@@ -108,7 +108,7 @@
                         @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                     </label>
 
-                    <div class="form-row" >
+                    <div class="form-row">
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
                             <button class="btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
@@ -131,11 +131,9 @@
 
                     </div>
 
-
-
                     <br />
 
-                    <div class="form-row" style="display: @virusMessageDisplay">
+                    <div class="form-row">
 
                         <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
                             <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
@@ -191,10 +189,7 @@
     private string currentFileName = "";
     private bool test;
 
-    string virusMessageDisplay = "none";
-
     bool success = false;
-    bool isFileUploaded = false;
 
     private void HandleValidSubmit()
     {
@@ -237,20 +232,18 @@
 
             if(uploadedMtoaAttachment.Id > 0)
             {
-                success = true;
+                test = true;
             }
             else
             {
-                success = false;
+                test = false;
             }
 
             model.UploadedFiles.Add(fileToUpload);
             model.FileDescription = string.Empty;
-            virusMessageDisplay = null;
         }
 
         currentFileName = file.Name;
-        isFileUploaded = true;
         StateHasChanged();
 
     }
