@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Data.Services;
     using CDNApplication.Models;
@@ -89,13 +90,14 @@
             };
 
             var mtoaParameterExtractor = new MtoaParameterExtractor();
-            var parameters = mtoaParameterExtractor.ExtractParameters(mtoaEmailNotification);
+            var parameters = mtoaParameterExtractor.ExtractParameters(seafarersDocumentSubmissionEmail);
             mtoaEmailNotification.Parameters.AddRange(parameters);
 
             var documentParameter = new KeyValuePair<string, string>("DOCUMENT", this.Model.MtoaDocumentString);
 
             mtoaEmailNotification.Parameters.Add(documentParameter);
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotification);
+           // this.MtoaService.SendEmailToApplicant(this.Model).Wait();
 
             this.NavigationManager.NavigateTo(this.ConfirmationPageLink);
 

@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Utilities;
+    using Microsoft.ApplicationInsights.Extensibility.Implementation;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 

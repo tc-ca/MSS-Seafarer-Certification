@@ -8,14 +8,14 @@
     using System.Diagnostics;
     using CDNApplication.Data.DTO.MTAPI;
 
-    public class MtoaEmailService
+    public class IMtoaService
     {
         private string api_key;
         private string jwt;
         private string base_uri_str = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/";
         private string sub_uri = "api/v1/notifications?overrideEmailRecipientsSafeguard=true";
 
-        public MtoaEmailService(AzureKeyVaultService azureKeyVaultService)
+        public IMtoaService(AzureKeyVaultService azureKeyVaultService)
         {
 
             api_key = azureKeyVaultService.GetSecretByName("MtoaApiKey");
@@ -35,7 +35,7 @@
             template.UserName = "Nobody";
             template.Language = "English";
             template.From = "donotreply-nepasrepondre@tc.gc.ca";
-            template.To = pageModel.EmailAddress;
+            template.To = pageModel.EmailAddress;   
             template.IsHtml = true;
 
             template.Attachements = new List<EmailAttachmentDTO>(); // in our email currently, we do not have attachments. But this field can not be null
