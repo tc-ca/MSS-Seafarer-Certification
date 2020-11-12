@@ -116,7 +116,7 @@ else
         if (!String.IsNullOrEmpty(model.EmailAddress))
         {
 
-            fileService.UploadFilesInPageModelAsync(model); // this method returns list of file attachment IDs to be used later.
+            //fileService.UploadFilesInPageModelAsync(model); // Use this line if the files are uploaded to MTOA all at once. Currently files are uploaded one bye one on upload page
 
             emailService.SendEmailToApplicant(model).Wait();
         }
