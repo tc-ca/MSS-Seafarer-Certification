@@ -23,9 +23,9 @@
 
 @if (model == null)
 {
-    <button class="btn btn-light" @onclick="GoBack" role="button">
+    <a class="btn btn-secondary" href="@previousPage">
         @CommonPageLocalizer["Back"]
-    </button>
+    </a>
 }
 else
 {
@@ -95,14 +95,16 @@ else
         @CommonPageLocalizer["Submit"]
     </button>
 
-    <button class="btn btn-secondary" @onclick="GoBack" role="button">
+    <a class="btn btn-secondary" href="@previousPage">
         @CommonPageLocalizer["Previous"]
-    </button>
+    </a>
 }
 
 @code {
 
     private UploadDocumentPageModel model;
+
+    private string previousPage => NavigationManager.BaseUri + "" + LanguageCode + "/upload";
 
     private int _confirmationGuid;
 
@@ -123,11 +125,6 @@ else
 
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
 
-    }
-
-    void GoBack()
-    {
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/upload");
     }
 
     protected override void OnInitialized()

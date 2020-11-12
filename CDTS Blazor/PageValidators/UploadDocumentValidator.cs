@@ -29,14 +29,16 @@
                     .WithMessage(localizer.GetString("CdnLengthText"))
                     .Matches(new Regex("^[a-zA-Z0-9]*$"))
                     .WithMessage(localizer.GetString("CdnFormatText"));
-            
+
             this.RuleFor(m => m.PhoneNumber)
                 .Cascade(CascadeMode.Stop)
                     .NotEmpty()
                     .WithMessage(localizer.GetString("PhoneNumberNotEmptyText"));
-            
+
             this.RuleFor(m => m.EmailAddress)
                 .Cascade(CascadeMode.Stop)
+                    .NotEmpty()
+                    .WithMessage(localizer.GetString("EmailAddressNotEmptyText"))
                     .EmailAddress()
                     .WithMessage(localizer.GetString("EmailAddressFormatText"));
 

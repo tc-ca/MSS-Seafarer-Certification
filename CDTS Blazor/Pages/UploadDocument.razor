@@ -55,8 +55,8 @@
                 </div>
                 <div class="form-control-wrapper">
                     <section>
-                        <label class="form-control-label" for="@nameof(model.EmailAddress)">
-                            @PageLocalizer["EmailAddressLabel"]
+                        <label class="form-control-label required" for="@nameof(model.EmailAddress)">
+                            @PageLocalizer["EmailAddressLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                         </label>
                         <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["EmailAddressHint"]" data-title="" style="width:100px;">
                             <i class="fa fa-info-circle ml-2"></i>
@@ -111,15 +111,8 @@
                     <div class="form-row">
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
-                            <button class="btn btn-primary btn-light" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @if (model.UploadedFiles != null && model.UploadedFiles.Any())
-                                {
-                                    @PageLocalizer["AddAnotherDocument"]
-                                }
-                                else
-                                {
+                            <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
                                     @PageLocalizer["AddDocument"]
-                                }
                             </button>
 
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
@@ -163,24 +156,26 @@
                         </p>
                     }
 
-                </div>
+                <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <button class=" btn btn-primary">
-        @PageLocalizer["Next"]
-    </button>
+<input type="submit" class="btn btn-primary" value="@PageLocalizer["Next"]" />
 
-    <button class=" btn btn-secondary" @onclick="HandlePreviousClick">
-        @CommonLocalizer["Previous"]
-    </button>
+<a class=" btn btn-secondary" href="@previousLink">
+    @CommonLocalizer["Previous"]
+</a>
 
 </EditForm>
 
 @code {
 
     private BaseStepper stepper = new BaseStepper();
+
+    private string previousLink => NavigationManager.BaseUri + "" + LanguageCode;
 
     private List<CertificateType> certificateTypes = new List<CertificateType>();
 
@@ -270,8 +265,6 @@
         return false;
     }
 
-
-
     void RemoveFile(int index)
     {
         model.UploadedFiles.RemoveAt(index);
@@ -293,6 +286,8 @@
         }
 
         certificateTypes = CertificateType.GetAllCertificateTypes();
+
+        currentFileName = PageLocalizer["FileNamePlaceholder"];
     }
 
     protected override async void OnAfterRender(bool firstRender)
