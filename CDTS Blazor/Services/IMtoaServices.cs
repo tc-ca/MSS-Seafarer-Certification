@@ -1,5 +1,6 @@
 ﻿namespace CDNApplication.Services
 {
+    using CDNApplication.Data.DTO.MTAPI;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -17,6 +18,6 @@
         /// This procedure posts the submision email for sending to MTOA.
         /// </summary>
         /// <returns>Returns the task.</returns>
-        public Task PostSendEmailNotificationAsync();
+        public Task PostSendEmailNotificationAsync(MtoaEmailNotificationDto mtoaEmailNotification);
     }
 }

@@ -6,6 +6,7 @@
     using CDNApplication.Models.PageModels;
     using CDNApplication.Services;
     using CDNApplication.Utilities;
+    using Microsoft.AspNetCore.Components;
 
     /// <summary>
     /// Defines the page model for the review document.
@@ -18,16 +19,14 @@
 
         protected int _confirmationGuid;
 
-        protected SessionState state;
-        protected MtoaEmailService emailService;
-        protected UploadDocumentsStepper UploadDocumentsStepper;
+        [Inject]
+        protected SessionState state { get; set; }
 
-        public ReviewDocumentPageModel(SessionState state, MtoaEmailService emailService, UploadDocumentsStepper uploadDocumentsStepper)
-        {
-            this.state = state;
-            this.emailService = emailService;
-            this.UploadDocumentsStepper = uploadDocumentsStepper;
-        }
+        [Inject]
+        protected MtoaEmailService emailService { get; set; }
+
+        [Inject]
+        protected UploadDocumentsStepper UploadDocumentsStepper { get; set; }
 
         protected void Submit()
         {

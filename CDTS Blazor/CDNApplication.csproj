@@ -78,7 +78,6 @@
     <Folder Include="Components\Banners\" />
     <Folder Include="TCComponents\Stepper\" />
     <Folder Include="Data\Attributes\" />
-    <Folder Include="PageModels\" />
   </ItemGroup>
 
   <ItemGroup>
