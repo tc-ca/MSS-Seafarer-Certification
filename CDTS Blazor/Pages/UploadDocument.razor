@@ -133,7 +133,7 @@
 
                     <br />
 
-                    <div class="form-row">
+                    <div class="form-row" style="display: @showFileScanMessage">
 
                         <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
                             <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
@@ -187,9 +187,9 @@
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
     private string currentFileName = "";
-    private bool test;
 
     bool success = false;
+    string showFileScanMessage = "none";
 
     private void HandleValidSubmit()
     {
@@ -232,15 +232,16 @@
 
             if(uploadedMtoaAttachment.Id > 0)
             {
-                test = true;
+                success = true;
             }
             else
             {
-                test = false;
+                success = false;
             }
 
             model.UploadedFiles.Add(fileToUpload);
             model.FileDescription = string.Empty;
+            showFileScanMessage = null;
         }
 
         currentFileName = file.Name;
