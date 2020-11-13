@@ -83,7 +83,7 @@
                 ServiceRequestId = int.Parse(this.Configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"]),
                 UserId = int.Parse(this.Configuration.GetSection("MtoaServiceSettings")["UserId"]),
                 UserName = "Nobody",
-                Language = "English",
+                Language = this.LanguageCode.Equals("fr", StringComparison.OrdinalIgnoreCase) ? "French" : "English",
                 From = this.Configuration.GetSection("MtoaServiceSettings")["ReplyEmail"],
                 To = this.Model.EmailAddress,
                 IsHtml = true,
@@ -97,7 +97,6 @@
 
             mtoaEmailNotification.Parameters.Add(documentParameter);
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotification);
-           // this.MtoaService.SendEmailToApplicant(this.Model).Wait();
 
             this.NavigationManager.NavigateTo(this.ConfirmationPageLink);
 
