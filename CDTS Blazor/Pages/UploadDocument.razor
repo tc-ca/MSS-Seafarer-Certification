@@ -112,7 +112,7 @@
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
                             <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                    @PageLocalizer["AddDocument"]
+                                @PageLocalizer["AddDocument"]
                             </button>
 
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
@@ -131,20 +131,25 @@
                         <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
                             <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
 
-                            <p class="mb-4">
-                                @PageLocalizer["DocumentType"]: RecordHardcore
-                            </p>
+                            @*<p class="mb-4">
+                                    @PageLocalizer["DocumentType"]: @model.CertificateType
+                                </p>*@
 
                             <p>
-                                @PageCommonLocalizer["Document"]: hardcored.pdf
+                                @PageCommonLocalizer["Document"]: @currentFileName
                             </p>
+
                         </div>
 
                     </div>
 
-                    @PageLocalizer["FilesAccepted"]
+                    <div>
+                        @PageLocalizer["FilesAccepted"]
+                    </div>
 
                     <ValidationMessage For="() => model.UploadedFiles" />
+
+                    <br />
 
                     @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
                     {
@@ -156,18 +161,18 @@
                         </p>
                     }
 
-                <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
+                    <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
 
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<input type="submit" class="btn btn-primary" value="@PageLocalizer["Next"]" />
+    <input type="submit" class="btn btn-primary" value="@PageLocalizer["Next"]" />
 
-<a class=" btn btn-secondary" href="@previousLink">
-    @CommonLocalizer["Previous"]
-</a>
+    <a class=" btn btn-secondary" href="@previousLink">
+        @CommonLocalizer["Previous"]
+    </a>
 
 </EditForm>
 
@@ -207,8 +212,8 @@
             return;
         }
 
-
         var file = files.FirstOrDefault();
+
         if (file != null)
         {
             if (!ExtensionIsValid(file.Name))
@@ -222,10 +227,10 @@
 
             var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
 
+            // uploadedFile will have Mtoa file attachment ID for the later retrieval.
+            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
 
-            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload); // uploadedFile will have Mtoa file attachment ID for the later retrieval.
-
-            if(uploadedMtoaAttachment.Id > 0)
+            if (uploadedMtoaAttachment.Id > 0)
             {
                 success = true;
             }
