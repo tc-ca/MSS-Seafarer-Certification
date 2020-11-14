@@ -68,7 +68,7 @@
 
             this.State.UploadDocumentPage = null;
 
-            var seafarersDocumentSubmissionEmail = new MtoaSeafarersDocumentSubmissionEmailDto()
+            var seafarersDocumentSubmissionEmail = new MtoaSeafarersDocumentSubmissionEmailParametersDto()
             {
                 ConfirmationNumber = this.Model.ConfirmationNumber,
                 CdnNumber = this.Model.CdnNumber,
@@ -93,7 +93,7 @@
             var parameters = mtoaParameterExtractor.ExtractParameters(seafarersDocumentSubmissionEmail);
             mtoaEmailNotification.Parameters.AddRange(parameters);
 
-            var documentParameter = new KeyValuePair<string, string>("DOCUMENT", this.Model.MtoaDocumentString);
+            var documentParameter = new KeyValuePair<string, string>("DOCUMENT", this.Model.ToMtoaDocumentString);
 
             mtoaEmailNotification.Parameters.Add(documentParameter);
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotification);

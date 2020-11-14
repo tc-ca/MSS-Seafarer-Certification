@@ -47,7 +47,7 @@
         /// <summary>
         /// Gets the uploaded files in a format that can be used in mtoa.
         /// </summary>
-        public string MtoaDocumentString
+        public string ToMtoaDocumentString
         {
             get
             {

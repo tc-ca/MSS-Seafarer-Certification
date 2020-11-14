@@ -5,7 +5,7 @@
     /// <summary>
     /// The parameters for the MTOA seafarer document submission email.
     /// </summary>
-    public class MtoaSeafarersDocumentSubmissionEmailDto
+    public class MtoaSeafarersDocumentSubmissionEmailParametersDto
     {
         /// <summary>
         /// Gets or sets the seafarer's confirmation number.

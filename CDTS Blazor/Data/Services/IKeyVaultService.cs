@@ -15,7 +15,7 @@
         /// <returns>The secret's value</returns>
         string GetSecretByName(string secretName);
 
-        // TODO: Wrap within our own object.
+        // TODO: Wrap SecretItem within our own object for testing purposes in the future.
         /// <summary>
         /// Gets the list of secrets from the key vault
         /// </summary>
