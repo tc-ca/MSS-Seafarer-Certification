@@ -132,18 +132,7 @@ namespace CDNApplication.Tests.Integration
 
             var uploadedFile = fileService.UploadFile(serviceRequestId, fileAttachment).GetAwaiter().GetResult();
 
-            bool isInfected = false;
-            if(uploadedFile.Id < 0)
-            {
-                isInfected = true;
-            }
-            else
-            {
-                isInfected = false;
-            }
-
-
-            Assert.True( isInfected );
+            Assert.True(uploadedFile.Id < 0);
 
         }
 
