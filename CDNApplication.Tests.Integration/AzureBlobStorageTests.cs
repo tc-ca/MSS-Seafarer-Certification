@@ -14,13 +14,12 @@
 
         public AzureBlobStorageTests()
         {
-            //this.azureBlobService = InitializeServices.GetAzureBlobService();
+            this.azureBlobService = InitializeServices.GetAzureBlobService();
         }
 
         [Fact]
         public async void UploadFileAsync_UploadTestFile_ReturnsNotNull()
         {
-            /*
             using (var memoryStream = new MemoryStream())
             {
                 // Arrange
@@ -37,15 +36,13 @@
                         {
                             Headers = new HeaderDictionary(), ContentType = "application/txt"
                         };
-              }
+
                 // Act
                 var result = await this.azureBlobService.UploadFileAsync(uploadTestFile);
-                
+
                 // Assert
                 Assert.NotNull(result);
-                
-                */
-            Assert.True(true);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CDNApplication.Data.Services
+namespace CDNApplication.Data.Services
 {
     using System;
     using System.Collections.Generic;

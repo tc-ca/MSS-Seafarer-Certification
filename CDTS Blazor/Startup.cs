@@ -129,7 +129,11 @@ namespace CDNApplication
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
+
+            services.AddScoped<MtoaFileService>();
+
             services.AddSingleton<IMtoaService>();
+
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddModelAccessor();

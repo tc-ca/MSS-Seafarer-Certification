@@ -206,4 +206,16 @@
   <data name="FileNamePlaceholder" xml:space="preserve">
     <value>Aucun document sélectionné</value>
   </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="DocumentError" xml:space="preserve">
+    <value>Euh oh. Votre document n'a pas passé notre scan de sécurité et ne peut pas être ajouté. Veuillez réessayer</value>
+  </data>
+  <data name="DocumentSuccess" xml:space="preserve">
+    <value>Nous avons scanné votre document et il est prêt à être soumis</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>Type de document</value>
+  </data>
 </root>

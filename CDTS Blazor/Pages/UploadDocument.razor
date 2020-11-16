@@ -4,8 +4,10 @@
 @inject IJSRuntime JSRuntime;
 @inject IStringLocalizer<Common> CommonLocalizer
 @inject IStringLocalizer<UploadDocument> PageLocalizer
+@inject IStringLocalizer<Common> PageCommonLocalizer
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
+@inject Data.Services.MtoaFileService fileService
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -110,7 +112,7 @@
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
                             <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                    @PageLocalizer["AddDocument"]
+                                @PageLocalizer["AddDocument"]
                             </button>
 
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
@@ -122,9 +124,32 @@
 
                     </div>
 
-                    @PageLocalizer["FilesAccepted"]
+                    <br />
+
+                    <div class="form-row" style="display: @showFileScanMessage">
+
+                        <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
+                            <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
+
+                            @*<p class="mb-4">
+                                    @PageLocalizer["DocumentType"]: @model.CertificateType
+                                </p>*@
+
+                            <p>
+                                @PageCommonLocalizer["Document"]: @currentFileName
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+                        @PageLocalizer["FilesAccepted"]
+                    </div>
 
                     <ValidationMessage For="() => model.UploadedFiles" />
+
+                    <br />
 
                     @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
                     {
@@ -136,18 +161,18 @@
                         </p>
                     }
 
-                <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
+                    <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
 
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<input type="submit" class="btn btn-primary" value="@PageLocalizer["Next"]" />
+    <input type="submit" class="btn btn-primary" value="@PageLocalizer["Next"]" />
 
-<a class=" btn btn-secondary" href="@previousLink">
-    @CommonLocalizer["Previous"]
-</a>
+    <a class=" btn btn-secondary" href="@previousLink">
+        @CommonLocalizer["Previous"]
+    </a>
 
 </EditForm>
 
@@ -163,6 +188,9 @@
 
     private string currentFileName = "";
 
+    bool success = false;
+    string showFileScanMessage = "none";
+
     private void HandleValidSubmit()
     {
 
@@ -176,7 +204,7 @@
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
     }
 
-    void HandleFileSelected(IFileListEntry[] files)
+    private async Task HandleFileSelected(IFileListEntry[] files)
     {
 
         if (string.IsNullOrWhiteSpace(model.FileDescription))
@@ -184,21 +212,39 @@
             return;
         }
 
-        foreach (var item in files)
-        {
+        var file = files.FirstOrDefault();
 
-            if (!ExtensionIsValid(item.Name))
+        if (file != null)
+        {
+            if (!ExtensionIsValid(file.Name))
             {
                 return;
             }
 
-            currentFileName = item.Name;
+            var memoryStream = new System.IO.MemoryStream();
+            await file.Data.CopyToAsync(memoryStream);
 
-            model.UploadedFiles.Add(new UploadedFile { SelectedFile = item, Description = model.FileDescription });
 
+            var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
+
+            // uploadedFile will have Mtoa file attachment ID for the later retrieval.
+            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
+
+            if (uploadedMtoaAttachment.Id > 0)
+            {
+                success = true;
+            }
+            else
+            {
+                success = false;
+            }
+
+            model.UploadedFiles.Add(fileToUpload);
             model.FileDescription = string.Empty;
+            showFileScanMessage = null;
         }
 
+        currentFileName = file.Name;
         StateHasChanged();
 
     }
