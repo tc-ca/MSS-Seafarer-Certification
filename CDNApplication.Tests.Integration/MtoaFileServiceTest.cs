@@ -67,7 +67,7 @@ namespace CDNApplication.Tests.Integration
         }
 
         [Fact]
-        public void MtoaFileServiceApiCleanDataTest()
+        public void MtoaFileService_UploadFile_CleanData_UploadSuccess()
         {
             byte[] bytes = { 1, 2, 3, 4, 0xBA, 0xDF, 0x00, 0x0D };
             int serviceRequestId = 13844; //13844 is for Dev.
