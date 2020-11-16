@@ -52,7 +52,7 @@ namespace CDNApplication.Data.Services
             // TODO: serviceRequestId needs to be created at runtime through MTOA Add service request.
             int serviceRequestId = 13844; // this is used for Dev
 
-            var fileAttachments = this.GetFileAttachmentsFromPageModelAsync(pageModel, serviceRequestId);
+            var fileAttachments = this.GetFileAttachmentsFromPageModel(pageModel, serviceRequestId);
 
             if (fileAttachments.Count > 0)
             {
@@ -68,7 +68,7 @@ namespace CDNApplication.Data.Services
         }
 
 
-        private List<FileAttachment> GetFileAttachmentsFromPageModelAsync(UploadDocumentPageModel pageModel, int serviceRequestId)
+        private List<FileAttachment> GetFileAttachmentsFromPageModel(UploadDocumentPageModel pageModel, int serviceRequestId)
         {
             List<FileAttachment> attachments = null;
 
