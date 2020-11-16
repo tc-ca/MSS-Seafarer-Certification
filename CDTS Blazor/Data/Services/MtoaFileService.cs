@@ -85,7 +85,7 @@ namespace CDNApplication.Data.Services
 
                     var fileAttachment = new FileAttachment
                     {
-                        ContentType = "testing",
+                        ContentType = file.SelectedFile.Type,
                         Data = byteData,
                         Name = file.SelectedFile.Name,
                         ServiceRequestId = serviceRequestId,
@@ -111,7 +111,7 @@ namespace CDNApplication.Data.Services
 
                 var attachment = new FileAttachment
                 {
-                    ContentType = "testing",
+                    ContentType = file.SelectedFile.Type,
                     Data = byteData,
                     Name = file.SelectedFile.Name,
                     ServiceRequestId = serviceRequestId,
@@ -138,7 +138,7 @@ namespace CDNApplication.Data.Services
 
                 var attachment = new FileAttachment
                 {
-                    ContentType = "testing",
+                    ContentType = file.SelectedFile.Type,
                     Data = byteData,
                     Name = file.SelectedFile.Name,
                     ServiceRequestId = serviceRequestId,
