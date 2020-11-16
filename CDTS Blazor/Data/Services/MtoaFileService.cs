@@ -23,10 +23,6 @@ namespace CDNApplication.Data.Services
 
         private readonly string baseURL = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/api/v1/"; //This is for Dev only works within organizational network.
 
-        // Kanga INT . Tested but did not work. 11-04
-        //private string base_uri_str = "https://wwwappstestext.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/api/v1/";
-
-
         private string api_key;
         private string jwt;
 

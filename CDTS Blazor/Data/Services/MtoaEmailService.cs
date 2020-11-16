@@ -21,10 +21,6 @@ namespace CDNApplication.Data.Services
         private string api_key;
         private string jwt;
         private string base_uri_str = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/";
-
-        // Tested the following , did not work for some reason.
-        //private string base_uri_str = "https://wwwappstestext.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/"; // Kanga INT
-
         private string sub_uri = "api/v1/notifications?overrideEmailRecipientsSafeguard=true";
 
         public MtoaEmailService(AzureKeyVaultService azureKeyVaultService)
