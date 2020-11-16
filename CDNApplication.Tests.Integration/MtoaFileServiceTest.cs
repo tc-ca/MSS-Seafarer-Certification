@@ -30,7 +30,7 @@ namespace CDNApplication.Tests.Integration
     public class MtoaFileServiceTest
     {
         [Fact]
-        public void MtoaFileServiceMethodTest()
+        public void MtoaFileService_UploadFile_Success()
         {
             byte[] bytes = { 1, 2, 3, 4, 0xBA, 0xDF, 0x00, 0x0D };
             int serviceRequestId = 13844; //13844 is for Dev. For Kanga use  15703
@@ -95,7 +95,7 @@ namespace CDNApplication.Tests.Integration
         }
 
         [Fact]
-        public void MtoaFileServiceApiInfectedDataTest()
+        public void MtoaFileService_UploadFile_InfectedFile()
         {
 
             #region Virus Test File
