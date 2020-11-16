@@ -36,8 +36,8 @@ namespace CDNApplication.Data.Services
 
         /// <summary> 
         ///following method uploads files after getting files from pageModel.
-        // this method returns a list of attachment IDs after storing files on MTOA storage. These IDs can be used to retrieving those file at later time.
-        // if there is a null value in the List<int>, it means that the corresponding file was not uploaded successfully. Like for a virus issue.
+        // this method returns a list of attachment IDs after storing files on MTOA storage. These IDs can be used to retrieving those files at later time.
+        // if there is a negative value (-1) in the List<int>, it means that the corresponding file was not uploaded successfully. Like for a virus issue.
         /// <param name="pageModel"></param>
         /// <returns> List<int> which represent the Mtoa file attachment IDs </returns>
         /// </summary>     
