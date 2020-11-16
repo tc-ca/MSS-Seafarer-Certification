@@ -3,15 +3,10 @@
 
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
 @inject IStringLocalizer<Common> CommonPageLocalizer
-@inject Utilities.SessionState state
-@inject Data.Services.MtoaEmailService emailService
-@inject Services.UploadDocumentsStepper UploadDocumentsStepper
 
-@using BlazorInputFile
-@using CDNApplication.Data.Entity
-@using CDNApplication.Models.PageModels
-@using CDNApplication.TCComponents.Stepper
-@inherits BaseComponent
+@using CDNApplication.PageModels
+@using TCComponents.Stepper;
+@inherits ReviewDocumentPageModel
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
@@ -19,9 +14,9 @@
 
 @((MarkupString)@PageLocalizer["PageDescription"].Value)
 
-@if (model == null)
+@if (Model == null)
 {
-    <a class="btn btn-secondary" href="@previousPage">
+    <a class="btn btn-secondary" href="@PreviousPage">
         @CommonPageLocalizer["Back"]
     </a>
 }
@@ -30,21 +25,20 @@ else
     <div class="panel panel-default">
         <div class="panel-heading">
             <span id="1"><strong>@PageLocalizer["YourInformation"]</strong></span>
-            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
 
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-5">@PageLocalizer["CDNNumber"]:</div>
-                <div class="col-md-7">@model.CdnNumber</div>
+                <div class="col-md-7">@Model.CdnNumber</div>
             </div>
             <div class="row">
                 <div class="col-md-5">@PageLocalizer["PhoneNumber"]:</div>
-                <div class="col-md-7">@model.PhoneNumber</div>
+                <div class="col-md-7">@Model.PhoneNumber</div>
             </div>
             <div class="row">
                 <div class="col-md-5">@PageLocalizer["EmailAddress"]:</div>
-                <div class="col-md-7">@model.EmailAddress</div>
+                <div class="col-md-7">@Model.EmailAddress</div>
             </div>
         </div>
     </div>
@@ -52,12 +46,11 @@ else
     <div class="panel panel-default">
         <div class="panel-heading">
             <span id="1"><strong>@PageLocalizer["YourCertificateSelection"]</strong></span>
-            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-5">@PageLocalizer["SelectedCertificate"]:</div>
-                <div class="col-md-7">@model.CertificateType</div>
+                <div class="col-md-7">@Model.CertificateType</div>
             </div>
         </div>
     </div>
@@ -65,21 +58,20 @@ else
     <div class="panel panel-default">
         <div class="panel-heading">
             <span class="panel-header" id="3"><strong>@PageLocalizer["YourDocument"]</strong></span>
-            @*<a @onclick="GoBack">@CommonPageLocalizer["Edit"]</a>*@
         </div>
         <div class="panel-body">
 
-            @for (int i = 0; i < model.UploadedFiles.Count; i++)
+            @for (int i = 0; i < Model.UploadedFiles.Count; i++)
             {
                 int index = i + 1;
 
                 <div>
                     <span class="wrap-text">@CommonPageLocalizer["Document"] @index:</span>
-                    <div class="wrap-text">@model.UploadedFiles[i].SelectedFile.Name &nbsp; (@model.UploadedFiles[i].SelectedFile.Size bytes)</div>
-                    <div class="wrap-text">@CommonPageLocalizer["Description"]: @model.UploadedFiles[i].Description</div>
+                    <div class="wrap-text">@Model.UploadedFiles[i].SelectedFile.Name &nbsp; (@Model.UploadedFiles[i].SelectedFile.Size bytes)</div>
+                    <div class="wrap-text">@CommonPageLocalizer["Description"]: @Model.UploadedFiles[i].Description</div>
                 </div>
 
-                @if (i < model.UploadedFiles.Count - 1)
+                @if (i < Model.UploadedFiles.Count - 1)
                 {
                     <br />
                 }
@@ -93,52 +85,7 @@ else
         @CommonPageLocalizer["Submit"]
     </button>
 
-    <a class="btn btn-secondary" href="@previousPage">
+    <a class="btn btn-secondary" href="@PreviousPage">
         @CommonPageLocalizer["Previous"]
     </a>
-}
-
-@code {
-
-    private UploadDocumentPageModel model;
-
-    private string previousPage => NavigationManager.BaseUri + "" + LanguageCode + "/upload";
-
-    private int _confirmationGuid;
-
-    private void Submit()
-    {
-
-        Console.WriteLine(model);
-
-        state.UploadDocumentPage = null;
-
-        if (!String.IsNullOrEmpty(model.EmailAddress))
-        {
-            emailService.SendEmailToApplicant(model).Wait();
-        }
-
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/confirmation/{_confirmationGuid}");
-
-    }
-
-    protected override void OnInitialized()
-    {
-
-        base.OnInitialized();
-
-        this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
-
-        _confirmationGuid = new Random().Next(100000, 9999999);
-
-        if (state.UploadDocumentPage == null)
-        {
-            state.UploadDocumentPage = new UploadDocumentPageModel();
-        }
-
-        model = state.UploadDocumentPage;
-
-        model.ConfirmationNumber = _confirmationGuid.ToString();
-    }
-
 }

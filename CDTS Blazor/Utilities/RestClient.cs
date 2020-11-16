@@ -19,8 +19,6 @@
         /// Creating a new instance for each request is an antipattern that can result in socket exhaustion.
         /// </summary>
         private static readonly HttpClient Client = new HttpClient();
-        private readonly string mtoaApiKey;
-        private readonly string mtoaJwtToken;
         private readonly IServiceLocator serviceLocator;
 
         /// <summary>
@@ -35,8 +33,10 @@
 
             if (configuration != null && azureKeyVaultService != null)
             {
-                this.mtoaApiKey = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaApiKey"]);
-                this.mtoaJwtToken = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaJwtToken"]);
+                var mtoaApiKey = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaApiKey"]);
+                var mtoaJwtToken = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaJwtToken"]);
+                Client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", mtoaJwtToken);
+                Client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", mtoaApiKey);
             }
         }
 
@@ -79,7 +79,7 @@
         /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
         /// <param name="path">Path to the API being called on the service.</param>
         /// <param name="dataObject">Object to post to the API.</param>
-        /// <returns>Return bject as specified by the API.</returns>
+        /// <returns>Return object as specified by the API.</returns>
         public async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
         {
@@ -155,8 +155,6 @@
         {
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            Client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", this.mtoaJwtToken);
-            Client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", this.mtoaApiKey);
         }
     }
 }

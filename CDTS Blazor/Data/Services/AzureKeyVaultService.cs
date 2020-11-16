@@ -1,7 +1,6 @@
 ﻿namespace CDNApplication.Data.Services
 {
-    using System;
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
     using Microsoft.Azure.KeyVault;
     using Microsoft.Azure.KeyVault.Models;
     using Microsoft.Azure.Services.AppAuthentication;
@@ -10,7 +9,7 @@
     /// <summary>
     ///  Represents the Azure key vault service.
     /// </summary>
-    public class AzureKeyVaultService
+    public class AzureKeyVaultService : IKeyVaultService
     {
         private string dNs;
 
@@ -42,9 +41,9 @@
         /// Get a list of secrets from the azure key vault.
         /// </summary>
         /// <returns>List of secrets.</returns>
-        public IPage<SecretItem> GetListOfSecrets()
+        public IEnumerable<SecretItem> GetListOfSecrets()
         {
-            IPage<SecretItem> secrets = new Page<SecretItem>();
+            IEnumerable<SecretItem> secrets = new Page<SecretItem>();
 
             using (var keyVaultClient = GetKeyVaultClient())
             {

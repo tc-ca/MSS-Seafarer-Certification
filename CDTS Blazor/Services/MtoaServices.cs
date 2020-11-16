@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Utilities;
+    using Microsoft.ApplicationInsights.Extensibility.Implementation;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
@@ -30,10 +31,7 @@
             this.logger = logger;
         }
 
-        /// <summary>
-        /// This procedure posts the submission email template to MTOA on application startup.
-        /// </summary>
-        /// <returns>Returns nothing (void).</returns>
+        /// <inheritdoc/>
         public async Task PostSubmissionEmailNotificationTemplateAsync()
         {
             string emailNotificationServicePath = this.configuration.GetSection("MtoaServiceSettings")["EmailNotificationTemplatePath"];
@@ -43,6 +41,22 @@
             try
             {
                 await this.restClient.PostAsync<MtoaEmailNotificationTemplateDto>(ServiceLocatorDomain.Mtoa, emailNotificationServicePath, mtoaEmailNotificationTemplate).ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public async Task PostSendEmailNotificationAsync(MtoaEmailNotificationDto mtoaEmailNotification)
+        {
+            string sendEmailNotificationPath = this.configuration.GetSection("MtoaServiceSettings")["EmailNotificationPath"];
+
+            try
+            {
+                await this.restClient.PostAsync<MtoaEmailNotificationDto>(ServiceLocatorDomain.Mtoa, sendEmailNotificationPath, mtoaEmailNotification).ConfigureAwait(true);
             }
             catch (Exception e)
             {

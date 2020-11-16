@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CDNApplication.Data.DTO.MTAPI
+﻿namespace CDNApplication.Data.DTO.MTAPI
 {
+    using System.Collections.Generic;
+    using System.Text.Json.Serialization;
+
     public class EmailNotificationDTO
     {
         public EmailNotificationDTO() { }
