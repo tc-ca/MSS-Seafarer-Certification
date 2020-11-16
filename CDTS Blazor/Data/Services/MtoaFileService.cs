@@ -50,14 +50,11 @@ namespace CDNApplication.Data.Services
 
             var fileAttachments = this.GetFileAttachmentsFromPageModel(pageModel, serviceRequestId);
 
-            if (fileAttachments.Count > 0)
+            fileAttachmentIDs = new List<int>();
+            foreach (var file in fileAttachments)
             {
-                fileAttachmentIDs = new List<int>();
-                foreach (var file in fileAttachments)
-                {
-                    var storedFileAttachment = this.UploadFile(serviceRequestId, file); 
-                    fileAttachmentIDs.Add( storedFileAttachment.Id);
-                }
+                var storedFileAttachment = this.UploadFile(serviceRequestId, file); 
+                fileAttachmentIDs.Add( storedFileAttachment.Id);
             }
 
             return fileAttachmentIDs;
