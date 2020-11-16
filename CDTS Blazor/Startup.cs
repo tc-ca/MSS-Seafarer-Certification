@@ -106,7 +106,7 @@ namespace CDNApplication
             services.AddServerSideBlazor();
 
             services.AddSingleton<IServiceLocator, ServiceLocator>();
-            services.AddScoped<IRestClient, RestClient>();
+            services.AddSingleton<IRestClient, RestClient>();
 
             services.AddScoped<UploadDocumentsStepper>();
             services.AddScoped<UploadDocumentPageModel>();
@@ -129,8 +129,11 @@ namespace CDNApplication
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
-            services.AddScoped<MtoaEmailService>();
+
             services.AddScoped<MtoaFileService>();
+
+            services.AddSingleton<IMtoaService>();
+
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddModelAccessor();

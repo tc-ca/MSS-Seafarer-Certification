@@ -99,7 +99,7 @@ namespace CDNApplication.Tests.Integration
         {
             // Arrange
             int serviceRequestId = 13844; //13844 is a temporary service request id for Dev.
-            virusFileBytes = this.createEICARTestVirusFile();
+            var virusFileBytes = this.createEICARTestVirusFile();
             var fileAttachment = new FileAttachment
             {
                 ContentType = "Visus",
