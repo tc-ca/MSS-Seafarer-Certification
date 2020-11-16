@@ -97,10 +97,32 @@ namespace CDNApplication.Tests.Integration
         [Fact]
         public void MtoaFileService_UploadFile_InfectedFile()
         {
+            // Arrange
+            int serviceRequestId = 13844; //13844 is a temporary service request id for Dev.
+            virusFileBytes = this.createEICARTestVirusFile();
+            var fileAttachment = new FileAttachment
+            {
+                ContentType = "Visus",
+                Data = virusFileBytes,
+                Name = "FirstName.txt",
+                ServiceRequestId = serviceRequestId,
+                Size = virusFileBytes.Length,
+            };
+            var azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
+            MtoaFileService fileService = new MtoaFileService(azureKeyVaultService);
 
-            #region Virus Test File
 
-            // ☠☠☠☠ Virus test file START  ☠☠☠☠ EICAR: European Institute for Computer Antivirus Research
+            // Act
+            var uploadedFile = fileService.UploadFile(serviceRequestId, fileAttachment).GetAwaiter().GetResult();
+
+
+            // Assert
+            Assert.True(uploadedFile.Id < 0);
+
+        }
+
+        private byte[] createEICARTestVirusFile()
+        {
             byte[] bytes = null;
             using (var ms = new MemoryStream())
             {
@@ -110,30 +132,7 @@ namespace CDNApplication.Tests.Integration
                 ms.Position = 0;
                 bytes = ms.ToArray();
             }
-            ////////////// Virus test file END ///////////////
-
-
-            #endregion--- bytes for virus--
-
-            int serviceRequestId = 13844; //13844 is a temporary service request id for Dev.
-
-
-            var fileAttachment = new FileAttachment
-            {
-                ContentType = "Visus",
-                Data = bytes,
-                Name = "FirstName.txt",
-                ServiceRequestId = serviceRequestId,
-                Size = bytes.Length
-            };
-
-            var azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
-            MtoaFileService fileService = new MtoaFileService(azureKeyVaultService);
-
-            var uploadedFile = fileService.UploadFile(serviceRequestId, fileAttachment).GetAwaiter().GetResult();
-
-            Assert.True(uploadedFile.Id < 0);
-
+            return bytes;
         }
 
     }
