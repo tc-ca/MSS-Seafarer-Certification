@@ -3,6 +3,7 @@
 // </auto-generated>
 using BlazorInputFile;
 using CDNApplication.Data.DTO.MTAPI;
+using CDNApplication.Exceptions;
 using CDNApplication.Models.PageModels;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
@@ -14,6 +15,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Security;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace CDNApplication.Data.Services
@@ -29,7 +31,6 @@ namespace CDNApplication.Data.Services
         public MtoaFileService(AzureKeyVaultService azureKeyVaultService)
         {
             api_key = azureKeyVaultService.GetSecretByName("MtoaApiKey");
-
             jwt = azureKeyVaultService.GetSecretByName("MtoaJwt");
         }
 
@@ -194,6 +195,13 @@ namespace CDNApplication.Data.Services
                     Debug.WriteLine(ex.Message);
                     Debug.WriteLine(ex.InnerException);
                     Debug.WriteLine(ex.StackTrace);
+                }
+                catch (HttpRequestException socketException)
+                {
+                    Debug.WriteLine(socketException.Message);
+                    Debug.WriteLine(socketException.InnerException);
+                    Debug.WriteLine(socketException.StackTrace);
+                    throw new MtoaConnectionException("Unable to connect to MTOA services.", socketException);
                 }
                 catch (Exception ex)
                 {
