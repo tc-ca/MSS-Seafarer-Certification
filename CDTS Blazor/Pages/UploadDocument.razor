@@ -110,18 +110,22 @@
 
                     <div class="form-row">
 
-                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
+                        <div class="col-md-2">
                             <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @PageLocalizer["AddDocument"]
+                                @PageLocalizer["Browse"]
                             </button>
 
                             <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
                         </div>
 
-                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-10"))">
+                        <div class="col-md-10">
                             <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
                         </div>
 
+                    </div>
+
+                    <div>
+                        @PageLocalizer["FilesAccepted"]
                     </div>
 
                     <br />
@@ -131,9 +135,9 @@
                         <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
                             <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
 
-                            @*<p class="mb-4">
-                                    @PageLocalizer["DocumentType"]: @model.CertificateType
-                                </p>*@
+                            <p class="mb-4">
+                                @PageLocalizer["DocumentType"]: @currentFileDescription
+                            </p>
 
                             <p>
                                 @PageCommonLocalizer["Document"]: @currentFileName
@@ -143,23 +147,7 @@
 
                     </div>
 
-                    <div>
-                        @PageLocalizer["FilesAccepted"]
-                    </div>
-
                     <ValidationMessage For="() => model.UploadedFiles" />
-
-                    <br />
-
-                    @for (var i = 0; i < (model.UploadedFiles?.Count ?? 0); i++)
-                    {
-                        var index = i;
-                        <p>
-                            @string.Format(PageLocalizer["FileUploadedSuccessText"], model.UploadedFiles?[i].SelectedFile.Name) | @PageLocalizer["DescriptionText"]: @model.UploadedFiles?[i].Description
-
-                            <button class="btn btn-danger" type="button" @onclick="e => RemoveFile(index)">X</button>
-                        </p>
-                    }
 
                     <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
 
@@ -187,6 +175,9 @@
     private UploadDocumentPageModel model = new UploadDocumentPageModel();
 
     private string currentFileName = "";
+
+    private string currentFileDescription = "";
+
 
     bool success = false;
     string showFileScanMessage = "none";
@@ -239,12 +230,15 @@
                 success = false;
             }
 
+            currentFileName = file.Name;
+            currentFileDescription = model.FileDescription;
+
             model.UploadedFiles.Add(fileToUpload);
             model.FileDescription = string.Empty;
             showFileScanMessage = null;
         }
 
-        currentFileName = file.Name;
+
         StateHasChanged();
 
     }

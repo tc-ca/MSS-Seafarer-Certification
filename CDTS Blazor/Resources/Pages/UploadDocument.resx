@@ -215,4 +215,7 @@
   <data name="DocumentType" xml:space="preserve">
     <value>Document type</value>
   </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
 </root>
