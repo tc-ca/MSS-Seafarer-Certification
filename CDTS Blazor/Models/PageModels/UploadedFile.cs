@@ -14,12 +14,12 @@
         public IFileListEntry SelectedFile { get; set; }
 
         /// <summary>
-        /// Gets or sets SelectedFileWithMemoryData
+        /// Gets or sets SelectedFileWithMemoryData.
         /// </summary>
         public FileListEntryImplExtension SelectedFileWithMemoryData { get; set; }
 
         /// <summary>
-        /// Gets or sets FileAttachment related to MTOA file upload
+        /// Gets or sets FileAttachment related to MTOA file upload.
         /// </summary>
         public FileAttachment MtoaFileAttachment { get; set; }
 
@@ -27,5 +27,10 @@
         /// Gets or sets the file description.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether gets or sets the virus status of the file.
+        /// </summary>
+        public bool Safe { get; set; }
     }
 }

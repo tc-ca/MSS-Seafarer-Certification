@@ -130,20 +130,23 @@
 
                     <br />
 
-                    <div class="form-row" style="display: @showFileScanMessage">
+                    <div class="form-row">
 
-                        <div class="alert @((success? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
-                            <h4 class="alert-heading">@((success) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
+                        @foreach (var file in model.UploadedFiles)
+                        {
+                            <div class="alert @((file.Safe ? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
+                                <h4 class="alert-heading">@((file.Safe) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
 
-                            <p class="mb-4">
-                                @PageLocalizer["DocumentType"]: @currentFileDescription
-                            </p>
+                                <p class="mb-4">
+                                    @PageLocalizer["DocumentType"]: @file.Description
+                                </p>
 
-                            <p>
-                                @PageCommonLocalizer["Document"]: @currentFileName
-                            </p>
+                                <p>
+                                    @PageCommonLocalizer["Document"]: @file.SelectedFile.Name
+                                </p>
 
-                        </div>
+                            </div>
+                        }
 
                     </div>
 
@@ -180,7 +183,6 @@
 
 
     bool success = false;
-    string showFileScanMessage = "none";
 
     private void HandleValidSubmit()
     {
@@ -223,11 +225,11 @@
 
             if (uploadedMtoaAttachment.Id > 0)
             {
-                success = true;
+                fileToUpload.Safe = true;
             }
             else
             {
-                success = false;
+                fileToUpload.Safe = false;
             }
 
             currentFileName = file.Name;
@@ -235,7 +237,6 @@
 
             model.UploadedFiles.Add(fileToUpload);
             model.FileDescription = string.Empty;
-            showFileScanMessage = null;
         }
 
 
