@@ -12,8 +12,49 @@ This document is under version control in GitHub.
 
 <img src="./GitOps.svg">
 
+# Textual version of the GitOps Diagram
+
+## Product Owner
+A **product backlog item (PBI)** is a new feature, change to existing an feature, bug fix, or other activity that a team may deliver in order to achieve a specific outcome is also intended to move the product forward.
+**Backlog Refinement** is when the team review items on the backlog to ensure the backlog contains the appropriate items, that they are prioritized, also clarify what the PBI is asking the team to do and that the items at the top of the backlog are ready for delivery.
+
+**Sprint planning** is where the team determines the product backlog items they will work on during that sprint and discusses their initial plan for completing those product backlog items.
+
+**People involed:**
+ - Product owner
+ - Development team
+ - Scrum master
+
+## Dev Team GitOps
+
+**Azure board** is where all of the backlog items are and it's where we find/create tasks within the PBI, which we will work on.
+
+**GitHub** is our source control so it's where all the code lies. We have 2 branches, **master** and **develop**. Master is production ready code and develop is test code, that is waiting to be tested by the product owner.
+- We create a branch in GitHub based on develop for every PBI we work on.
+
+We **modify the code** primarily using Visual Studio 2019 Enterprise or any text editor that we are comfortable with.
+
+When we have tested the code or are happy with it we **commit the changes**. Within the commit, we add a commit message describing what was done and also adding the task number, so it can be linked and tracked in the task. After that, the changes are pushed to GitHub.
+
+We initiate **pull request** in order to get the code reviewed before it can get merged in the develop branch. The pull request's branch must be up to date, build, and pass all tests needed.
+
+**Reviewing a pull request** means, making sure the code builds and runs, matches the wire-frame, and meets acceptance criteria. The reviewer can requests changes or comment where needed. If all is well, they then approve.
+Whoever approves the pull request will also **merge** it.
+
+## Developper - Workflow
+
+When starting work on a sprint backlog item , the developper looks from top to bottom and grabs a task from the PBI (If no tasks or yet created the developper can go ahead and do that as well to the best of their ability). Once the task is started the developper can assign themselves and mark the task as in progress.   
+
+### Default tasks
+- PO to review and close
+- Review Pull Request
+- Verify published build meets acceptance criteria.
+
+
 # Contribute
  - Fork this project, make your suggestions via editing the diagram and initiate a Pull Request for Transport Canada to see your suggestions.
  - Make the SVG editable via double-click as shown here: https://github.com/jgraph/drawio-github
  - Link GitHook text to Project's custom `prepare-commit-msg` README.md.
  - Update this README.md file with an explanation of the steps.
+
+
