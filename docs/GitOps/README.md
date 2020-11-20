@@ -30,7 +30,9 @@ A **product backlog item (PBI)** is a new feature, change to existing an feature
 **Azure board** is where all of the backlog items are and it's where we find/create tasks within the PBI, which we will work on.
 
 **GitHub** is our source control so it's where all the code lies. We have 2 branches, **master** and **develop**. Master is production ready code and develop is test code, that is waiting to be tested by the product owner.
-- We create a branch in GitHub based on develop for every PBI we work on.
+When we start work on a PBI that requires development work we create a branch:
+- If the PBI is a bug we branch from master.
+- If the PBI is not a bug we branch from develop.
 
 We **modify the code** primarily using Visual Studio 2019 Enterprise or any text editor that we are comfortable with.
 
@@ -41,9 +43,15 @@ We initiate **pull request** in order to get the code reviewed before it can get
 **Reviewing a pull request** means, making sure the code builds and runs, matches the wire-frame, and meets acceptance criteria. The reviewer can requests changes or comment where needed. If all is well, they then approve.
 Whoever approves the pull request will also **merge** it.
 
-## Developper - Workflow
+### Development Enviornment CI/CD (Continuous integration / Continuous delivery)
+Any merging of code into the develop branch will trigger our CI/CD pipeline. Our pipelines exists on AzureDevOps 
+- CDNApplicationPrototype-develop-BuildTestPublishToZip-CI
+- CDNApplicationPrototype-develop-BuildTestPushImageToACR-CI
+- *As a temporary measure due to MTOAKenga being offline we deploy manually (The pipelines still run they just don't automaitcally update the prototype). 
 
-When starting work on a sprint backlog item , the developper looks from top to bottom and grabs a task from the PBI (If no tasks or yet created the developper can go ahead and do that as well to the best of their ability). Once the task is started the developper can assign themselves and mark the task as in progress.   
+Link to the prototype (Need access to VPN): [CDNApplicationPrototype-OnPrem](http://cdnapplicationprototype.azurewebsites.net/)
+Link to the prototype (Temporarily unavailable): [CDNApplicationPrototype-Cloud](http://wwwappsmssdev/saf-sec-sur/4/seafarers/)
+ 
 
 ### Default tasks
 - PO to review and close
