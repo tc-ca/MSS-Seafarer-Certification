@@ -68,7 +68,7 @@
 
             this.State.UploadDocumentPage = null;
 
-            var seafarersDocumentSubmissionEmail = new MtoaSeafarersDocumentSubmissionEmailParametersDto()
+            var seafarersDocumentSubmissionEmail = new MtoaSeafarersSubmissionEmailParametersDto()
             {
                 ConfirmationNumber = this.Model.ConfirmationNumber,
                 CdnNumber = this.Model.CdnNumber,
