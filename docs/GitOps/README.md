@@ -52,6 +52,10 @@ Any merging of code into the develop branch will trigger our CI/CD pipeline. Our
 Link to the prototype (Need access to VPN): [CDNApplicationPrototype-OnPrem](http://cdnapplicationprototype.azurewebsites.net/)
 Link to the prototype (Temporarily unavailable): [CDNApplicationPrototype-Cloud](http://wwwappsmssdev/saf-sec-sur/4/seafarers/)
  
+### Production Enviornment CI/CD (Continuous integration / Continuous delivery)
+Any merging of code into the master branch will trigger our CI/CD pipeline. Our pipelines exists on AzureDevOps 
+- CDNApplicationPrototype-master-BuildTestPublishToZip-CI
+- CDNApplicationPrototype-master-BuildTestPushImageToACR-CI
 
 ### Default tasks
 - PO to review and close
