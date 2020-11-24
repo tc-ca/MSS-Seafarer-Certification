@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.IO;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Data.Services;
     using CDNApplication.Models;
@@ -75,11 +76,15 @@
                 PhoneNumber = this.Model.PhoneNumber,
                 EmailAddress = this.Model.EmailAddress,
                 CertificateType = this.Model.CertificateType,
+                EnglishIntroduction = string.Format(File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateIntroductionEnglish.html"), this.Model.ConfirmationNumber),
+                EnglishSignature = string.Format(File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateSignatureEnglish.html"), this.Model.ConfirmationNumber),
+                FrenchIntroduction = File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateIntroductionFrench.html"),
+                FrenchSignature = File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateSignatureFrench.html"),
             };
 
             var mtoaEmailNotification = new MtoaEmailNotificationDto()
             {
-                NotificationTemplateName = "Seafarers_Document_Submission_Email",
+                NotificationTemplateName = this.Configuration.GetSection("MtoaServiceSettings")["EmailSubmissionTemplateName"],
                 ServiceRequestId = int.Parse(this.Configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"]),
                 UserId = int.Parse(this.Configuration.GetSection("MtoaServiceSettings")["UserId"]),
                 UserName = "Nobody",

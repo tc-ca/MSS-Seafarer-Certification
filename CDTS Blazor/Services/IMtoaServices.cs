@@ -19,5 +19,11 @@
         /// </summary>
         /// <returns>Returns the task.</returns>
         public Task PostSendEmailNotificationAsync(MtoaEmailNotificationDto mtoaEmailNotification);
+
+        /// <summary>
+        /// This procedure posts the file attachment to MTOA.
+        /// </summary>
+        /// <returns>Return the task.</returns>
+        public Task PostFileAttachmentsAsync();
     }
 }

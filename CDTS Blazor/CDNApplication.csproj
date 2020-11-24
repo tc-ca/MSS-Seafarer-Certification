@@ -20,12 +20,20 @@
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html" />
     <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html" />
     <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextFrench.html" />
     <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextEnglish.html" />
     <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html" />
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html" />
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html" />
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html" />
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
