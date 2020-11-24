@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CDNApplication.Models.PageModels;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Diagnostics;
-using CDNApplication.Data.DTO.MTAPI;
-
 namespace CDNApplication.Data.Services
 {
-    public class MtoaEmailService
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using CDNApplication.Models.PageModels;
+    using System.Net.Http;
+    using System.Diagnostics;
+    using CDNApplication.Data.DTO.MTAPI;
+
+    public class IMtoaService
     {
         private string api_key;
         private string jwt;
         private string base_uri_str = "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/13/MTAPI-INT/";
         private string sub_uri = "api/v1/notifications?overrideEmailRecipientsSafeguard=true";
 
-        public MtoaEmailService(AzureKeyVaultService azureKeyVaultService)
+        public IMtoaService(AzureKeyVaultService azureKeyVaultService)
         {
 
             api_key = azureKeyVaultService.GetSecretByName("MtoaApiKey");
@@ -38,13 +34,14 @@ namespace CDNApplication.Data.Services
             template.UserId = 4536;
             template.UserName = "Nobody";
             template.Language = "English";
-            template.From = "mansuer.aizimu@tc.gc.ca";
-            template.To = pageModel.EmailAddress;
+            template.From = "donotreply-nepasrepondre@tc.gc.ca";
+            template.To = pageModel.EmailAddress;   
             template.IsHtml = true;
 
             template.Attachements = new List<EmailAttachmentDTO>(); // in our email currently, we do not have attachments. But this field can not be null
 
             var parameters = new List<KeyValuePair<string, string>>();
+
 
             parameters.Add(new KeyValuePair<string, string>("Confirmation_Number", pageModel.ConfirmationNumber));
             parameters.Add(new KeyValuePair<string, string>("CDN_Number", pageModel.CdnNumber));

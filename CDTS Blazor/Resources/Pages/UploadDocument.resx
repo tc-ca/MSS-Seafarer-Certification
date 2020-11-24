@@ -130,7 +130,7 @@
     <value>Select the certificate</value>
   </data>
   <data name="SelectFileLabel" xml:space="preserve">
-    <value>Select your file</value>
+    <value>Select your document</value>
   </data>
   <data name="FileUploadedSuccessText" xml:space="preserve">
     <value>File {0} has been uploaded</value>
@@ -196,5 +196,26 @@
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="AddDocument" xml:space="preserve">
+    <value>Add Document</value>
+  </data>
+  <data name="AddAnotherDocument" xml:space="preserve">
+    <value>Add another document</value>
+  </data>
+  <data name="FileNamePlaceholder" xml:space="preserve">
+    <value>No document selected</value>
+  </data>
+  <data name="DocumentError" xml:space="preserve">
+    <value>Uh oh. Your document did not pass our security scan and cannot be added. Please try again</value>
+  </data>
+  <data name="DocumentSuccess" xml:space="preserve">
+    <value>We scanned your document and it is ready to submit</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>Document type</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
   </data>
 </root>
