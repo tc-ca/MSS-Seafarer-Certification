@@ -30,10 +30,6 @@
     <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html" />
-    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html" />
-    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html" />
-    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html" />
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -44,6 +40,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
@@ -86,6 +94,7 @@
     <Folder Include="Components\Banners\" />
     <Folder Include="TCComponents\Stepper\" />
     <Folder Include="Data\Attributes\" />
+    <Folder Include="Services\EmailNotification\" />
   </ItemGroup>
 
   <ItemGroup>
