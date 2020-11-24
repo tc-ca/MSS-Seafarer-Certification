@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="EmailTemplate\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CDTS Blazor\CDNApplication.csproj" />
