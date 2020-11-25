@@ -49,6 +49,11 @@
             this.RuleFor(m => m.UploadedFiles)
                 .NotEmpty()
                 .WithMessage(localizer.GetString("UploadedFilesNotEmptyText"));
+
+            this.RuleFor(m => m.Renewing)
+                .Empty()
+                .WithMessage(localizer.GetString("TypeOfCertificateNotEmptyText"));
+
         }
     }
 }

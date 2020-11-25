@@ -221,4 +221,7 @@
   <data name="Browse" xml:space="preserve">
     <value>Feuilleter</value>
   </data>
+  <data name="TypeOfCertificateLabel" xml:space="preserve">
+    <value>Décrivez le type de certificat que vous souhaitez</value>
+  </data>
 </root>

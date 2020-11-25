@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using CDNApplication.Data;
     using CDNApplication.Data.Entity;
 
     /// <summary>
@@ -10,6 +11,11 @@
     /// </summary>
     public class UploadDocumentPageModel
     {
+        /// <summary>
+        /// Gets or sets renewal status.
+        /// </summary>
+        public bool IsRenewal { get; set; } = false;
+
         /// <summary>
         /// Gets or sets CDN number.
         /// </summary>
@@ -62,6 +68,11 @@
                 return mtoaDocumentStringBuilder.ToString();
             }
         }
+
+        /// <summary>
+        /// Gets or sets Renewing.
+        /// </summary>
+        public CorrespondenceRenewal Renewing { get; set; }
 
         /// <summary>
         /// Override of Object.ToString() method.

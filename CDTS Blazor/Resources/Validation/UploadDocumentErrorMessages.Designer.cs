@@ -124,6 +124,15 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must choose the type of certificate.
+        /// </summary>
+        internal static string TypeOfCertificateNotEmptyText {
+            get {
+                return ResourceManager.GetString("TypeOfCertificateNotEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must upload at least 1 file.
         /// </summary>
         internal static string UploadedFilesNotEmptyText {
