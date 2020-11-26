@@ -13,7 +13,8 @@
 @using CDNApplication.Data
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
-@using CDNApplication.TCComponents.Stepper
+@using CDNApplication.TCComponents.Stepper 
+@using CDNApplication.Utilities 
 @inherits BaseComponent
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -96,21 +97,23 @@
             <div class="form-group">
                 <div class="form-control-wrapper">
                     <section>
-                        <label class="form-control-label">
+                        <label class="form-control-label required">
                             @PageLocalizer["TypeOfCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                         </label>
                         <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
                             <i class="fa fa-info-circle ml-2"></i>
                         </span>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="@nameof(model.Renewing)" @onchange="RenewalSelectionChanged" id="renewal_1" value="@CorrespondenceRenewal.YES">
-                            <label class="form-check-label" for="renewal_1">New certificate</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="@nameof(model.Renewing)" @onchange="RenewalSelectionChanged" id="renewal_2" value="@CorrespondenceRenewal.NO">
-                            <label class="form-check-label" for="renewal_2">Renewal</label>
-                        </div>
+                        <InputRadioGroup @bind-Value="model.SubmissionType">
+                            @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
+                            {
+                                var submissionTypeValue = submissionType.GetValue();
+                                <div>
+                                    <InputRadio id="@submissionTypeValue" Value="submissionType" />
+                                    <label for="@submissionTypeValue">@submissionTypeValue</label>
+                                </div>
+                            }
+                        </InputRadioGroup>
                     </section>
                 </div>
             </div>
@@ -141,7 +144,7 @@
                                 @(!model.UploadedFiles.Any() ? @PageLocalizer["Browse"] : @PageLocalizer["AddAnotherDocument"])
                             </button>
 
-                            <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                            <BlazorInputFile.InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
                         </div>
 
                         <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-10"))">
@@ -219,9 +222,9 @@
     void RenewalSelectionChanged(ChangeEventArgs args)
     {
 
-        Enum.TryParse(args.Value.ToString(), out CorrespondenceRenewal result);
+        Enum.TryParse(args.Value.ToString(), out SubmissionType result);
 
-        model.Renewing = result;
+        model.SubmissionType = result;
 
     }
 

@@ -2,6 +2,7 @@
 {
     using System.Resources;
     using System.Text.RegularExpressions;
+    using CDNApplication.Data;
     using CDNApplication.Models.PageModels;
     using FluentValidation;
     using ValidationResources = CDNApplication.Resources.Validation;
@@ -50,8 +51,8 @@
                 .NotEmpty()
                 .WithMessage(localizer.GetString("UploadedFilesNotEmptyText"));
 
-            this.RuleFor(m => m.Renewing)
-                .Empty()
+            this.RuleFor(m => m.SubmissionType)
+                .IsInEnum()
                 .WithMessage(localizer.GetString("TypeOfCertificateNotEmptyText"));
 
         }
