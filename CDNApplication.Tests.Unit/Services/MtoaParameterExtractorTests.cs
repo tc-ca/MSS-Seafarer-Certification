@@ -1,5 +1,6 @@
 ﻿namespace CDNApplication.Tests.Unit.Services
 {
+    using System;
     using System.Linq;
     using CDNApplication.Data.Attributes;
     using CDNApplication.Services;
@@ -72,6 +73,13 @@
 
             // Assert
             Assert.Empty(parameters);
+        }
+
+        [Fact]
+        public void ExtractParameter_WhenTemplateIsNull_ThrowsArgumentNullException()
+        {
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => this.mtoaParameterExtractor.ExtractParameters(null));
         }
 
         private class MtoaParameterTestWithAttribute
