@@ -10,13 +10,13 @@ namespace CDNApplication.Data
         /// <summary>
         /// Defines the user is not renewing.
         /// </summary>
-        [Description("New certificate")]
+        [Description("NewCertificate")]
         NEW,
 
         /// <summary>
         /// Defines the user is renewing.
         /// </summary>
-        [Description("Renewal")]
+        [Description("RenewalCertificate")]
         RENEWAL,
     }
 }
