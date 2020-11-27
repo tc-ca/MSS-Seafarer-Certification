@@ -44,6 +44,7 @@
                 PhoneNumber = model.PhoneNumber,
                 EmailAddress = model.EmailAddress,
                 CertificateType = model.CertificateType,
+                SubmissionType = "Renewal",
                 EnglishIntroduction = string.Format(File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateIntroductionEnglish.html"), model.ConfirmationNumber),
                 EnglishSignature = File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateSignatureEnglish.html"),
                 FrenchIntroduction = string.Format(File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateIntroductionFrench.html"), model.ConfirmationNumber),

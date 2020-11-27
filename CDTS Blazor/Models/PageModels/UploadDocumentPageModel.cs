@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using CDNApplication.Data.Entity;
 
     /// <summary>
     /// PageModel for the UploadDocument page.
@@ -29,6 +28,7 @@
         /// Gets or sets Confirmation Number.
         /// </summary>
         public string ConfirmationNumber { get; set; }
+
         /// <summary>
         /// Gets or sets the certificate type.
         /// </summary>

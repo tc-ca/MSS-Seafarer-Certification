@@ -36,5 +36,11 @@
         /// </summary>
         [MtoaNotificationParameterName("Selected_CertificateType")]
         public string CertificateType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the submission type (whether a renewal or not).
+        /// </summary>
+        [MtoaNotificationParameterName("Submission_Type")]
+        public string SubmissionType { get; set; }
     }
 }
