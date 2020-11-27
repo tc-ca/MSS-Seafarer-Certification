@@ -2,21 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Text;
     using CDNApplication.Data;
-    using CDNApplication.Data.Entity;
 
     /// <summary>
     /// PageModel for the UploadDocument page.
     /// </summary>
     public class UploadDocumentPageModel
     {
-        /// <summary>
-        /// Gets or sets renewal status.
-        /// </summary>
-        public bool IsRenewal { get; set; } = false;
-
         /// <summary>
         /// Gets or sets CDN number.
         /// </summary>

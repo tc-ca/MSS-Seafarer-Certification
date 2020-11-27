@@ -222,6 +222,6 @@
     <value>Feuilleter</value>
   </data>
   <data name="TypeOfCertificateLabel" xml:space="preserve">
-    <value>Décrivez le type de certificat que vous souhaitez</value>
+    <value>Décrivez le type de certificat que vous souhaitez obtenir</value>
   </data>
 </root>
