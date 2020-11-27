@@ -218,4 +218,7 @@
   <data name="Browse" xml:space="preserve">
     <value>Browse</value>
   </data>
+  <data name="TypeOfCertificateLabel" xml:space="preserve">
+    <value>Describe the type of certificate you want</value>
+  </data>
 </root>

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using CDNApplication.Data.Entity;
+    using CDNApplication.Data;
 
     /// <summary>
     /// PageModel for the UploadDocument page.
@@ -29,6 +29,7 @@
         /// Gets or sets Confirmation Number.
         /// </summary>
         public string ConfirmationNumber { get; set; }
+
         /// <summary>
         /// Gets or sets the certificate type.
         /// </summary>
@@ -43,6 +44,11 @@
         /// Gets or sets the file description.
         /// </summary>
         public string FileDescription { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets Renewing.
+        /// </summary>
+        public SubmissionType SubmissionType { get; set; }
 
         /// <summary>
         /// Gets the uploaded files in a format that can be used in mtoa.
