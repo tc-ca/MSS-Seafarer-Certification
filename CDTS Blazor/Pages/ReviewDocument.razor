@@ -2,10 +2,10 @@
 @page "/{LanguageCode}/review"
 
 @inject IStringLocalizer<ReviewDocument> PageLocalizer
-@inject IStringLocalizer<Common> CommonPageLocalizer
 
-@using CDNApplication.PageModels
-@using TCComponents.Stepper;
+@using CDNApplication.PageModels;
+@using CDNApplication.TCComponents.Stepper;
+@using Utilities; 
 @inherits ReviewDocumentPageModel
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -54,7 +54,7 @@ else
             </div>
             <div class="row">
                 <div class="col-md-5">@PageLocalizer["SubmissionType"]</div>
-                <div class="col-md-7">New certificate</div>
+                <div class="col-md-7">@CommonPageLocalizer[Model.SubmissionType.GetValue()]</div>
             </div>
         </div>
     </div>

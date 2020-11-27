@@ -8,9 +8,11 @@
     using CDNApplication.Models.PageModels;
     using CDNApplication.Services;
     using CDNApplication.Services.EmailNotification;
+    using CDNApplication.Shared;
     using CDNApplication.Utilities;
     using Microsoft.AspNetCore.Components;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Localization;
 
     /// <summary>
     /// Defines the page model for the review document.
@@ -33,6 +35,12 @@
         /// Gets the confirmation page link.
         /// </summary>
         protected string ConfirmationPageLink => string.Format("{0}{1}/confirmation/{2}", this.NavigationManager.BaseUri, this.LanguageCode, this.confirmationGuid);
+
+        /// <summary>
+        /// Gets or sets the CommonPageLocalizer.
+        /// </summary>
+        [Inject]
+        protected IStringLocalizer<Common> CommonPageLocalizer { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration object see appsettings.json.
@@ -67,7 +75,7 @@
 
             this.State.UploadDocumentPage = null;
 
-            var documentSubmissionEmailBuilder = new SeafarersDocumentSubmissionEmailBuilder(this.Configuration, this.LanguageCode);
+            var documentSubmissionEmailBuilder = new SeafarersDocumentSubmissionEmailBuilder(this.CommonPageLocalizer, this.Configuration, this.LanguageCode);
             var mtoaEmailNotificationDto = documentSubmissionEmailBuilder.Build(this.Model);
 
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotificationDto);

@@ -38,9 +38,15 @@
         public string CertificateType { get; set; }
 
         /// <summary>
-        /// Gets or sets the submission type (whether a renewal or not).
+        /// Gets or sets the submission type english string.
         /// </summary>
-        [MtoaNotificationParameterName("Submission_Type")]
-        public string SubmissionType { get; set; }
+        [MtoaNotificationParameterName("Submission_Type_En")]
+        public string SubmissionTypeEnglish { get; set; }
+
+        /// <summary>
+        /// Gets or sets the submission type french string.
+        /// </summary>
+        [MtoaNotificationParameterName("Submission_Type_Fr")]
+        public string SubmissionTypeFrench { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace CDNApplication.Models.PageModels
 {
+    using CDNApplication.Data;
     using System;
     using System.Collections.Generic;
     using System.Text;
