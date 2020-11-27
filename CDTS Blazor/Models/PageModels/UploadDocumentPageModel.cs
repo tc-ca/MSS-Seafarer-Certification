@@ -45,6 +45,11 @@
         public string FileDescription { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets Renewing.
+        /// </summary>
+        public SubmissionType SubmissionType { get; set; }
+
+        /// <summary>
         /// Gets the uploaded files in a format that can be used in mtoa.
         /// </summary>
         public string ToMtoaDocumentString

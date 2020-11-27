@@ -10,9 +10,11 @@
 @inject Data.Services.MtoaFileService fileService
 
 @using BlazorInputFile
+@using CDNApplication.Data
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
-@using CDNApplication.TCComponents.Stepper
+@using CDNApplication.TCComponents.Stepper 
+@using CDNApplication.Utilities 
 @inherits BaseComponent
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -90,6 +92,52 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required">
+                            @PageLocalizer["TypeOfCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+
+                        <InputRadioGroup @bind-Value="model.SubmissionType">
+                            @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
+                            {
+                                var submissionTypeValue = submissionType.GetValue();
+                                <div>
+                                    <InputRadio id="@submissionTypeValue" Value="submissionType" />
+                                    <label for="@submissionTypeValue">@CommonLocalizer[submissionTypeValue]</label>
+                                </div>
+                            }
+                        </InputRadioGroup>
+                        <!--
+                            <fieldset class="provisional gc-chckbxrdio">
+        <legend>Which is your favorite pet?</legend>
+        <ul class="list-unstyled lst-spcd-2">
+            <li class="radio">
+                <input type="radio" name="animal" id="animal-1">
+                <label for="animal-1">Dog</label>
+            </li>
+            <li class="radio">
+                <input type="radio" name="animal" id="animal-2">
+                <label for="animal-2">Cat</label>
+            </li>
+            <li class="radio">
+                <input type="radio" name="animal" id="animal-3">
+                <label for="animal-3">Rat</label>
+            </li>
+        </ul>
+    </fieldset>
+                            -->
+                    </section>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <section class="panel panel-primary">
@@ -110,15 +158,15 @@
 
                     <div class="form-row">
 
-                        <div class="col-md-2">
+                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
                             <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @PageLocalizer["Browse"]
+                                @(!model.UploadedFiles.Any() ? @PageLocalizer["Browse"] : @PageLocalizer["AddAnotherDocument"])
                             </button>
 
-                            <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                            <BlazorInputFile.InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
                         </div>
 
-                        <div class="col-md-10">
+                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-10"))">
                             <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
                         </div>
 
@@ -132,7 +180,7 @@
 
                     <div class="form-row">
 
-                        @foreach (var file in model.UploadedFiles)
+                        @foreach (var file in model.UploadedFiles.AsEnumerable().Reverse())
                         {
                             <div class="alert @((file.Safe ? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
                                 <h4 class="alert-heading">@((file.Safe) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
@@ -151,8 +199,6 @@
                     </div>
 
                     <ValidationMessage For="() => model.UploadedFiles" />
-
-                    <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
 
                 </div>
             </div>
@@ -190,6 +236,15 @@
         state.UploadDocumentPage = model;
 
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
+    }
+
+    void RenewalSelectionChanged(ChangeEventArgs args)
+    {
+
+        Enum.TryParse(args.Value.ToString(), out SubmissionType result);
+
+        model.SubmissionType = result;
+
     }
 
     private void HandlePreviousClick()
