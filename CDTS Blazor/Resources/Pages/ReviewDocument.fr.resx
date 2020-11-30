@@ -124,13 +124,13 @@
     <value>Soumettre</value>
   </data>
   <data name="SelectedCertificate" xml:space="preserve">
-    <value>Brevet sélectionné:</value>
+    <value>Brevet sélectionné</value>
   </data>
   <data name="Attachments" xml:space="preserve">
     <value>Annexe(s)</value>
   </data>
   <data name="CDNNumber" xml:space="preserve">
-    <value>Numéro de candidat (CDN) :</value>
+    <value>Numéro de candidat (CDN) </value>
   </data>
   <data name="Attachment" xml:space="preserve">
     <value>Pièce jointe</value>
@@ -150,12 +150,12 @@
     <value>Vos renseignements</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
-    <value>Adresse électronique:</value>
+    <value>Adresse électronique</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Numéro de téléphone:</value>
+    <value>Numéro de téléphone</value>
   </data>
   <data name="SubmissionType" xml:space="preserve">
-    <value>Type de brevet:</value>
+    <value>Type de brevet</value>
   </data>
 </root>

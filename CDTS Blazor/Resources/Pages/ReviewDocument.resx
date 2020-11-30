@@ -121,7 +121,7 @@
     <value>Review and submit</value>
   </data>
   <data name="SelectedCertificate" xml:space="preserve">
-    <value>Selected certificate:</value>
+    <value>Selected certificate</value>
   </data>
   <data name="CDNNumber" xml:space="preserve">
     <value>Candidate Document Number (CDN):</value>
@@ -150,12 +150,12 @@
     <value>Your information</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
-    <value>Email address:</value>
+    <value>Email address</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone Number:</value>
+    <value>Phone Number</value>
   </data>
   <data name="SubmissionType" xml:space="preserve">
-    <value>Type of certificate:</value>
+    <value>Type of certificate</value>
   </data>
 </root>
