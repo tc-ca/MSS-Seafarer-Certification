@@ -2,6 +2,8 @@
 {
     using System;
     using System.IO;
+    using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Utilities;
@@ -66,14 +68,14 @@
         }
 
         /// <inheritdoc/>
-        public async Task PostServiceRequests()
+        public ServiceRequestCreationResult PostServiceRequests()
         {
             string serviceRequestsPath = this.GetServiceRequestsPath();
 
             // TODO: Don't return object create class to hold result.
             try
             {
-                await this.restClient.PostAsync<object>(ServiceLocatorDomain.Mtoa, serviceRequestsPath, null).ConfigureAwait(true);
+                return this.restClient.PostAsync<ServiceRequestCreationResult>(ServiceLocatorDomain.Mtoa, serviceRequestsPath, null).GetAwaiter().GetResult();
             }
             catch (Exception e)
             {

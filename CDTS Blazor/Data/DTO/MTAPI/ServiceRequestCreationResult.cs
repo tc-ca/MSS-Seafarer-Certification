@@ -1,5 +1,7 @@
 ﻿namespace CDNApplication.Data.DTO.MTAPI
 {
+    using System.Text.Json.Serialization;
+
     /// <summary>
     /// Expresses Service reqeust Created on MTOA.
     /// </summary>
@@ -15,6 +17,7 @@
         /// <summary>
         /// Gets or sets service request Id.
         /// </summary>
+        [JsonPropertyName("ServiceRequestId")]
         public int ServiceRequestId { get; set; }
     }
 }

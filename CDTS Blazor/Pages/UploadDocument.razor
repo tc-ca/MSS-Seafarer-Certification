@@ -15,6 +15,7 @@
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
 @using CDNApplication.TCComponents.Stepper
+@using CDNApplication.Data.DTO.MTAPI
 @inherits BaseComponent
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -291,8 +292,7 @@
 
         currentFileName = PageLocalizer["FileNamePlaceholder"];
 
-        var mtoaTest = mtoaService.PostServiceRequests().ConfigureAwait(false);
-        model.MtoaServiceRequestId = requestService.GetServiceRequestIdFromMTOA();
+        var mtoaTest = mtoaService.PostServiceRequests();
         model.ConfirmationNumber = model.MtoaServiceRequestId.ToString();
     }
 

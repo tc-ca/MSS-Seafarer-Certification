@@ -24,6 +24,6 @@
         /// This procedure posts the service requests to MTOA.
         /// </summary>
         /// <returns>Returns the task.</returns>
-        public Task PostServiceRequests();
+        public ServiceRequestCreationResult PostServiceRequests();
     }
 }

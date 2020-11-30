@@ -43,14 +43,8 @@ namespace CDNApplication.Data.Services
 
             try
             {
-                
-                HttpResponseMessage response = this.restClient.PostAsync<HttpResponseMessage>(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    var result = HttpContentExtensions.ReadAsAsync<ServiceRequestCreationResult>(response.Content).GetAwaiter().GetResult();
-                    serviceRequestId = result.ServiceRequestId;
-                }
-
+                ServiceRequestCreationResult response = this.restClient.PostAsync<ServiceRequestCreationResult>(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
+                var id = response.ServiceRequestId;
             }
             catch(Exception ex)
             {
