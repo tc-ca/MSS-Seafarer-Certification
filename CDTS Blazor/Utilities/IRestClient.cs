@@ -1,5 +1,6 @@
 ﻿namespace CDNApplication.Utilities
 {
+    using System.Net.Http;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -27,6 +28,14 @@
         /// <returns>Return bject as specified by the API.</returns>
         Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new();
+
+        /// <summary>
+        /// Makes POST request with full Uri.
+        /// </summary>
+        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
+        /// <param name="path">Path to the API being called on the service.</param>
+        /// <returns>A <see cref="Task{HttpResponseMessage}"/> task of HttpResponseMessage.</returns>
+        public Task<HttpResponseMessage> PostAsync(ServiceLocatorDomain serviceName, string path);
 
         /// <summary>
         /// Makes a PUT call to the specified API.

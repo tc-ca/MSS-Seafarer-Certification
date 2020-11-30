@@ -45,6 +45,11 @@
         public string FileDescription { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the service request id from Mtoa.
+        /// </summary>
+        public int MtoaServiceRequestId { get; set; }
+
+        /// <summary>
         /// Gets the uploaded files in a format that can be used in mtoa.
         /// </summary>
         public string ToMtoaDocumentString

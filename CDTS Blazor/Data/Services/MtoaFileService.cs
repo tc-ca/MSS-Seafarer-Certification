@@ -94,10 +94,9 @@ namespace CDNApplication.Data.Services
         }
 
 
-        public FileAttachment UploadSingleFileFromPage(UploadedFile file)
+        public FileAttachment UploadSingleFileFromPage(UploadedFile file, int serviceRequestId)
         {
             FileAttachment uploadedFileAttachment = null;
-            int serviceRequestId = 13844; // this is used for Dev
 
             if (file != null)
             {

@@ -8,6 +8,7 @@
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaFileService fileService
+@inject Data.Services.MtoaRequestService requestService
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -221,7 +222,7 @@
             var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
 
             // uploadedFile will have Mtoa file attachment ID for the later retrieval.
-            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
+            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload, model.MtoaServiceRequestId);
 
             if (uploadedMtoaAttachment.Id > 0)
             {
@@ -288,6 +289,9 @@
         certificateTypes = CertificateType.GetAllCertificateTypes();
 
         currentFileName = PageLocalizer["FileNamePlaceholder"];
+
+        model.MtoaServiceRequestId = requestService.GetServiceRequestIdFromMTOA();
+        model.ConfirmationNumber = model.MtoaServiceRequestId.ToString();
     }
 
     protected override async void OnAfterRender(bool firstRender)

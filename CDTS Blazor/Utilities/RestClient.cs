@@ -104,6 +104,21 @@
         }
 
         /// <summary>
+        /// Makes POST request with full Uri.
+        /// </summary>
+        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
+        /// <param name="path">Path to the API being called on the service.</param>
+        /// <returns>A <see cref="Task{HttpResponseMessage}"/> task of HttpResponseMessage.</returns>
+        public async Task<HttpResponseMessage> PostAsync(ServiceLocatorDomain serviceName, string path)
+        {
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+
+            var response = await Client.PostAsync(uri, null).ConfigureAwait(false);
+
+            return response;
+        }
+
+        /// <summary>
         /// Makes a PUT call to the specified API.
         /// </summary>
         /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
