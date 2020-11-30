@@ -121,7 +121,7 @@
     <value>Vous devez avoir accès à des copies numériques de vos documents. Nous acceptons les fichiers JPG, PNG, GIF et PDF. Vous pouvez sélectionner et ajouter des documents à partir de votre ordinateur ou de votre appareil cellulaire.</value>
   </data>
   <data name="ExplanationParagraph" xml:space="preserve">
-    <value>Économisez du temps et soumettez en ligne votre demande de brevet de capacité. Sélectionnez le brevet que vous souhaitez obtenir et ajoutez les documents requis. Nous examinerons ce que vous soumettez dans le cadre de votre demande.</value>
+    <value>Économisez du temps et soumettez en ligne votre demande de brevet de capacité. Sélectionnez le nouveau brevet ou le renouvellement du brevet que vous souhaitez obtenir et ajoutez les documents requis. Nous examinerons ce que vous soumettez dans le cadre de votre demande.</value>
   </data>
   <data name="HowToSubmitDocumentLinkText" xml:space="preserve">
     <value>Comment soumettre des documents en personne</value>
@@ -154,7 +154,7 @@
     <value>De vote region</value>
   </data>
   <data name="WhatYouNeedCertificateSubtitle" xml:space="preserve">
-    <value>Le nom du brevet que vous souhaitez obtenir.</value>
+    <value>Le nom du nouveau brevet ou du brevet de renouvellement que vous souhaitez obtenir.</value>
   </data>
   <data name="WhatYouNeedDocument-Part1" xml:space="preserve">
     <value>Si vous avez des doutes au sujet des documents que vous devez fournir, consultez le</value>

@@ -121,7 +121,7 @@
     <value>You will need access to digital copies of your documents. We accept JPG, PNG, GIF, and PDF files. You can select and add documents from your computer or device.</value>
   </data>
   <data name="ExplanationParagraph" xml:space="preserve">
-    <value>Save time and submit online for your certificate application. Select the certificate you want and add your required documents. We will review what you submit as part of your application.</value>
+    <value>Save time and submit online for your certificate application. Select the new or renewal certificate you want and add your required documents. We will review what you submit as part of your application.</value>
   </data>
   <data name="HowToSubmitDocumentLinkText" xml:space="preserve">
     <value>How to submit documents in person</value>
@@ -154,7 +154,7 @@
     <value>.</value>
   </data>
   <data name="WhatYouNeedCertificateSubtitle" xml:space="preserve">
-    <value>The name of the certificate that you want.</value>
+    <value>The name of the new or renewal certificate that you want.</value>
   </data>
   <data name="WhatYouNeedDocument-Part1" xml:space="preserve">
     <value>If you are unsure of what documents are required, check the</value>
