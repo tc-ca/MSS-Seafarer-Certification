@@ -65,6 +65,34 @@
             }
         }
 
+        /// <inheritdoc/>
+        public async Task PostServiceRequests()
+        {
+            string serviceRequestsPath = this.GetServiceRequestsPath();
+
+            // TODO: Don't return object create class to hold result.
+            try
+            {
+                await this.restClient.PostAsync<object>(ServiceLocatorDomain.Mtoa, serviceRequestsPath, null).ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        private string GetServiceRequestsPath()
+        {
+            string serviceRequestsPath = this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestsPath"];
+            string userId = this.configuration.GetSection("MtoaServiceSettings")["UserId"];
+            string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
+            string serviceNameEnglish = this.configuration.GetSection("MtoaServiceSettings")["ServiceNameInEnglish"];
+            string serviceNameFrench = this.configuration.GetSection("MtoaServiceSettings")["ServiceNameInFrench"];
+            string serviceRequestStatus = this.configuration.GetSection("MtoaServiceSettings")["ProgressStatus"];
+            return string.Format(string.Format("api/v1/servicerequests?userId={0}&serviceId={1}&englishName={2}&frenchName={3}&serviceRequestStatus={4}", userId, serviceId, serviceNameEnglish, serviceNameFrench, serviceRequestStatus));
+        }
+
         private MtoaEmailNotificationTemplateDto GetSubmissionEmailNotificationTemplate()
         {
             MtoaEmailNotificationTemplateDto mtoaEmailNotificationTemplate = new MtoaEmailNotificationTemplateDto();

@@ -44,7 +44,7 @@ namespace CDNApplication.Data.Services
             try
             {
                 
-                HttpResponseMessage response = this.restClient.PostAsync(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
+                HttpResponseMessage response = this.restClient.PostAsync<HttpResponseMessage>(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var result = HttpContentExtensions.ReadAsAsync<ServiceRequestCreationResult>(response.Content).GetAwaiter().GetResult();

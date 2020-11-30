@@ -9,6 +9,7 @@
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaFileService fileService
 @inject Data.Services.MtoaRequestService requestService
+@inject CDNApplication.Services.IMtoaServices mtoaService
 
 @using BlazorInputFile
 @using CDNApplication.Data.Entity
@@ -290,6 +291,7 @@
 
         currentFileName = PageLocalizer["FileNamePlaceholder"];
 
+        var mtoaTest = mtoaService.PostServiceRequests().ConfigureAwait(false);
         model.MtoaServiceRequestId = requestService.GetServiceRequestIdFromMTOA();
         model.ConfirmationNumber = model.MtoaServiceRequestId.ToString();
     }
