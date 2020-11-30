@@ -139,7 +139,7 @@
     <value>Le numéro de téléphone est un champ obligatoire</value>
   </data>
   <data name="TypeOfCertificateNotEmptyText" xml:space="preserve">
-    <value>Vous devez choisir le type de certificat</value>
+    <value>Veuillez indiquer le type de renouvellement de certificat que vous souhaitezt</value>
   </data>
   <data name="UploadedFilesNotEmptyText" xml:space="preserve">
     <value>Vous devez soumettre au moins 1 fichier</value>
