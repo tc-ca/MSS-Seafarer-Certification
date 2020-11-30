@@ -292,7 +292,8 @@
 
         currentFileName = PageLocalizer["FileNamePlaceholder"];
 
-        var mtoaTest = mtoaService.PostServiceRequests();
+        var serviceRequests = mtoaService.PostServiceRequests();
+        model.MtoaServiceRequestId = serviceRequests.ServiceRequestId;
         model.ConfirmationNumber = model.MtoaServiceRequestId.ToString();
     }
 
