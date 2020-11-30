@@ -43,6 +43,8 @@
             }
 
             var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var currentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+
             var englishCulture = new System.Globalization.CultureInfo("en");
             var frenchCulture = new System.Globalization.CultureInfo("fr");
 
@@ -57,7 +59,7 @@
             var submissionTypeFrench = this.commonPageLocalizer[model.SubmissionType.GetValue()];
 
             System.Globalization.CultureInfo.CurrentCulture = currentCulture;
-            System.Globalization.CultureInfo.CurrentUICulture = currentCulture;
+            System.Globalization.CultureInfo.CurrentUICulture = currentUICulture;
 
             var seafarersDocumentSubmissionEmail = new MtoaSeafarersSubmissionEmailParametersDto()
             {
