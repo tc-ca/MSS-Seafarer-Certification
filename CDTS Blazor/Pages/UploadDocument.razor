@@ -101,16 +101,21 @@
                             <i class="fa fa-info-circle ml-2"></i>
                         </span>
 
-                        <InputRadioGroup @bind-Value="model.SubmissionType">
-                            @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
-                            {
-                                var submissionTypeValue = submissionType.GetValue();
-                                <div>
-                                    <InputRadio id="@submissionTypeValue" Value="submissionType" />
-                                    <label for="@submissionTypeValue">@CommonLocalizer[submissionTypeValue]</label>
-                                </div>
-                            }
-                        </InputRadioGroup>
+
+                        @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
+                        {
+                            var submissionTypeValue = submissionType.GetValue();
+                    <div>
+                        <label>
+                            <input type="radio"
+                                   name="submissionType"
+                                   checked="@(model.SubmissionType == submissionType)"
+                                   @onchange="@(() => model.SubmissionType = submissionType)" />
+                            @CommonLocalizer[submissionTypeValue]
+                        </label>
+                    </div>
+                        }
+                        <ValidationMessage For="() => model.SubmissionType" />
                     </section>
                 </div>
             </div>
@@ -328,5 +333,4 @@
         base.OnAfterRender(firstRender);
         await JSRuntime.InvokeVoidAsync("initPopover").ConfigureAwait(false);
     }
-
 }
