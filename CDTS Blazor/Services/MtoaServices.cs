@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Utilities;
-    using Microsoft.ApplicationInsights.Extensibility.Implementation;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
@@ -63,6 +62,13 @@
                 this.logger.LogError(e.Message);
                 throw;
             }
+        }
+
+        public Task PostFileAttachmentsAsync()
+        {
+            string fileAttachmentsPath = this.configuration.GetSection("MtoaServiceSettings")["FileAttachmentsPath"];
+
+            throw new NotImplementedException();
         }
 
         private MtoaEmailNotificationTemplateDto GetSubmissionEmailNotificationTemplate()

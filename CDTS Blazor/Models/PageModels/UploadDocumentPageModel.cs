@@ -1,9 +1,9 @@
 ﻿namespace CDNApplication.Models.PageModels
 {
+    using CDNApplication.Data;
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using CDNApplication.Data;
 
     /// <summary>
     /// PageModel for the UploadDocument page.

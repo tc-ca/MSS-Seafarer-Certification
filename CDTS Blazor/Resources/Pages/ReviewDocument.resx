@@ -124,7 +124,7 @@
     <value>Selected certificate</value>
   </data>
   <data name="CDNNumber" xml:space="preserve">
-    <value>Candidate Document Number (CDN)</value>
+    <value>Candidate Document Number (CDN):</value>
   </data>
   <data name="Attachment" xml:space="preserve">
     <value>Attachment</value>
@@ -154,5 +154,8 @@
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone Number</value>
+  </data>
+  <data name="SubmissionType" xml:space="preserve">
+    <value>Type of certificate</value>
   </data>
 </root>
