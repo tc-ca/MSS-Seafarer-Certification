@@ -36,13 +36,13 @@
         public void FrenchSubjectTitleText_IsValid()
         {
             // Arrange
-            var exoectedSubjectTitleText = this.GetSubjectTitleText();
+            var expectedSubjectTitleText = this.GetSubjectTitleText();
 
             // Act
             var result = File.ReadAllText($"Resources/EmailTemplates/SubmissionEmailTemplateSubjectTextFrench.html").Replace(System.Environment.NewLine, "");
 
             // Assert
-            Assert.Equal(exoectedSubjectTitleText, result);
+            Assert.Equal(expectedSubjectTitleText, result);
         }
 
         [Fact]
