@@ -33,20 +33,20 @@
         }
 
         [Fact]
-        public void EnglshSubjectTitleText_IsValid()
+        public void EnglishSubjectTitleText_IsValid()
         {
             // Arrange
-            var exoectedSubjectTitleText = this.GetSubjectTitleText();
+            var expectedSubjectTitleText = this.GetSubjectTitleText();
 
             // Act
             var result = File.ReadAllText($"Resources/EmailTemplates/SubmissionEmailTemplateSubjectTextEnglish.html").Replace(System.Environment.NewLine, "");
 
             // Assert
-            Assert.Equal(exoectedSubjectTitleText, result);
+            Assert.Equal(expectedSubjectTitleText, result);
         }
 
         [Fact]
-        public void EnglshBodyText_IsValid()
+        public void EnglishBodyText_IsValid()
         {
             // Arrange
             var expectedBodyText = this.GetBodyText();
