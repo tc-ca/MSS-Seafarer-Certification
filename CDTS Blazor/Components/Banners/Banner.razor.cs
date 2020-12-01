@@ -16,12 +16,6 @@
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets the phase.
-        /// </summary>
-        [Parameter]
-        public string Phase { get; set; }
-
-        /// <summary>
         /// Gets the classname.
         /// </summary>
         public string ClassName
