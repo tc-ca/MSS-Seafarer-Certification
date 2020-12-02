@@ -46,6 +46,10 @@
         public string FileDescription { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the service request id from Mtoa.
+        /// </summary>
+        public int MtoaServiceRequestId { get; set; }
+      
         /// Gets or sets Renewing.
         /// </summary>
         public SubmissionType SubmissionType { get; set; }

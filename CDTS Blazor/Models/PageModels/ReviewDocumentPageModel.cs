@@ -89,17 +89,13 @@
             base.OnInitialized();
 
             this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
-
-            this.confirmationGuid = new Random().Next(100000, 9999999);
-
             if (this.State.UploadDocumentPage == null)
             {
                 this.State.UploadDocumentPage = new UploadDocumentPageModel();
             }
 
             this.Model = this.State.UploadDocumentPage;
-
-            this.Model.ConfirmationNumber = this.confirmationGuid.ToString();
+            this.confirmationGuid = this.Model.MtoaServiceRequestId;
         }
     }
 }

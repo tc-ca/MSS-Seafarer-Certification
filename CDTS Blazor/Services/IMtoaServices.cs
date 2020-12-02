@@ -21,9 +21,15 @@
         public Task PostSendEmailNotificationAsync(MtoaEmailNotificationDto mtoaEmailNotification);
 
         /// <summary>
+        /// This procedure posts the service requests to MTOA.
+        /// </summary>
+        /// <returns>Returns the task.</returns>
+        public ServiceRequestCreationResult PostServiceRequests();
+
         /// This procedure posts the file attachment to MTOA.
         /// </summary>
         /// <returns>Return the task.</returns>
         public Task PostFileAttachmentsAsync();
+
     }
 }

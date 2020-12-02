@@ -30,7 +30,7 @@ namespace CDNApplication.Data.Services
 
             EmailNotificationDTO template = new EmailNotificationDTO();
             template.NotificationTemplateName = "Seafarers_Document_Submission_Email";
-            template.ServiceRequestId = 13844;
+            template.ServiceRequestId = pageModel == null ? 0 : pageModel.MtoaServiceRequestId;
             template.UserId = 4536;
             template.UserName = "Nobody";
             template.Language = "English";

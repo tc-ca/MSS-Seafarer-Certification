@@ -2,6 +2,8 @@
 {
     using System;
     using System.IO;
+    using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Utilities;
@@ -64,6 +66,32 @@
             }
         }
 
+        /// <inheritdoc/>
+        public ServiceRequestCreationResult PostServiceRequests()
+        {
+            string serviceRequestsPath = this.GetServiceRequestsPath();
+
+            try
+            {
+                return this.restClient.PostAsync<ServiceRequestCreationResult>(ServiceLocatorDomain.Mtoa, serviceRequestsPath, null).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        private string GetServiceRequestsPath()
+        {
+            string serviceRequestsPath = this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestsPath"];
+            string userId = this.configuration.GetSection("MtoaServiceSettings")["UserId"];
+            string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
+            string serviceNameEnglish = this.configuration.GetSection("MtoaServiceSettings")["ServiceNameInEnglish"];
+            string serviceNameFrench = this.configuration.GetSection("MtoaServiceSettings")["ServiceNameInFrench"];
+            string serviceRequestStatus = this.configuration.GetSection("MtoaServiceSettings")["ProgressStatus"];
+            return string.Format(string.Format("api/v1/servicerequests?userId={0}&serviceId={1}&englishName={2}&frenchName={3}&serviceRequestStatus={4}", userId, serviceId, serviceNameEnglish, serviceNameFrench, serviceRequestStatus));
+            
         public Task PostFileAttachmentsAsync()
         {
             string fileAttachmentsPath = this.configuration.GetSection("MtoaServiceSettings")["FileAttachmentsPath"];
