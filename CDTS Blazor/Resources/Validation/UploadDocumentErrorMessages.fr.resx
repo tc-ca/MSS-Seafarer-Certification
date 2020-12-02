@@ -135,6 +135,9 @@
   <data name="EmailAddressNotEmptyText" xml:space="preserve">
     <value>L'adresse électronique est un champ obligatoire</value>
   </data>
+  <data name="FileDescriptionNotEmptyText" xml:space="preserve">
+    <value>La description du fichier est un champ obligatoire</value>
+  </data>
   <data name="PhoneNumberNotEmptyText" xml:space="preserve">
     <value>Le numéro de téléphone est un champ obligatoire</value>
   </data>
