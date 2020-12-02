@@ -7,7 +7,6 @@
     using System.Threading.Tasks;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Utilities;
-    using Microsoft.ApplicationInsights.Extensibility.Implementation;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
@@ -72,7 +71,6 @@
         {
             string serviceRequestsPath = this.GetServiceRequestsPath();
 
-            // TODO: Don't return object create class to hold result.
             try
             {
                 return this.restClient.PostAsync<ServiceRequestCreationResult>(ServiceLocatorDomain.Mtoa, serviceRequestsPath, null).GetAwaiter().GetResult();
@@ -93,6 +91,12 @@
             string serviceNameFrench = this.configuration.GetSection("MtoaServiceSettings")["ServiceNameInFrench"];
             string serviceRequestStatus = this.configuration.GetSection("MtoaServiceSettings")["ProgressStatus"];
             return string.Format(string.Format("api/v1/servicerequests?userId={0}&serviceId={1}&englishName={2}&frenchName={3}&serviceRequestStatus={4}", userId, serviceId, serviceNameEnglish, serviceNameFrench, serviceRequestStatus));
+            
+        public Task PostFileAttachmentsAsync()
+        {
+            string fileAttachmentsPath = this.configuration.GetSection("MtoaServiceSettings")["FileAttachmentsPath"];
+
+            throw new NotImplementedException();
         }
 
         private MtoaEmailNotificationTemplateDto GetSubmissionEmailNotificationTemplate()
