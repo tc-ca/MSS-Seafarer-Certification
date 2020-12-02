@@ -150,23 +150,19 @@
 
                     <br />
 
-                    <div class="form-row">
-
-                        @foreach (var file in model.UploadedFiles.AsEnumerable().Reverse())
-                        {
-                            <div class="alert @((file.Safe ? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
-                                <h4 class="alert-heading">@((file.Safe) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
-
-                                <p>
-                                    @PageCommonLocalizer["Document"]: @file.SelectedFile.Name
-                                </p>
-
-                            </div>
-                        }
-
-                    </div>
-
                     <ValidationMessage For="() => model.UploadedFiles" />
+
+                    <!-- 
+                    <div class="alert document-alert-danger alert-dismissible" role="alert">
+                        <svg>
+                            <circle cx="15" cy="15" r="15" fill="#D3080C" />
+                        </svg>
+                        <div style="flex-grow:2">
+                            <strong>Warning!</strong> Better check yourself, you're not looking too good.
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    -->
 
                     <section class="documents-section">
                         <div class="row row-header">
@@ -259,13 +255,18 @@
                 return;
             }
 
+            if(file.Size >= 200000000)
+            {
+                return;
+            }
+
             var memoryStream = new System.IO.MemoryStream();
             await file.Data.CopyToAsync(memoryStream);
 
 
             var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
 
-            // uploadedFile will have Mtoa file attachment ID for the later retrieval.
+            // uploadedFile will have Mtoa file attachment ID foUploadSingleFileFromPage the later retrieval.
             var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
 
             if (uploadedMtoaAttachment.Id > 0)

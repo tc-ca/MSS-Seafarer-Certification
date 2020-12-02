@@ -17,6 +17,21 @@ ul.steps  li {
     line-height: 1;
 }
 
+.document-alert-danger {
+    background-color: #F3E9E8;
+    border-left: 5px solid #D3080C;
+    display: flex;
+    flex-direction: row;
+}
+    .document-alert-danger svg {
+        align-self: flex-start;
+        width: 60px;
+        height:40px;
+    }
+    .document-alert-danger button {
+        align-self:flex-start;
+    }
+
 .documents-section div.row-header {
     background-color: #FFF;
     font-weight: bold;
