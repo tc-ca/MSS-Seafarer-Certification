@@ -127,29 +127,20 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <div class="form-control-wrapper">
-                    <label class="form-control-label required" for="@nameof(model.FileDescription)">
-                        @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                    </label>
-                    <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionPlaceholder"]" />
-
+                <div class="form-control-wrapper">  
                     <label class="required" for="@nameof(model.UploadedFiles)">
                         @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                     </label>
 
                     <div class="form-row">
 
-                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-3" : "col-md-2"))">
-                            <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @(!model.UploadedFiles.Any() ? @PageLocalizer["Browse"] : @PageLocalizer["AddAnotherDocument"])
-                            </button>
-
-                            <BlazorInputFile.InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                        <div class="input-group" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Browse</button>
+                            </span>
+                            <input type="text" class="form-control" placeholder="No document selected">
                         </div>
-
-                        <div class="@((model.UploadedFiles != null && model.UploadedFiles.Any()? "col-md-9" : "col-md-10"))">
-                            <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
-                        </div>
+                        <BlazorInputFile.InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
 
                     </div>
 
@@ -180,6 +171,52 @@
                     </div>
 
                     <ValidationMessage For="() => model.UploadedFiles" />
+
+                    <section class="documents-section">
+                        <div class="row row-header">
+                            <div class="col-md-5">
+                                Document(s) successfully added
+                            </div>
+                            <div class="col-md-5">
+                                <strong class="required">*</strong> Identify your document type <strong class="required">@CommonLocalizer["Required"]</strong>
+                            </div>
+                            <div class="col-md-2">
+                                Delete
+                            </div>
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-5">
+                                documentType.jpg
+                            </div>
+                            <div class="col-md-5">
+                                <div><input type="text" /></div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn trash">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-5">
+                                documentType.jpg
+                            </div>
+                            <div class="col-md-5">
+                                <div><input type="text" /></div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn trash">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
 
                 </div>
             </div>
@@ -219,15 +256,6 @@
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
     }
 
-    void RenewalSelectionChanged(ChangeEventArgs args)
-    {
-
-        Enum.TryParse(args.Value.ToString(), out SubmissionType result);
-
-        model.SubmissionType = result;
-
-    }
-
     private void HandlePreviousClick()
     {
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}");
@@ -235,12 +263,6 @@
 
     private async Task HandleFileSelected(IFileListEntry[] files)
     {
-
-        if (string.IsNullOrWhiteSpace(model.FileDescription))
-        {
-            return;
-        }
-
         var file = files.FirstOrDefault();
 
         if (file != null)

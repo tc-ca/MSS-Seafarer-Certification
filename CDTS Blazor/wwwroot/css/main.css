@@ -17,6 +17,40 @@ ul.steps  li {
     line-height: 1;
 }
 
+.documents-section div.row-header {
+    background-color: #FFF;
+    font-weight: bold;
+}
+    .documents-section div.row-header strong.required {
+        color:#D3080C;
+    }
+
+    .documents-section div.row-header div {
+        background-color: #EAEBED;
+        padding: 20px 18px;
+    }
+
+.documents-section div.row-data {
+    padding: 20px 5px;
+}
+
+
+button.trash {
+    background-color: black;
+}
+
+.documents-section .row-data svg {
+    color: white;
+}
+
+.documents-section div.row-data:nth-child(even) {
+    background-color: #FFF;
+}
+
+.documents-section div.row-data:nth-child(odd) {
+    background-color: #EAEBED;
+}
+
 /**
     BANNER
 */
