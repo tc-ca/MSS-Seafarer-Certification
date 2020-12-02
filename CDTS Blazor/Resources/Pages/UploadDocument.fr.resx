@@ -224,4 +224,10 @@
   <data name="TypeOfCertificateLabel" xml:space="preserve">
     <value>Décrivez le type de certificat que vous souhaitez obtenir</value>
   </data>
+  <data name="DocumentSuccessfullyAdded" xml:space="preserve">
+    <value>Document(s) ajouté(s) avec succès</value>
+  </data>
+  <data name="IdentifyYourDocumentType" xml:space="preserve">
+    <value>Identifiez votre type de document</value>
+  </data>
 </root>

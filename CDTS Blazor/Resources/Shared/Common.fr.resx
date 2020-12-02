@@ -174,4 +174,7 @@
   <data name="RenewalCertificate" xml:space="preserve">
     <value>Renouvellement</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
 </root>
