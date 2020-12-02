@@ -2,6 +2,7 @@
 {
     using BlazorInputFile;
     using CDNApplication.Data.DTO.MTAPI;
+    using System;
 
     /// <summary>
     /// Saves the uploaded file's properties.
@@ -32,5 +33,14 @@
         /// Gets or sets a value indicating whether gets or sets the virus status of the file.
         /// </summary>
         public bool Safe { get; set; }
+
+        /// <summary>
+        /// Override of Object.ToString() method.
+        /// </summary>
+        /// <returns>List of all uploaded files.</returns>
+        public override string ToString()
+        {
+            return Guid.NewGuid().ToString();
+        }
     }
 }

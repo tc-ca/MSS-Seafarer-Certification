@@ -177,19 +177,21 @@
                             </div>
                         </div>
 
-                        @foreach (var file in model.UploadedFiles.AsEnumerable().Reverse())
+
+                        @for (int i = 0; i < model.UploadedFiles.Count(); i++)
                         {
                             <div class="row row-data">
                                 <div class="col-md-5">
-                                    @file.SelectedFile.Name
+                                    @model.UploadedFiles[i].SelectedFile.Name
                                 </div>
                                 <div class="col-md-5">
                                     <div>
-                                        <InputText class="form-control" @bind-Value="@file.Description" id="@file.ToString()" />
+                                        <InputText class="form-control" @bind-Value="@model.UploadedFiles[i].Description" id="@model.UploadedFiles[i].ToString()" />
+                                        <ValidationMessage For="() => model.UploadedFiles[i].Description" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn trash" @onclick="e => RemoveFile(file)">
+                                    <button type="button" class="btn trash" @onclick="e => RemoveFile(model.UploadedFiles[i])">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -198,6 +200,29 @@
                                 </div>
                             </div>
                         }
+
+                        @*@foreach (var file in model.UploadedFiles.AsEnumerable().Reverse())
+                            {
+                                <div class="row row-data">
+                                    <div class="col-md-5">
+                                        @file.SelectedFile.Name
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div>
+                                            <InputText class="form-control" @bind-Value="@file.Description" id="@file.ToString()" />
+                                            <ValidationMessage For="() => file.Description" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn trash" @onclick="e => RemoveFile(file)">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            }*@
 
                     </section>
 
@@ -226,7 +251,7 @@
 
     private string currentFileName = "";
 
-    private string currentFileDescription = "";
+    private int length = 0;
 
 
     bool success = false;
@@ -264,7 +289,7 @@
             await file.Data.CopyToAsync(memoryStream);
 
 
-            var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
+            var fileToUpload = new UploadedFile { SelectedFile = file, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
 
             // uploadedFile will have Mtoa file attachment ID foUploadSingleFileFromPage the later retrieval.
             var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
@@ -279,10 +304,10 @@
             }
 
             currentFileName = file.Name;
-            currentFileDescription = model.FileDescription;
 
             model.UploadedFiles.Add(fileToUpload);
-            model.FileDescription = string.Empty;
+
+            length = model.UploadedFiles.Count;
         }
 
 
