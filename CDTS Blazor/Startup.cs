@@ -133,7 +133,7 @@ namespace CDNApplication
             services.AddSingleton<SessionStateModel>();
 
             services.AddScoped<MtoaFileService>();
-
+            services.AddScoped<MtoaRequestService>();
             services.AddSingleton<IMtoaService>();
 
             services.AddHttpContextAccessor();

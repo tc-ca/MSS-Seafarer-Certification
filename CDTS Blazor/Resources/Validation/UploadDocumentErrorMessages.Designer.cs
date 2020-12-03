@@ -133,7 +133,7 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must choose the type of certificate.
+        ///   Looks up a localized string similar to Please identify the type of certificate renewal you want.
         /// </summary>
         internal static string TypeOfCertificateNotEmptyText {
             get {

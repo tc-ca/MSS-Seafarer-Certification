@@ -8,13 +8,16 @@
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaFileService fileService
+@inject Data.Services.MtoaRequestService requestService
+@inject CDNApplication.Services.IMtoaServices mtoaService
 
 @using BlazorInputFile
 @using CDNApplication.Data
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
 @using CDNApplication.TCComponents.Stepper
-@using CDNApplication.Utilities
+@using CDNApplication.Data.DTO.MTAPI
+@using CDNApplication.Utilities 
 @inherits BaseComponent
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -91,9 +94,6 @@
                     <ValidationMessage For="() => model.CertificateType" />
                 </div>
             </div>
-        </div>
-
-        <div class="panel-body">
             <div class="form-group">
                 <div class="form-control-wrapper">
                     <section>
@@ -104,16 +104,20 @@
                             <i class="fa fa-info-circle ml-2"></i>
                         </span>
 
-                        <InputRadioGroup @bind-Value="model.SubmissionType">
-                            @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
-                            {
-                                var submissionTypeValue = submissionType.GetValue();
-                                <div>
-                                    <InputRadio id="@submissionTypeValue" Value="submissionType" />
-                                    <label for="@submissionTypeValue">@CommonLocalizer[submissionTypeValue]</label>
-                                </div>
-                            }
-                        </InputRadioGroup>
+                        @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
+                        {
+                            var submissionTypeValue = submissionType.GetValue();
+                    <div>
+                        <label>
+                            <input type="radio"
+                                   name="submissionType"
+                                   checked="@(model.SubmissionType == submissionType)"
+                                   @onchange="@(() => model.SubmissionType = submissionType)" />
+                            @CommonLocalizer[submissionTypeValue]
+                        </label>
+                    </div>
+                        }
+                        <ValidationMessage For="() => model.SubmissionType" />
                     </section>
                 </div>
             </div>
@@ -292,8 +296,8 @@
 
             var fileToUpload = new UploadedFile { SelectedFile = file, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
 
-            // uploadedFile will have Mtoa file attachment ID foUploadSingleFileFromPage the later retrieval.
-            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
+            // uploadedFile will have Mtoa file attachment ID for the later retrieval.
+            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload, model.MtoaServiceRequestId);
 
             if (uploadedMtoaAttachment.Id > 0)
             {
@@ -368,6 +372,10 @@
         certificateTypes = CertificateType.GetAllCertificateTypes();
 
         currentFileName = PageLocalizer["FileNamePlaceholder"];
+
+        var serviceRequests = mtoaService.PostServiceRequests();
+        model.MtoaServiceRequestId = serviceRequests.ServiceRequestId;
+        model.ConfirmationNumber = model.MtoaServiceRequestId.ToString();
     }
 
     protected override async void OnAfterRender(bool firstRender)
@@ -375,5 +383,4 @@
         base.OnAfterRender(firstRender);
         await JSRuntime.InvokeVoidAsync("initPopover").ConfigureAwait(false);
     }
-
 }

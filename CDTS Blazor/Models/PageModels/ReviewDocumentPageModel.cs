@@ -2,15 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
+    using System.IO;
     using CDNApplication.Data.DTO.MTAPI;
-    using CDNApplication.Data.Services;
     using CDNApplication.Models;
     using CDNApplication.Models.PageModels;
     using CDNApplication.Services;
+    using CDNApplication.Services.EmailNotification;
+    using CDNApplication.Shared;
     using CDNApplication.Utilities;
     using Microsoft.AspNetCore.Components;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Localization;
 
     /// <summary>
     /// Defines the page model for the review document.
@@ -33,6 +35,12 @@
         /// Gets the confirmation page link.
         /// </summary>
         protected string ConfirmationPageLink => string.Format("{0}{1}/confirmation/{2}", this.NavigationManager.BaseUri, this.LanguageCode, this.confirmationGuid);
+
+        /// <summary>
+        /// Gets or sets the CommonPageLocalizer.
+        /// </summary>
+        [Inject]
+        protected IStringLocalizer<Common> CommonPageLocalizer { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration object see appsettings.json.
@@ -63,63 +71,31 @@
         /// </summary>
         protected void Submit()
         {
-
             Console.WriteLine(this.Model);
 
             this.State.UploadDocumentPage = null;
 
-            var seafarersDocumentSubmissionEmail = new MtoaSeafarersDocumentSubmissionEmailParametersDto()
-            {
-                ConfirmationNumber = this.Model.ConfirmationNumber,
-                CdnNumber = this.Model.CdnNumber,
-                PhoneNumber = this.Model.PhoneNumber,
-                EmailAddress = this.Model.EmailAddress,
-                CertificateType = this.Model.CertificateType,
-            };
+            var documentSubmissionEmailBuilder = new SeafarersDocumentSubmissionEmailBuilder(this.CommonPageLocalizer, this.Configuration, this.LanguageCode);
+            var mtoaEmailNotificationDto = documentSubmissionEmailBuilder.Build(this.Model);
 
-            var mtoaEmailNotification = new MtoaEmailNotificationDto()
-            {
-                NotificationTemplateName = "Seafarers_Document_Submission_Email",
-                ServiceRequestId = int.Parse(this.Configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"]),
-                UserId = int.Parse(this.Configuration.GetSection("MtoaServiceSettings")["UserId"]),
-                UserName = "Nobody",
-                Language = this.LanguageCode.Equals("fr", StringComparison.OrdinalIgnoreCase) ? "French" : "English",
-                From = this.Configuration.GetSection("MtoaServiceSettings")["ReplyEmail"],
-                To = this.Model.EmailAddress,
-                IsHtml = true,
-            };
-
-            var mtoaParameterExtractor = new MtoaParameterExtractor();
-            var parameters = mtoaParameterExtractor.ExtractParameters(seafarersDocumentSubmissionEmail);
-            mtoaEmailNotification.Parameters.AddRange(parameters);
-
-            var documentParameter = new KeyValuePair<string, string>("DOCUMENT", this.Model.ToMtoaDocumentString);
-
-            mtoaEmailNotification.Parameters.Add(documentParameter);
-            this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotification);
+            this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotificationDto);
 
             this.NavigationManager.NavigateTo(this.ConfirmationPageLink);
-
         }
 
         /// <inheritdoc/>
         protected override void OnInitialized()
         {
-
             base.OnInitialized();
 
             this.UploadDocumentsStepper.Stepper.ActivateStepAtIndex(1);
-
-            this.confirmationGuid = new Random().Next(100000, 9999999);
-
             if (this.State.UploadDocumentPage == null)
             {
                 this.State.UploadDocumentPage = new UploadDocumentPageModel();
             }
 
             this.Model = this.State.UploadDocumentPage;
-
-            this.Model.ConfirmationNumber = this.confirmationGuid.ToString();
+            this.confirmationGuid = this.Model.MtoaServiceRequestId;
         }
     }
 }
