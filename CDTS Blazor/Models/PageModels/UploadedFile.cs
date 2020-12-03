@@ -17,7 +17,7 @@
         /// <summary>
         /// Gets or sets SelectedFileWithMemoryData.
         /// </summary>
-        public FileListEntryImplExtension SelectedFileWithMemoryData { get; set; }
+        public MemoryStreamFileListEntryImpl SelectedFileWithMemoryData { get; set; }
 
         /// <summary>
         /// Gets or sets FileAttachment related to MTOA file upload.
@@ -26,7 +26,7 @@
 
         /// <summary>
         /// Gets or sets the file description.
-        /// </summary
+        /// </summary>
         public string Description { get; set; }
 
         /// <summary>
