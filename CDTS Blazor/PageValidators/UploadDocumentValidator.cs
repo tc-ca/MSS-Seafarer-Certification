@@ -55,6 +55,10 @@
                 .IsInEnum()
                 .WithMessage(localizer.GetString("TypeOfCertificateNotEmptyText"));
 
+            this.RuleForEach(m => m.UploadedFiles)
+                .ChildRules(x => x.RuleFor(y => y.Description)
+                    .NotEmpty()
+                    .WithMessage(localizer.GetString("FileDescriptionNotEmptyText")));
         }
     }
 }

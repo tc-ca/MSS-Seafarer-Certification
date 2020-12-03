@@ -221,4 +221,16 @@
   <data name="TypeOfCertificateLabel" xml:space="preserve">
     <value>Describe the type of certificate you want</value>
   </data>
+  <data name="DocumentSuccessfullyAdded" xml:space="preserve">
+    <value>Document(s) successfully added</value>
+  </data>
+  <data name="IdentifyYourDocumentType" xml:space="preserve">
+    <value>Identify your document type</value>
+  </data>
+  <data name="DocumentFileExtensionInvalid" xml:space="preserve">
+    <value>Uh oh! The file extension is invalid and must be of type JPG, PNG, GIF, or PDF.</value>
+  </data>
+  <data name="DocumentFileSizeTooBigError" xml:space="preserve">
+    <value>Uh oh! Each document must be smaller than 200 MB. Your document(s) cannot be added.</value>
+  </data>
 </root>
