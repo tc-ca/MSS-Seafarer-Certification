@@ -295,7 +295,7 @@
             await file.Data.CopyToAsync(memoryStream);
 
 
-            var fileToUpload = new UploadedFile { SelectedFile = file, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
+            var fileToUpload = new UploadedFile { SelectedFile = file, SelectedFileWithMemoryData = new MemoryStreamFileListEntryImpl(memoryStream) };
 
             // uploadedFile will have Mtoa file attachment ID for the later retrieval.
             var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload, model.MtoaServiceRequestId);
