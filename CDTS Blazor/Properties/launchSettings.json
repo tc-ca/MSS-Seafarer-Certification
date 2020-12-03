@@ -12,14 +12,18 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://kv-seafarer-acc.vault.azure.net/",
+        "AZURE_USERNAME": "alexandre.sanscartier@034gc.onmicrosoft.com"
       }
     },
     "CDNApplication": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://kv-seafarer-acc.vault.azure.net/",
+        "AZURE_USERNAME": "alexandre.sanscartier@034gc.onmicrosoft.com"
       },
       "applicationUrl": "http://localhost:5000"
     },
@@ -28,7 +32,11 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": true,
+      "environmentVariables": {
+        "VaultUri": "https://kv-seafarer-acc.vault.azure.net/",
+        "AZURE_USERNAME": "alexandre.sanscartier@034gc.onmicrosoft.com"
+      }
     }
   }
 }

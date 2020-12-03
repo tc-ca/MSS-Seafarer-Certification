@@ -1,8 +1,8 @@
 ﻿namespace CDNApplication.Models.PageModels
 {
+    using System;
     using BlazorInputFile;
     using CDNApplication.Data.DTO.MTAPI;
-    using System;
 
     /// <summary>
     /// Saves the uploaded file's properties.
@@ -26,13 +26,23 @@
 
         /// <summary>
         /// Gets or sets the file description.
-        /// </summary>
+        /// </summary
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether gets or sets the virus status of the file.
         /// </summary>
         public bool Safe { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the file has an error.
+        /// </summary>
+        public bool HasAnError => !string.IsNullOrEmpty(this.ErrorMessage);
+
+        /// <summary>
+        /// Gets or sets the file's error message if it exists.
+        /// </summary>
+        public string ErrorMessage { get; set; }
 
         /// <summary>
         /// Override of Object.ToString() method.
