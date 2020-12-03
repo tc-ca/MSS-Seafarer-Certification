@@ -21,9 +21,6 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://kv-seafarer-acc.vault.azure.net/",
-        "AZURE_USERNAME": "alexandre.sanscartier@034gc.onmicrosoft.com"
       },
       "applicationUrl": "http://localhost:5000"
     },
