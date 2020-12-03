@@ -228,7 +228,7 @@
     <value>Identify your document type</value>
   </data>
   <data name="DocumentFileExtensionInvalid" xml:space="preserve">
-    <value>Uh oh! File extension is invalid must be JPG, PNG, GIF, or PDF</value>
+    <value>Uh oh! The file extension is invalid and must be of type JPG, PNG, GIF, or PDF.</value>
   </data>
   <data name="DocumentFileSizeTooBigError" xml:space="preserve">
     <value>Uh oh! Each document must be smaller than 200 MB. Your document(s) cannot be added.</value>
