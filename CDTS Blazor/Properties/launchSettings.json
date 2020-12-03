@@ -30,10 +30,6 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true,
       "useSSL": true,
-      "environmentVariables": {
-        "VaultUri": "https://kv-seafarer-acc.vault.azure.net/",
-        "AZURE_USERNAME": "alexandre.sanscartier@034gc.onmicrosoft.com"
-      }
     }
   }
 }
