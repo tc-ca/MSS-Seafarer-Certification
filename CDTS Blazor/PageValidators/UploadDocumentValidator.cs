@@ -58,7 +58,6 @@
             this.RuleForEach(m => m.UploadedFiles)
                 .ChildRules(x => x.RuleFor(y => y.Description)
                     .NotEmpty()
-                    .NotNull()
                     .WithMessage(localizer.GetString("FileDescriptionNotEmptyText")));
         }
     }
