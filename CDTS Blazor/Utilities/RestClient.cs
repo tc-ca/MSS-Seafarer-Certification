@@ -89,9 +89,8 @@
 
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
-                StringContent testContent = content == "{}" ? null : stringContent;
                 this.ResetRestClientHeaders();
-                var response = await Client.PostAsync(uri, testContent).ConfigureAwait(false);
+                var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
                 if (!response.IsSuccessStatusCode)
