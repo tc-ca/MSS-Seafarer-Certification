@@ -12,7 +12,9 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://kv-seafarer-acc.vault.azure.net/",
+        "AZURE_USERNAME": "alexandre.sanscartier@034gc.onmicrosoft.com"
       }
     },
     "CDNApplication": {

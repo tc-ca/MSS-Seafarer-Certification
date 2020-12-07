@@ -118,24 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CdnFormatText" xml:space="preserve">
-    <value>Le CDN ne doit contenir que des caractères alphanumériques.</value>
+    <value>Le CDN ne doit contenir que des caractères alphanumériques</value>
   </data>
   <data name="CdnLengthText" xml:space="preserve">
-    <value>Le CDN doit comporter 6 à 7 caractères.</value>
+    <value>Le CDN doit comporter 6 à 7 caractères</value>
   </data>
   <data name="CdnNumberNotEmptyText" xml:space="preserve">
-    <value>Le CDN est un champ obligatoire.</value>
+    <value>Le CDN est un champ obligatoire</value>
   </data>
   <data name="CertificateTypeNotEmptyText" xml:space="preserve">
-    <value>Le type de certificat est un champ obligatoire.</value>
+    <value>Le type de certificat est un champ obligatoire</value>
   </data>
   <data name="EmailAddressFormatText" xml:space="preserve">
     <value>L'adresse électronique doit avoir un format valide</value>
   </data>
+  <data name="EmailAddressNotEmptyText" xml:space="preserve">
+    <value>L'adresse électronique est un champ obligatoire</value>
+  </data>
+  <data name="FileDescriptionNotEmptyText" xml:space="preserve">
+    <value>La description du fichier est un champ obligatoire</value>
+  </data>
   <data name="PhoneNumberNotEmptyText" xml:space="preserve">
     <value>Le numéro de téléphone est un champ obligatoire</value>
   </data>
+  <data name="TypeOfCertificateNotEmptyText" xml:space="preserve">
+    <value>Veuillez indiquer le type de renouvellement de certificat que vous souhaitez</value>
+  </data>
   <data name="UploadedFilesNotEmptyText" xml:space="preserve">
-    <value>Vous devez soumettre au moins 1 fichier.</value>
+    <value>Vous devez soumettre au moins 1 fichier</value>
   </data>
 </root>

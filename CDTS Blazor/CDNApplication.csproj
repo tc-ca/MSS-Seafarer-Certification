@@ -20,9 +20,48 @@
     <NoWarn>1591;1701;1702</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextFrench.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextEnglish.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.2.2" />
     <PackageReference Include="Blazored.FluentValidation" Version="1.3.1" />
     <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="GoC.WebTemplate-Components.Core" Version="2.1.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.15.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="3.1.8" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
@@ -37,6 +76,7 @@
     </PackageReference>
     <PackageReference Include="BuildTools.FxCop" Version="1.0.1" />
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.14.0.22654">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -54,7 +94,8 @@
     <Folder Include="Components\" />
     <Folder Include="Components\Banners\" />
     <Folder Include="TCComponents\Stepper\" />
-    <Folder Include="Services\" />
+    <Folder Include="Data\Attributes\" />
+    <Folder Include="Services\EmailNotification\" />
   </ItemGroup>
 
   <ItemGroup>

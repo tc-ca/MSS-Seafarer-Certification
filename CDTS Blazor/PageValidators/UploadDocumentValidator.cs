@@ -2,6 +2,7 @@
 {
     using System.Resources;
     using System.Text.RegularExpressions;
+    using CDNApplication.Data;
     using CDNApplication.Models.PageModels;
     using FluentValidation;
     using ValidationResources = CDNApplication.Resources.Validation;
@@ -29,14 +30,16 @@
                     .WithMessage(localizer.GetString("CdnLengthText"))
                     .Matches(new Regex("^[a-zA-Z0-9]*$"))
                     .WithMessage(localizer.GetString("CdnFormatText"));
-            
+
             this.RuleFor(m => m.PhoneNumber)
                 .Cascade(CascadeMode.Stop)
                     .NotEmpty()
                     .WithMessage(localizer.GetString("PhoneNumberNotEmptyText"));
-            
+
             this.RuleFor(m => m.EmailAddress)
                 .Cascade(CascadeMode.Stop)
+                    .NotEmpty()
+                    .WithMessage(localizer.GetString("EmailAddressNotEmptyText"))
                     .EmailAddress()
                     .WithMessage(localizer.GetString("EmailAddressFormatText"));
 
@@ -47,6 +50,15 @@
             this.RuleFor(m => m.UploadedFiles)
                 .NotEmpty()
                 .WithMessage(localizer.GetString("UploadedFilesNotEmptyText"));
+
+            this.RuleFor(m => m.SubmissionType)
+                .IsInEnum()
+                .WithMessage(localizer.GetString("TypeOfCertificateNotEmptyText"));
+
+            this.RuleForEach(m => m.UploadedFiles)
+                .ChildRules(x => x.RuleFor(y => y.Description)
+                    .NotEmpty()
+                    .WithMessage(localizer.GetString("FileDescriptionNotEmptyText")));
         }
     }
 }

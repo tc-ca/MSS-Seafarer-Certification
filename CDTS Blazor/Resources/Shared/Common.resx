@@ -168,4 +168,16 @@
   <data name="TCWebsiteLink" xml:space="preserve">
     <value>https://tc.canada.ca/en</value>
   </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="NewCertificate" xml:space="preserve">
+    <value>New certificate</value>
+  </data>
+  <data name="RenewalCertificate" xml:space="preserve">
+    <value>Renewal</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>
