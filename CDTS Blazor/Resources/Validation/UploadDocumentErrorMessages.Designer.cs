@@ -115,11 +115,29 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File description is a required field.
+        /// </summary>
+        internal static string FileDescriptionNotEmptyText {
+            get {
+                return ResourceManager.GetString("FileDescriptionNotEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone number is a required field.
         /// </summary>
         internal static string PhoneNumberNotEmptyText {
             get {
                 return ResourceManager.GetString("PhoneNumberNotEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please identify the type of certificate renewal you want.
+        /// </summary>
+        internal static string TypeOfCertificateNotEmptyText {
+            get {
+                return ResourceManager.GetString("TypeOfCertificateNotEmptyText", resourceCulture);
             }
         }
         

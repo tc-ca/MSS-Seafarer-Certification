@@ -155,4 +155,7 @@
   <data name="PhoneNumber" xml:space="preserve">
     <value>Numéro de téléphone</value>
   </data>
+  <data name="SubmissionType" xml:space="preserve">
+    <value>Type de brevet</value>
+  </data>
 </root>

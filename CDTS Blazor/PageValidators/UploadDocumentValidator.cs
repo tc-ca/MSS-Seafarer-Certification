@@ -2,6 +2,7 @@
 {
     using System.Resources;
     using System.Text.RegularExpressions;
+    using CDNApplication.Data;
     using CDNApplication.Models.PageModels;
     using FluentValidation;
     using ValidationResources = CDNApplication.Resources.Validation;
@@ -49,6 +50,15 @@
             this.RuleFor(m => m.UploadedFiles)
                 .NotEmpty()
                 .WithMessage(localizer.GetString("UploadedFilesNotEmptyText"));
+
+            this.RuleFor(m => m.SubmissionType)
+                .IsInEnum()
+                .WithMessage(localizer.GetString("TypeOfCertificateNotEmptyText"));
+
+            this.RuleForEach(m => m.UploadedFiles)
+                .ChildRules(x => x.RuleFor(y => y.Description)
+                    .NotEmpty()
+                    .WithMessage(localizer.GetString("FileDescriptionNotEmptyText")));
         }
     }
 }

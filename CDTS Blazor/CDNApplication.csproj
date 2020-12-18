@@ -31,31 +31,32 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextFrench.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextEnglish.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.2.2" />
     <PackageReference Include="Blazored.FluentValidation" Version="1.3.1" />
     <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="GoC.WebTemplate-Components.Core" Version="2.1.2" />

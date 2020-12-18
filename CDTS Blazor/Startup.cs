@@ -114,6 +114,7 @@ namespace CDNApplication
 
             services.AddTransient<LayoutViewModel>();
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
+
             services.AddTransient<IMtoaServices, MtoaServices>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>
@@ -131,7 +132,7 @@ namespace CDNApplication
             services.AddSingleton<SessionStateModel>();
 
             services.AddScoped<MtoaFileService>();
-
+            services.AddScoped<MtoaRequestService>();
             services.AddSingleton<IMtoaService>();
 
             services.AddHttpContextAccessor();

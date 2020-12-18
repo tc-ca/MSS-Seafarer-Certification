@@ -8,11 +8,16 @@
 @inject Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject Utilities.SessionState state
 @inject Data.Services.MtoaFileService fileService
+@inject Data.Services.MtoaRequestService requestService
+@inject CDNApplication.Services.IMtoaServices mtoaService
 
 @using BlazorInputFile
+@using CDNApplication.Data
 @using CDNApplication.Data.Entity
 @using CDNApplication.Models.PageModels
 @using CDNApplication.TCComponents.Stepper
+@using CDNApplication.Data.DTO.MTAPI
+@using CDNApplication.Utilities
 @inherits BaseComponent
 
 <StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
@@ -89,7 +94,35 @@
                     <ValidationMessage For="() => model.CertificateType" />
                 </div>
             </div>
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <section>
+                        <label class="form-control-label required">
+                            @PageLocalizer["TypeOfCertificateLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
+                        </label>
+                        <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="@PageLocalizer["SelectCertificateHint"]" data-title="" style="width:100px;">
+                            <i class="fa fa-info-circle ml-2"></i>
+                        </span>
+
+                        @foreach (var submissionType in (SubmissionType[])Enum.GetValues(typeof(SubmissionType)))
+                        {
+                            var submissionTypeValue = submissionType.GetValue();
+                            <div>
+                                <label>
+                                    <input type="radio"
+                                           name="submissionType"
+                                           checked="@(model.SubmissionType == submissionType)"
+                                           @onchange="@(() => model.SubmissionType = submissionType)" />
+                                    @CommonLocalizer[submissionTypeValue]
+                                </label>
+                            </div>
+                        }
+                        <ValidationMessage For="() => model.SubmissionType" />
+                    </section>
+                </div>
+            </div>
         </div>
+
     </section>
 
     <section class="panel panel-primary">
@@ -99,28 +132,19 @@
         <div class="panel-body">
             <div class="form-group">
                 <div class="form-control-wrapper">
-                    <label class="form-control-label required" for="@nameof(model.FileDescription)">
-                        @PageLocalizer["FileDescriptionLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
-                    </label>
-                    <InputText class="form-control" @bind-Value="@model.FileDescription" id="@nameof(model.FileDescription)" placeholder="@PageLocalizer["FileDescriptionPlaceholder"]" />
-
                     <label class="required" for="@nameof(model.UploadedFiles)">
                         @PageLocalizer["SelectFileLabel"] <strong class="required">@CommonLocalizer["Required"]</strong>
                     </label>
 
                     <div class="form-row">
 
-                        <div class="col-md-2">
-                            <button class="btn btn-primary btn-light" type="button" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
-                                @PageLocalizer["Browse"]
-                            </button>
-
-                            <InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
+                        <div class="input-group" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Browse</button>
+                            </span>
+                            <input type="text" class="form-control" placeholder="@currentFileName" disabled>
                         </div>
-
-                        <div class="col-md-10">
-                            <InputText class="form-control" disabled @bind-Value="@currentFileName" type="text" style="background-color: #ffffff; width:100%" />
-                        </div>
+                        <BlazorInputFile.InputFile class="form-control" style="display:none;" OnChange="HandleFileSelected" id="@nameof(model.UploadedFiles)" accept=".jpg, .png, .gif, .pdf" />
 
                     </div>
 
@@ -130,29 +154,59 @@
 
                     <br />
 
-                    <div class="form-row">
+                    <ValidationMessage For="() => model.UploadedFiles" />
 
-                        @foreach (var file in model.UploadedFiles)
+                    @foreach (var documentError in this.DocumentErrors)
+                    {
+                        <div class="alert document-alert-danger alert-dismissible" role="alert">
+                            <svg style="margin:0;">
+                                <circle cx="10" cy="10" r="10" fill="#D3080C" />
+                            </svg>
+                            <div style="flex-grow:2">
+                                <b>@documentError.ErrorMessage</b> <br /><br />
+                                <b>@documentError.FileName</b> (@documentError.FileBytesLength.ToString() bytes)
+                            </div>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                    }
+
+                    <section class="documents-section">
+                        <div class="row row-header">
+                            <div class="col-md-5">
+                                @PageLocalizer["DocumentSuccessfullyAdded"]
+                            </div>
+                            <div class="col-md-5">
+                                <strong class="required">*</strong>@PageLocalizer["IdentifyYourDocumentType"]<strong class="required">@CommonLocalizer["Required"]</strong>
+                            </div>
+                            <div class="col-md-2">
+                                @CommonLocalizer["Delete"]
+                            </div>
+                        </div>
+
+                        @foreach (var file in model.UploadedFiles.AsEnumerable().Reverse())
                         {
-                            <div class="alert @((file.Safe ? "alert-success" : "alert-danger"))" role="alert" style=" width: 100%; margin-right: 5px; margin-left: 5px;">
-                                <h4 class="alert-heading">@((file.Safe) ? @PageLocalizer["DocumentSuccess"] : @PageLocalizer["DocumentError"] )</h4>
-
-                                <p class="mb-4">
-                                    @PageLocalizer["DocumentType"]: @file.Description
-                                </p>
-
-                                <p>
-                                    @PageCommonLocalizer["Document"]: @file.SelectedFile.Name
-                                </p>
-
+                            <div class="row row-data">
+                                <div class="col-md-5">
+                                    @file.SelectedFile.Name
+                                </div>
+                                <div class="col-md-5">
+                                    <div>
+                                        <InputText class="form-control" @bind-Value="@file.Description" id="@file.ToString()" />
+                                        <ValidationMessage For="() => file.Description" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn trash" @onclick="e => RemoveFile(file)">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         }
 
-                    </div>
-
-                    <ValidationMessage For="() => model.UploadedFiles" />
-
-                    <button id="add_another_file" type="button" class="btn btn-light col-md-3" onclick="document.getElementById('@nameof(model.UploadedFiles)').click();">@PageLocalizer["AddAnotherDocument"]</button>
+                    </section>
 
                 </div>
             </div>
@@ -169,6 +223,15 @@
 
 @code {
 
+    class DocumentError
+    {
+        public string FileName { get; set; }
+        public double FileBytesLength { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
+    private List<DocumentError> DocumentErrors = new List<DocumentError>();
+
     private BaseStepper stepper = new BaseStepper();
 
     private string previousLink => String.Format("{0}{1}", NavigationManager.BaseUri, LanguageCode);
@@ -179,14 +242,13 @@
 
     private string currentFileName = "";
 
-    private string currentFileDescription = "";
+    private int length = 0;
 
 
     bool success = false;
 
     private void HandleValidSubmit()
     {
-
         state.UploadDocumentPage = model;
 
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}{LanguageCode}/review");
@@ -199,18 +261,33 @@
 
     private async Task HandleFileSelected(IFileListEntry[] files)
     {
-
-        if (string.IsNullOrWhiteSpace(model.FileDescription))
-        {
-            return;
-        }
-
         var file = files.FirstOrDefault();
 
         if (file != null)
         {
             if (!ExtensionIsValid(file.Name))
             {
+                var documentError = new DocumentError()
+                {
+                    FileName = file.Name,
+                    FileBytesLength = file.Size,
+                    ErrorMessage = PageLocalizer["DocumentFileExtensionInvalid"],
+                };
+                this.DocumentErrors.Add(documentError);
+                StateHasChanged();
+                return;
+            }
+
+            if (file.Size >= 200000000)
+            {
+                var documentError = new DocumentError()
+                {
+                    FileName = file.Name,
+                    FileBytesLength = file.Size,
+                    ErrorMessage = PageLocalizer["DocumentFileSizeTooBigError"],
+                };
+                this.DocumentErrors.Add(documentError);
+                StateHasChanged();
                 return;
             }
 
@@ -218,25 +295,28 @@
             await file.Data.CopyToAsync(memoryStream);
 
 
-            var fileToUpload = new UploadedFile { SelectedFile = file, Description = model.FileDescription, SelectedFileWithMemoryData = new FileListEntryImplExtension(memoryStream) };
+            var fileToUpload = new UploadedFile { SelectedFile = file, SelectedFileWithMemoryData = new MemoryStreamFileListEntryImpl(memoryStream) };
 
             // uploadedFile will have Mtoa file attachment ID for the later retrieval.
-            var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload);
 
-            if (uploadedMtoaAttachment.Id > 0)
-            {
-                fileToUpload.Safe = true;
-            }
-            else
-            {
-                fileToUpload.Safe = false;
-            }
+
+            //var uploadedMtoaAttachment = fileService.UploadSingleFileFromPage(fileToUpload, model.MtoaServiceRequestId);
+            //if (uploadedMtoaAttachment.Id > 0)
+            //{
+            //    fileToUpload.Safe = true;
+            //}
+            //else
+            //{
+            //    fileToUpload.Safe = false;
+            //}
+
+            fileToUpload.Safe = true;
 
             currentFileName = file.Name;
-            currentFileDescription = model.FileDescription;
 
             model.UploadedFiles.Add(fileToUpload);
-            model.FileDescription = string.Empty;
+
+            length = model.UploadedFiles.Count;
         }
 
 
@@ -272,6 +352,14 @@
         StateHasChanged();
     }
 
+    void RemoveFile(UploadedFile file)
+    {
+        model.UploadedFiles.Remove(file);
+
+        StateHasChanged();
+    }
+
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -288,6 +376,10 @@
         certificateTypes = CertificateType.GetAllCertificateTypes();
 
         currentFileName = PageLocalizer["FileNamePlaceholder"];
+
+        var serviceRequests = mtoaService.PostServiceRequests();
+        model.MtoaServiceRequestId = serviceRequests.ServiceRequestId;
+        model.ConfirmationNumber = model.MtoaServiceRequestId.ToString();
     }
 
     protected override async void OnAfterRender(bool firstRender)
@@ -295,5 +387,4 @@
         base.OnAfterRender(firstRender);
         await JSRuntime.InvokeVoidAsync("initPopover").ConfigureAwait(false);
     }
-
 }

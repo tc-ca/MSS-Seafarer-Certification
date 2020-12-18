@@ -210,7 +210,7 @@
     <value>Document</value>
   </data>
   <data name="DocumentError" xml:space="preserve">
-    <value>Euh oh. Votre document n'a pas passé notre scan de sécurité et ne peut pas être ajouté. Veuillez réessayer</value>
+    <value>Zut alors! Votre document n'a pas passé notre scan de sécurité et ne peut pas être ajouté. Veuillez réessayer.</value>
   </data>
   <data name="DocumentSuccess" xml:space="preserve">
     <value>Nous avons scanné votre document et il est prêt à être soumis</value>
@@ -220,5 +220,20 @@
   </data>
   <data name="Browse" xml:space="preserve">
     <value>Feuilleter</value>
+  </data>
+  <data name="TypeOfCertificateLabel" xml:space="preserve">
+    <value>Décrivez le type de certificat que vous souhaitez obtenir</value>
+  </data>
+  <data name="DocumentSuccessfullyAdded" xml:space="preserve">
+    <value>Document(s) ajouté(s) avec succès</value>
+  </data>
+  <data name="IdentifyYourDocumentType" xml:space="preserve">
+    <value>Identifiez votre type de document</value>
+  </data>
+  <data name="DocumentFileExtensionInvalid" xml:space="preserve">
+    <value>Zut alors! L'extension de fichier est invalide et doit être JPG, PNG, GIF ou PDF.</value>
+  </data>
+  <data name="DocumentFileSizeTooBigError" xml:space="preserve">
+    <value>Zut alors! Chaque document doit être inférieur à 200 Mo. Votre (vos) document(s) ne peut (peuvent) pas être ajouté(s).</value>
   </data>
 </root>

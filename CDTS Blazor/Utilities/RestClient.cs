@@ -90,15 +90,15 @@
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
                 this.ResetRestClientHeaders();
-                var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(true);
+                var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(true);
+                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
                 }
 
-                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<TReturnMessage>(result);
             }
         }

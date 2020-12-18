@@ -5,13 +5,17 @@
     using System.IO;
     using CDNApplication.Data.DTO.MTAPI;
     using CDNApplication.Models.PageModels;
+    using CDNApplication.Shared;
+    using CDNApplication.Utilities;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Localization;
 
     /// <summary>
     /// Defines the email builder for the seafarer's document submission email.
     /// </summary>
     public class SeafarersDocumentSubmissionEmailBuilder : IEmailNotificationBuilder<UploadDocumentPageModel>
     {
+        private readonly IStringLocalizer<Common> commonPageLocalizer;
         private readonly IConfiguration configuration;
         private readonly string languageCode;
 
@@ -20,8 +24,9 @@
         /// </summary>
         /// <param name="configuration">The application's configuration object.</param>
         /// <param name="languageCode">The language code.</param>
-        public SeafarersDocumentSubmissionEmailBuilder(IConfiguration configuration, string languageCode)
+        public SeafarersDocumentSubmissionEmailBuilder(IStringLocalizer<Common> commonPageLocalizer, IConfiguration configuration, string languageCode)
         {
+            this.commonPageLocalizer = commonPageLocalizer;
             this.configuration = configuration;
             this.languageCode = languageCode;
         }
@@ -37,6 +42,25 @@
                 throw new ArgumentNullException(nameof(model));
             }
 
+            var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var currentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+
+            var englishCulture = new System.Globalization.CultureInfo("en");
+            var frenchCulture = new System.Globalization.CultureInfo("fr");
+
+            System.Globalization.CultureInfo.CurrentCulture = englishCulture;
+            System.Globalization.CultureInfo.CurrentUICulture = englishCulture;
+
+            var submissionTypeEnglish = this.commonPageLocalizer[model.SubmissionType.GetValue()];
+
+            System.Globalization.CultureInfo.CurrentCulture = frenchCulture;
+            System.Globalization.CultureInfo.CurrentUICulture = frenchCulture;
+
+            var submissionTypeFrench = this.commonPageLocalizer[model.SubmissionType.GetValue()];
+
+            System.Globalization.CultureInfo.CurrentCulture = currentCulture;
+            System.Globalization.CultureInfo.CurrentUICulture = currentUICulture;
+
             var seafarersDocumentSubmissionEmail = new MtoaSeafarersSubmissionEmailParametersDto()
             {
                 ConfirmationNumber = model.ConfirmationNumber,
@@ -44,6 +68,8 @@
                 PhoneNumber = model.PhoneNumber,
                 EmailAddress = model.EmailAddress,
                 CertificateType = model.CertificateType,
+                SubmissionTypeEnglish = submissionTypeEnglish,
+                SubmissionTypeFrench = submissionTypeFrench,
                 EnglishIntroduction = string.Format(File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateIntroductionEnglish.html"), model.ConfirmationNumber),
                 EnglishSignature = File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateSignatureEnglish.html"),
                 FrenchIntroduction = string.Format(File.ReadAllText($"Resources/EmailTemplates/Parameters/SubmissionEmailTemplateIntroductionFrench.html"), model.ConfirmationNumber),
