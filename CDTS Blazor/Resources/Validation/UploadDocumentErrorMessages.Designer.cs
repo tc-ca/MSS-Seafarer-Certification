@@ -115,6 +115,15 @@ namespace CDNApplication.Resources.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File description is a required field.
+        /// </summary>
+        internal static string FileDescriptionNotEmptyText {
+            get {
+                return ResourceManager.GetString("FileDescriptionNotEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone number is a required field.
         /// </summary>
         internal static string PhoneNumberNotEmptyText {

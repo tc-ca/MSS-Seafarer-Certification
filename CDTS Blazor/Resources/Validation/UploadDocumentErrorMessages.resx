@@ -135,6 +135,9 @@
   <data name="EmailAddressNotEmptyText" xml:space="preserve">
     <value>Email address is a required field</value>
   </data>
+  <data name="FileDescriptionNotEmptyText" xml:space="preserve">
+    <value>File description is a required field</value>
+  </data>
   <data name="PhoneNumberNotEmptyText" xml:space="preserve">
     <value>Phone number is a required field</value>
   </data>

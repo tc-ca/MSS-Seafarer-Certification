@@ -73,7 +73,7 @@ namespace CDNApplication.Data.Services
                 foreach (var file in pageModel.UploadedFiles)
                 {
 
-                    byte[] byteData=file.SelectedFileWithMemoryData.MemoryData.ToArray();
+                    byte[] byteData=file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
 
                     var fileName = file.SelectedFile.Name;
 
@@ -100,7 +100,7 @@ namespace CDNApplication.Data.Services
 
             if (file != null)
             {
-                byte[] byteData = file.SelectedFileWithMemoryData.MemoryData.ToArray();
+                byte[] byteData = file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
 
                 var attachment = new FileAttachment
                 {
@@ -127,7 +127,7 @@ namespace CDNApplication.Data.Services
 
             if (file != null)
             {
-                byte[] byteData = file.SelectedFileWithMemoryData.MemoryData.ToArray();
+                byte[] byteData = file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
 
                 var attachment = new FileAttachment
                 {
