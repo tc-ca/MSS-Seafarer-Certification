@@ -16,7 +16,7 @@ namespace CDNApplication.WebAPI.Controllers
         [Route("")]
         public IActionResult HelloWorld()
         {
-            return Ok("Hello world :)");
+            return Ok("Hello world. Holiday Greetings from Transport Canada :)");
         }
 
         [HttpGet]
