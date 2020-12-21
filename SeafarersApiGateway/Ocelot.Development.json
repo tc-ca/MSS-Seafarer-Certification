@@ -1,0 +1,72 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappstest",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/hello",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello/guid",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappstest",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/guid",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v2/pokemon",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//pokeapi.co",
+          "Port": "443"
+        }
+      ],
+      "UpstreamPathTemplate": "/pokemon",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v2/pokemon/{Id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//pokeapi.co",
+          "Port": "443"
+        }
+      ],
+      "UpstreamPathTemplate": "/pokemon/{Id}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/facts/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//cat-fact.herokuapp.com",
+          "Port": "443"
+        }
+      ],
+      "UpstreamPathTemplate": "/catfacts",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/4/csf-apim"
+  }
+
+
+
+}
