@@ -20,7 +20,7 @@ namespace CDNApplication.Data.Services
         /// Initializes a new instance of the <see cref="AzureBlobConnectionFactory"/> class.
         /// </summary>
         /// <param name="azureKeyVaultService">Azure key vault service.</param>
-        public AzureBlobConnectionFactory(AzureKeyVaultService azureKeyVaultService)
+        public AzureBlobConnectionFactory(IKeyVaultService azureKeyVaultService)
         {
             if (azureKeyVaultService != null)
             {
