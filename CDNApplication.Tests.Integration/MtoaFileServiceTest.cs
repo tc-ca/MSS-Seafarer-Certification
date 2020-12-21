@@ -19,7 +19,7 @@
 
         public MtoaFileServiceTest()
         {
-            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-acc.vault.azure.net/");
+            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-dev.vault.azure.net/");
             var azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
             this.mtoaFileService = new MtoaFileService(azureKeyVaultService);
         }

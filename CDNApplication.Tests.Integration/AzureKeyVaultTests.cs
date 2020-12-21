@@ -11,7 +11,7 @@
 
         public AzureKeyVaultTests()
         {
-            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-acc.vault.azure.net/");
+            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-dev.vault.azure.net/");
             this.azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
         }
 
