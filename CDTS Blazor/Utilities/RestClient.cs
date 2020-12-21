@@ -27,7 +27,7 @@
         /// <param name="configuration">Application configuration.</param>
         /// <param name="serviceLocator">Service locator.</param>
         /// <param name="azureKeyVaultService">Azure Key Vault instance for the application.</param>
-        public RestClient(IConfiguration configuration, IServiceLocator serviceLocator, AzureKeyVaultService azureKeyVaultService)
+        public RestClient(IConfiguration configuration, IServiceLocator serviceLocator, IKeyVaultService azureKeyVaultService)
         {
             this.serviceLocator = serviceLocator;
 

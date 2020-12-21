@@ -28,7 +28,7 @@ namespace CDNApplication.Data.Services
         private string api_key;
         private string jwt;
 
-        public MtoaFileService(AzureKeyVaultService azureKeyVaultService)
+        public MtoaFileService(IKeyVaultService azureKeyVaultService)
         {
             api_key = azureKeyVaultService.GetSecretByName("MtoaApiKey");
             jwt = azureKeyVaultService.GetSecretByName("MtoaJwt");

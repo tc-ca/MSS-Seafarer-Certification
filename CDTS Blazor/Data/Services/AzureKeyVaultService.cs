@@ -4,6 +4,7 @@
     using Microsoft.Azure.KeyVault;
     using Microsoft.Azure.KeyVault.Models;
     using Microsoft.Azure.Services.AppAuthentication;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Rest.Azure;
 
     /// <summary>
@@ -17,9 +18,9 @@
         /// Initializes a new instance of the <see cref="AzureKeyVaultService"/> class.
         /// </summary>
         /// <param name="dNS">DNS for the key vault.</param>
-        public AzureKeyVaultService(string dNS)
+        public AzureKeyVaultService(IConfiguration configuration)
         {
-            this.dNs = dNS;
+            this.dNs = configuration.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"];
         }
 
         /// <summary>

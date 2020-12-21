@@ -126,14 +126,13 @@ namespace CDNApplication
                 options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
             });
 
-            services.AddSingleton(new AzureKeyVaultService(this.Configuration.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"]));
+            services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
 
             services.AddScoped<MtoaFileService>();
             services.AddScoped<MtoaRequestService>();
-            services.AddSingleton<IMtoaService>();
 
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();

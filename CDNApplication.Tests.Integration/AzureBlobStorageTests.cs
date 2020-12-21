@@ -4,17 +4,21 @@
     using System.IO;
     using System.Text;
     using CDNApplication.Data.Services;
-    using CDNApplication.Tests.Integration.Services;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Moq;
     using Xunit;
 
     public class AzureBlobStorageTests
     {
-        private readonly AzureBlobService azureBlobService;
+        private readonly IAzureBlobService azureBlobService;
 
         public AzureBlobStorageTests()
         {
-            this.azureBlobService = InitializeServices.GetAzureBlobService();
+            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-acc.vault.azure.net/");
+            var azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
+            var azureBlobConnectionFactory = new AzureBlobConnectionFactory(azureKeyVaultService);
+            this.azureBlobService = new AzureBlobService(azureBlobConnectionFactory);
         }
 
         [Fact]
