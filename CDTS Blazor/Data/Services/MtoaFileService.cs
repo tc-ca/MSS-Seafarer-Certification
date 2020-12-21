@@ -164,7 +164,7 @@ namespace CDNApplication.Data.Services
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 string subUrl = "file-attachments?serviceRequestId=" + serviceRequestId +
-                                "&filename=" + fileAttachment.Name +
+                                "&filename=" + fileAttachment.EscapedName +
                                 "&contentType=application/octet-stream&size=" + fileAttachment.Size;
 
                 try

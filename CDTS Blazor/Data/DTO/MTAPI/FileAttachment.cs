@@ -3,11 +3,10 @@
 // </auto-generated>
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CDNApplication.Data.DTO.MTAPI
 {
+    using System.Text.RegularExpressions;
+
     public class FileAttachment
     {
         public FileAttachment()
@@ -17,6 +16,9 @@ namespace CDNApplication.Data.DTO.MTAPI
         public int Id { get; set; }
         public int ServiceRequestId { get; set; }
         public string Name { get; set; }
+
+        public string EscapedName => Regex.Replace(this.Name, "[\"|\'|\\\\|/|\\||<|>|:|\\?|\\*|!]", "_");
+
         public int? Size { get; set; }
         public string ContentType { get; set; }
         public byte[] Data { get; set; }

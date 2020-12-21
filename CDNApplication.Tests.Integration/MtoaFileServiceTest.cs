@@ -70,6 +70,28 @@
             }
         }
 
+        [Theory]
+        [InlineData("'\\/|<>:?*!\"")]
+        public void MtoaFileService_UploadFileWithSpecialCharacters_Succeeds(string specialCharacters)
+        {
+            // Arrange
+            var fileName = string.Format("FileWitth{0}specialcharacter.txt", specialCharacters);
+            var fileAttachment = this.createFileAttachment(this.defaultFileBytes, fileName);
+
+            try
+            {
+                // Act
+                var uploadedFile = this.mtoaFileService.UploadFile(serviceRequestId, fileAttachment).GetAwaiter().GetResult();
+
+                // Assert
+                Assert.True(uploadedFile.Id > 0);
+            }
+            catch (MtoaConnectionException mtoaConnectionException)
+            {
+                Assert.True(true);
+            }
+        }
+
         private byte[] createEICARTestVirusFileBytes()
         {
             byte[] bytes = null;
@@ -91,6 +113,18 @@
                 ContentType = "testing",
                 Data = fileBytes,
                 Name = "FirstName.txt",
+                ServiceRequestId = serviceRequestId,
+                Size = fileBytes.Length
+            };
+        }
+
+        private FileAttachment createFileAttachment(byte[] fileBytes, string fileName)
+        {
+            return new FileAttachment
+            {
+                ContentType = "testing",
+                Data = fileBytes,
+                Name = fileName,
                 ServiceRequestId = serviceRequestId,
                 Size = fileBytes.Length
             };
