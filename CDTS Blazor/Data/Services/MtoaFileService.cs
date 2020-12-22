@@ -34,118 +34,6 @@ namespace CDNApplication.Data.Services
             jwt = azureKeyVaultService.GetSecretByName("MtoaJwt");
         }
 
-
-        /// <summary> 
-        ///following method uploads files after getting files from pageModel.
-        // this method returns a list of attachment IDs after storing files on MTOA storage. These IDs can be used to retrieving those files at later time.
-        // if there is a negative value (-1) in the List<int>, it means that the corresponding file was not uploaded successfully. Like for a virus issue.
-        /// <param name="pageModel"></param>
-        /// <returns> List<int> which represent the Mtoa file attachment IDs </returns>
-        /// </summary>     
-        public List<int> UploadFilesInPageModelAsync(UploadDocumentPageModel pageModel)
-        {
-            List<int> fileAttachmentIDs = null;
-            // Following is a temporary static serviceRequestId.
-            // TODO: serviceRequestId needs to be created at runtime through MTOA Add service request.
-            int serviceRequestId = 13844; // this is used for Dev
-
-            var fileAttachments = this.GetFileAttachmentsFromPageModel(pageModel, serviceRequestId);
-
-            fileAttachmentIDs = new List<int>();
-            foreach (var file in fileAttachments)
-            {
-                var storedFileAttachment = this.UploadFile(serviceRequestId, file); 
-                fileAttachmentIDs.Add( storedFileAttachment.Id);
-            }
-
-            return fileAttachmentIDs;
-        }
-
-
-        private List<FileAttachment> GetFileAttachmentsFromPageModel(UploadDocumentPageModel pageModel, int serviceRequestId)
-        {
-            List<FileAttachment> attachments = null;
-
-            if (pageModel.UploadedFiles.Count > 0)
-            {
-                attachments = new List<FileAttachment>();
-
-                foreach (var file in pageModel.UploadedFiles)
-                {
-
-                    byte[] byteData=file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
-
-                    var fileName = file.SelectedFile.Name;
-
-                    var fileAttachment = new FileAttachment
-                    {
-                        ContentType = file.SelectedFile.Type,
-                        Data = byteData,
-                        Name = file.SelectedFile.Name,
-                        ServiceRequestId = serviceRequestId,
-                        Size = byteData.Length
-                    };
-
-                    attachments.Add(fileAttachment);
-                }
-            }
-
-            return attachments;
-        }
-
-
-        public FileAttachment UploadSingleFileFromPage(UploadedFile file, int serviceRequestId)
-        {
-            FileAttachment uploadedFileAttachment = null;
-
-            if (file != null)
-            {
-                byte[] byteData = file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
-
-                var attachment = new FileAttachment
-                {
-                    ContentType = file.SelectedFile.Type,
-                    Data = byteData,
-                    Name = file.SelectedFile.Name,
-                    ServiceRequestId = serviceRequestId,
-                    Size = byteData.Length
-                };
-
-                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment).GetAwaiter().GetResult();
-                file.MtoaFileAttachment = uploadedFileAttachment;
-            }
-
-            return uploadedFileAttachment;
-        }
-
-        public UploadedFile UploadSingleFileFromPageAsUpload(UploadedFile file)
-        {
-            UploadedFile uploadedFile = null;
-
-            FileAttachment uploadedFileAttachment = null;
-            int serviceRequestId = 13844; // this is used for Dev
-
-            if (file != null)
-            {
-                byte[] byteData = file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
-
-                var attachment = new FileAttachment
-                {
-                    ContentType = file.SelectedFile.Type,
-                    Data = byteData,
-                    Name = file.SelectedFile.Name,
-                    ServiceRequestId = serviceRequestId,
-                    Size = byteData.Length
-                };
-
-                uploadedFileAttachment = this.UploadFile(serviceRequestId, attachment).GetAwaiter().GetResult();
-            }
-
-
-            return uploadedFile;
-        }
-
-
         public async Task<FileAttachment> UploadFile(int serviceRequestId, FileAttachment fileAttachment)
         {
             FileAttachment uploadedFileAttachment = null;
@@ -213,6 +101,37 @@ namespace CDNApplication.Data.Services
             }
 
 
-        }   
+        } 
+        
+        private List<FileAttachment> GetFileAttachmentsFromPageModel(UploadDocumentPageModel pageModel, int serviceRequestId)
+        {
+            List<FileAttachment> attachments = null;
+
+            if (pageModel.UploadedFiles.Count > 0)
+            {
+                attachments = new List<FileAttachment>();
+
+                foreach (var file in pageModel.UploadedFiles)
+                {
+
+                    byte[] byteData=file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
+
+                    var fileName = file.SelectedFile.Name;
+
+                    var fileAttachment = new FileAttachment
+                    {
+                        ContentType = file.SelectedFile.Type,
+                        Data = byteData,
+                        Name = file.SelectedFile.Name,
+                        ServiceRequestId = serviceRequestId,
+                        Size = byteData.Length
+                    };
+
+                    attachments.Add(fileAttachment);
+                }
+            }
+
+            return attachments;
+        }
     }
 }
