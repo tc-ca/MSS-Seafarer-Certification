@@ -1,0 +1,118 @@
+﻿@page "/identitydocuments"
+@using CSF.Web.Client.Data.Services;
+@using BlazorInputFile;
+
+@inject IAzureBlobService AzureBlobService;
+@using CSF.Web.Client.Data.Resources
+
+<nav aria-label="progress" class="step-indicator">
+    <ul class="steps">
+        <li class="complete">
+            <a href="/cdnform">@labels_en.CDNApplicationProgressApplicantDetails</a><span class="sr-only">completed</span>
+        </li>
+        <li class="complete">
+            <a href="/mailingaddress">@labels_en.CDNApplicationProgressMailingAddress</a><span class="sr-only">completed</span>
+        </li>
+        <li class="active" aria-current="true">
+            @labels_en.CDNApplicationProgressIdentityDocuments
+        </li>
+        <li>
+            @labels_en.CDNApplicationProgressSignature<span class="sr-only">not completed</span>
+        </li>
+    </ul>
+</nav>
+
+<br />
+
+<div class="wb-frmvld">
+   
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non 
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+
+    <form role="form" method="get" action="/">
+        <div class="form-group">
+            <label for="Document">Upload Documents</label>
+            <BlazorInputFile.InputFile id="Document" multiple class="form-control" OnChange="HandleFileSelected" />
+        </div>
+    </form>
+
+    @if (isLoading == true)
+    {
+        // TODO : Add a loading animation instead of just text.
+        // Aurora: https://design.gccollab.ca/component/icons
+        // WET: https://wet-boew.github.io/wet-boew-styleguide/design/icons-en.html
+        // Bootstrap: https://www.blazorade.com/Blazorade-Bootstrap/spinners
+    <div>Loading.....</div>
+    }
+
+    @if (fileUploaded == UploadedFileStatus.SUCCESS)
+    {
+    // TODO : Make the alerts closeable
+    // https://www.blazorade.com/Blazorade-Bootstrap/alerts
+    // TODO : Keep file names so the user knows that the files haven't disapeared
+    <div class="alert alert-success" role="alert">
+
+        @if (@selectedFiles.Length == 1)
+            {
+        <span>@labels_en.IdentityDocumentUploadedSuccessfully</span>
+            }
+            else
+            {
+        <span>@string.Format(labels_en.IdentityDocumentsUploadedSuccessfully, selectedFiles.Length)</span>
+            }
+
+    </div>
+    }
+    else if (fileUploaded == UploadedFileStatus.FAIL)
+    {
+    <div class="alert alert-danger" role="alert">
+        @labels_en.IdentityDocumentsUploadUnsuccessful
+    </div>
+    }
+
+    <a class="btn btn-primary" href="/signature" role="button">Next</a>
+    <a class="btn btn-secondary" href="/" role="button">Cancel</a>
+</div>
+
+@code {
+
+    private bool isLoading = false;
+
+    private UploadedFileStatus fileUploaded { get; set; }
+
+    private IFileListEntry[] selectedFiles = new IFileListEntry[0];
+
+    async void HandleFileSelected(IFileListEntry[] files)
+    {
+
+        selectedFiles = files;
+
+        fileUploaded = UploadedFileStatus.DEFAULT;
+
+        isLoading = true;
+
+        StateHasChanged();
+
+        // Upload the file to the root directory
+        var result = await AzureBlobService.UploadMultipleFilesAsync(files);
+
+        isLoading = false;
+
+        fileUploaded = result.Count == files.Length ? UploadedFileStatus.SUCCESS : UploadedFileStatus.FAIL;
+
+        StateHasChanged();
+
+    }
+
+    public enum UploadedFileStatus
+    {
+        DEFAULT,
+        SUCCESS,
+        FAIL,
+    }
+
+}

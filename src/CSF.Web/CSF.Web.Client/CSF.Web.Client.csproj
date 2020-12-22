@@ -1,0 +1,164 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>CSF.Web.Client</RootNamespace>
+    <AssemblyName>CSF.Web.Client</AssemblyName>
+    <NeutralLanguage>en</NeutralLanguage>
+    <UserSecretsId>5a1e3f1f-28cd-4322-b8d1-921af0053adb</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Debug\netcoreapp3.1\CSF.Web.Client.xml</DocumentationFile>
+    <NoWarn>1591;1701;1702</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Release\netcoreapp3.1\CSF.Web.Client.xml</DocumentationFile>
+    <NoWarn>1591;1701;1702</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html" />
+    <None Remove="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextFrench.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextEnglish.html" />
+    <None Remove="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateBodyTextFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\SubmissionEmailTemplateSubjectTextFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateIntroductionFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureEnglish.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmailTemplates\Parameters\SubmissionEmailTemplateSignatureFrench.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.2.2" />
+    <PackageReference Include="Blazored.FluentValidation" Version="1.3.1" />
+    <PackageReference Include="FluentValidation" Version="9.2.0" />
+    <PackageReference Include="GoC.WebTemplate-Components.Core" Version="2.1.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.15.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.5.0" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="BuildTools.FxCop" Version="1.0.1" />
+    <PackageReference Include="BlazorInputFile" Version="0.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.14.0.22654">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Resources\" />
+    <Folder Include="Views\" />
+    <Folder Include="Components\" />
+    <Folder Include="Components\Banners\" />
+    <Folder Include="TCComponents\Stepper\" />
+    <Folder Include="Data\Attributes\" />
+    <Folder Include="Services\EmailNotification\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Data\Resources\ErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Data\Resources\ErrorMessages %28copy%29.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>labels_en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\CandidateDocumentNumberForm.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CandidateDocumentNumberForm.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Components\Banners\Resources\Prototype.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrototypeBanner.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Components\Banners\Resources\PrototypeBanner.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrototypeBanner.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\UploadDocument.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <!--<EmbeddedResource Update="Resources\Validation\UploadDocumentValidation.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>-->
+    <EmbeddedResource Update="Resources\Validation\UploadDocumentErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UploadDocumentErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Data\Resources\ErrorMessages.Designer.cs">
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Data\Resources\ErrorMessages %28copy%29.Designer.cs">
+      <DependentUpon>labels_en.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Data\Resources\ErrorMessages.Designer.cs">
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Components\Banners\Resources\Prototype.Designer.cs">
+      <DependentUpon>PrototypeBanner.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\CandidateDocumentNumberForm.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CandidateDocumentNumberForm.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\UploadDocument.Designer.cs">
+      <DependentUpon>UploadDocument.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Validation\UploadDocumentErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UploadDocumentErrorMessages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
