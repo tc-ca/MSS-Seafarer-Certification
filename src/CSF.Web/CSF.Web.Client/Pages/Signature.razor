@@ -1,0 +1,28 @@
+﻿@page "/signature"
+@using CSF.Web.Client.Data.Resources
+
+<nav aria-label="progress" class="step-indicator">
+    <ul class="steps">
+        <li class="complete">
+            <a href="/cdnform">@labels_en.CDNApplicationProgressApplicantDetails</a><span class="sr-only">completed</span>
+        </li>
+        <li class="complete">
+            <a href="/mailingaddress">@labels_en.CDNApplicationProgressMailingAddress</a><span class="sr-only">completed</span>
+        </li>
+        <li class="complete">
+            <a href="/identitydocuments">@labels_en.CDNApplicationProgressIdentityDocuments</a><span class="sr-only">completed</span>
+        </li>
+        <li class="active" aria-current="true">
+            @labels_en.CDNApplicationProgressSignature
+        </li>
+    </ul>
+</nav>
+
+<br />
+
+<a class="btn btn-primary" href="/" role="button">Submit</a>
+<a class="btn btn-secondary" href="/" role="button">Cancel</a>
+
+@code {
+
+}

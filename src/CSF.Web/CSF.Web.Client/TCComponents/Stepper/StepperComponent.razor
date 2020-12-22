@@ -1,0 +1,24 @@
+﻿@using CSF.Web.Client.TCComponents.Stepper;
+@inject IStringLocalizer<Common> CommonLocalizer
+
+<nav aria-label="progress" class="step-indicator">
+    <ul class="steps">
+        @for (int i = 0; i < this.Stepper.AmountOfSteps; i++)
+        {
+            var step = this.Stepper.GetStepAtIndex(i);
+            <StepComponent Step="step" />
+        }
+    </ul>
+</nav>
+
+@code {
+
+    [Parameter]
+    public IStepper Stepper { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+}

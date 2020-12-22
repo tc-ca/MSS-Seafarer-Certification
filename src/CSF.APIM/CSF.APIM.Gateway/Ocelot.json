@@ -1,0 +1,35 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappstest",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/hello",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello/guid",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappstest",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/guid",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/4/csf-apim"
+  }
+
+
+
+}
