@@ -43,7 +43,7 @@
             }
             catch (Exception e)
             {
-                this.logger.LogError(e.Message);
+                this.logger.LogError(e.Message, e);
                 throw;
             }
         }
@@ -59,7 +59,7 @@
             }
             catch (Exception e)
             {
-                this.logger.LogError(e.Message);
+                this.logger.LogError(e.Message, e);
                 throw;
             }
         }
@@ -75,7 +75,7 @@
             }
             catch (Exception e)
             {
-                this.logger.LogError(e.Message);
+                this.logger.LogError(e.Message, e);
                 throw;
             }
         }
@@ -83,14 +83,12 @@
         /// <inheritdoc/>
         public Task PostFileAttachmentsAsync()
         {
-            string fileAttachmentsPath = this.configuration.GetSection("MtoaServiceSettings")["FileAttachmentsPath"];
-
+            // string fileAttachmentsPath = this.configuration.GetSection("MtoaServiceSettings")["FileAttachmentsPath"];
             throw new NotImplementedException();
         }
 
         private string GetServiceRequestsPath()
         {
-            string serviceRequestsPath = this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestsPath"];
             string userId = this.configuration.GetSection("MtoaServiceSettings")["UserId"];
             string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
             string serviceNameEnglish = this.configuration.GetSection("MtoaServiceSettings")["ServiceNameInEnglish"];
