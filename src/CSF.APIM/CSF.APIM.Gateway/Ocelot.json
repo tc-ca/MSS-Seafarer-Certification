@@ -23,43 +23,6 @@
       ],
       "UpstreamPathTemplate": "/guid",
       "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/v2/pokemon",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//pokeapi.co",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/pokemon",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/v2/pokemon/{Id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//pokeapi.co",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/pokemon/{Id}",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-
-    {
-      "DownstreamPathTemplate": "/facts/",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//cat-fact.herokuapp.com",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/catfacts",
-      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
 
