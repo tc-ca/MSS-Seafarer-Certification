@@ -102,36 +102,5 @@ namespace CDNApplication.Data.Services
 
 
         } 
-        
-        private List<FileAttachment> GetFileAttachmentsFromPageModel(UploadDocumentPageModel pageModel, int serviceRequestId)
-        {
-            List<FileAttachment> attachments = null;
-
-            if (pageModel.UploadedFiles.Count > 0)
-            {
-                attachments = new List<FileAttachment>();
-
-                foreach (var file in pageModel.UploadedFiles)
-                {
-
-                    byte[] byteData=file.SelectedFileWithMemoryData.MemoryStreamData.ToArray();
-
-                    var fileName = file.SelectedFile.Name;
-
-                    var fileAttachment = new FileAttachment
-                    {
-                        ContentType = file.SelectedFile.Type,
-                        Data = byteData,
-                        Name = file.SelectedFile.Name,
-                        ServiceRequestId = serviceRequestId,
-                        Size = byteData.Length
-                    };
-
-                    attachments.Add(fileAttachment);
-                }
-            }
-
-            return attachments;
-        }
     }
 }

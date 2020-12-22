@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Text;
+    using System.Threading.Tasks;
     using CDNApplication.Data.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
@@ -19,6 +20,13 @@
             var azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
             var azureBlobConnectionFactory = new AzureBlobConnectionFactory(azureKeyVaultService);
             this.azureBlobService = new AzureBlobService(azureBlobConnectionFactory);
+        }
+
+        [Fact]
+        public async Task UploadFileAsync_UploadTestFileWhenFileIsNull_ThrowsArgumentNullException()
+        {
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => this.azureBlobService.UploadFileAsync(null));
         }
 
         [Fact]
