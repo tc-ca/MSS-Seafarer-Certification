@@ -23,6 +23,9 @@
         private readonly BreadcrumbOptions marineBreadcrumbOptions = new BreadcrumbOptions();
         private readonly BreadcrumbOptions csfBreadcrumbOptions = new BreadcrumbOptions();
 
+        private ModelAccessor modelAccessor { get; init; }
+        private PageSettingsMiddleware pageSettingsMiddleware { get; init; }
+
         public PageSettingsMiddlewareTests()
         {
             this.configuration = ConfigurationHelper.InitConfiguration();
@@ -30,6 +33,9 @@
             this.configuration?.GetSection(BreadcrumbOptions.CanadaBreadcrumb).Bind(this.canadaBreadcrumbOptions);
             this.configuration?.GetSection(BreadcrumbOptions.MarineBreadcrumb).Bind(this.marineBreadcrumbOptions);
             this.configuration?.GetSection(BreadcrumbOptions.CSFBreadcrumb).Bind(this.csfBreadcrumbOptions);
+
+            this.modelAccessor = ArrangeModelAccessor();
+            this.pageSettingsMiddleware = ArrangePageSettingsMiddleware();
         }
 
         [Fact]
@@ -37,12 +43,10 @@
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            RequestDelegate next = (httpContext) => Task.CompletedTask;
-            var pageSettingsMiddleware = new PageSettingsMiddleware(next, this.configuration);
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentNullException>( () =>
-                 pageSettingsMiddleware.InvokeAsync(httpContext, null));
+                 this.pageSettingsMiddleware.InvokeAsync(httpContext, null));
         }
 
         [Fact]
@@ -50,15 +54,9 @@
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            var memoryCacheService = CreateMemoryCacheService();
-            var mockEnvironment = Mock.Of<IHostingEnvironment>();
-            var modelAccessor = new ModelAccessor(memoryCacheService, (IHostingEnvironment)mockEnvironment);
             
-            RequestDelegate next = (httpContext) => Task.CompletedTask;
-            var pageSettingsMiddleware = new PageSettingsMiddleware(next, this.configuration);
-
             // Act
-            var task = pageSettingsMiddleware.InvokeAsync(httpContext, modelAccessor);
+            var task = this.pageSettingsMiddleware.InvokeAsync(httpContext, this.modelAccessor);
 
             // Assert
             Assert.Equal(DateTime.Now.Date, modelAccessor.Model.DateModified);
@@ -69,15 +67,9 @@
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            var memoryCacheService = CreateMemoryCacheService();
-            var mockEnvironment = Mock.Of<IHostingEnvironment>();
-            var modelAccessor = new ModelAccessor(memoryCacheService, (IHostingEnvironment)mockEnvironment);
-
-            RequestDelegate next = (httpContext) => Task.CompletedTask;
-            var pageSettingsMiddleware = new PageSettingsMiddleware(next, this.configuration);
-
+            
             // Act
-            var task = pageSettingsMiddleware.InvokeAsync(httpContext, modelAccessor);
+            var task = this.pageSettingsMiddleware.InvokeAsync(httpContext, this.modelAccessor);
 
             // Assert - assertion is set to Contains because the ModelAccessor class applies a postfix to the page's HeaderTitle.
             Assert.Contains(this.configuration.GetSection("GoCWebTemplate")["HeaderTitle"], modelAccessor.Model.HeaderTitle);
@@ -88,13 +80,7 @@
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            var memoryCacheService = CreateMemoryCacheService();
-            var mockEnvironment = Mock.Of<IHostingEnvironment>();
-            var modelAccessor = new ModelAccessor(memoryCacheService, (IHostingEnvironment)mockEnvironment);
-
-            RequestDelegate next = (httpContext) => Task.CompletedTask;
-            var pageSettingsMiddleware = new PageSettingsMiddleware(next, this.configuration);
-
+            
             var canadaBreadcrumb = new Breadcrumb { Href = this.canadaBreadcrumbOptions.Href, Title = this.canadaBreadcrumbOptions.Title };
             var marineBreadcrumb = new Breadcrumb { Href = this.marineBreadcrumbOptions.Href, Title = this.marineBreadcrumbOptions.Title };
             var csfBreadcrumb = new Breadcrumb { Href = this.csfBreadcrumbOptions.Href, Title = this.csfBreadcrumbOptions.Title };
@@ -109,13 +95,26 @@
                     Assert.Equal(canadaBreadcrumb.Title, item.Title);
                 },
                 item => {
-                    Assert.Equal(marineBreadcrumbOptions.Href, item.Href);
-                    Assert.Equal(marineBreadcrumbOptions.Title, item.Title);
+                    Assert.Equal(marineBreadcrumb.Href, item.Href);
+                    Assert.Equal(marineBreadcrumb.Title, item.Title);
                 },
                 item => {
-                    Assert.Equal(csfBreadcrumbOptions.Href, item.Href);
-                    Assert.Equal(csfBreadcrumbOptions.Title, item.Title);
+                    Assert.Equal(csfBreadcrumb.Href, item.Href);
+                    Assert.Equal(csfBreadcrumb.Title, item.Title);
                 });
+        }
+
+        private ModelAccessor ArrangeModelAccessor()
+        {
+            var memoryCacheService = CreateMemoryCacheService();
+            var mockEnvironment = Mock.Of<IHostingEnvironment>();
+            return new ModelAccessor(memoryCacheService, (IHostingEnvironment)mockEnvironment);
+        }
+
+        private PageSettingsMiddleware ArrangePageSettingsMiddleware()
+        {
+            RequestDelegate next = (httpContext) => Task.CompletedTask;
+            return new PageSettingsMiddleware(next, this.configuration);
         }
 
         private IMemoryCache CreateMemoryCacheService()
