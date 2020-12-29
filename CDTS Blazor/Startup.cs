@@ -3,6 +3,7 @@ namespace CDNApplication
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using CDNApplication.Data.Services;
     using CDNApplication.Middleware;
@@ -105,6 +106,7 @@ namespace CDNApplication
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddSingleton<IRestClient, RestClient>();
 
