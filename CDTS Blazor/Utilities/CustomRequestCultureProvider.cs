@@ -15,7 +15,7 @@
         private readonly string english = "/en";
         private readonly string french = "/fr";
         private readonly string blazorFrameworkURL = "/_blazor";
-        private string lastSetCulture;
+        private string lastSetCulture = "en-CA";
 
         /// <inheritdoc/>
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
