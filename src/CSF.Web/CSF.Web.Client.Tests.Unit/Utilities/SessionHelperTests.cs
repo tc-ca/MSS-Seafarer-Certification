@@ -1,6 +1,6 @@
-﻿namespace CDNApplication.Tests.Unit.Utilities
+﻿namespace CSF.Web.Client.Tests.Unit.Utilities
 {
-    using CDNApplication.Utilities;
+    using CSF.Web.Client.Utilities;
     using Microsoft.AspNetCore.Http;
     using Moq;
     using System;

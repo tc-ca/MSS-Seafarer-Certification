@@ -1,8 +1,8 @@
-﻿namespace CDNApplication.Tests.Unit.Services.EmailNotification
+﻿namespace CSF.Web.Client.Tests.Unit.Services.EmailNotification
 {
-    using CDNApplication.Models.PageModels;
-    using CDNApplication.Services.EmailNotification;
-    using CDNApplication.Shared;
+    using CSF.Web.Client.Models.PageModels;
+    using CSF.Web.Client.Services.EmailNotification;
+    using CSF.Web.Client.Shared;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Localization;
     using Moq;

@@ -1,7 +1,7 @@
-﻿namespace CDNApplication.Tests.Unit.Services
+﻿namespace CSF.Web.Client.Tests.Unit.Services
 {
-    using CDNApplication.Services;
-    using CDNApplication.Shared;
+    using CSF.Web.Client.Services;
+    using CSF.Web.Client.Shared;
     using Microsoft.Extensions.Localization;
     using Moq;
     using Xunit;

@@ -1,8 +1,8 @@
-﻿namespace CDNApplication.Tests.Unit.Services
+﻿namespace CSF.Web.Client.Tests.Unit.Services
 {
-    using CDNApplication.Data.DTO.MTAPI;
-    using CDNApplication.Services;
-    using CDNApplication.Utilities;
+    using CSF.Web.Client.Data.DTO.MTAPI;
+    using CSF.Web.Client.Services;
+    using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Moq;

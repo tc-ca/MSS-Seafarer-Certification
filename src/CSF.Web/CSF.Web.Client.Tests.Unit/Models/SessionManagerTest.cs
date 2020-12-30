@@ -1,6 +1,6 @@
-﻿namespace CDNApplication.Tests.Unit.EmailTemplate
+﻿namespace CSF.Web.Client.Tests.Unit.EmailTemplate
 {
-    using CDNApplication.Models;
+    using CSF.Web.Client.Models;
     using Xunit;
 
     public class SessionManagerTest

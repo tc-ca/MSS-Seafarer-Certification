@@ -1,7 +1,8 @@
 ﻿namespace CSF.Web.Client.Tests.Integration
 {
     using CSF.Web.Client.Data.Services;
-    using CSF.Web.Client.Tests.Integration.Services;
+    using Microsoft.Extensions.Configuration;
+    using Moq;
     using Xunit;
 
     public class AzureKeyVaultTests

@@ -3,7 +3,7 @@
     using CSF.Web.Client.Data.DTO.MTAPI;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Exceptions;
-    using CSF.Web.Client.Tests.Integration.Services;
+    using Microsoft.Extensions.Configuration;
     using Moq;
     using System.IO;
     using Xunit;

@@ -1,4 +1,4 @@
-﻿namespace CDNApplication.Tests.Unit.Utilities
+﻿namespace CSF.Web.Client.Tests.Unit.Utilities
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Localization;
@@ -8,11 +8,11 @@
 
     public class CustomRequestCultureProviderTests
     {
-        private readonly CDNApplication.Utilities.CustomRequestCultureProvider customRequestCultureProvider;
+        private readonly CSF.Web.Client.Utilities.CustomRequestCultureProvider customRequestCultureProvider;
 
         public CustomRequestCultureProviderTests()
         {
-            this.customRequestCultureProvider = new CDNApplication.Utilities.CustomRequestCultureProvider();
+            this.customRequestCultureProvider = new CSF.Web.Client.Utilities.CustomRequestCultureProvider();
         }
 
         [Fact]

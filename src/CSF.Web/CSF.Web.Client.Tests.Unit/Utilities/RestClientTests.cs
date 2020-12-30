@@ -1,7 +1,7 @@
-﻿namespace CDNApplication.Tests.Unit.Utilities
+﻿namespace CSF.Web.Client.Tests.Unit.Utilities
 {
-    using CDNApplication.Data.Services;
-    using CDNApplication.Utilities;
+    using CSF.Web.Client.Data.Services;
+    using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;
     using Moq;
     using Moq.Protected;

@@ -4,7 +4,6 @@
     using System.IO;
     using System.Text;
     using CSF.Web.Client.Data.Services;
-    using CSF.Web.Client.Tests.Integration.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using Moq;
@@ -23,10 +22,10 @@
         }
 
         [Fact]
-        public async Task UploadFileAsync_UploadTestFileWhenFileIsNull_ThrowsArgumentNullException()
+        public void UploadFileAsync_UploadTestFileWhenFileIsNull_ThrowsArgumentNullException()
         {
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => this.azureBlobService.UploadFileAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.azureBlobService.UploadFileAsync(null));
         }
 
         [Fact]

@@ -1,6 +1,6 @@
-﻿namespace CDNApplication.Tests.Unit.Services
+﻿namespace CSF.Web.Client.Tests.Unit.Services
 {
-    using CDNApplication.Data.Services;
+    using CSF.Web.Client.Data.Services;
     using Moq;
     using Xunit;
 
