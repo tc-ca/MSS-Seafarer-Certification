@@ -38,7 +38,6 @@ namespace CSF.Web.Client.Middleware
             }
 
             // add page settings like: Modified Date, Breadcrumbs, Culture, Title etc.
-            modelAccessor.Model.DateModified = DateTime.Now.Date;
             modelAccessor.Model.HeaderTitle = "Seafarer Credentials Online Prototype";
             List<Breadcrumb> breadcrumbs = new List<Breadcrumb>();
             breadcrumbs.Add(new Breadcrumb { Href = "http://www.canada.ca/en/index.html", Title = "Canada.ca" });
