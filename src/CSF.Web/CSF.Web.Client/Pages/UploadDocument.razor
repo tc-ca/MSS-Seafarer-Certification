@@ -24,7 +24,7 @@
 
 <h1>@PageLocalizer["PageTitle"]</h1>
 
-<EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInValidSubmit">
     <FluentValidationValidator />
     <DataAnnotationsValidator/>
     <ValidationSummary />
@@ -254,7 +254,7 @@
     private async Task HandleValidSubmit()
     {
 
-        model.NotRobot =await JSRuntime.InvokeAsync<string>("isRecaptchaChecked");
+        //UploadDocumentPageModel.NotRobot =await JSRuntime.InvokeAsync<string>("isRecaptchaChecked");
 
         state.UploadDocumentPage = model;
 
@@ -397,6 +397,20 @@
         {
             await JSRuntime.InvokeVoidAsync("onloadCallback", null);
         }
+
+    }
+
+    private void HandleInValidSubmit()
+    {
+        var somevalue= model.NotRobot;
+    }
+
+    [JSInvokable]
+    public static Task UpdateRecaptchaInfo()
+    {
+        UploadDocumentPageModel temp_model = new UploadDocumentPageModel();
+        temp_model.NotRobot = "done";
+        //UploadDocumentPageModel.NotRobot = "";
 
     }
 }

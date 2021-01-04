@@ -20,7 +20,8 @@ var onloadCallback = function ()
 
 function onRecaptchaSubmit()
 {
-    return true;
+    DotNet.invokeMethodAsync('CSF.Web.Client', 'UpdateRecaptchaInfo')
+
 }
 
 function isRecaptchaChecked()
