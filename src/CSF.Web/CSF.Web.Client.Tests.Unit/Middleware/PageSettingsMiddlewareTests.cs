@@ -12,28 +12,26 @@
     using Microsoft.Extensions.DependencyInjection;
     using Moq;
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
 
     public class PageSettingsMiddlewareTests
     {
-        private readonly IConfiguration configuration;
+        private readonly Mock<IConfiguration> configuration;
 
-        private readonly BreadcrumbOptions canadaBreadcrumbOptions = new BreadcrumbOptions();
-        private readonly BreadcrumbOptions marineBreadcrumbOptions = new BreadcrumbOptions();
-        private readonly BreadcrumbOptions csfBreadcrumbOptions = new BreadcrumbOptions();
+        private readonly string headerTitle = "Seafarer Credentials Online Prototype";
+
+        private readonly BreadcrumbOptions canadaBreadcrumbOptions = new BreadcrumbOptions { Href = "http://www.canada.ca/en/index.html", Title = "Canada.ca" };
+        private readonly BreadcrumbOptions marineBreadcrumbOptions = new BreadcrumbOptions { Href = "https://www.tc.gc.ca/en/services/marine.html", Title = "Marine Transportation" };
+        private readonly BreadcrumbOptions csfBreadcrumbOptions = new BreadcrumbOptions { Href = "/", Title = "Seafarer Credentials Online Prototype" };
 
         private ModelAccessor modelAccessor { get; init; }
         private PageSettingsMiddleware pageSettingsMiddleware { get; init; }
 
         public PageSettingsMiddlewareTests()
         {
-            this.configuration = ConfigurationHelper.InitConfiguration();
-
-            this.configuration?.GetSection(BreadcrumbOptions.CanadaBreadcrumb).Bind(this.canadaBreadcrumbOptions);
-            this.configuration?.GetSection(BreadcrumbOptions.MarineBreadcrumb).Bind(this.marineBreadcrumbOptions);
-            this.configuration?.GetSection(BreadcrumbOptions.CSFBreadcrumb).Bind(this.csfBreadcrumbOptions);
-
+            this.configuration = ArrangeConfigurationMock();
             this.modelAccessor = ArrangeModelAccessor();
             this.pageSettingsMiddleware = ArrangePageSettingsMiddleware();
         }
@@ -72,7 +70,7 @@
             var task = this.pageSettingsMiddleware.InvokeAsync(httpContext, this.modelAccessor);
 
             // Assert - assertion is set to Contains because the ModelAccessor class applies a postfix to the page's HeaderTitle.
-            Assert.Contains(this.configuration.GetSection("GoCWebTemplate")["HeaderTitle"], modelAccessor.Model.HeaderTitle);
+            Assert.Contains(this.headerTitle, modelAccessor.Model.HeaderTitle);
         }
 
         [Fact]
@@ -104,17 +102,57 @@
                 });
         }
 
+        private Mock<IConfiguration> ArrangeConfigurationMock()
+        {
+            var mockConfiguration = new Mock<IConfiguration>();
+
+            mockConfiguration.Setup(x => x.GetSection("GoCWebTemplate")["HeaderTitle"]).Returns(this.headerTitle);
+            
+            // mock the 'canada' breadcrumb
+            var canadaHrefSectionMock = new Mock<IConfigurationSection>();
+            canadaHrefSectionMock.Setup(s => s.Value).Returns(canadaBreadcrumbOptions.Href);
+            var canadaTitleSectionMock = new Mock<IConfigurationSection>();
+            canadaTitleSectionMock.Setup(s => s.Value).Returns(canadaBreadcrumbOptions.Title);
+
+            var canadaBreadcrumbSectionMock = new Mock<IConfigurationSection>();
+            canadaBreadcrumbSectionMock.Setup(s => s.GetChildren()).Returns(new List<IConfigurationSection> { canadaHrefSectionMock.Object, canadaTitleSectionMock.Object });
+            
+            mockConfiguration.Setup(c => c.GetSection(BreadcrumbOptions.CanadaBreadcrumb)).Returns(canadaBreadcrumbSectionMock.Object);
+
+            // mock the 'marine' breadcrumb
+            var marineHrefSectionMock = new Mock<IConfigurationSection>();
+            marineHrefSectionMock.Setup(s => s.Value).Returns(marineBreadcrumbOptions.Href);
+            var marineTitleSectionMock = new Mock<IConfigurationSection>();
+            marineTitleSectionMock.Setup(s => s.Value).Returns(marineBreadcrumbOptions.Title);
+
+            var marineBreadcrumbSectionMock = new Mock<IConfigurationSection>();
+            marineBreadcrumbSectionMock.Setup(s => s.GetChildren()).Returns(new List<IConfigurationSection> { marineHrefSectionMock.Object, marineTitleSectionMock.Object });
+            mockConfiguration.Setup(c => c.GetSection(BreadcrumbOptions.MarineBreadcrumb)).Returns(marineBreadcrumbSectionMock.Object);
+
+            // mock the 'csf' breadcrumb
+            var csfHrefSectionMock = new Mock<IConfigurationSection>();
+            csfHrefSectionMock.Setup(s => s.Value).Returns(csfBreadcrumbOptions.Href);
+            var csfTitleSectionMock = new Mock<IConfigurationSection>();
+            csfTitleSectionMock.Setup(s => s.Value).Returns(csfBreadcrumbOptions.Title);
+
+            var csfBreadcrumbSectionMock = new Mock<IConfigurationSection>();
+            csfBreadcrumbSectionMock.Setup(s => s.GetChildren()).Returns(new List<IConfigurationSection> { csfHrefSectionMock.Object, csfTitleSectionMock.Object });
+            mockConfiguration.Setup(c => c.GetSection(BreadcrumbOptions.CSFBreadcrumb)).Returns(csfBreadcrumbSectionMock.Object);
+
+            return mockConfiguration;
+        }
+
         private ModelAccessor ArrangeModelAccessor()
         {
             var memoryCacheService = CreateMemoryCacheService();
             var mockEnvironment = Mock.Of<IHostingEnvironment>();
-            return new ModelAccessor(memoryCacheService, (IHostingEnvironment)mockEnvironment);
+            return new ModelAccessor(memoryCacheService, mockEnvironment);
         }
 
         private PageSettingsMiddleware ArrangePageSettingsMiddleware()
         {
             RequestDelegate next = (httpContext) => Task.CompletedTask;
-            return new PageSettingsMiddleware(next, this.configuration);
+            return new PageSettingsMiddleware(next, this.configuration.Object);
         }
 
         private IMemoryCache CreateMemoryCacheService()
