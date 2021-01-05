@@ -58,7 +58,7 @@
         /// <summary>
         /// Gets or sets NotRobot value which is associated with recaptcha element.
         /// </summary>
-        [Required(ErrorMessage ="I am not a robot field must be checked")]
+        [Required(ErrorMessage ="\"I'm not a robot\" field must be checked")]
         public string NotRobot { get; set; }
 
         /// <summary>

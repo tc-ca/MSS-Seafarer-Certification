@@ -3,7 +3,9 @@
     document.getElementById("Document").click();
 }
 
-var onloadCallback = function ()
+
+
+var onloadCallback = function (dotNetReference)
 {
     var recaptcha_tag = document.getElementById("reCapture_element");
     // if reCapture_element is not rendered yet, we will render this element.
@@ -11,18 +13,13 @@ var onloadCallback = function ()
     {
         grecaptcha.render('reCapture_element', {
             'sitekey': '6LdLxhoaAAAAABr4xFKLYiojPjlt9LiXI3iDTXfk',
-            'callback': 'onRecaptchaSubmit',
+            'callback': () => { dotNetReference.invokeMethodAsync('UpdateRecaptcha'); },
             'theme': 'light'
         }
         );
     }
 };
 
-function onRecaptchaSubmit()
-{
-    DotNet.invokeMethodAsync('CSF.Web.Client', 'UpdateRecaptchaInfo')
-
-}
 
 function isRecaptchaChecked()
 {
