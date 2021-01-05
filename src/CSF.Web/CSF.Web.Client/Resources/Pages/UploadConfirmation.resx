@@ -148,4 +148,7 @@
         &lt;/ul&gt;
 &lt;p&gt;We will contact you by the phone number or email address you provided if we need any more information.&lt;/p&gt;</value>
   </data>
+  <data name="PrintThisPage" xml:space="preserve">
+    <value>Print this page</value>
+  </data>
 </root>

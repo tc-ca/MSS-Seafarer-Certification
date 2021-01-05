@@ -5,9 +5,11 @@
 @inject CSF.Web.Client.Services.UploadDocumentsStepper UploadDocumentsStepper
 @inject CSF.Web.Client.Utilities.SessionState state
 
+@using CSF.Web.Client.TCComponents.Stepper
+
 @inherits BaseComponent
 
-<@CSF.Web.Client.TCComponents.Stepper.StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
+<StepperComponent Stepper="@UploadDocumentsStepper.Stepper" />
 
 <main property="mainContentOfPage" class="container" typeof="WebPageElement">
     <section>
@@ -28,6 +30,10 @@
     <section>
         <h2>@PageLocalizer["ContactUsHeader"]</h2>
         @((MarkupString)PageLocalizer["ThankYouBody"].Value)
+    </section>
+
+    <section>
+        <button onclick="window.print();" class="shr-opn wb-lbx btn btn-default wb-lbx-inited wb-init">@((MarkupString)PageLocalizer["PrintThisPage"].Value)</button>
     </section>
 </main>
 
