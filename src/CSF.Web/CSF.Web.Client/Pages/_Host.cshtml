@@ -27,11 +27,11 @@
     <title>@WebTemplateModel.Render.HeaderTitle()</title>
     <meta content="width=device-width,initial-scale=1" name="viewport" />
     <!-- Load closure template scripts -->
-    <script type="text/javascript" src="@string.Concat(WebTemplateModel.CDNPath, " soyutils.js")"></script>
+    <script type="text/javascript" src="@string.Concat(WebTemplateModel.CDNPath, "soyutils.js")"></script>
     <link href="~/css/aurora.min.css" rel="stylesheet" />
     <link href="~/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/ErrorMessage.css" rel="stylesheet" />
-    <script type="text/javascript" src="@string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}wet-{1}.js", WebTemplateModel.CDNPath, WebTemplateModel.TwoLetterCultureLanguage)"></script>
+    <script type="text/javascript" src="@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}wet-{1}.js", WebTemplateModel.CDNPath, WebTemplateModel.TwoLetterCultureLanguage)"></script>
     <noscript>
         <!-- Write closure fall-back static file -->
         @WebTemplateModel.LoadStaticFile("refTop.html")
@@ -43,7 +43,6 @@
     </script>
     @WebTemplateModel.Render.HtmlHeaderElements()
     <link href="~/css/main.css" rel="stylesheet" />
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 </head>
 <body vocab="http://schema.org/" typeof="WebPage">
 
@@ -97,5 +96,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="~/js/Ninja.js"></script>
     <script src="~/js/aurora.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 </body>
 </html>
