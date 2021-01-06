@@ -18,16 +18,17 @@
         /// Best practice: Make HttpClient static and reuse.
         /// Creating a new instance for each request is an antipattern that can result in socket exhaustion.
         /// </summary>
-        private static readonly HttpClient Client = new HttpClient();
+        private readonly HttpClient httpClient;
         private readonly IServiceLocator serviceLocator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RestClient"/> class.
         /// </summary>
+        /// <param name="httpClient">The HttpClient.</param>
         /// <param name="configuration">Application configuration.</param>
         /// <param name="serviceLocator">Service locator.</param>
         /// <param name="azureKeyVaultService">Azure Key Vault instance for the application.</param>
-        public RestClient(IConfiguration configuration, IServiceLocator serviceLocator, AzureKeyVaultService azureKeyVaultService)
+        public RestClient(HttpClient httpClient, IConfiguration configuration, IServiceLocator serviceLocator, IKeyVaultService azureKeyVaultService)
         {
             this.serviceLocator = serviceLocator;
 
@@ -35,8 +36,9 @@
             {
                 var mtoaApiKey = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaApiKey"]);
                 var mtoaJwtToken = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaJwtToken"]);
-                Client.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", mtoaJwtToken);
-                Client.DefaultRequestHeaders.TryAddWithoutValidation("api-key", mtoaApiKey);
+                this.httpClient = httpClient;
+                this.httpClient.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", mtoaJwtToken);
+                this.httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-key", mtoaApiKey);
             }
         }
 
@@ -56,7 +58,7 @@
 
             // Here is actual call to target service
             this.ResetRestClientHeaders();
-            response = await Client.GetAsync(uri).ConfigureAwait(true);
+            response = await this.httpClient.GetAsync(uri).ConfigureAwait(true);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -90,7 +92,7 @@
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
                 this.ResetRestClientHeaders();
-                var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(false);
+                var response = await this.httpClient.PostAsync(uri, stringContent).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
                 if (!response.IsSuccessStatusCode)
@@ -121,7 +123,7 @@
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
                 this.ResetRestClientHeaders();
-                var response = await Client.PutAsync(uri, stringContent).ConfigureAwait(true);
+                var response = await this.httpClient.PutAsync(uri, stringContent).ConfigureAwait(true);
                 response.EnsureSuccessStatusCode();
 
                 if (!response.IsSuccessStatusCode)
@@ -145,7 +147,7 @@
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
             this.ResetRestClientHeaders();
-            var response = await Client.DeleteAsync(uri).ConfigureAwait(true);
+            var response = await this.httpClient.DeleteAsync(uri).ConfigureAwait(true);
             response.EnsureSuccessStatusCode();
 
             return response.IsSuccessStatusCode;
@@ -153,8 +155,8 @@
 
         private void ResetRestClientHeaders()
         {
-            Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            this.httpClient.DefaultRequestHeaders.Accept.Clear();
+            this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }
 }

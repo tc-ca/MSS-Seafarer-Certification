@@ -51,39 +51,6 @@ namespace CSF.Web.Client.Data.Services
             return blob;
         }
 
-        /// <inheritdoc/>
-        public async Task<List<CloudBlockBlob>> UploadMultipleFilesAsync(IFileListEntry[] files, string container = null)
-        {
-            // Perhaps we can fail more gracefully then just throwing an exception
-            if (files == null)
-            {
-                throw new ArgumentNullException(nameof(files));
-            }
-
-            // Get the container
-            var blobContainer = await this.azureBlobConnectionFactory.GetBlobContainer(container).ConfigureAwait(false);
-
-            var list = new List<CloudBlockBlob>();
-
-            for (int i = 0; i < files.Length; i++)
-            {
-                // Create the blob to hold the data
-                var blob = blobContainer.GetBlockBlobReference(UniqueFileName(files[i].Name));
-
-                // Send the file to the cloud
-                using (StreamContent streamContent = new StreamContent(files[i].Data))
-                {
-                    var stream = await streamContent.ReadAsStreamAsync().ConfigureAwait(false);
-
-                    await blob.UploadFromStreamAsync(stream).ConfigureAwait(false);
-                }
-
-                list.Add(blob);
-            }
-
-            return list;
-        }
-
         private static string UniqueFileName(string currentFileName)
         {
             string ext = Path.GetExtension(currentFileName);

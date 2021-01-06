@@ -3,6 +3,7 @@ namespace CSF.Web.Client
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Middleware;
@@ -105,6 +106,7 @@ namespace CSF.Web.Client
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddSingleton<IRestClient, RestClient>();
 
@@ -126,14 +128,12 @@ namespace CSF.Web.Client
                 options.RequestCultureProviders.Add(new CustomRequestCultureProvider());
             });
 
-            services.AddSingleton(new AzureKeyVaultService(this.Configuration.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"]));
+            services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddSingleton<SessionStateModel>();
 
             services.AddScoped<MtoaFileService>();
-            services.AddScoped<MtoaRequestService>();
-            services.AddSingleton<IMtoaService>();
 
             services.AddHttpContextAccessor();
             services.AddScoped<ISessionManager, SessionManager>();

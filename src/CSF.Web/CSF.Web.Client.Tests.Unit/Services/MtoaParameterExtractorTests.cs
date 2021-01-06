@@ -1,5 +1,6 @@
 ﻿namespace CSF.Web.Client.Tests.Unit.Services
 {
+    using System;
     using System.Linq;
     using CSF.Web.Client.Data.Attributes;
     using CSF.Web.Client.Services;
@@ -72,6 +73,13 @@
 
             // Assert
             Assert.Empty(parameters);
+        }
+
+        [Fact]
+        public void ExtractParameter_WhenTemplateIsNull_ThrowsArgumentNullException()
+        {
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => this.mtoaParameterExtractor.ExtractParameters(null));
         }
 
         private class MtoaParameterTestWithAttribute

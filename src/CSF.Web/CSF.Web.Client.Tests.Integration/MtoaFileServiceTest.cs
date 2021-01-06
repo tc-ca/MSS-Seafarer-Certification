@@ -3,7 +3,8 @@
     using CSF.Web.Client.Data.DTO.MTAPI;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Exceptions;
-    using CSF.Web.Client.Tests.Integration.Services;
+    using Microsoft.Extensions.Configuration;
+    using Moq;
     using System.IO;
     using Xunit;
 
@@ -15,11 +16,11 @@
         private readonly int serviceRequestId = 13844; //13844 is for Dev. For Kanga use  15703
         private readonly byte[] defaultFileBytes = { 1, 2, 3, 4, 0xBA, 0xDF, 0x00, 0x0D };
         private readonly MtoaFileService mtoaFileService;
-        private readonly AzureKeyVaultService azureKeyVaultService;
 
         public MtoaFileServiceTest()
         {
-            this.azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
+            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-dev.vault.azure.net/");
+            var azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
             this.mtoaFileService = new MtoaFileService(azureKeyVaultService);
         }
 

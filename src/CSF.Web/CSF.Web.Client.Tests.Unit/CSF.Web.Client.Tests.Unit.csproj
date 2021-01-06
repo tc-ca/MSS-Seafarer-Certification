@@ -33,11 +33,6 @@
     <PackageReference Include="bunit" Version="1.0.0-beta-11" />
     <PackageReference Include="bunit.xunit" Version="1.0.0-beta-11" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\CSF.Web.Client\CSF.Web.Client.csproj" />
   </ItemGroup>

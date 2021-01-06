@@ -17,6 +17,7 @@
         /// <summary>
         /// This procedure posts the submision email for sending to MTOA.
         /// </summary>
+        /// <param name="mtoaEmailNotification">The mtoa email notificatio object.</param>
         /// <returns>Returns the task.</returns>
         public Task PostSendEmailNotificationAsync(MtoaEmailNotificationDto mtoaEmailNotification);
 
@@ -26,6 +27,7 @@
         /// <returns>Returns the task.</returns>
         public ServiceRequestCreationResult PostServiceRequests();
 
+        /// <summary>
         /// This procedure posts the file attachment to MTOA.
         /// </summary>
         /// <returns>Return the task.</returns>

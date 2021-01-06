@@ -1,16 +1,18 @@
 ﻿namespace CSF.Web.Client.Tests.Integration
 {
     using CSF.Web.Client.Data.Services;
-    using CSF.Web.Client.Tests.Integration.Services;
+    using Microsoft.Extensions.Configuration;
+    using Moq;
     using Xunit;
 
     public class AzureKeyVaultTests
     {
-        private AzureKeyVaultService azureKeyVaultService;
+        private readonly AzureKeyVaultService azureKeyVaultService;
 
         public AzureKeyVaultTests()
         {
-            this.azureKeyVaultService = InitializeServices.GetAzureKeyVaultService();
+            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-dev.vault.azure.net/");
+            this.azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
         }
 
         [Fact]

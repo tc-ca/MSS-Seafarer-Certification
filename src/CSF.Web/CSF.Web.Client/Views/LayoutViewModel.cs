@@ -30,7 +30,6 @@
         {
             this.modelAccessor = modelAccessor;
 
-            // this.localizer = new ResourceManager(typeof(Common));
             this.httpContextAccessor = httpContextAccessor;
             this.logger = logger;
             this.config = config;

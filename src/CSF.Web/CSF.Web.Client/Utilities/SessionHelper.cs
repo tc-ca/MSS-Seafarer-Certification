@@ -32,11 +32,6 @@
             return GetLanguageFromPath(context.Request.Path.Value);
         }
 
-        private static bool IsContextPathEmpty(HttpContext context)
-        {
-            return !context.Request.Path.HasValue;
-        }
-
         /// <summary>
         /// Gets the language from the uri path.
         /// </summary>
@@ -61,6 +56,11 @@
             }
 
             return pathSubDirectories[LanguageIndexInPath];
+        }
+
+        private static bool IsContextPathEmpty(HttpContext context)
+        {
+            return !context.Request.Path.HasValue;
         }
 
         private static bool DoesURLPathContainOnlyOneSubdirectory(string[] pathSubDirectories)

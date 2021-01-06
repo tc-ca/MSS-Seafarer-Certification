@@ -4,17 +4,28 @@
     using System.IO;
     using System.Text;
     using CSF.Web.Client.Data.Services;
-    using CSF.Web.Client.Tests.Integration.Services;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Moq;
     using Xunit;
 
     public class AzureBlobStorageTests
     {
-        private readonly AzureBlobService azureBlobService;
+        private readonly IAzureBlobService azureBlobService;
 
         public AzureBlobStorageTests()
         {
-            this.azureBlobService = InitializeServices.GetAzureBlobService();
+            var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-dev.vault.azure.net/");
+            var azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
+            var azureBlobConnectionFactory = new AzureBlobConnectionFactory(azureKeyVaultService);
+            this.azureBlobService = new AzureBlobService(azureBlobConnectionFactory);
+        }
+
+        [Fact]
+        public void UploadFileAsync_UploadTestFileWhenFileIsNull_ThrowsArgumentNullException()
+        {
+            // Assert
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.azureBlobService.UploadFileAsync(null));
         }
 
         [Fact]

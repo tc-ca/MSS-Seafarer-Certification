@@ -40,11 +40,6 @@
 
             this.logger.LogInformation($"Target Service URL is {uri}");
 
-            if (uri == null)
-            {
-                throw new ArgumentNullException($"Uri key for {key} has not been configured. Add to it UserSecrets or appsettings.json");
-            }
-
             return new Uri(uri);
         }
     }
