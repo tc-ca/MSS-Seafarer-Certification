@@ -130,6 +130,9 @@
   <data name="DocumentsSubmittedHeader" xml:space="preserve">
     <value>Vos documents ont été soumis avec succès.</value>
   </data>
+  <data name="PrintThisPage" xml:space="preserve">
+    <value>Imprime cette page</value>
+  </data>
   <data name="ThankYouBody" xml:space="preserve">
     <value>&lt;p&gt;Si vous avez des questions ou des préoccupations, communiquez avec le centre de service de votre localité &lt;a href="https://tc.canada.ca/fr/transport-maritime-dans-regions" target="_blank"&gt;Transport Canada &lt;/a&gt;. Assurez-vous d'avoir votre numéro de confirmation prêt à être partagé.&lt;/p&gt;</value>
   </data>
