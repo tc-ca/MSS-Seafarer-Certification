@@ -51,7 +51,8 @@
             webTemplateModel.LanguageLink.Href = $"{baseUrl}/{toggleLanguage}/langtoggle";
             webTemplateModel.ApplicationTitle.Href = "/";
             webTemplateModel.ApplicationTitle.NewWindow = true;
-            webTemplateModel.DateModified = new DateTime(2020, 04, 29);
+
+            webTemplateModel.DateModified = DateTime.Parse(this.config.GetSection("Settings")["PublishDate"]);
         }
     }
 }

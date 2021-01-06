@@ -124,6 +124,15 @@ namespace CSF.Web.Client.Resources.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;I&apos;m not a robot&quot; field must be checked.
+        /// </summary>
+        internal static string ImNotRobotText {
+            get {
+                return ResourceManager.GetString("ImNotRobotText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone number is a required field.
         /// </summary>
         internal static string PhoneNumberNotEmptyText {

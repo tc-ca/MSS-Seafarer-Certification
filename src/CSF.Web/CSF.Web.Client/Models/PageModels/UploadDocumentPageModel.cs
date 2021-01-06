@@ -1,9 +1,10 @@
 ﻿namespace CSF.Web.Client.Models.PageModels
 {
-    using CSF.Web.Client.Data;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text;
+    using CSF.Web.Client.Data;
 
     /// <summary>
     /// PageModel for the UploadDocument page.
@@ -49,10 +50,15 @@
         /// Gets or sets the service request id from Mtoa.
         /// </summary>
         public int MtoaServiceRequestId { get; set; }
-      
+        /// <summary>
         /// Gets or sets Renewing.
         /// </summary>
         public SubmissionType SubmissionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets NotRobot value which is associated with recaptcha element.
+        /// </summary>
+        public string NotRobot { get; set; }
 
         /// <summary>
         /// Gets the uploaded files in a format that can be used in mtoa.
