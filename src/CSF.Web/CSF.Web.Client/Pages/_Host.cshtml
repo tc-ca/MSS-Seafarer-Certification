@@ -96,6 +96,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="~/js/Ninja.js"></script>
     <script src="~/js/aurora.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+<script src="@string.Concat("https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=", @WebTemplateModel.TwoLetterCultureLanguage), " async defer"></script>
 </body>
 </html>
