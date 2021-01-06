@@ -59,6 +59,9 @@
                 .ChildRules(x => x.RuleFor(y => y.Description)
                     .NotEmpty()
                     .WithMessage(localizer.GetString("FileDescriptionNotEmptyText")));
+            this.RuleFor(m => m.NotRobot)
+                .NotNull()
+                .WithMessage(localizer.GetString("ImNotRobotText"));
         }
     }
 }
