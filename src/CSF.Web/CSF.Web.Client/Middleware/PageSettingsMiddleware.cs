@@ -50,7 +50,6 @@ namespace CSF.Web.Client.Middleware
             }
 
             // add page settings like: Modified Date, Breadcrumbs, Culture, Title etc.
-            modelAccessor.Model.DateModified = DateTime.Now.Date;
             modelAccessor.Model.HeaderTitle = this.configuration.GetSection("GoCWebTemplate")["HeaderTitle"];
             List<Breadcrumb> breadcrumbs = new List<Breadcrumb>
             {
