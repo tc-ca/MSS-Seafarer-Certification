@@ -50,19 +50,6 @@
         }
 
         [Fact]
-        public void InvokeAsync_ValidRequest_SetsDateModifiedToToday()
-        {
-            // Arrange
-            var httpContext = new DefaultHttpContext();
-            
-            // Act
-            var task = this.pageSettingsMiddleware.InvokeAsync(httpContext, this.modelAccessor);
-
-            // Assert
-            Assert.Equal(DateTime.Now.Date, modelAccessor.Model.DateModified);
-        }
-
-        [Fact]
         public void InvokeAsync_ValidRequest_SetsHeaderTitle()
         {
             // Arrange
