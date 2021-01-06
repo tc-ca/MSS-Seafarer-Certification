@@ -3,6 +3,37 @@
     document.getElementById("Document").click();
 }
 
+
+
+var onloadCallback = function (dotNetReference)
+{
+    var recaptcha_tag = document.getElementById("reCapture_element");
+    // if reCapture_element is not rendered yet, we will render this element.
+    if (recaptcha_tag.hasChildNodes.length == 0)
+    {
+        grecaptcha.render('reCapture_element', {
+            'sitekey': '6LdLxhoaAAAAABr4xFKLYiojPjlt9LiXI3iDTXfk',
+            'callback': () => { dotNetReference.invokeMethodAsync('UpdateRecaptcha'); },
+            'theme': 'light'
+        }
+        );
+    }
+};
+
+
+function isRecaptchaChecked()
+{
+    var isChecked = null;
+
+    if (grecaptcha && grecaptcha.getResponse().length > 0)
+    {
+        //alert('Well, recaptcha is checked !');
+        isChecked = "YES";
+    }
+
+    return isChecked;
+}
+
 window.initPopover = () => {
     $('[data-toggle="popover"]').popover({
         html:true,

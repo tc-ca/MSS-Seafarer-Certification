@@ -138,6 +138,9 @@
   <data name="FileDescriptionNotEmptyText" xml:space="preserve">
     <value>La description du fichier est un champ obligatoire</value>
   </data>
+  <data name="ImNotRobotText" xml:space="preserve">
+    <value>Le champ "Je ne suis pas un robot" doit être coché</value>
+  </data>
   <data name="PhoneNumberNotEmptyText" xml:space="preserve">
     <value>Le numéro de téléphone est un champ obligatoire</value>
   </data>

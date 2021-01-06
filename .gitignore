@@ -344,3 +344,5 @@ ASALocalRun/
 healthchecksdb
 *.dgml
 /CDNApplication.Test/AzureBlobStorageTests.cs
+/src/CSF.Web/CSF.Web.Client/Properties/PublishProfiles/TestSeafarer - Web Deploy.pubxml
+/src/CSF.Web/CSF.Web.Client/Properties/ServiceDependencies/TestSeafarer - Web Deploy/profile.arm.json
