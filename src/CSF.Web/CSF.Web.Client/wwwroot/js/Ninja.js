@@ -12,7 +12,7 @@ var onloadCallback = function (dotNetReference)
     if (recaptcha_tag.hasChildNodes.length == 0)
     {
         grecaptcha.render('reCapture_element', {
-            'sitekey': '6LdLxhoaAAAAABr4xFKLYiojPjlt9LiXI3iDTXfk',
+            'sitekey': '6LfWoygaAAAAANbwE6tYQNzSWbFXme-cILTYB5RS',
             'callback': () => { dotNetReference.invokeMethodAsync('UpdateRecaptcha'); },
             'theme': 'light'
         }
