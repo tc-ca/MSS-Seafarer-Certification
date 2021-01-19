@@ -34,7 +34,8 @@
         }
       ],
       "UpstreamPathTemplate": "/pokemon",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "pokemon"
     },
     {
       "DownstreamPathTemplate": "/api/v2/pokemon/{Id}",
