@@ -1,12 +1,11 @@
-﻿namespace CSF.MPDIS.API.Controllers
+﻿namespace CSF.API.Controllers
 {
-    using CSF.MPDIS.API.Data.Entities;
-    using CSF.MPDIS.API.Services.Repositories;
+    using CSF.API.Services.Repositories;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class CertificateController : ControllerBase
     {
         private ICertificateTypeRepository certifcateTypeRepository;
         public CertificateController(ICertificateTypeRepository certifcateTypeRepository)
@@ -15,8 +14,8 @@
         }
 
         [HttpGet]
-        [Route("certificate")]
-        public IActionResult GetCertificates()
+        [Route("")]
+        public IActionResult GetCertificateTypes()
         {
 
             return Ok(certifcateTypeRepository.GetAll());

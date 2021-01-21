@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSF.MPDIS.API
+namespace CSF.API
 {
     public class Program
     {

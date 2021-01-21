@@ -4,18 +4,18 @@
     using Microsoft.Extensions.Configuration;
     using System.Collections.Generic;
 
-    public class CertificateTypeRepository : ICertificateTypeRepository
+    public class DocumentTypeRepository : IDocumentTypeRepository
     {
         private IConfiguration configuration;
 
-        public CertificateTypeRepository(IConfiguration configuration)
+        public DocumentTypeRepository(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        public IEnumerable<CertificateType> GetAll()
+        public IEnumerable<DocumentType> GetAll()
         {
-            return this.configuration.GetSection("Data:CertificateTypes").Get<List<CertificateType>>();
+            return this.configuration.GetSection("Data:DocumentTypes").Get<List<DocumentType>>();
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     using CSF.API.Data.Entities;
 
-    public interface ICertificateTypeRepository : IRepository<CertificateType>
+    public interface IDocumentTypeRepository : IRepository<DocumentType>
     {
     }
 }

@@ -1,18 +1,16 @@
 ﻿namespace CSF.API.Data.Entities
 {
-    /// <summary>
-    /// Defines a CertificateType
-    /// </summary>
-    public class CertificateType
+    public class DocumentType
     {
+
         /// <summary>
-        /// Gets or sets the Id.
+        /// Gets or sets the Index.
         /// </summary>
-        public int Id { get; set; }
+        public int Index { get; set; }
 
         /// <summary>
         /// Gets or sets English Name.
-        /// </summary> 
+        /// </summary>
         public string EnglishName { get; set; }
 
         /// <summary>
