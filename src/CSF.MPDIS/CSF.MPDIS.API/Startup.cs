@@ -31,6 +31,7 @@ namespace CSF.API
             services.AddSwaggerGen();
 
             services.AddSingleton<ICertificateTypeRepository, CertificateTypeRepository>();
+            services.AddSingleton<IDocumentTypeRepository, DocumentTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
