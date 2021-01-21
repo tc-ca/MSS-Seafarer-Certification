@@ -9,15 +9,25 @@ namespace CSF.MPDIS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CertificateController : ControllerBase
+    public class HomeController : ControllerBase
     {
 
         [HttpGet]
-        [Route("")]
+        [Route("certificate")]
         public IActionResult GetCertificates()
         {
 
             return Ok(CertificateType.GetAllCertificateTypes());
+
+        }
+
+        [HttpGet]
+        [Route("document")]
+        public IActionResult GetDocuments()
+        {
+
+            return Ok(DocumentType.GetAllDocumentTypes());
+
         }
 
     }
