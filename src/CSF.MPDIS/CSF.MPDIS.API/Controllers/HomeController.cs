@@ -6,7 +6,7 @@
 
     [Route("api/[controller]")]
     [ApiController]
-    public class CertificateController : ControllerBase
+    public class HomeController : ControllerBase
     {
         private ICertificateTypeRepository certifcateTypeRepository;
         public CertificateController(ICertificateTypeRepository certifcateTypeRepository)
@@ -15,7 +15,7 @@
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("certificate")]
         public IActionResult GetCertificates()
         {
 
