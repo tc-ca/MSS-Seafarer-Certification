@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSF.MPDIS.API.Controllers
+namespace CSF.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
