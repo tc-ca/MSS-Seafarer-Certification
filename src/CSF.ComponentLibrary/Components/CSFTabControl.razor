@@ -1,0 +1,15 @@
+﻿@inherits CSFTabControlBase
+
+<CascadingValue Value="this">
+    <section class="csf-tab-button-group" role="group">
+        @foreach (CSFTabPage tabPage in Pages)
+        {
+            <button type="button"
+                    class="csf-tab-button @GetButtonClass(tabPage)"
+                    @onclick=@( () => ActivatePage(tabPage) )>
+                @tabPage.Text
+            </button>
+        }
+    </section>
+    @ChildContent
+</CascadingValue>
