@@ -48,3 +48,47 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+
+/*
+    BASE STYLE OVERRIDES
+*/
+.top-row[b-cht5mpaqgp] {
+    background: #1A202C;
+    border: 0;
+}
+.top-row[b-ussj044e2c] {
+    background: #4A5568;
+}
+a.navbar-brand {
+    font-family: 'Nunito Sans' sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 900;
+}
+.sidebar[b-cht5mpaqgp] {
+    background: #F7F9FC;
+}
+ul.nav[b-ussj044e2c] {
+    margin-top: 30px;
+}
+.nav-item[b-ussj044e2c] a.active,
+.nav-item[b-ussj044e2c] a:hover {
+    font-family: 'Nunito Sans' sans-serif;
+    font-weight: bold;
+    color: #1B50B1;
+}
+    .nav-item[b-ussj044e2c] a,
+    .nav-item[b-ussj044e2c] a:active,
+    .nav-item[b-ussj044e2c] a:focus {
+        color: #4D5D6C;
+    }
+/*
+    CUSTOM
+*/
+        .nav-item[b-ussj044e2c] a i {
+    margin-right: 24px;
+}
+div.page-layout {
+    display: flex;
+}

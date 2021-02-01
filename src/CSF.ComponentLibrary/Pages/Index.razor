@@ -27,6 +27,8 @@
     <CSFButton Text="Filter" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.FILTER" />
 </section>
 
+<CSFFlexTable Rows="@this.Rows" />
+
 
 <section class="csf-flex-table">
     <section class="csf-flex-table-header">
@@ -43,7 +45,7 @@
     <section class="csf-flex-table-body">
         <section class="csf-flex-table-row-group">
             <section>
-                <div style="color:#1B50B1"><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" /> View</div>
+                <div class="font-color-light-blue"><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" /> View</div>
                 <div>1234567</div>
                 <div>John Doe</div>
                 <div>123456F</div>
@@ -53,7 +55,7 @@
                 <div>Initial review of submitted request</div>
             </section>
             <section>
-                <div style="color:#1B50B1"><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" /> View</div>
+                <div class="font-color-light-blue"><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" /> View</div>
                 <div>1234567</div>
                 <div>John Doe</div>
                 <div>123456F</div>
@@ -65,7 +67,7 @@
         </section>
         <section class="csf-flex-table-row-group">
             <section>
-                <div style="color:#1B50B1"><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" /> View</div>
+                <div class="font-color-light-blue"><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" /> View</div>
                 <div>1234567</div>
                 <div>John Doe</div>
                 <div>123456F</div>
@@ -90,3 +92,48 @@
         </div>
     </section>
 </section>
+
+@code {
+    public List<Row> Rows { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        this.Rows = new List<Row>();
+
+        var headerColumns = new List<Column>();
+        headerColumns.Add(new Column() { Text = "" });
+        headerColumns.Add(new Column() { Text = "Seafarer request #" });
+        headerColumns.Add(new Column() { Text = "First and last name" });
+        headerColumns.Add(new Column() { Text = "CDN" });
+        headerColumns.Add(new Column() { Text = "Request type" });
+        headerColumns.Add(new Column() { Text = "Assigned to" });
+        headerColumns.Add(new Column() { Text = "Service standard" });
+        headerColumns.Add(new Column() { Text = "Processing phase" });
+        this.Rows.Add(new Row()
+        {
+            Columns = headerColumns,
+            IsHeaderRow = true,
+            GroupId = 0
+        });
+
+        for (var i = 0; i < 4; i++)
+        {
+            var columns = new List<Column>();
+            columns.Add(new Column() { Text = "View", CssClass = "font-color-light-blue" });
+            columns.Add(new Column() { Text = "1234567" });
+            columns.Add(new Column() { Text = "John Doe" });
+            columns.Add(new Column() { Text = "123456F" });
+            columns.Add(new Column() { Text = "First-class Engineer Motor Ship" });
+            columns.Add(new Column() { Text = "John Whick" });
+            columns.Add(new Column() { Text = "60 days remaining" });
+            columns.Add(new Column() { Text = "Initial review of submitted request" });
+            this.Rows.Add(new Row()
+            {
+                Columns = columns,
+                IsHeaderRow = false,
+                GroupId = i
+            });
+        }
+    }
+}

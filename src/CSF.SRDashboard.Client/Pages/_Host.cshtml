@@ -20,29 +20,33 @@
     <title></title>
     <base href="/" />
     <!-- Font Awesome JS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap" rel="stylesheet">
     <link href="fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet" />
-    <link href="css/bootstrap/bootstrap.css" rel="stylesheet" />
-    <link href="css/components.css" rel="stylesheet" />
-    <link href="_content/DSD.MSS.Blazor.Components.AddressComplete/lookup.css" rel="stylesheet" />
-    <link href="css/spinkit.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="CSF.SRDashboard.Client.styles.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="~/css/components/component-library.css" rel="stylesheet" />
 </head>
 
 <body>
     <!-- the main content -->
-    <div>
-        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
     </div>
-    <script src="_content/BlazorInputFile/inputfile.js"></script>
+
     <script src="_framework/blazor.server.js"></script>
-
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-
-    <script src="script/apphelper.js"></script>
-    <script src="script/bootstrap.js"></script>
-    <script type="text/javascript" src="_content/DSD.MSS.Blazor.Components.AddressComplete/lookup.js"></script>
 </body>
 </html>
 

@@ -3,7 +3,7 @@
     using System;
     using Microsoft.AspNetCore.Components;
 
-    public class CSFTabPageBase : ComponentBase
+    public partial class CSFTabPage : ComponentBase
     {
         [CascadingParameter]
         public CSFTabControl Parent { get; set; }

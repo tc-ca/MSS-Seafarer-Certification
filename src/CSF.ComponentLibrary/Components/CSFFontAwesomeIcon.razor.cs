@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Components;
 
-    public class CSFFontAwesomeIconBase : ComponentBase
+    public partial class CSFFontAwesomeIcon : ComponentBase
     {
         [Parameter]
         public CSFFontAwesomeIconType CSFFontAwesomeIconType { get; set; }

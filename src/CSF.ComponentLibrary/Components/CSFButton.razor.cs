@@ -2,7 +2,7 @@
 
 namespace CSF.ComponentLibrary.Components
 {
-    public class CSFButtonBase : ComponentBase
+    public partial class CSFButton : ComponentBase
     {
         [Parameter]
         public string Text { get; set; }
