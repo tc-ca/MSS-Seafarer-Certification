@@ -35,9 +35,33 @@ button.csf-component {
     border-radius: 3px;
 }
 
-button.csf-component i {
-    margin-right: 5px;
+    button.csf-component i {
+        margin-right: 5px;
+    }
+
+/** 
+    CSF-Toggle-Button 
+*/
+section.csf-toggle-button-container {
+    color: #1B50B1;
+    display: inline-flex;
+    border: 1px solid #CBD5E0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: #1B50B1;
 }
+input[type="radio"].csf-toggle-button {
+    display:none;
+}
+    input[type="radio"].csf-toggle-button + label {
+        background: #FFFFFF;
+        padding: 5px 10px;
+        font-weight: 700;
+        margin: 0;
+    }
+    input[type="radio"].csf-toggle-button:checked + label {
+        background: #E2E8F0;
+    }
 
 /**
     CSF-Flex-Table

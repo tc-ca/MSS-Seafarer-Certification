@@ -60,6 +60,14 @@ a, .btn-link {
 .top-row[b-ussj044e2c] {
     background: #4A5568;
 }
+
+.top-row section.header-bar {
+    display: flex;
+    flex-basis: 30%;
+    justify-content: space-between;
+    align-items: center;
+}
+
 a.navbar-brand {
     font-family: 'Nunito Sans' sans-serif;
     font-size: 15px;
@@ -86,7 +94,7 @@ ul.nav[b-ussj044e2c] {
 /*
     CUSTOM
 */
-        .nav-item[b-ussj044e2c] a i {
+.nav-item[b-ussj044e2c] a i {
     margin-right: 24px;
 }
 div.page-layout {
