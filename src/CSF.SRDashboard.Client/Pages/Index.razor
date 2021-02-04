@@ -21,10 +21,18 @@
 </CSFTabControl>
 
 <section class="csf-flex-button-group">
-    <CSFButton Text="Search" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.SEARCH" />
-    <CSFButton Text="Create new request" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.EDIT" />
-    <CSFButton Text="Sort" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.ORDER_DESC" />
-    <CSFButton Text="Filter" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.FILTER" />
+    <CSFButton>
+        <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.SEARCH" /> <span>Search</span>
+    </CSFButton>
+    <CSFButton>
+        <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" /> <span>Create New Request</span>
+    </CSFButton>
+    <CSFButton>
+        <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.ORDER_DESC" /> <span>Sort</span>
+    </CSFButton>
+    <CSFButton>
+        <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.FILTER" /> <span>Filter</span>
+    </CSFButton> 
 </section>
 
 <CSFFlexTable Rows="@this.Rows" />
