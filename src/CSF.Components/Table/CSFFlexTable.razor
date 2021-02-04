@@ -18,7 +18,13 @@
                 <section>
                     @foreach (var column in row.Columns)
                     {
-                        <div class="@column.CssClass">@column.Text</div>
+                        <div class="@column.CssClass">
+                    @if (!string.IsNullOrEmpty(column.Icon))
+                    {
+                        <i class="@column.Icon"></i>
+                    }
+                        <span style="margin-left:5px">@column.Text</span>
+                        </div>
                     }
                 </section>
             </section>

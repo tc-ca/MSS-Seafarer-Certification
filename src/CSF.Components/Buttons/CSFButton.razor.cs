@@ -9,5 +9,8 @@
 
         [Parameter]
         public string Text { get; set; }
+
+        [Parameter]
+        public string CssClass { get; set; } = string.Empty;
     }
 }

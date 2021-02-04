@@ -20,12 +20,17 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     font-weight: 700;
     font-size: 1.75rem; 
-    margin:30px 0 40px 0;
+    margin:30px 0 50px 0;
 }
 
 /**
     CSF-Button
 */
+button.csf-component,
+input.csf-toggle-button {
+    cursor: pointer;
+}
+
 button.csf-component {
     font-weight: 600;
     line-height: 19px;
@@ -33,6 +38,7 @@ button.csf-component {
     background-color: #F7F9FC;
     border: 1px solid #4A5568;
     border-radius: 3px;
+    padding: 6px;
 }
 
     button.csf-component i {

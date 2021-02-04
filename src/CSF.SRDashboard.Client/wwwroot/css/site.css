@@ -63,17 +63,20 @@ a, .btn-link {
 
 .top-row section.header-bar {
     display: flex;
-    flex-basis: 30%;
-    justify-content: space-between;
     align-items: center;
 }
 
-a.navbar-brand {
-    font-family: 'Nunito Sans' sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 900;
-}
+    .top-row section.header-bar button.notification-button {
+        margin-left:40px;
+        margin-right:30px;
+    }
+
+    a.navbar-brand {
+        font-family: 'Nunito Sans' sans-serif;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 900;
+    }
 .sidebar[b-cht5mpaqgp] {
     background: #F7F9FC;
 }
@@ -101,5 +104,5 @@ div.page-layout {
     display: flex;
 }
 section.csf-page-group {
-    padding-right:40px;
+    padding-right:140px;
 }
