@@ -11,13 +11,13 @@
     /// <summary>
     /// Class to test integration with mtoa upload file.
     /// </summary>
-    public class MtoaFileServiceTest
+    public class MtoaFileServiceTests
     {
         private readonly int serviceRequestId = 13844; //13844 is for Dev. For Kanga use  15703
         private readonly byte[] defaultFileBytes = { 1, 2, 3, 4, 0xBA, 0xDF, 0x00, 0x0D };
         private readonly MtoaFileService mtoaFileService;
 
-        public MtoaFileServiceTest()
+        public MtoaFileServiceTests()
         {
             var mockConfiguration = Mock.Of<IConfiguration>(x => x.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"] == "https://kv-seafarer-dev.vault.azure.net/");
             var azureKeyVaultService = new AzureKeyVaultService(mockConfiguration);
