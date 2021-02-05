@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using CSF.Web.Client.Data.DTO.MTAPI;
+    using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Models;
     using CSF.Web.Client.Models.PageModels;
     using CSF.Web.Client.Services;
@@ -61,6 +62,12 @@
         protected IMtoaServices MtoaService { get; set; }
 
         /// <summary>
+        /// Gets or sets the mtoa artifact service.
+        /// </summary>
+        [Inject]
+        protected MtoaArtifactService MtoaArtifactService { get; set; }
+
+        /// <summary>
         /// Gets or sets the upload document stepper.
         /// </summary>
         [Inject]
@@ -79,6 +86,8 @@
             var mtoaEmailNotificationDto = documentSubmissionEmailBuilder.Build(this.Model);
 
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotificationDto);
+
+            this.MtoaArtifactService.PostPageModelToMtoaAsJSON(this.Model);
 
             this.NavigationManager.NavigateTo(this.ConfirmationPageLink);
         }
