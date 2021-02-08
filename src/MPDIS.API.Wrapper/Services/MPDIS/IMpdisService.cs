@@ -1,7 +1,7 @@
-﻿namespace CSF.Web.Client.Services.MPDIS
-{
-    using CSF.Web.Client.Data.DTO.MPDIS;
+﻿using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 
+namespace MPDIS.API.Wrapper.Services.MPDIS
+{
     /// <summary>
     /// Defines the interface for the MPDIS service.
     /// </summary>
@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="cdn">The applicant's cdn.</param>
         /// <returns>The applicant's information.</returns>
-        ApplicantInformationDto GetApplicantByCdn(string cdn);
+        ApplicantInformation GetApplicantByCdn(string cdn);
     }
 }

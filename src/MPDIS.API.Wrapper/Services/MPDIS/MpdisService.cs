@@ -1,12 +1,12 @@
-﻿namespace CSF.Web.Client.Services.MPDIS
-{
-    using System;
-    using System.Net.Http;
-    using CSF.Web.Client.Data.DTO.MPDIS;
-    using CSF.Web.Client.Utilities;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Net.Http;
+using CSF.Common.Library;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
+namespace MPDIS.API.Wrapper.Services.MPDIS
+{
     /// <summary>
     /// The Mpdis service.
     /// </summary>
@@ -30,12 +30,12 @@
         }
 
         /// <inheritdoc/>
-        public ApplicantInformationDto GetApplicantByCdn(string cdn)
+        public ApplicantInformation GetApplicantByCdn(string cdn)
         {
             var serviceRequestPath = string.Format("applicants/cdn/{0}", cdn);
             try
             {
-                return this.restClient.GetAsync<ApplicantInformationDto>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
+                return this.restClient.GetAsync<ApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
             }
             catch (HttpRequestException httpRequestException)
             {
@@ -48,8 +48,9 @@
                 // We want to retry once
                 try
                 {
-                    return this.restClient.GetAsync<ApplicantInformationDto>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
-                } catch(Exception exception)
+                    return this.restClient.GetAsync<ApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
+                }
+                catch (Exception exception)
                 {
                     this.logger.LogError(exception.Message, exception);
                     throw;

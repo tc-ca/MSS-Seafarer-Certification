@@ -10,8 +10,8 @@
 
     public class MpdisServiceTests
     {
-        private IMpdisService mpdisService;
-        private IRestClient restClient;
+        private readonly IMpdisService mpdisService;
+        private readonly IRestClient restClient;
 
         public MpdisServiceTests()
         {
