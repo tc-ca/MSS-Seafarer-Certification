@@ -48,5 +48,20 @@ namespace CSF.Web.Client.Data.DTO
         /// Gets or sets submission.
         /// </summary>
         public string SubmissionProgress { get; set; }
+
+        /// <summary>
+        /// Gets or sets submitted date.
+        /// </summary>
+        public DateTime SubmittedDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets person assogned to.
+        /// </summary>
+        public string PersonAssignedTo { get; set; }
+
+        /// <summary>
+        /// Gets or sets note.
+        /// </summary>
+        public string Note { get; set; }
     }
 }

@@ -36,6 +36,10 @@ namespace CSF.Web.Client.Data.Services
 
         private SeafarersArtifactDTO GetArtifactDTOfromPageModel(UploadDocumentPageModel model)
         {
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+
+            DateTime userLocal = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, cstZone);
+
 
             SeafarersArtifactDTO dto = new SeafarersArtifactDTO
             {
@@ -45,7 +49,8 @@ namespace CSF.Web.Client.Data.Services
                 EmailAddress = model.EmailAddress,
                 PhoneNumber = model.PhoneNumber,
                 SubmissionType = model.SubmissionType.ToString(),
-                UploadedFilesInfo = new List<MtoaFileInfo>()
+                UploadedFilesInfo = new List<MtoaFileInfo>(),
+                SubmittedDate = userLocal
             };
 
             return dto;
@@ -60,7 +65,7 @@ namespace CSF.Web.Client.Data.Services
             }
 
             int serviceRequestId = int.Parse(this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"]);
-            
+
             int userId = int.Parse(this.configuration.GetSection("MtoaServiceSettings")["UserId"]);
 
             var dto = GetArtifactDTOfromPageModel(model);
@@ -69,7 +74,7 @@ namespace CSF.Web.Client.Data.Services
             foreach (var x in model.UploadedFiles)
             {
                 //var uploadedFile = _mtoaFileService.UploadFile(serviceRequestId, x.MtoaFileAttachment).GetAwaiter().GetResult();
-                
+
                 // Temporary solution
                 Random random = new Random();
 
