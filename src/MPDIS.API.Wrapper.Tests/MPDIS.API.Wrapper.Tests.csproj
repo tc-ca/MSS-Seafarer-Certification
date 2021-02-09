@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.test.json" />
+    <None Remove="Mpdis\applicant.test.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.test.json">
+    <Content Include="Mpdis\applicant.test.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CSF.API\CSF.API\CSF.API.csproj" />
+    <ProjectReference Include="..\MPDIS.API.Wrapper\MPDIS.API.Wrapper.csproj" />
   </ItemGroup>
 
 </Project>

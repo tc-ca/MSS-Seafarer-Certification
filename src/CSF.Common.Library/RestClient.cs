@@ -1,11 +1,11 @@
-﻿namespace CSF.Web.Client.Utilities
+﻿namespace CSF.Common.Library
 {
     using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
-    using CSF.Web.Client.Data.Services;
+    using CSF.Common.Library.Azure;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
 
@@ -28,18 +28,10 @@
         /// <param name="configuration">Application configuration.</param>
         /// <param name="serviceLocator">Service locator.</param>
         /// <param name="azureKeyVaultService">Azure Key Vault instance for the application.</param>
-        public RestClient(HttpClient httpClient, IConfiguration configuration, IServiceLocator serviceLocator, IKeyVaultService azureKeyVaultService)
+        public RestClient(HttpClient httpClient, IConfiguration configuration, IServiceLocator serviceLocator)
         {
             this.serviceLocator = serviceLocator;
             this.httpClient = httpClient;
-
-            if (configuration != null && azureKeyVaultService != null)
-            {
-                var mtoaApiKey = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaApiKey"]);
-                var mtoaJwtToken = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaJwtToken"]);
-                this.httpClient.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", mtoaJwtToken);
-                this.httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-key", mtoaApiKey);
-            }
         }
 
         /// <summary>
