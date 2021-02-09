@@ -1,10 +1,10 @@
-﻿namespace CSF.Web.Client.Tests.Integration
+﻿namespace MPDIS.API.Wrapper.Tests
 {
-    using CSF.Web.Client.Services.MPDIS;
-    using CSF.Web.Client.Utilities;
+    using CSF.Common.Library;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Moq;
+    using MPDIS.API.Wrapper.Services.MPDIS;
     using System.Net.Http;
     using Xunit;
 
@@ -46,7 +46,7 @@
         private IRestClient BuildRestClient(IConfiguration configuration)
         {
             var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.Mpdis) == new System.Uri("https://mpdis-sddpm-dev.tc.gc.ca/mpdis-sddpm/auth/rest"));
-            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator, null);
+            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator);
         }
     }
 }

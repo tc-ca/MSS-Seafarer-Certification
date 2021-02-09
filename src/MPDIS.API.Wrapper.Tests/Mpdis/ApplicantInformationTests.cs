@@ -1,6 +1,6 @@
-﻿namespace CSF.Web.Client.Tests.Unit.Mpdis
+﻿namespace MPDIS.API.Wrapper.Tests.Mpdis
 {
-    using CSF.Web.Client.Data.DTO.MPDIS;
+    using MPDIS.API.Wrapper.Services.MPDIS.Entities;
     using Newtonsoft.Json;
     using System.IO;
     using Xunit;
@@ -14,11 +14,11 @@
             var expectedApplicantInformationDto = this.ExpectedApplicantInformation();
 
             // Act
-            var applicantInformation = JsonConvert.DeserializeObject<ApplicantInformationDto>(jsonString);
+            var applicantInformation = JsonConvert.DeserializeObject<ApplicantInformation>(jsonString);
 
             // Assert
             var properties = applicantInformation.GetType().GetProperties();
-            foreach(var property in properties)
+            foreach (var property in properties)
             {
                 var actual = property.GetValue(applicantInformation);
                 var expected = property.GetValue(expectedApplicantInformationDto);
@@ -26,9 +26,9 @@
             }
         }
 
-        private ApplicantInformationDto ExpectedApplicantInformation()
+        private ApplicantInformation ExpectedApplicantInformation()
         {
-            return new ApplicantInformationDto()
+            return new ApplicantInformation()
             {
                 FromAces = false,
                 Id = 627,

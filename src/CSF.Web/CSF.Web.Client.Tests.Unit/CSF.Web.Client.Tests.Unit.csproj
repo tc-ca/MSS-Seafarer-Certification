@@ -8,14 +8,10 @@
 
   <ItemGroup>
     <None Remove="appsettings.test.json" />
-    <None Remove="Mpdis\applicant.test.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.test.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mpdis\applicant.test.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
