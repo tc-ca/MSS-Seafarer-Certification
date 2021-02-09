@@ -44,9 +44,10 @@ namespace MPDIS.API.Wrapper
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MPDIS.API.Wrapper v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "MPDIS.API.Wrapper v1"));
 
             app.UseHttpsRedirection();
 
