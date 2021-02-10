@@ -64,7 +64,7 @@ namespace CSF.Web.Client.Data.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            int serviceRequestId = int.Parse(this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"]);
+            int serviceRequestId = model.MtoaServiceRequestId;
 
             int userId = int.Parse(this.configuration.GetSection("MtoaServiceSettings")["UserId"]);
 
