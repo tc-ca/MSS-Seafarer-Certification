@@ -1,4 +1,4 @@
-﻿namespace CSF.Web.Client.Utilities
+﻿namespace CSF.Common.Library
 {
     /// <summary>
     /// Enumerator for all web services in the solution.
