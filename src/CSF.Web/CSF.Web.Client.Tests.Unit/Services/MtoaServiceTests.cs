@@ -64,6 +64,19 @@
         }
 
         [Fact]
+        public void PostSeafarersArtifactDtoAsync_Suceeds()
+        {
+            // Arrange
+            mockRestClient.Setup(client => client.PostAsync<SeafarersArtifactDto>(ServiceLocatorDomain.Mtoa, "mockArtifactPath", It.IsAny<SeafarersArtifactDto>())).Verifiable();
+
+            // Act
+            this.mtoaServices.PostSeafarerArtifactInformationAsync(new SeafarersArtifactDto());
+
+            // Assert
+            this.mockRestClient.Verify(prop => prop.PostAsync<SeafarersArtifactDto>(ServiceLocatorDomain.Mtoa, "mockArtifactPath", It.IsAny<SeafarersArtifactDto>()), Times.Once);
+        }
+
+        [Fact]
         public void PostSendEmailNotificationAsync_ThrowsException()
         {
             // Arrange

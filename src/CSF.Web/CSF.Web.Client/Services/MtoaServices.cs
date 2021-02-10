@@ -107,7 +107,7 @@
 
         private string GetArtifactPath(int serviceRequestId)
         {
-            string artifactPath = this.configuration.GetSection("MtoaServiceSettings")["ArifactPath"];
+            string artifactPath = this.configuration.GetSection("MtoaServiceSettings")["ArtifactPath"];
             string userId = this.configuration.GetSection("MtoaServiceSettings")["UserId"];
 
             return string.Format("{0}?artifactType={1}&version={2}&serviceRequestId={3}&userId={4}", artifactPath, ArtifactType.JsonDocument.ToString(), 1, serviceRequestId, userId);
