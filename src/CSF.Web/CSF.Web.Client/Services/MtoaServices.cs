@@ -92,7 +92,7 @@
         /// <inheritdoc/>
         public Task PostSeafarerArtifactInformationAsync(SeafarersArtifactDto seafarerArtifactInformation)
         {
-            string artifactPath = this.GetArtifactPath();
+            string artifactPath = this.GetArtifactPath(seafarerArtifactInformation.ServiceRequestId);
 
             try
             {
@@ -105,13 +105,12 @@
             }
         }
 
-        private string GetArtifactPath()
+        private string GetArtifactPath(int serviceRequestId)
         {
             string artifactPath = this.configuration.GetSection("MtoaServiceSettings")["ArifactPath"];
             string userId = this.configuration.GetSection("MtoaServiceSettings")["UserId"];
-            string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceRequestId"];
 
-            return string.Format("{0}?artifactType={1}&version={2}&serviceRequestId={3}&userId={4}", artifactPath, ArtifactType.JsonDocument.ToString(), 1, serviceId, userId);
+            return string.Format("{0}?artifactType={1}&version={2}&serviceRequestId={3}&userId={4}", artifactPath, ArtifactType.JsonDocument.ToString(), 1, serviceRequestId, userId);
         }
 
         private string GetServiceRequestsPath()

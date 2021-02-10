@@ -29,6 +29,7 @@
                 throw new ArgumentNullException(nameof(uploadDoucmentPageModel));
             }
 
+            this.ServiceRequestId = uploadDoucmentPageModel.MtoaServiceRequestId;
             this.CdnNumber = uploadDoucmentPageModel.CdnNumber;
             this.CertificateType = uploadDoucmentPageModel.CertificateType;
             this.ConfirmationNumber = uploadDoucmentPageModel.ConfirmationNumber;
@@ -46,6 +47,11 @@
                 });
             }
         }
+
+        /// <summary>
+        /// Gets or sets the service request id.
+        /// </summary>
+        public int ServiceRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets CDN number.
