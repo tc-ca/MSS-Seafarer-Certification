@@ -1,8 +1,6 @@
 ﻿namespace CSF.Web.Client.PageModels
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using CSF.Web.Client.Data.DTO.MTAPI;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Models;
@@ -62,12 +60,6 @@
         protected IMtoaServices MtoaService { get; set; }
 
         /// <summary>
-        /// Gets or sets the mtoa artifact service.
-        /// </summary>
-        [Inject]
-        protected MtoaArtifactService MtoaArtifactService { get; set; }
-
-        /// <summary>
         /// Gets or sets the upload document stepper.
         /// </summary>
         [Inject]
@@ -84,10 +76,10 @@
 
             var documentSubmissionEmailBuilder = new SeafarersDocumentSubmissionEmailBuilder(this.CommonPageLocalizer, this.Configuration, this.LanguageCode);
             var mtoaEmailNotificationDto = documentSubmissionEmailBuilder.Build(this.Model);
+            var seafarerArtifact = new SeafarersArtifactDto(this.Model);
 
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotificationDto);
-
-            this.MtoaArtifactService.PostPageModelToMtoaAsJSON(this.Model);
+            this.MtoaService.PostSeafarerArtifactInformationAsync(seafarerArtifact);
 
             this.NavigationManager.NavigateTo(this.ConfirmationPageLink);
         }

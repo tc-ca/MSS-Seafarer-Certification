@@ -118,7 +118,6 @@ namespace CSF.Web.Client
             services.AddTransient<IValidator<UploadDocumentPageModel>, UploadDocumentValidator>();
 
             services.AddTransient<IMtoaServices, MtoaServices>();
-            services.AddTransient<MtoaArtifactService>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>
             {
