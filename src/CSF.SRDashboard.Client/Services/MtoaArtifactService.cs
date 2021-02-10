@@ -76,9 +76,7 @@ namespace CSF.SRDashboard.Client.Services
         public SeafarersArtifactDTO GetArtifactByServiceRequestId(int serviceRequestId)
         {
             SeafarersArtifactDTO artifactInfo = null;
-            //string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
             string pathTemplate = this.configuration.GetSection("MtoaServiceSettings")["GetArtifactByServiceRequestIdPath"];
-
             string path = string.Format(pathTemplate, serviceRequestId);
 
             try
@@ -96,7 +94,6 @@ namespace CSF.SRDashboard.Client.Services
         {
             DashboardRow row = null;
             var serviceRequestId = serviceRequest.Id;
-
             var artifact = this.GetArtifactByServiceRequestId(serviceRequestId);
 
             if (artifact != null)
