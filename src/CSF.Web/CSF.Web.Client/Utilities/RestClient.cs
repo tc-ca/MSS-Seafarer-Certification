@@ -58,7 +58,7 @@
 
             // Here is actual call to target service
             this.ResetRestClientHeaders();
-            response = await this.httpClient.GetAsync(uri).ConfigureAwait(true);
+            response = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {

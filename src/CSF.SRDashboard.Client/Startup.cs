@@ -1,3 +1,6 @@
+using CSF.SRDashboard.Client.Services;
+using CSF.Web.Client.Data.Services;
+using CSF.Web.Client.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client
@@ -27,6 +31,11 @@ namespace CSF.SRDashboard.Client
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSingleton<HttpClient>();
+            services.AddSingleton<IServiceLocator, ServiceLocator>();
+            services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
+            services.AddSingleton<IRestClient, RestClient>();
+            services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
         }
 
