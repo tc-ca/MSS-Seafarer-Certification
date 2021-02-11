@@ -49,14 +49,13 @@ namespace CSF.SRDashboard.Client.Services
             return numberOfRequest;
         }
 
-        public List<ServiceRequest> GetAllRequestsForSeafarers(int numberOfRequests)
+        public List<ServiceRequest> GetAllRequestsForSeafarers(int pageSize)
         {
             List<ServiceRequest> allServiceRequests = null;
 
             bool excludeMetadata = true;
             bool excludeServiceRequests = false;
             int page = 1;
-            int pageSize = numberOfRequests;
             string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
             string pathTemplate= this.configuration.GetSection("MtoaServiceSettings")["GetServiceRequestsPath"];
             string path = string.Format(pathTemplate,serviceId, page, pageSize, excludeMetadata, excludeServiceRequests);
