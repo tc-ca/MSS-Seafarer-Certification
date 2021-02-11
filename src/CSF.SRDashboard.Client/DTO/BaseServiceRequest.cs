@@ -13,32 +13,32 @@ namespace CSF.SRDashboard.Client.DTO
         {
         }
 
-        [JsonProperty(Order = -17)]
+        [JsonProperty]
         public int Id { get; set; }
-        [JsonProperty(Order = -16)]
+        [JsonProperty]
         public string Guid { get; set; }
-        [JsonProperty(Order = -15)]
+        [JsonProperty]
         public int UserId { get; set; }
-        [JsonProperty(Order = -14)]
+        [JsonProperty]
         public int ServiceId { get; set; }
-        [JsonProperty(Order = -13)]
+        [JsonProperty]
         public int? OrganizationId { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty(Order = -12)]
+        [JsonProperty]
         public ServiceRequestStatus RequestStatus { get; set; }
-        [JsonProperty(Order = -11)]
+        [JsonProperty]
         public string EnglishDisplayName { get; set; }
-        [JsonProperty(Order = -10)]
+        [JsonProperty]
         public string FrenchDisplayName { get; set; }
-        [JsonProperty(Order = -9)]
+        [JsonProperty]
         public int? MetadataStructureId { get; set; }
-        [JsonProperty(Order = -8)]
+        [JsonProperty]
         public int? ServiceAttributeId { get; set; }
-        [JsonProperty(Order = -7)]
+        [JsonProperty]
         public string Comment { get; set; }
-        [JsonProperty(Order = -6)]
+        [JsonProperty]
         public int? RequesterId { get; set; }
-        [JsonProperty(Order = -5)]
+        [JsonProperty]
         public int? MailCoordinateId { get; set; }
     }
 }
