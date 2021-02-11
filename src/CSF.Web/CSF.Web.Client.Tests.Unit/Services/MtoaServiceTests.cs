@@ -67,13 +67,13 @@
         public void PostSeafarersArtifactDtoAsync_Suceeds()
         {
             // Arrange
-            mockRestClient.Setup(client => client.PostAsync<SeafarersArtifactDto>(ServiceLocatorDomain.Mtoa, "mockArtifactPath", It.IsAny<SeafarersArtifactDto>())).Verifiable();
+            mockRestClient.Setup(client => client.PostAsync<object>(ServiceLocatorDomain.Mtoa, It.IsAny<string>(), It.IsAny<SeafarersArtifactDto>())).Verifiable();
 
             // Act
             this.mtoaServices.PostSeafarerArtifactInformationAsync(new SeafarersArtifactDto());
 
             // Assert
-            this.mockRestClient.Verify(prop => prop.PostAsync<SeafarersArtifactDto>(ServiceLocatorDomain.Mtoa, "mockArtifactPath", It.IsAny<SeafarersArtifactDto>()), Times.Once);
+            this.mockRestClient.Verify(prop => prop.PostAsync<object>(ServiceLocatorDomain.Mtoa, It.IsAny<string>(), It.IsAny<SeafarersArtifactDto>()), Times.Once);
         }
 
         [Fact]
@@ -120,6 +120,7 @@
             mockConfig.Setup(config => config.GetSection("MtoaServiceSettings")["EmailNotificationTemplatePath"]).Returns("mockEmailPath");
             mockConfig.Setup(config => config.GetSection("MtoaServiceSettings")["EmailSubmissionTemplateName"]).Returns("mockEmailTemplate");
             mockConfig.Setup(config => config.GetSection("MtoaServiceSettings")["SeafarerCertificationServiceName"]).Returns("mockCertificationServiceName");
+            mockConfig.Setup(config => config.GetSection("MtoaServiceSettings")["ArtifactPath"]).Returns("ArtifactPath");
 
             mockConfig.Setup(config => config.GetSection("MtoaServiceSettings")["UserId"]).Returns("0");
             mockConfig.Setup(config => config.GetSection("MtoaServiceSettings")["ServiceId"]).Returns("1337");
