@@ -87,6 +87,7 @@ namespace CSF.SRDashboard.Client.Services
             {
                 Console.WriteLine(ex.Message);
             }
+
             return artifactInfo;
         }
 
@@ -100,7 +101,6 @@ namespace CSF.SRDashboard.Client.Services
             {
                 row = new DashboardRow();
                 row.ServiceRequestNumber = serviceRequestId;
-                // names will be assigned later.
                 row.RequestType = artifact.CertificateType;
                 row.CDN = artifact.CdnNumber;
                 row.RequestType = artifact.CertificateType;
