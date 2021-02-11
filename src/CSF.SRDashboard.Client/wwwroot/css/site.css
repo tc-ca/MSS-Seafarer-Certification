@@ -60,12 +60,23 @@ a, .btn-link {
 .top-row[b-ussj044e2c] {
     background: #4A5568;
 }
-a.navbar-brand {
-    font-family: 'Nunito Sans' sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 900;
+
+.top-row section.header-bar {
+    display: flex;
+    align-items: center;
 }
+
+    .top-row section.header-bar button.notification-button {
+        margin-left:40px;
+        margin-right:30px;
+    }
+
+    a.navbar-brand {
+        font-family: 'Nunito Sans' sans-serif;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 900;
+    }
 .sidebar[b-cht5mpaqgp] {
     background: #F7F9FC;
 }
@@ -86,9 +97,12 @@ ul.nav[b-ussj044e2c] {
 /*
     CUSTOM
 */
-        .nav-item[b-ussj044e2c] a i {
+.nav-item[b-ussj044e2c] a i {
     margin-right: 24px;
 }
 div.page-layout {
     display: flex;
+}
+section.csf-page-group {
+    padding-right:140px;
 }

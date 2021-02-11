@@ -20,12 +20,17 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     font-weight: 700;
     font-size: 1.75rem; 
-    margin:30px 0 40px 0;
+    margin:30px 0 50px 0;
 }
 
 /**
     CSF-Button
 */
+button.csf-component,
+input.csf-toggle-button {
+    cursor: pointer;
+}
+
 button.csf-component {
     font-weight: 600;
     line-height: 19px;
@@ -33,11 +38,36 @@ button.csf-component {
     background-color: #F7F9FC;
     border: 1px solid #4A5568;
     border-radius: 3px;
+    padding: 6px;
 }
 
-button.csf-component i {
-    margin-right: 5px;
+    button.csf-component i {
+        margin-right: 5px;
+    }
+
+/** 
+    CSF-Toggle-Button 
+*/
+section.csf-toggle-button-container {
+    color: #1B50B1;
+    display: inline-flex;
+    border: 1px solid #CBD5E0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: #1B50B1;
 }
+input[type="radio"].csf-toggle-button {
+    display:none;
+}
+    input[type="radio"].csf-toggle-button + label {
+        background: #FFFFFF;
+        padding: 5px 10px;
+        font-weight: 700;
+        margin: 0;
+    }
+    input[type="radio"].csf-toggle-button:checked + label {
+        background: #E2E8F0;
+    }
 
 /**
     CSF-Flex-Table

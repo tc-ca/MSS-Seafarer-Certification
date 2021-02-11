@@ -10,5 +10,10 @@
         /// MyTC Account
         /// </summary>
         Mtoa,
+
+        /// <summary>
+        /// MPDIS
+        /// </summary>
+        Mpdis,
     }
 }

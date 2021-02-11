@@ -31,12 +31,12 @@
         public RestClient(HttpClient httpClient, IConfiguration configuration, IServiceLocator serviceLocator, IKeyVaultService azureKeyVaultService)
         {
             this.serviceLocator = serviceLocator;
+            this.httpClient = httpClient;
 
             if (configuration != null && azureKeyVaultService != null)
             {
                 var mtoaApiKey = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaApiKey"]);
                 var mtoaJwtToken = azureKeyVaultService.GetSecretByName(configuration.GetSection("AzureKeyVaultSettings:SecretNames")["MtoaJwtToken"]);
-                this.httpClient = httpClient;
                 this.httpClient.DefaultRequestHeaders.TryAddWithoutValidation("app-jwt", mtoaJwtToken);
                 this.httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-key", mtoaApiKey);
             }

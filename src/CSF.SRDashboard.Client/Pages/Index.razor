@@ -20,14 +20,24 @@
     </CSFTabPage>
 </CSFTabControl>
 
-<section class="csf-flex-button-group">
-    <CSFButton Text="Search" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.SEARCH" />
-    <CSFButton Text="Create new request" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.EDIT" />
-    <CSFButton Text="Sort" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.ORDER_DESC" />
-    <CSFButton Text="Filter" CSFFontAwesomeIconType="@CSFFontAwesomeIconType.FILTER" />
-</section>
+<section class="csf-page-group">
+    <section class="csf-flex-button-group">
+        <CSFButton>
+            <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.SEARCH" /> <span>Search</span>
+        </CSFButton>
+        <CSFButton>
+            <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" /> <span>Create New Request</span>
+        </CSFButton>
+        <CSFButton>
+            <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.ORDER_DESC" /> <span>Sort</span>
+        </CSFButton>
+        <CSFButton>
+            <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.FILTER" /> <span>Filter</span>
+        </CSFButton> 
+    </section>
 
-<CSFFlexTable Rows="@this.Rows" />
+    <CSFFlexTable Rows="@this.Rows" />
+</section>
 @code {
     public List<Row> Rows { get; set; }
 
@@ -55,7 +65,7 @@
         for (var i = 0; i < 4; i++)
         {
             var columns = new List<Column>();
-            columns.Add(new Column() { Text = "View", CssClass = "font-color-light-blue" });
+            columns.Add(new Column() { Text = "View", CssClass = "font-color-light-blue", Icon = "fa fa-eye" });
             columns.Add(new Column() { Text = "1234567" });
             columns.Add(new Column() { Text = "John Doe" });
             columns.Add(new Column() { Text = "123456F" });

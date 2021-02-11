@@ -1,7 +1,10 @@
-﻿<button class="csf-component">
-    @if(this.CSFFontAwesomeIconType.HasValue)
+﻿<button class="csf-component @this.CssClass">
+    @if (this.ChildContent != null)
     {
-        <CSFFontAwesomeIcon CSFFontAwesomeIconType="this.CSFFontAwesomeIconType.Value" />
+        @this.ChildContent
     }
-    <span>@Text</span>
+    else
+    {
+        <span>@this.Text</span>
+    }
 </button>

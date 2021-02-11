@@ -27,6 +27,7 @@ namespace CSF.SRDashboard.Client
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
