@@ -7,10 +7,6 @@ namespace CSF.SRDashboard.Client.DTO
 {
     public class ServiceRequestCollection
     {
-        public ServiceRequestCollection()
-        {
-        }
-
         public ICollection<ServiceRequest> ServiceRequests { get; set; }
         public int Count { get; set; }
         public int Page { get; set; }
