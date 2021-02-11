@@ -94,9 +94,17 @@
         {
             string artifactPath = this.GetArtifactPath(seafarerArtifactInformation.ServiceRequestId);
 
+            var restClientRequestOptions = new RestClientRequestOptions()
+            {
+                ServiceName = ServiceLocatorDomain.Mtoa,
+                Path = artifactPath,
+                DataObject = seafarerArtifactInformation,
+                ParameterContentType = "application/octet-stream",
+            };
+
             try
             {
-                return this.restClient.PostAsync<object>(ServiceLocatorDomain.Mtoa, artifactPath, seafarerArtifactInformation);
+                return this.restClient.PostAsync<object>(restClientRequestOptions);
             }
             catch (Exception e)
             {

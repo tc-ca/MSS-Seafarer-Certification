@@ -30,6 +30,15 @@
             where TReturnMessage : class, new();
 
         /// <summary>
+        /// Makes a POST call to the specified API.
+        /// </summary>
+        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
+        /// <param name="restClientRequestOptions">the rest client request options.</param>
+        /// <returns>Return object as specified by the API.</returns>
+        Task<TReturnMessage> PostAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions) 
+            where TReturnMessage : class, new();
+
+        /// <summary>
         /// Makes a PUT call to the specified API.
         /// </summary>
         /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>

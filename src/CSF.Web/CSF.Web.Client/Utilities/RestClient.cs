@@ -106,6 +106,44 @@
         }
 
         /// <summary>
+        /// Makes a POST call to the specified API.
+        /// </summary>
+        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
+        /// <param name="restClientRequestOptions">the rest client request options.</param>
+        /// <returns>Return object as specified by the API.</returns>
+        public async Task<TReturnMessage> PostAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions)
+            where TReturnMessage : class, new()
+        {
+            if (restClientRequestOptions == null)
+            {
+                throw new ArgumentNullException(nameof(restClientRequestOptions));
+            }
+
+            var serviceName = restClientRequestOptions.ServiceName;
+            var path = restClientRequestOptions.Path;
+            var dataObject = restClientRequestOptions.DataObject;
+
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+
+            var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
+
+            using (StringContent stringContent = new StringContent(content, Encoding.UTF8, restClientRequestOptions.ParameterContentType))
+            {
+                this.ResetRestClientHeaders();
+                var response = await this.httpClient.PostAsync(uri, stringContent).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
+                }
+
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return JsonConvert.DeserializeObject<TReturnMessage>(result);
+            }
+        }
+
+        /// <summary>
         /// Makes a PUT call to the specified API.
         /// </summary>
         /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
