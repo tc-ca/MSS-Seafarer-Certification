@@ -30,35 +30,13 @@ namespace CSF.SRDashboard.Client.Services
             this.logger = logger;
         }
 
-        public int GetNumberOfRequestForSeafarers()
-        {
-            int numberOfRequest = -1;
-
-            bool excludeMetadata = true;
-            bool excludeServiceRequests = true;
-            int page = 1;
-            int pageSize = 1;
-
-            string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
-            string pathTemplate = this.configuration.GetSection("MtoaServiceSettings")["GetServiceRequestsPath"];
-            string path = string.Format(pathTemplate, serviceId, page, pageSize, excludeMetadata, excludeServiceRequests);
-
-            var serviceRequestInfo = restClient.GetAsync<ServiceRequestCollection>(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
-            numberOfRequest = serviceRequestInfo.Count;
-
-            return numberOfRequest;
-        }
-
-        public List<ServiceRequest> GetAllRequestsForSeafarers(int pageSize)
+        public List<ServiceRequest> GetAllRequestsForSeafarers( )
         {
             List<ServiceRequest> allServiceRequests = null;
 
-            bool excludeMetadata = true;
-            bool excludeServiceRequests = false;
-            int page = 1;
             string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
-            string pathTemplate= this.configuration.GetSection("MtoaServiceSettings")["GetServiceRequestsPath"];
-            string path = string.Format(pathTemplate,serviceId, page, pageSize, excludeMetadata, excludeServiceRequests);
+            string pathTemplate = this.configuration.GetSection("MtoaServiceSettings")["GetServiceRequestsPath"];
+            string path = string.Format(pathTemplate, serviceId );
             try
             {
                 var serviceRequestCollection = restClient.GetAsync<ServiceRequestCollection>(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
@@ -71,7 +49,6 @@ namespace CSF.SRDashboard.Client.Services
 
             return allServiceRequests;
         }
-
         public SeafarersArtifactDTO GetArtifactByServiceRequestId(int serviceRequestId)
         {
             SeafarersArtifactDTO artifactInfo = null;
@@ -89,8 +66,7 @@ namespace CSF.SRDashboard.Client.Services
 
             return artifactInfo;
         }
-
-        public DashboardRow GetDashboarRowFromServiceRequest(ServiceRequest serviceRequest)
+        public DashboardRow GetDashboardRowFromServiceRequest(ServiceRequest serviceRequest)
         {
             DashboardRow row = null;
             var serviceRequestId = serviceRequest.Id;
@@ -109,38 +85,15 @@ namespace CSF.SRDashboard.Client.Services
 
             return row;
         }
-
-
-        public SeafarersArtifactDTO GetArtifactByArtifactId(int artifactId)
-        {
-            SeafarersArtifactDTO artifact = null;
-            string pathTemplate = this.configuration.GetSection("MtoaServiceSettings")["GetArtifactByArtifactIdPath"];
-
-            string path = string.Format(pathTemplate, artifactId.ToString());
-
-            try
-            {
-                artifact = restClient.GetAsync<SeafarersArtifactDTO>(ServiceLocatorDomain.Mtoa, path).GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return artifact;
-        }
-
         public List<DashboardRow> GetDashboardRowsInParallel()
         {
             List<DashboardRow> dashbaordRows = new List<DashboardRow>();
-            var numberOfTotalRequests = GetNumberOfRequestForSeafarers();
-            var allRequests = this.GetAllRequestsForSeafarers(numberOfTotalRequests);
-
+            var allRequests = this.GetAllRequestsForSeafarers();
             List<Task<DashboardRow>> multipleTasks = new List<Task<DashboardRow>>();
 
             foreach (var request in allRequests)
             {
-                multipleTasks.Add(Task.Run(() => this.GetDashboarRowFromServiceRequest(request)));
+                multipleTasks.Add(Task.Run(() => this.GetDashboardRowFromServiceRequest(request)));
 
                 if (multipleTasks.Count > 10)
                 {

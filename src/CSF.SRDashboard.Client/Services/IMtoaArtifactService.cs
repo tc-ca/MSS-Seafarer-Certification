@@ -9,12 +9,9 @@ namespace CSF.SRDashboard.Client.Services
 {
     public interface IMtoaArtifactService
     {
-        public int GetNumberOfRequestForSeafarers();
-        public List<ServiceRequest> GetAllRequestsForSeafarers(int numberOfRequest);
+        public List<ServiceRequest> GetAllRequestsForSeafarers();
         public SeafarersArtifactDTO GetArtifactByServiceRequestId(int serviceRequestId);
-        public DashboardRow GetDashboarRowFromServiceRequest(ServiceRequest serviceRequest);
-        public SeafarersArtifactDTO GetArtifactByArtifactId(int artifactId);
+        public DashboardRow GetDashboardRowFromServiceRequest(ServiceRequest serviceRequest);
         public List<DashboardRow> GetDashboardRowsInParallel();
-
     }
 }

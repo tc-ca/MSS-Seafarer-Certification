@@ -10,7 +10,7 @@ namespace CSF.SRDashboard.Client.Utilities
     public class Utility
     {
 
-        public List<Row> FillDashboarRows(IMtoaArtifactService artifactService)
+        public List<Row> FillDashboardRows(IMtoaArtifactService artifactService)
         {
             var dataRows = artifactService.GetDashboardRowsInParallel();
 
