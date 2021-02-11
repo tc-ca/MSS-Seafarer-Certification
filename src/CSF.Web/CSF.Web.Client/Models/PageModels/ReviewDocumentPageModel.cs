@@ -1,9 +1,8 @@
 ﻿namespace CSF.Web.Client.PageModels
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using CSF.Web.Client.Data.DTO.MTAPI;
+    using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Models;
     using CSF.Web.Client.Models.PageModels;
     using CSF.Web.Client.Services;
@@ -77,8 +76,10 @@
 
             var documentSubmissionEmailBuilder = new SeafarersDocumentSubmissionEmailBuilder(this.CommonPageLocalizer, this.Configuration, this.LanguageCode);
             var mtoaEmailNotificationDto = documentSubmissionEmailBuilder.Build(this.Model);
+            var seafarerArtifact = new SeafarersArtifactDto(this.Model);
 
             this.MtoaService.PostSendEmailNotificationAsync(mtoaEmailNotificationDto);
+            this.MtoaService.PostSeafarerArtifactInformationAsync(seafarerArtifact);
 
             this.NavigationManager.NavigateTo(this.ConfirmationPageLink);
         }
