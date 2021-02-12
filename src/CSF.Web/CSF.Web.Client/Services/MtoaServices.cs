@@ -3,6 +3,8 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using CSF.Web.Client.Data;
+    using CSF.Web.Client.Data.DTO;
     using CSF.Web.Client.Data.DTO.MTAPI;
     using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;
@@ -85,6 +87,38 @@
         {
             // string fileAttachmentsPath = this.configuration.GetSection("MtoaServiceSettings")["FileAttachmentsPath"];
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public Task PostSeafarerArtifactInformationAsync(SeafarersArtifactDto seafarerArtifactInformation)
+        {
+            string artifactPath = this.GetArtifactPath(seafarerArtifactInformation.ServiceRequestId);
+
+            var restClientRequestOptions = new RestClientRequestOptions()
+            {
+                ServiceName = ServiceLocatorDomain.Mtoa,
+                Path = artifactPath,
+                DataObject = seafarerArtifactInformation,
+                ParameterContentType = "application/octet-stream",
+            };
+
+            try
+            {
+                return this.restClient.PostAsync<object>(restClientRequestOptions);
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.Message, e);
+                throw;
+            }
+        }
+
+        private string GetArtifactPath(int serviceRequestId)
+        {
+            string artifactPath = this.configuration.GetSection("MtoaServiceSettings")["ArtifactPath"];
+            string userId = this.configuration.GetSection("MtoaServiceSettings")["UserId"];
+
+            return string.Format("{0}?artifactType={1}&version={2}&serviceRequestId={3}&userId={4}", artifactPath, ArtifactType.JsonDocument.ToString(), 1, serviceRequestId, userId);
         }
 
         private string GetServiceRequestsPath()
