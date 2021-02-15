@@ -60,6 +60,18 @@
       ],
       "UpstreamPathTemplate": "/catfacts",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api-mpdis_wrapper/Mpdis/Applicant/{cdn}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//wwwappsmssdev",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/applicant/{cdn}",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
 
