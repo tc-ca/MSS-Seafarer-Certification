@@ -44,9 +44,9 @@
     public List<Row> Rows { get; set; }
 
     protected override void OnInitialized()
-    {
-        Utility utility = new Utility();
-        Rows = utility.FillDashboardRows(artifactService);
+   {
+        Utility utility = new Utility(artifactService);
+        Rows = utility.FillDashboardRows();
 
         base.OnInitialized();
     }

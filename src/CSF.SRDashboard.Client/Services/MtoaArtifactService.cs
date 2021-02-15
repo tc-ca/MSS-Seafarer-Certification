@@ -33,7 +33,6 @@ namespace CSF.SRDashboard.Client.Services
         public List<ServiceRequest> GetAllRequestsForSeafarers( )
         {
             List<ServiceRequest> allServiceRequests = null;
-
             string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
             string pathTemplate = this.configuration.GetSection("MtoaServiceSettings")["GetServiceRequestsPath"];
             string path = string.Format(pathTemplate, serviceId );
@@ -66,7 +65,7 @@ namespace CSF.SRDashboard.Client.Services
 
             return artifactInfo;
         }
-        public DashboardRow GetDashboardRowFromServiceRequest(ServiceRequest serviceRequest)
+        public DashboardRow GetDashboardRowByServiceRequest(ServiceRequest serviceRequest)
         {
             DashboardRow row = null;
             var serviceRequestId = serviceRequest.Id;
@@ -93,7 +92,7 @@ namespace CSF.SRDashboard.Client.Services
 
             foreach (var request in allRequests)
             {
-                multipleTasks.Add(Task.Run(() => this.GetDashboardRowFromServiceRequest(request)));
+                multipleTasks.Add(Task.Run(() => this.GetDashboardRowByServiceRequest(request)));
 
                 if (multipleTasks.Count > 10)
                 {
@@ -131,5 +130,19 @@ namespace CSF.SRDashboard.Client.Services
             return rowsWithoutNull;
         }
 
+
+        public List<DashboardRow> GetDashboardRowsInSequence()
+        {
+            List<DashboardRow> dashbaordRows = new List<DashboardRow>();
+            var allRequests = this.GetAllRequestsForSeafarers();
+
+            foreach(var request in allRequests)
+            {
+                var row = this.GetDashboardRowByServiceRequest(request);
+                dashbaordRows.Add(row);
+            }
+
+            return dashbaordRows;
+        }
     }
 }

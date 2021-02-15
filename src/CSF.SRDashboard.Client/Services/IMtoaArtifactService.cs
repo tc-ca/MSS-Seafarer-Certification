@@ -11,7 +11,8 @@ namespace CSF.SRDashboard.Client.Services
     {
         public List<ServiceRequest> GetAllRequestsForSeafarers();
         public SeafarersArtifactDTO GetArtifactByServiceRequestId(int serviceRequestId);
-        public DashboardRow GetDashboardRowFromServiceRequest(ServiceRequest serviceRequest);
+        public DashboardRow GetDashboardRowByServiceRequest(ServiceRequest serviceRequest);
         public List<DashboardRow> GetDashboardRowsInParallel();
+        List<DashboardRow> GetDashboardRowsInSequence();
     }
 }

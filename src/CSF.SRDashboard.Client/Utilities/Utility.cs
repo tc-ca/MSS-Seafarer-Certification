@@ -9,11 +9,14 @@ namespace CSF.SRDashboard.Client.Utilities
 {
     public class Utility
     {
-
-        public List<Row> FillDashboardRows(IMtoaArtifactService artifactService)
+        IMtoaArtifactService _artifactService;
+        public Utility(IMtoaArtifactService artifactService)
         {
-            var dataRows = artifactService.GetDashboardRowsInParallel();
-
+            _artifactService = artifactService;
+        }
+        public List<Row> FillDashboardRows( )
+        {
+            var dataRows = _artifactService.GetDashboardRowsInParallel();
             var dashboardRows = new List<Row>();
 
             var headerColumns = new List<Column>();
