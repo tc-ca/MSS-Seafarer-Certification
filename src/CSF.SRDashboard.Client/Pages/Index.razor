@@ -1,4 +1,6 @@
 ﻿@page "/"
+@inject CSF.SRDashboard.Client.Services.IMtoaArtifactService artifactService
+@using Utilities
 
 <h1>Request Board</h1>
 
@@ -42,43 +44,10 @@
     public List<Row> Rows { get; set; }
 
     protected override void OnInitialized()
-    {
+   {
+        Utility utility = new Utility(artifactService);
+        Rows = utility.FillDashboardRows();
+
         base.OnInitialized();
-        this.Rows = new List<Row>();
-
-        var headerColumns = new List<Column>();
-        headerColumns.Add(new Column() { Text = "" });
-        headerColumns.Add(new Column() { Text = "Seafarer request #" });
-        headerColumns.Add(new Column() { Text = "First and last name" });
-        headerColumns.Add(new Column() { Text = "CDN" });
-        headerColumns.Add(new Column() { Text = "Request type" });
-        headerColumns.Add(new Column() { Text = "Assigned to" });
-        headerColumns.Add(new Column() { Text = "Service standard" });
-        headerColumns.Add(new Column() { Text = "Processing phase" });
-        this.Rows.Add(new Row()
-        {
-            Columns = headerColumns,
-            IsHeaderRow = true,
-            GroupId = 0
-        });
-
-        for (var i = 0; i < 4; i++)
-        {
-            var columns = new List<Column>();
-            columns.Add(new Column() { Text = "View", CssClass = "font-color-light-blue", Icon = "fa fa-eye" });
-            columns.Add(new Column() { Text = "1234567" });
-            columns.Add(new Column() { Text = "John Doe" });
-            columns.Add(new Column() { Text = "123456F" });
-            columns.Add(new Column() { Text = "First-class Engineer Motor Ship" });
-            columns.Add(new Column() { Text = "John Whick" });
-            columns.Add(new Column() { Text = "60 days remaining" });
-            columns.Add(new Column() { Text = "Initial review of submitted request" });
-            this.Rows.Add(new Row()
-            {
-                Columns = columns,
-                IsHeaderRow = false,
-                GroupId = i
-            });
-        }
     }
 }
