@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSF.Components\CSF.Components.csproj" />
+    <ProjectReference Include="..\CSF.Web\CSF.Web.Client\CSF.Web.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
