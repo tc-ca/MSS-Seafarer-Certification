@@ -23,13 +23,23 @@
       ],
       "UpstreamPathTemplate": "/guid",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api-mpdis_wrapper/Mpdis/Applicant/{cdn}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//wwwappsmssdev",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/applicant/{cdn}",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
 
   "GlobalConfiguration": {
     "BaseUrl": "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/4/csf-apim"
   }
-
-
 
 }
