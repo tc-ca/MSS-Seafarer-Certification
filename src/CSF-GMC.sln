@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPDIS.API.Wrapper", "MPDIS.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPDIS.API.Wrapper.Tests", "MPDIS.API.Wrapper.Tests\MPDIS.API.Wrapper.Tests.csproj", "{4FD093ED-64CD-44F9-A58B-0FF3A7802BE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.SRDashboard.Client.Test.Integration", "CSF.SRDashboard.Client.Test.Integration\CSF.SRDashboard.Client.Test.Integration.csproj", "{CEE46B6A-0987-4BC4-9CB6-64794908A34A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSF.SRDashboard.Client.Test.Integration", "CSF.SRDashboard.Client.Test.Integration\CSF.SRDashboard.Client.Test.Integration.csproj", "{CEE46B6A-0987-4BC4-9CB6-64794908A34A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
