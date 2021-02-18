@@ -1,47 +1,68 @@
-﻿<div class="container">
-    <h2>Basic Card</h2>
-    <div class="card">
-        <div class="card-header stepper-header">
-            <h5>Processing phase</h5>
-            <button><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" />Edit</button>
-        </div>
-
-        <div class="card-body">
-            <div class="steps">
-                <div class="step">
-                    <div class="step-header">
-                        <div class="header"><b>Create new request</b></div>
-                        <div class="subheader">Hopefully this looks cool</div>
-                    </div>
-                    <div class="step-content one">
-                        <button class="next-btn">Next</button>
-                    </div>
-                </div>
-                <div class="step minimized">
-                    <div class="step-header">
-                        <div class="header">This is step two!</div>
-                        <div class="subheader">The content is a little bigger!</div>
-                    </div>
-                    <div class="step-content two">
-                        <button class="next-btn">Next</button>
-                    </div>
-                </div>
-                <div class="step minimized">
-                    <div class="step-header">
-                        <div class="header">And finally step three!</div>
-                        <div class="subheader">Last but not the least!</div>
-                    </div>
-                    <div class="step-content three">
-                        <button class="close-btn">Close</button>
-                    </div>
-                </div>
+﻿<CascadingValue Value="this">
+    <div class="container">
+        <div class="card">
+            <div class="card-header stepper-header">
+                <h5>Processing phase</h5>
+                <a><CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" />Edit</a>
             </div>
 
+            <div class="card-body">
+                <div class="steps">
+                    @ChildContent
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
+</CascadingValue>
+
+<button @onclick="this.StepForward">Next</button>
+
+<button @onclick="this.StepBackward">Back</button>
 
 @code {
+
+    private int CurrentActiveStepIndex;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public List<ProcessingPhase> ProcessingPhases { get; set; } = new List<ProcessingPhase>();
+
+    public void AddStep(ProcessingPhase processingPhase)
+    {
+        this.ProcessingPhases.Add(processingPhase);
+
+        if (this.ProcessingPhases.Count == 1)
+        {
+            CurrentActiveStepIndex = 0;
+            processingPhase.IsActive = true;
+        }
+    }
+
+    public void StepForward()
+    {
+
+        if (this.ProcessingPhases.Count > CurrentActiveStepIndex + 1)
+        {
+            this.ProcessingPhases[CurrentActiveStepIndex].IsActive = false;
+            this.ProcessingPhases[CurrentActiveStepIndex + 1].IsActive = true;
+            CurrentActiveStepIndex++;
+        }
+
+
+    }
+
+    public void StepBackward()
+    {
+        if ((CurrentActiveStepIndex - 1) >= 0)
+        {
+            this.ProcessingPhases[CurrentActiveStepIndex].IsActive = false;
+            this.ProcessingPhases[CurrentActiveStepIndex - 1].IsActive = true;
+            CurrentActiveStepIndex--;
+
+           
+        }
+    }
 
 }

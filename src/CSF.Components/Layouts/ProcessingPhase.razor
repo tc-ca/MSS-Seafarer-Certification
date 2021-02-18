@@ -1,0 +1,39 @@
+﻿
+<div class="step @(!this.IsActive ? "minimized" : "")">
+    <div class="step-header">
+        @Header
+    </div>
+    <div class="step-content">
+        @if (this.IsActive)
+        {
+            @Body
+        }else
+        {
+            <span>Not started</span>
+        }
+
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment Header { get; set; }
+
+    [Parameter]
+    public RenderFragment Body { get; set; }
+
+    [CascadingParameter]
+    public ProcessingPhaseComponent Parent { get; set; }
+
+    public bool IsActive { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Parent == null)
+            throw new ArgumentNullException(nameof(Parent), "ProcessingPhase must exist within a ProcessingPhaseComponent");
+        base.OnInitialized();
+        Parent.AddStep(this);
+    }
+
+}
