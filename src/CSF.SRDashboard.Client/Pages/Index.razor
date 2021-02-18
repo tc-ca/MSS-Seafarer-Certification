@@ -5,21 +5,23 @@
 <h1>Request Board</h1>
 
 <CSFTabControl>
-    <CSFTabPage Text="In progress">
+    <TabPages>
+        <CSFTabPage Text="In progress">
 
-    </CSFTabPage>
-    <CSFTabPage Text="on hold">
+        </CSFTabPage>
+        <CSFTabPage Text="on hold">
 
-    </CSFTabPage>
-    <CSFTabPage Text="completed">
+        </CSFTabPage>
+        <CSFTabPage Text="completed">
 
-    </CSFTabPage>
-    <CSFTabPage Text="not submitted">
+        </CSFTabPage>
+        <CSFTabPage Text="not submitted">
 
-    </CSFTabPage>
-    <CSFTabPage Text="new requests">
+        </CSFTabPage>
+        <CSFTabPage Text="new requests">
 
-    </CSFTabPage>
+        </CSFTabPage>
+    </TabPages>
 </CSFTabControl>
 
 <section class="csf-page-group">
@@ -44,10 +46,18 @@
     public List<Row> Rows { get; set; }
 
     protected override void OnInitialized()
-   {
-        Utility utility = new Utility(artifactService);
-        Rows = utility.FillDashboardRows();
-
+    {
         base.OnInitialized();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            Utility utility = new Utility(artifactService);
+            Rows = utility.FillDashboardRows();
+            InvokeAsync(StateHasChanged);
+        }
+        base.OnAfterRender(firstRender);
     }
 }

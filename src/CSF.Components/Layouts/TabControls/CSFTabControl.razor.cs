@@ -5,7 +5,10 @@
     public partial class CSFTabControl : ComponentBase
     {
         [Parameter]
-        public RenderFragment ChildContent { get; set; }
+        public RenderFragment TabPages { get; set; }
+
+        [Parameter]
+        public RenderFragment TabPageEndContent { get; set; }
 
         public CSFTabPage ActivePage { get; set; }
         public List<CSFTabPage> Pages = new List<CSFTabPage>();
