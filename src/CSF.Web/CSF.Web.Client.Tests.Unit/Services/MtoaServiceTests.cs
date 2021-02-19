@@ -67,14 +67,14 @@
         public void PostSeafarersArtifactDtoAsync_Suceeds()
         {
             // Arrange
-            var servicePath = "?artifactType=JsonDocument&version=1&serviceRequestId=0&userId=0";
-            mockRestClient.Setup(client => client.PostAsync<object>(ServiceLocatorDomain.Mtoa, servicePath, It.IsAny<SeafarersArtifactDto>())).Verifiable();
+            var servicePath = "mockArtifact?artifactType=JsonDocument&version=1&serviceRequestId=0&userId=0";
+            mockRestClient.Setup(client => client.PostAsync<object>(It.IsAny<RestClientRequestOptions>())).Verifiable();
 
             // Act
             this.mtoaServices.PostSeafarerArtifactInformationAsync(new SeafarersArtifactDto());
 
             // Assert
-            this.mockRestClient.Verify(prop => prop.PostAsync<object>(ServiceLocatorDomain.Mtoa, servicePath, It.IsAny<SeafarersArtifactDto>()), Times.Once);
+            this.mockRestClient.Verify(prop => prop.PostAsync<object>(It.IsAny<RestClientRequestOptions>()), Times.Once);
         }
 
         [Fact]

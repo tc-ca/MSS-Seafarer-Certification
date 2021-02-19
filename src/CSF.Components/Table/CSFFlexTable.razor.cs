@@ -6,6 +6,11 @@
 
     public partial class CSFFlexTable
     {
+        public CSFFlexTable()
+        {
+            this.Rows = new List<Row>();
+        }
+
         [Parameter]
         public List<Row> Rows { get; set; }
     }
