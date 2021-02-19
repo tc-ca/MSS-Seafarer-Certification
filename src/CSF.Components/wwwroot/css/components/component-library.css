@@ -241,9 +241,15 @@ button.csf-tab-button-active {
 .step {
     padding: 0 20px 24px 50px;
     position: relative;
-    transition: all 0.4s ease-in-out;
     background-color: #FFF;
 }
+
+    .step .step-header {
+        user-select: none;
+        color: #1B50B1;
+        font-size: 16px;
+        font-weight: 700;
+    }
 
     .step::before {
         content: '';
@@ -259,6 +265,11 @@ button.csf-tab-button-active {
 
     .step.minimized::before {
         background-color: #CBD5E0;
+    }
+
+    .step:last-child .step-content {
+        visibility:hidden;
+        display:none;
     }
 
     .step:not(:last-child)::after {
@@ -278,30 +289,27 @@ button.csf-tab-button-active {
 
     .step.minimized {
         background-color: #FFF;
-        transition: background-color 0.3s ease-in-out;
         font-weight:700;
         color: #CBD5E0;
         cursor: pointer;
     }
 
-        .step.minimized .step-header {
-            color: #CBD5E0;
+        .step.minimized.complete::after,
+        .step.minimized.complete::before
+        {
+            background-color: #1B50B1;
         }
-        .step .step-header {
-        user-select: none;
-        color: #1B50B1;
-        font-size: 16px;
-        font-weight: 700;
+
+    .step.minimized .step-header {
+        color: #CBD5E0;
     }
 
-.subheader {
-    user-select: none;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.4);
-}
+        .step.minimized.complete,
+        .step.minimized.complete .step-header {
+            color: #1B50B1;
+        }
 
 .step-content {
-    transition: all 0.3s ease-in-out;
     overflow: hidden;
     position: relative;
 }
@@ -312,4 +320,16 @@ button.csf-tab-button-active {
     padding-left: 28px;
     padding-right: 28px;
     background-color: #F7F9FC;
+}
+/**
+    CSF ACTION BUTTONS
+*/
+a.csf-edit-action {
+    color: #1B50B1;
+    font-weight:600;
+    font-size:14px;
+    text-decoration:none;
+}
+a.csf-edit-action span {
+    margin-left:5px;
 }

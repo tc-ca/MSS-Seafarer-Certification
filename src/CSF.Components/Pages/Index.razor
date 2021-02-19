@@ -1,38 +1,40 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<StepperContainer>
 
-Welcome to your new app.
-
-<ProcessingPhaseComponent>
-
-    <ProcessingPhase>
+    <Stepper>
 
         <Header>Hello CCIV</Header>
         <Body>
             Welcome merger
         </Body>
 
-    </ProcessingPhase>
+    </Stepper>
 
-    <ProcessingPhase>
+    <Stepper>
 
         <Header>Hello PLTR</Header>
         <Body>
             Welcome AMC
         </Body>
 
-    </ProcessingPhase>
+    </Stepper>
 
-    <ProcessingPhase>
+    <Stepper>
 
         <Header>Hello GME</Header>
         <Body>
             Welcome GME
         </Body>
 
-    </ProcessingPhase>
+    </Stepper>
 
-</ProcessingPhaseComponent>
+    <Stepper>
+
+        <Header>Complete</Header>
+
+    </Stepper>
+
+</StepperContainer>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
