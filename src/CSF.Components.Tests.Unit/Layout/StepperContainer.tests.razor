@@ -1,26 +1,109 @@
 ﻿@inherits TestComponentBase
 
-<Fixture Test="StepperContainerInitializesCorrectly">
+<Fixture Test="StepperContainerInitializesStepsCorrectly">
+    <ComponentUnderTest>
+        <StepperContainer>
+            <Stepper>
+                <Header>
+                    Step One
+                </Header>
+                <Body>
+                    Body for step one.
+                </Body>
+            </Stepper>
+            <Stepper>
+                <Header>
+                    Step Two
+                </Header>
+                <Body>
+                    Body for step two.
+                </Body>
+            </Stepper>
+        </StepperContainer>
+    </ComponentUnderTest>
 
-    <StepperContainer>
+        @code {
+            void StepperContainerInitializesStepsCorrectly(Fixture fixture)
+            {
 
+                // Act
+                var cut = fixture.GetComponentUnderTest<StepperContainer>();
+                var steps = cut.FindAll("div.step");
 
+                var firstStep = steps[0];
+                var secondStep = steps[1];
 
-    </StepperContainer>
+                var firstStepCss = "step";
+                var secondStepCss = "step minimized";
 
+                // Assert
+                Assert.Equal(firstStepCss, firstStep.ClassName);
+                Assert.Equal(secondStepCss, secondStep.ClassName);
+            }
 
+        }
+</Fixture>
+
+<Fixture Test="StepperContainerProperly_GoesToNextAndPreviousStep">
+    <ComponentUnderTest>
+        <StepperContainer @ref="stepperContainer">
+            <Stepper>
+                <Header>
+                    Step One
+                </Header>
+                <Body>
+                    Body for step one.
+                </Body>
+            </Stepper>
+            <Stepper>
+                <Header>
+                    Step Two
+                </Header>
+                <Body>
+                    Body for step two.
+                </Body>
+            </Stepper>
+            <button class="next" @onclick="stepperContainer.NextStep">Next</button>
+            <button class="back" @onclick="stepperContainer.PreviousStep">Back</button>
+        </StepperContainer>
+    </ComponentUnderTest>
 
     @code {
-        void StepperContainerInitializesCorrectly(Fixture fixture)
+        StepperContainer stepperContainer;
+
+        void StepperContainerProperly_GoesToNextAndPreviousStep(Fixture fixture)
         {
-
-            // Act
+            // Act - Next
             var cut = fixture.GetComponentUnderTest<StepperContainer>();
+            var nextButton = cut.Find("button.next");
+            var previousButton = cut.Find("button.back");
+            nextButton.Click();
+            var steps = cut.FindAll("div.step");
 
-            // Assert
-            
+            var firstStep = steps[0];
+            var secondStep = steps[1];
+
+            var firstStepCss = "step minimized complete";
+            var secondStepCss = "step";
+
+            // Assert - Next
+            Assert.Equal(firstStepCss, firstStep.ClassName);
+            Assert.Equal(secondStepCss, secondStep.ClassName);
+
+            // Act - Previous
+            previousButton.Click();
+            steps = cut.FindAll("div.step");
+
+            firstStep = steps[0];
+            secondStep = steps[1];
+
+            firstStepCss = "step";
+            secondStepCss = "step minimized";
+
+            // Assert - Previous
+            Assert.Equal(firstStepCss, firstStep.ClassName);
+            Assert.Equal(secondStepCss, secondStep.ClassName);
         }
 
     }
-
 </Fixture>
