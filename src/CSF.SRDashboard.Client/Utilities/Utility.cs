@@ -39,7 +39,7 @@ namespace CSF.SRDashboard.Client.Utilities
             foreach(var data in dataRows)
             {
                 var columns = new List<Column>();
-                columns.Add(new Column() { Text = "View", CssClass = "font-color-light-blue", Icon = "fa fa-eye" });
+                columns.Add(new Column() { Text = "View", CssClass = "font-color-light-blue", Icon = "fa fa-eye", Link = string.Format("/requestdetails/{0}",data.ServiceRequestNumber) });
                 columns.Add(new Column() { Text = data.ServiceRequestNumber.ToString() });
                 columns.Add(new Column() { Text = "John Doe" });
                 columns.Add(new Column() { Text = data.CDN });
