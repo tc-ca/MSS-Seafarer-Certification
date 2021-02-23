@@ -6,22 +6,21 @@
     </Header>
 
     <Body>
-        <div><b>Request type:</b></div>
-        <div>Marine medical certificate</div>
+        @if (Model != null)
+        {
+            <div><b>Request type:</b></div>
+            <div>@Model.RequestType</div>
 
-        <br />
+            <br />
 
-        <div><b>New or renewal:</b></div>
-        <div>Renewal</div>
+            <div><b>New or renewal:</b></div>
+            <div>@Model.CertificateType</div>
 
-        <br />
+            <br />
 
-        <div><b>Triage type:</b></div>
-        <div>Fast track</div>
+            <div><b>Triage type:</b></div>
+            <div>@Model.TriageType</div>
+        } 
     </Body>
 
 </Card>
-
-@code {
-
-}
