@@ -214,3 +214,130 @@ button.csf-tab-button-active {
     border-bottom: 4px solid #1B50B1;
     padding-bottom: 6px;
 }
+
+/**
+    CSF-Stepper Processing phase
+*/
+
+.card-header h5 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1A202C;
+}
+
+.steps {
+    width: 100%;
+    background-color: #FFF;
+    padding: 24px 0;
+    position: relative;
+    margin: auto;
+}
+
+    .steps::after {
+        content: '';
+        position: absolute;
+        height: 13px;
+        width: 13px;
+        background-color: var(--primary-color);
+        box-shadow: 0px 0px 5px 0px var(--primary-color);
+        border-radius: 15px;
+        left: calc(50px / 2);
+        transform: translateX(-45%);
+        z-index: 2;
+    }
+
+.step {
+    padding: 0 20px 24px 50px;
+    position: relative;
+    background-color: #FFF;
+}
+
+    .step .step-header {
+        user-select: none;
+        color: #1B50B1;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .step::before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-color: #1b50b1;
+        border-radius: 2px;
+        left: calc(50px / 2);
+        transform: translateX(-45%);
+        z-index: 2;
+    }
+
+    .step.minimized::before {
+        background-color: #CBD5E0;
+    }
+
+    .step:last-child .step-content {
+        visibility: hidden;
+        display: none;
+    }
+
+    .step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        height: calc(100% - 40px);
+        width: 1px;
+        background-color: #1B50B1;
+        left: calc(50px / 2);
+        top: 30px;
+        z-index: 1;
+    }
+
+    .step.minimized:not(:last-child)::after {
+        background-color: #CBD5E0;
+    }
+
+    .step.minimized {
+        background-color: #FFF;
+        font-weight: 700;
+        color: #CBD5E0;
+        cursor: pointer;
+    }
+
+        .step.minimized.complete::after,
+        .step.minimized.complete::before {
+            background-color: #1B50B1;
+        }
+
+        .step.minimized .step-header {
+            color: #CBD5E0;
+        }
+
+        .step.minimized.complete,
+        .step.minimized.complete .step-header {
+            color: #1B50B1;
+        }
+
+.step-content {
+    overflow: hidden;
+    position: relative;
+}
+
+.card-header.stepper-header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 28px;
+    padding-right: 28px;
+    background-color: #F7F9FC;
+}
+/**
+    CSF ACTION BUTTONS
+*/
+a.csf-edit-action {
+    color: #1B50B1;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+    a.csf-edit-action span {
+        margin-left: 5px;
+    }

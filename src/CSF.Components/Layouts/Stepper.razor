@@ -1,0 +1,20 @@
+﻿<div class="@this.CssClass">
+    <div class="step-header">
+        @this.Header
+    </div>
+    <div class="step-content">
+        @if (this.IsActive)
+        {
+            @this.Body
+        }
+        else if(this.IsComplete)
+        {
+            <span>Completed</span>
+        }
+        else
+        {
+            <span>Not started</span>
+        }
+
+    </div>
+</div>
