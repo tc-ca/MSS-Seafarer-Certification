@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Radzen;
 
 namespace CSF.SRDashboard.Client
 {
@@ -36,6 +37,7 @@ namespace CSF.SRDashboard.Client
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddSingleton<IRestClient, RestClient>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
+            services.AddScoped<DialogService>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
         }
 

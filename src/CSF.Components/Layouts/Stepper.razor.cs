@@ -26,10 +26,10 @@
         public string CssClass { 
             get
             {
-                string cssClass = string.Empty;
-                cssClass += !this.IsActive ? "minimized " : "";
-                cssClass += this.IsComplete ? "complete " : "";
-                return cssClass.Trim();
+                string cssClass = "step";
+                cssClass += !this.IsActive ? " minimized" : "";
+                cssClass += this.IsComplete ? " complete" : "";
+                return cssClass;
             }
         }
 
