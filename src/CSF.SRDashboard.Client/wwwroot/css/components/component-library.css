@@ -127,7 +127,8 @@ section.csf-flex-table {
                 margin-bottom: 19px;
             }
 
-        section.csf-flex-table div {
+        section.csf-flex-table div,
+        section.csf-flex-table a {
             flex-basis: 12.5%;
             padding: 5px 3px;
             text-align: center;

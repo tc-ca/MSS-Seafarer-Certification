@@ -79,7 +79,8 @@ namespace CSF.SRDashboard.Client.Services
                 row.CDN = artifact.CdnNumber;
                 row.RequestType = artifact.CertificateType;
                 row.AssignedTo = artifact.PersonAssignedTo;
-                row.ProcessingPhase = serviceRequest.RequestStatus.ToString();
+                row.ProcessingPhase = artifact.SubmissionProgress;
+                row.View = "View";
             }
 
             return row;
@@ -139,7 +140,10 @@ namespace CSF.SRDashboard.Client.Services
             foreach(var request in allRequests)
             {
                 var row = this.GetDashboardRowByServiceRequest(request);
-                dashbaordRows.Add(row);
+                if(row != null)
+                {
+                    dashbaordRows.Add(row);
+                }
             }
 
             return dashbaordRows;

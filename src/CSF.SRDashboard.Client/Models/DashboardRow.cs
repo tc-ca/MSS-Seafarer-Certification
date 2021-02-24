@@ -12,7 +12,8 @@ namespace CSF.SRDashboard.Client.Models
         public string CDN { get; set; }
         public string RequestType { get; set; }
         public string AssignedTo { get; set; }
-        public string ServiceStandard { get; set; }
+        public int ServiceStandard { get; set; }
         public string ProcessingPhase { get; set; }
+        public string View { get; set; }
     }
 }
