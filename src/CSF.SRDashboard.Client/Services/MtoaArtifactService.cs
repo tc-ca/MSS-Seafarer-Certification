@@ -79,7 +79,7 @@ namespace CSF.SRDashboard.Client.Services
                 row.CDN = artifact.CdnNumber;
                 row.RequestType = artifact.CertificateType;
                 row.AssignedTo = artifact.PersonAssignedTo;
-                row.ProcessingPhase = artifact.SubmissionProgress;
+                row.ProcessingPhase = serviceRequest.RequestStatus.GetValue(); //artifact.SubmissionProgress;
                 row.View = "View";
             }
 
