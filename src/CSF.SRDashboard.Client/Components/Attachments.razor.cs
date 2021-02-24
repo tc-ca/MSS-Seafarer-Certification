@@ -42,13 +42,4 @@ namespace CSF.SRDashboard.Client.Components
         }
 
     }
-
-    public class FileList
-    {
-
-        public int PicsID { get; set; }
-
-        public string PicsName { get; set; }
-
-    }
 }
