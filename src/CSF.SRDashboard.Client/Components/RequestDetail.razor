@@ -1,0 +1,26 @@
+﻿<Card HeaderClasses="csf-header">
+
+    <Header>
+        <h5>Request details</h5>
+        <CSF.Components.Buttons.Actions.CSFEditButton />
+    </Header>
+
+    <Body>
+        @if (Model != null)
+        {
+            <div><b>Request type:</b></div>
+            <div>@Model.RequestType</div>
+
+            <br />
+
+            <div><b>New or renewal:</b></div>
+            <div>@Model.CertificateType</div>
+
+            <br />
+
+            <div><b>Triage type:</b></div>
+            <div>@Model.TriageType</div>
+        } 
+    </Body>
+
+</Card>

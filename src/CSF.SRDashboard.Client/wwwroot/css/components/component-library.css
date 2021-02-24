@@ -328,6 +328,15 @@ button.csf-tab-button-active {
     padding-right: 28px;
     background-color: #F7F9FC;
 }
+
+.card-header.csf-header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 28px;
+    padding-right: 28px;
+    background-color: #F7F9FC;
+}
+
 /**
     CSF ACTION BUTTONS
 */
