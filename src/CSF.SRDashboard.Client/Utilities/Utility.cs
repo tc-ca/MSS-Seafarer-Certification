@@ -325,7 +325,7 @@ namespace CSF.SRDashboard.Client.Utilities
             requestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
             requestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
 
-            int numberOfTotalRequests = allRequests.Count;
+            int numberOfTotalRequests = allRequests.Count; 
             return numberOfTotalRequests;
         }
     }
