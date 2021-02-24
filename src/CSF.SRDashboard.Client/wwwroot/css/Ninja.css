@@ -1,5 +1,4 @@
-﻿
-.rz-tabview-title {
+﻿.rz-tabview-title {
     color: #1A202C;
 }
 .rz-tabview-selected {
@@ -37,6 +36,7 @@
 .rz-datatable-thead th .rz-column-title {
         text-transform: none;
         font-weight: bold;
+        font-size: 14px;
 }
 
 .rz-tabview-nav .rz-tabview-selected 
@@ -62,10 +62,10 @@
     color: #FFFFFF;
 }
 
-
 .rz-spinner-button {
     color: #4A5568;
     background-color: #E2E8F0;
+    display: none;
 }
 
 #gloablSearchButton 
@@ -81,7 +81,7 @@
     border: 1px solid darkblue
 }
 
-#CreateNewRequestButton 
+#createNewRequestButton 
 {
     margin-right: 20px;
     background-color: #1B50B1;

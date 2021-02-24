@@ -140,21 +140,21 @@ namespace CSF.SRDashboard.Client.Pages
             Utility helper = new Utility(artifactService);
 
             //use the following method for filling in some mock data when not getting data from MTOA
-           totalNewRequest = helper.FillMockDataForGrids(ref newRequests,
-                                                         ref requestsInProgress,
-                                                         ref requestsOnHold,
-                                                         ref requestsCompleted,
-                                                         ref requestsNotSubmitted);
+            //totalNewRequest = helper.FillMockDataForGrids(ref newRequests,
+            //                                              ref requestsInProgress,
+            //                                              ref requestsOnHold,
+            //                                              ref requestsCompleted,
+            //                                              ref requestsNotSubmitted);
 
-           //use the following method for fetching data froom MTOA
-           //totalNewRequest = helper.FillDataForGrids(ref newRequests,
-           //                                          ref requestsInProgress,
-           //                                          ref requestsOnHold,
-           //                                          ref requestsCompleted,
-           //                                          ref requestsNotSubmitted);
+            //use the following method for fetching data froom MTOA
+            totalNewRequest = helper.FillDataForGrids(ref newRequests,
+                                                      ref requestsInProgress,
+                                                      ref requestsOnHold,
+                                                      ref requestsCompleted,
+                                                      ref requestsNotSubmitted);
 
 
-           numberOfRequestsInProgress = requestsInProgress.Count;
+            numberOfRequestsInProgress = requestsInProgress.Count;
             numberOfRequestsOnHold = requestsOnHold.Count;
             numberOfRequestsCompleted = requestsCompleted.Count;
             numberOfRequestNotSubmitted = requestsNotSubmitted.Count;
@@ -171,7 +171,7 @@ namespace CSF.SRDashboard.Client.Pages
                 inProgressPageSize = numberOfRequestsInProgress;
             }
 
-            if (numberOfRequestsOnHold >Constants.DefaultPageSize)
+            if (numberOfRequestsOnHold > Constants.DefaultPageSize)
             {
                 onHoldPageSize = Constants.DefaultPageSize;
             }
@@ -180,7 +180,7 @@ namespace CSF.SRDashboard.Client.Pages
                 onHoldPageSize = numberOfRequestsOnHold;
             }
 
-            if (numberOfRequestsCompleted >Constants.DefaultPageSize)
+            if (numberOfRequestsCompleted > Constants.DefaultPageSize)
             {
                 completedPageSize = Constants.DefaultPageSize;
             }
@@ -189,7 +189,7 @@ namespace CSF.SRDashboard.Client.Pages
                 completedPageSize = numberOfRequestsCompleted;
             }
 
-            if (numberOfRequestNotSubmitted >Constants.DefaultPageSize)
+            if (numberOfRequestNotSubmitted > Constants.DefaultPageSize)
             {
                 notSubmittedPageSize = Constants.DefaultPageSize;
             }
@@ -198,7 +198,7 @@ namespace CSF.SRDashboard.Client.Pages
                 notSubmittedPageSize = numberOfRequestNotSubmitted;
             }
 
-            if (numberOfNewRequests >Constants.DefaultPageSize)
+            if (numberOfNewRequests > Constants.DefaultPageSize)
             {
                 newRequestsPageSize = Constants.DefaultPageSize;
             }
@@ -211,7 +211,6 @@ namespace CSF.SRDashboard.Client.Pages
             base.OnInitialized();
 
         }
-
         void OnRowDoubleClick(DashboardRow row)
         {
             var requestNumber = row.ServiceRequestNumber;
@@ -226,8 +225,6 @@ namespace CSF.SRDashboard.Client.Pages
             StateHasChanged();
 
             var somePageSize = inProgressGrid.PageSize;
-
-
             inProgressGrid.Reload();
         }
 
@@ -256,7 +253,7 @@ namespace CSF.SRDashboard.Client.Pages
         public Dictionary<string, object> CreateNewRequestButtonAttribute { get; set; } =
             new Dictionary<string, object>()
             {
-                { "id", "CreateNewRequestButton" }
+                { "id", "createNewRequestButton" }
             };
     }
 }
