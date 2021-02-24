@@ -1,8 +1,11 @@
-﻿<a class="csf-edit-action" href="#">
+﻿<a class="csf-edit-action" href="@(Href == null? "#" : Href)" target="_blank">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" />
     <span>View</span>
 </a>
 
 @code {
+
+    [Parameter]
+    public string Href { get; set; }
 
 }

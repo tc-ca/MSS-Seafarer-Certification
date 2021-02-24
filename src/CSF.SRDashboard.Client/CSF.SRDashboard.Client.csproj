@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Models\PageModels\" />
+    <Folder Include="wwwroot\temp\" />
   </ItemGroup>
 
 </Project>

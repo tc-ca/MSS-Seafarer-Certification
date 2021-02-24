@@ -15,6 +15,16 @@
         public IFileListEntry SelectedFile { get; set; }
 
         /// <summary>
+        /// Gets or sets the file name.
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file path.
+        /// </summary>
+        public string FilePath { get; set; }
+
+        /// <summary>
         /// Gets or sets SelectedFileWithMemoryData.
         /// </summary>
         public MemoryStreamFileListEntryImpl SelectedFileWithMemoryData { get; set; }

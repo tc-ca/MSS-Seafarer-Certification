@@ -6,20 +6,27 @@
     </Header>
 
     <Body>
+        @if (UploadedFiles != null)
+        {
+            int i = 0;
 
-        <CSF.Components.Buttons.Actions.CSFViewButton />
-        <div><b>Marine medical examination report</b></div>
-        <div>mmereportJohndoe.pdf</div>
+            @foreach (var x in UploadedFiles)
+            {
 
-        <br />
+                i++;
+                <CSF.Components.Buttons.Actions.CSFViewButton Href="@x.FilePath" />
+                <div><b>Marine medical examination report @i</b></div>
+                <div>@x.FileName</div>
 
-        <CSF.Components.Buttons.Actions.CSFViewButton />
-        <div><b>Provisional medical certificate</b></div>
-        <div>ProvisionalcertJohndoe.pdf </div>
+                if ((i % 2) == 0)
+                {
+                    <br />
+                }
+
+            }
+        }
+
     </Body>
 
 </Card>
 
-@code {
-
-}
