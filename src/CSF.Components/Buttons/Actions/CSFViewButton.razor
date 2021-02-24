@@ -1,11 +1,9 @@
-﻿<a class="csf-edit-action" href="@(Href == null? "#" : Href)" target="_blank">
+﻿<a class="csf-edit-action" @attributes="AdditionalAttributes">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.VIEW" />
     <span>View</span>
 </a>
 
 @code {
-
-    [Parameter]
-    public string Href { get; set; }
-
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
 }

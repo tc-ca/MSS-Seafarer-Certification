@@ -8,21 +8,15 @@
     <Body>
         @if (UploadedFiles != null)
         {
-            int i = 0;
-
-            @foreach (var x in UploadedFiles)
+            @foreach (var uploadedFile in UploadedFiles)
             {
-
-                i++;
-                <CSF.Components.Buttons.Actions.CSFViewButton Href="@x.FilePath" />
-                <div><b>Marine medical examination report @i</b></div>
-                <div>@x.FileName</div>
-
-                if ((i % 2) == 0)
-                {
-                    <br />
-                }
-
+                <div style="display:flex;">
+                    <CSF.Components.Buttons.Actions.CSFViewButton href="@uploadedFile.FilePath" target="_blank" download="@uploadedFile.FileName" style="text-align:center;flex-basis:10%;" />
+                    <div>
+                        <div><b>Marine medical examination report</b></div>
+                        <div>@uploadedFile.FileName</div>
+                    </div>
+                </div>
             }
         }
 
