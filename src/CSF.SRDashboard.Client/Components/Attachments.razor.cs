@@ -1,40 +1,29 @@
 ﻿using CSF.Web.Client.Models.PageModels;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CSF.SRDashboard.Client.Components
 {
+    using System.Collections.Generic;
+    using System.IO;
+
     public partial class Attachments
     {
-        [Inject]
-        private IWebHostEnvironment hostingEnv { get; set; }
-
         public List<UploadedFile> UploadedFiles { get; set; }
 
         protected override void OnAfterRender(bool firstRender)
         {
             if (firstRender)
             {
-                var h = hostingEnv.WebRootPath;
-
-                string FilePath = Path.Combine(hostingEnv.WebRootPath, "temp");
-
-                string[] filePaths = Directory.GetFiles(FilePath);
-
                 UploadedFiles = new List<UploadedFile>();
+
+                string[] filePaths = {"temp/image_1.jpg", "temp/image_2.jpg", "temp/image_3.jpg" };
 
                 foreach (string filePath in filePaths)
                 {
                     UploadedFiles.Add(new UploadedFile
                     {
                         FilePath = filePath,
-                        FileName = Path.GetFileName(filePath)
-                    });
+                        FileName = filePath.Split('/')[1]
+                    }); 
                 }
             }
             StateHasChanged();
