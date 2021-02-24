@@ -6,20 +6,19 @@
     </Header>
 
     <Body>
-
-        <CSF.Components.Buttons.Actions.CSFViewButton />
-        <div><b>Marine medical examination report</b></div>
-        <div>mmereportJohndoe.pdf</div>
-
-        <br />
-
-        <CSF.Components.Buttons.Actions.CSFViewButton />
-        <div><b>Provisional medical certificate</b></div>
-        <div>ProvisionalcertJohndoe.pdf </div>
+        @if (UploadedFiles != null)
+        {
+            @foreach (var uploadedFile in UploadedFiles)
+            {
+                <div style="display:flex;">
+                    <CSF.Components.Buttons.Actions.CSFViewButton href="@uploadedFile.FilePath" target="_blank" download="@uploadedFile.FileName" style="text-align:center;flex-basis:10%;" />
+                    <div>
+                        <div><b>Marine medical examination report</b></div>
+                        <div>@uploadedFile.FileName</div>
+                    </div>
+                </div>
+            }
+        }
     </Body>
 
 </Card>
-
-@code {
-
-}
