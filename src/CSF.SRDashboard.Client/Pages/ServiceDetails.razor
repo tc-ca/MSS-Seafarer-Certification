@@ -1,0 +1,28 @@
+﻿@page "/requestdetails/{ServiceRequestId:int}"
+
+<a href="/" class="link-back">
+    <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>Back to dashboard</span>
+</a>
+
+<h1>Request #@this.ServiceRequestId</h1>
+
+<CSFTabControl>
+    <TabPages>
+        <CSFTabPage Text="Summary">
+            <section style="display:flex; justify-content:space-between; margin-top:53px;">
+                <section style="background:RGB(251,220,206); flex-basis:25%; height:25vh;">
+                    Processing Phase Stepper goes here
+                </section>
+                <section style="background:RGB(175,223,219); flex-basis:73%; height:25vh;">
+                    Service Request Information goes here
+                </section>
+            </section>
+        </CSFTabPage>
+        <CSFTabPage Text="Notes">
+
+        </CSFTabPage>
+    </TabPages>
+    <TabPageEndContent>
+        <span class="badge-pill">Status: In progress</span>
+    </TabPageEndContent>
+</CSFTabControl>

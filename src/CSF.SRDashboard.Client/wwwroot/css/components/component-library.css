@@ -127,7 +127,8 @@ section.csf-flex-table {
                 margin-bottom: 19px;
             }
 
-        section.csf-flex-table div {
+        section.csf-flex-table div,
+        section.csf-flex-table a {
             flex-basis: 12.5%;
             padding: 5px 3px;
             text-align: center;
@@ -182,10 +183,15 @@ section.csf-flex-table {
 /**
     CSF-Tab
 */
+section.csf-tab-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #CBD5E0;
+}
+
 section.csf-tab-button-group {
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid #CBD5E0;
 }
 
 button.csf-tab-button {

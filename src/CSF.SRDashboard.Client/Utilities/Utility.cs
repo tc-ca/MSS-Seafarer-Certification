@@ -304,6 +304,7 @@ namespace CSF.SRDashboard.Client.Utilities
                 row.ProcessingPhase = processingPhases[processingPhaseIndex];
 
                 requestList.Add(row);
+
             }
 
             return requestList;
@@ -327,11 +328,5 @@ namespace CSF.SRDashboard.Client.Utilities
             int numberOfTotalRequests = allRequests.Count;
             return numberOfTotalRequests;
         }
-
-    
-
-    
-    
-    
     }
 }

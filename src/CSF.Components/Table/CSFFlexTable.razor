@@ -1,34 +1,50 @@
 ﻿<section class="csf-flex-table">
-    @for (var i = 0; i < this.Rows.Count; i++)
+    @if (this.Rows != null)
     {
-        var row = this.Rows[i];
-        if (row.IsHeaderRow)
+        @for (var i = 0; i < this.Rows.Count; i++)
         {
-            <section class="csf-flex-table-header">
-                @foreach (var column in row.Columns)
-                {
-                    <div class="@column.CssClass">@column.Text</div>
-                }
-            </section>
-        }
-        else
-        {
-        <section class="csf-flex-table-body">
-            <section class="csf-flex-table-row-group">
-                <section>
+            var row = this.Rows[i];
+            if (row.IsHeaderRow)
+            {
+                <section class="csf-flex-table-header">
                     @foreach (var column in row.Columns)
                     {
-                        <div class="@column.CssClass">
-                    @if (!string.IsNullOrEmpty(column.Icon))
-                    {
-                        <i class="@column.Icon"></i>
-                    }
-                        <span style="margin-left:5px">@column.Text</span>
-                        </div>
+                        <div class="@column.CssClass">@column.Text</div>
                     }
                 </section>
+            }
+            else
+            {
+            <section class="csf-flex-table-body">
+                <section class="csf-flex-table-row-group">
+                    <section>
+                        @foreach (var column in row.Columns)
+                        {
+                            @if (string.IsNullOrEmpty(column.Link))
+                            {
+                                <div class="@column.CssClass">
+                                    @if (!string.IsNullOrEmpty(column.Icon))
+                                    {
+                                        <i class="@column.Icon"></i>
+                                    }
+                                    <span style="margin-left:5px">@column.Text</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <a class="@column.CssClass" href="@column.Link">
+                                    @if (!string.IsNullOrEmpty(column.Icon))
+                                    {
+                                        <i class="@column.Icon"></i>
+                                    }
+                                    <span style="margin-left:5px">@column.Text</span>
+                                </a>
+                            }
+                        }
+                    </section>
+                </section>
             </section>
-        </section>
+            }
         }
     }
     <section class="csf-flex-table-footer">
