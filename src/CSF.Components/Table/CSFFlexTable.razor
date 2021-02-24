@@ -20,13 +20,26 @@
                     <section>
                         @foreach (var column in row.Columns)
                         {
-                            <div class="@column.CssClass">
-                        @if (!string.IsNullOrEmpty(column.Icon))
-                        {
-                            <i class="@column.Icon"></i>
-                        }
-                            <span style="margin-left:5px">@column.Text</span>
-                            </div>
+                            @if (string.IsNullOrEmpty(column.Link))
+                            {
+                                <div class="@column.CssClass">
+                                    @if (!string.IsNullOrEmpty(column.Icon))
+                                    {
+                                        <i class="@column.Icon"></i>
+                                    }
+                                    <span style="margin-left:5px">@column.Text</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <a class="@column.CssClass" href="@column.Link">
+                                    @if (!string.IsNullOrEmpty(column.Icon))
+                                    {
+                                        <i class="@column.Icon"></i>
+                                    }
+                                    <span style="margin-left:5px">@column.Text</span>
+                                </a>
+                            }
                         }
                     </section>
                 </section>

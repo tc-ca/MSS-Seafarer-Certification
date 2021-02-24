@@ -9,9 +9,6 @@ namespace CSF.Web.Client.Data.DTO.MTAPI
 
     public class FileAttachment
     {
-        public FileAttachment()
-        {
-        }
 
         public int Id { get; set; }
         public int ServiceRequestId { get; set; }

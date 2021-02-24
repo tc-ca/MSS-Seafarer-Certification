@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPDIS.API.Wrapper.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSF.SRDashboard.Client.Test.Integration", "CSF.SRDashboard.Client.Test.Integration\CSF.SRDashboard.Client.Test.Integration.csproj", "{CEE46B6A-0987-4BC4-9CB6-64794908A34A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSF.Components.Tests.Unit", "CSF.Components.Tests.Unit\CSF.Components.Tests.Unit.csproj", "{1D5A9778-3742-46D9-BE65-32AA75F7F06F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{CEE46B6A-0987-4BC4-9CB6-64794908A34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEE46B6A-0987-4BC4-9CB6-64794908A34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEE46B6A-0987-4BC4-9CB6-64794908A34A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D5A9778-3742-46D9-BE65-32AA75F7F06F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D5A9778-3742-46D9-BE65-32AA75F7F06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D5A9778-3742-46D9-BE65-32AA75F7F06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D5A9778-3742-46D9-BE65-32AA75F7F06F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{8A1DC890-305C-4C44-915F-831CC660F593} = {36A51163-9388-4775-A6FC-A8588B2A6BAC}
 		{4FD093ED-64CD-44F9-A58B-0FF3A7802BE1} = {36A51163-9388-4775-A6FC-A8588B2A6BAC}
 		{CEE46B6A-0987-4BC4-9CB6-64794908A34A} = {E210AC2D-F2E5-4941-8189-7AFD7E182C54}
+		{1D5A9778-3742-46D9-BE65-32AA75F7F06F} = {0124EF7A-2E78-4032-86CA-513F060B9BBE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1681D7A-E12C-4288-A8CC-F0439A40B90A}
