@@ -346,3 +346,8 @@ healthchecksdb
 /CDNApplication.Test/AzureBlobStorageTests.cs
 /src/CSF.Web/CSF.Web.Client/Properties/PublishProfiles/TestSeafarer - Web Deploy.pubxml
 /src/CSF.Web/CSF.Web.Client/Properties/ServiceDependencies/TestSeafarer - Web Deploy/profile.arm.json
+/src/CSF.SRDashboard.Client/Properties/PublishProfiles/TestSeafarer - Web Deploy.pubxml
+/src/CSF.SRDashboard.Client/Properties/ServiceDependencies/TestSeafarer - Web Deploy/appInsights1.arm.json
+/src/CSF.SRDashboard.Client/Properties/ServiceDependencies/TestSeafarer - Web Deploy/profile.arm.json
+/src/CSF.SRDashboard.Client/Properties/ServiceDependencies/TestSeafarer - Web Deploy/secrets1.arm.json
+/src/CSF.SRDashboard.Client/Properties/serviceDependencies.TestSeafarer - Web Deploy.json

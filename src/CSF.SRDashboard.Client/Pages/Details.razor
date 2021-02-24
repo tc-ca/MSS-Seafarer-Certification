@@ -1,0 +1,13 @@
+﻿@page "/requestdetails/{requestId}"
+
+<h3>Details</h3>
+
+<h4>Request number is : @requestId</h4>
+
+@code
+{
+    [Parameter]
+    public string requestId { get; set; }
+
+}
+
