@@ -162,8 +162,6 @@ namespace CSF.SRDashboard.Client.Pages
 
             totalNewRequest = numberOfRequestsInProgress + numberOfRequestsOnHold + numberOfRequestsCompleted + numberOfRequestNotSubmitted + numberOfNewRequests;
 
-
-
             oneRow = requestGridData.RequestsInProgress.FirstOrDefault();
 
             if (numberOfRequestsInProgress > Constants.DefaultPageSize)
