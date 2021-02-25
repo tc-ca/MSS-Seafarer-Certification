@@ -7,10 +7,6 @@ namespace CSF.SRDashboard.Client.Models
 {
     public class RequestGridsModel
     {
-        public RequestGridsModel()
-        {
-
-        }
         public List<DashboardRow> RequestsInProgress { get; set; }
         public List<DashboardRow> RequestsOnHold { get; set; }
         public List<DashboardRow> RequestsCompleted { get; set; }
