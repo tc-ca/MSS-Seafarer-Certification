@@ -16,10 +16,11 @@
                     <div>@Data.CDN</div><br>
                     <div><b>Date of birth:</b></div>
                     <div>@Data.DateOfBirth.ToShortDateString()</div><br>
-
                     <RadzenButton Style="background-color: #F7F9FC;color: #1A202C;
                         border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">View full profile</RadzenButton><br>
+                    <br />
                 </RadzenAccordionItem>
+
                 <RadzenAccordionItem Text="Medical summary" Style="width: 300px">
                     <div><b>Fitness status:</b></div>
                     <div>@Data.FitnessStatus</div><br>
@@ -29,13 +30,13 @@
                         {
                             <div>@limitation</div><br>
                         }
-
                     <div><b>Date of expiry:</b></div>
                     <div>@Data.DateOfExpiry</div><br>
                     <RadzenButton Style="background-color: #F7F9FC;color: #1A202C;
                         border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">
                         View full medical file
                     </RadzenButton><br>
+                    <br />
                 </RadzenAccordionItem>
 
                 <RadzenAccordionItem Text="Certification summary">
@@ -51,6 +52,7 @@
                         border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">
                         View full certification file
                     </RadzenButton><br>
+                    <br />
                 </RadzenAccordionItem>
             </Items>
         </RadzenAccordion>
