@@ -135,6 +135,8 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         protected NavigationManager navigationManger { get; set; }
 
+        [Inject]
+        RequestGridsModel requestGridData { get; set; }
         protected override void OnInitialized()
         {
             Utility helper = new Utility(artifactService);
@@ -146,21 +148,23 @@ namespace CSF.SRDashboard.Client.Pages
             //                                              ref requestsCompleted,
             //                                              ref requestsNotSubmitted);
 
-            //use the following method for fetching data froom MTOA
-            totalNewRequest = helper.FillDataForGrids(ref newRequests,
-                                                      ref requestsInProgress,
-                                                      ref requestsOnHold,
-                                                      ref requestsCompleted,
-                                                      ref requestsNotSubmitted);
+            if(! requestGridData.HasData)
+            {
+                requestGridData = helper.FillDataForGrids( requestGridData);
+                requestGridData.HasData = true;
+            }
+
+            numberOfRequestsInProgress = requestGridData.RequestsInProgress.Count;
+            numberOfRequestsOnHold = requestGridData.RequestsOnHold.Count;
+            numberOfRequestsCompleted = requestGridData.RequestsCompleted.Count;
+            numberOfRequestNotSubmitted = requestGridData.RequestsNotSubmitted.Count;
+            numberOfNewRequests = requestGridData.NewRequests.Count;
+
+            totalNewRequest = numberOfRequestsInProgress + numberOfRequestsOnHold + numberOfRequestsCompleted + numberOfRequestNotSubmitted + numberOfNewRequests;
 
 
-            numberOfRequestsInProgress = requestsInProgress.Count;
-            numberOfRequestsOnHold = requestsOnHold.Count;
-            numberOfRequestsCompleted = requestsCompleted.Count;
-            numberOfRequestNotSubmitted = requestsNotSubmitted.Count;
-            numberOfNewRequests = newRequests.Count;
 
-            oneRow = requestsInProgress.FirstOrDefault();
+            oneRow = requestGridData.RequestsInProgress.FirstOrDefault();
 
             if (numberOfRequestsInProgress > Constants.DefaultPageSize)
             {
