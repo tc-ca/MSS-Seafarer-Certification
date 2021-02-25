@@ -6,6 +6,6 @@ namespace CSF.SRDashboard.Client.Components
     public partial class SeafarerDetails
     {
         [Parameter]
-        public SeafarerDetailsModel Data { get; set; }
+        public SeafarerDetailsModel Model { get; set; }
     }
 }
