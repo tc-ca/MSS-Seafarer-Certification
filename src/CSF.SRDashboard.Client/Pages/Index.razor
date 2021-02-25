@@ -3,6 +3,7 @@
 @using Models
 
 
+
 <h1>Request Board</h1>
 <div>
     <RadzenButton @attributes="SearchButtonAttribute" Text="Search" Icon="search"  Click="SearchButtonClicked" />
@@ -17,7 +18,7 @@
             <RadzenTabsItem Text="In progress" Style="color:#1A202C">
                 <RadzenGrid @ref="inProgressGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                             FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@inProgressPageSize" AllowSorting="true"
-                            Data="@requestsInProgress" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
+                            Data="@requestGridData.RequestsInProgress" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" ColumnWidth="200px">
                     <Columns>
                         <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="Request #" Type="int">
@@ -70,7 +71,7 @@
 
             <RadzenTabsItem Text="On hold">
                 <RadzenGrid @ref="onHoldGrid" AllowFiltering="true" AllowPaging="true" PageSize="@onHoldPageSize" AllowSorting="true"
-                            EditMode="DataGridEditMode.Single" Data="@requestsOnHold" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            EditMode="DataGridEditMode.Single" Data="@requestGridData.RequestsOnHold" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick"
                             AllowColumnResize="true">
                     <Columns>
@@ -103,7 +104,7 @@
                             <Template>
                                 @if (data.ServiceStandard < 8)
                                 {
-                                <span style='color:red'>@data.ServiceStandard.ToString()   days remaining</span>
+                                    <span style='color:red'>@data.ServiceStandard.ToString()   days remaining</span>
                                 }
                                 else
                                 {
@@ -126,7 +127,7 @@
             <RadzenTabsItem Text="Completed">
                 <RadzenGrid @ref="completedGrid" AllowFiltering="true" AllowPaging="true" PageSize="@completedPageSize" AllowSorting="true" EditMode="DataGridEditMode.Single"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                            Data="@requestsCompleted" TItem="DashboardRow">
+                            Data="@requestGridData.RequestsCompleted" TItem="DashboardRow">
                     <Columns>
                         <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="Request #" Type="int">
                             <Template>
@@ -179,7 +180,7 @@
             <RadzenTabsItem Text="Not submitted">
                 <RadzenGrid @ref="notSubmittedGrid" AllowFiltering="true" AllowPaging="true" PageSize="@notSubmittedPageSize" AllowSorting="true" EditMode="DataGridEditMode.Single"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                            Data="@requestsNotSubmitted" TItem="DashboardRow">
+                            Data="@requestGridData.RequestsNotSubmitted" TItem="DashboardRow">
                     <Columns>
                         <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="Request #" Type="int">
                             <Template>
@@ -233,7 +234,7 @@
             <RadzenTabsItem Text="New request">
                 <RadzenGrid @ref="newRequestsGrid" AllowFiltering="true" AllowPaging="true" PageSize="@newRequestsPageSize" AllowSorting="true" EditMode="DataGridEditMode.Single"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                            Data="@newRequests" TItem="DashboardRow">
+                            Data="@requestGridData.NewRequests" TItem="DashboardRow">
                     <Columns>
                         <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="Request #" Type="int">
                             <Template>
@@ -282,7 +283,7 @@
                 <span>Showing 1 to @newRequestsPageSize of @numberOfNewRequests &nbsp;&nbsp; | &nbsp;&nbsp;</span>
                 <span>Show </span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@newRequestsPageSize" /><span>request</span>
             </RadzenTabsItem>
-        
+
         </Tabs>
     </RadzenTabs>
 

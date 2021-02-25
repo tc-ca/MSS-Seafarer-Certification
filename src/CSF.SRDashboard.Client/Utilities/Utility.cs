@@ -37,6 +37,24 @@ namespace CSF.SRDashboard.Client.Utilities
             return numberOfTotalRequests;
         }
 
+        public RequestGridsModel FillDataForGrids(RequestGridsModel requestGridsModel)
+        {
+
+            var allRequests = this._artifactService.GetDashboardRowsInSequence();
+            allRequests = this.AddMockServiceStandardAndFullName(allRequests);
+            requestGridsModel.NewRequests = allRequests.Where(x => x.ProcessingPhase == Constants.New).ToList();
+
+            requestGridsModel.RequestsInProgress = allRequests.Where(x => x.ProcessingPhase == Constants.InProgress).ToList();
+
+            requestGridsModel.RequestsOnHold = allRequests.Where(x => x.ProcessingPhase == Constants.OnHold).ToList();
+
+            requestGridsModel.RequestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
+
+            requestGridsModel.RequestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
+
+            return requestGridsModel;
+        }
+
 
         // this is a temporary method that we want to use while we do not have Service standard and the applicant full name data
         private List<DashboardRow> AddMockServiceStandardAndFullName(List<DashboardRow> rows)
@@ -327,6 +345,29 @@ namespace CSF.SRDashboard.Client.Utilities
 
             int numberOfTotalRequests = allRequests.Count; 
             return numberOfTotalRequests;
+        }
+
+        public RequestDetailsPageModel CreateMockRequestDetailsData()
+        {
+            RequestDetailsPageModel requestDetailsPageModel = new RequestDetailsPageModel();
+
+            SeafarerDetailsModel seafarerDetails = new SeafarerDetailsModel();
+            seafarerDetails.FirstName = "Colin";
+            seafarerDetails.LastName = "Gunanayagam";
+            seafarerDetails.CDN = "456257P";
+            seafarerDetails.DateOfBirth = new DateTime(1979, 07, 28);
+
+            seafarerDetails.FitnessStatus = "Fit";
+            seafarerDetails.Limitations.Add("Work day shifts only");
+            seafarerDetails.Limitations.Add("Near sighted");
+            seafarerDetails.DateOfExpiry = new DateTime(2026, 02, 23);
+
+            seafarerDetails.CurrentCertificates.Add(new CertificateInfo("Master Near Coastal", new DateTime(2026, 02, 23)));
+            seafarerDetails.CurrentCertificates.Add(new CertificateInfo("Passenger Safety Management", new DateTime(2022, 06, 11)));
+            seafarerDetails.CurrentCertificates.Add(new CertificateInfo("Master Mariner", new DateTime(2024, 12, 15)));
+
+            requestDetailsPageModel.SeafarerDetails = seafarerDetails;
+            return requestDetailsPageModel;
         }
     }
 }

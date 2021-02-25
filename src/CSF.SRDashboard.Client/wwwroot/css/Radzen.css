@@ -92,4 +92,13 @@
     padding-right: 0px;
     float: right;
 }
+#rz-accordiontab-0, #rz-accordiontab-1, #rz-accordiontab-2 {
+    width: 300px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1B50B1;
+    border-width: 0;
+    outline: 0px;
+}
 
