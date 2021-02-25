@@ -7,11 +7,7 @@ namespace CSF.SRDashboard.Client.Models
 {
     public class RequestDetailsPageModel
     {
-        public RequestDetailsPageModel()
-        {
-        }
         public RequestDetailComponentModel RequestDetails { get; set; }
         public SeafarerDetailsModel SeafarerDetails { get; set; }
-
     }
 }
