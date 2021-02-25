@@ -1,4 +1,6 @@
 ﻿@page "/requestdetails/{ServiceRequestId:int}"
+@using Models
+
 
 <a href="/" class="link-back">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>Back to dashboard</span>
@@ -14,11 +16,12 @@
                     <CSF.SRDashboard.Client.Components.ProcessingPhase />
                 </section>
                 <section style="flex-basis:73%; height:25vh;">
-                    <CSF.SRDashboard.Client.Components.RequestDetail Model="this.RequestDetailComponentModel"/>
-                    
+                    <CSF.SRDashboard.Client.Components.RequestDetail Model="this.RequestDetailComponentModel" />
+
                     <br />
 
                     <CSF.SRDashboard.Client.Components.Attachments />
+                    <CSF.SRDashboard.Client.Components.SeafarerDetails Data="requestDetailsPageData.SeafarerDetails" />
                 </section>
 
             </section>

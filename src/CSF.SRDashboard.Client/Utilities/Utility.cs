@@ -328,5 +328,28 @@ namespace CSF.SRDashboard.Client.Utilities
             int numberOfTotalRequests = allRequests.Count; 
             return numberOfTotalRequests;
         }
+
+        public RequestDetailsPageModel CreateMockRequestDetailsData()
+        {
+            RequestDetailsPageModel requestDetailsPageModel = new RequestDetailsPageModel();
+
+            SeafarerDetailsModel seafarerDetails = new SeafarerDetailsModel();
+            seafarerDetails.FirstName = "Colin";
+            seafarerDetails.LastName = "Gunanayagam";
+            seafarerDetails.CDN = "456257P";
+            seafarerDetails.DateOfBirth = new DateTime(1979, 07, 28);
+
+            seafarerDetails.FitnessStatus = "Fit";
+            seafarerDetails.Limitations.Add("Work day shifts only");
+            seafarerDetails.Limitations.Add("Near sighted");
+            seafarerDetails.DateOfExpiry = new DateTime(2026, 02, 23);
+
+            seafarerDetails.CurrentCertificates.Add(new CertificateInfo("Master Near Coastal", new DateTime(2026, 02, 23)));
+            seafarerDetails.CurrentCertificates.Add(new CertificateInfo("Passenger Safety Management", new DateTime(2022, 06, 11)));
+            seafarerDetails.CurrentCertificates.Add(new CertificateInfo("Master Mariner", new DateTime(2024, 12, 15)));
+
+            requestDetailsPageModel.SeafarerDetails = seafarerDetails;
+            return requestDetailsPageModel;
+        }
     }
 }

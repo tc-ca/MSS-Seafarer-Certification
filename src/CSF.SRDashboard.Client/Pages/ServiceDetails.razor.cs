@@ -2,6 +2,7 @@
 {
     using CSF.SRDashboard.Client.Models;
     using CSF.SRDashboard.Client.Services;
+    using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
 
     public partial class ServiceDetails
@@ -16,6 +17,7 @@
         [Parameter]
         public int ServiceRequestId { get; set; }
 
+        public RequestDetailsPageModel requestDetailsPageData { get; set; }
         protected override void OnAfterRender(bool firstRender)
         {
             if (firstRender)
@@ -31,7 +33,18 @@
 
                 InvokeAsync(StateHasChanged);
             }
-            base.OnAfterRender(firstRender);
+            base.OnAfterRender(firstRender);       
         }
+
+        protected override void OnInitialized()
+        {
+            var utility = new Utility(MtoaArtifactService);
+
+            requestDetailsPageData = utility.CreateMockRequestDetailsData();
+
+            base.OnInitialized();
+        }
+
+
     }
 }
