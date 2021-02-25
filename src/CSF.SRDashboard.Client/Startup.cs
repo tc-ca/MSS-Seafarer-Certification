@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Radzen;
+using CSF.SRDashboard.Client.Models;
 
 namespace CSF.SRDashboard.Client
 {
@@ -38,6 +39,7 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IRestClient, RestClient>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             services.AddScoped<DialogService>();
+            services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
         }
 

@@ -3,6 +3,7 @@
 @using Models
 
 
+
 <h1>Request Board</h1>
 <div>
     <RadzenButton @attributes="SearchButtonAttribute" Text="Search" Icon="search"  Click="SearchButtonClicked" />
@@ -17,7 +18,7 @@
             <RadzenTabsItem Text="In progress" Style="color:#1A202C">
                 <RadzenGrid @ref="inProgressGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                             FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@inProgressPageSize" AllowSorting="true"
-                            Data="@requestsInProgress" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
+                            Data="@requestGridData.RequestsInProgress" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" ColumnWidth="200px">
                     <Columns>
                         <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="Request #" Type="int">
@@ -68,7 +69,7 @@
                 <span>Show &nbsp;</span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@inProgressPageSize" /><span>&nbsp;request</span>
             </RadzenTabsItem>
 
-            <RadzenTabsItem Text="On hold">
+            @*<RadzenTabsItem Text="On hold">
                 <RadzenGrid @ref="onHoldGrid" AllowFiltering="true" AllowPaging="true" PageSize="@onHoldPageSize" AllowSorting="true"
                             EditMode="DataGridEditMode.Single" Data="@requestsOnHold" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                             Value="@oneRow" RowSelect="@(args => oneRow = args)" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick"
@@ -103,7 +104,7 @@
                             <Template>
                                 @if (data.ServiceStandard < 8)
                                 {
-                                <span style='color:red'>@data.ServiceStandard.ToString()   days remaining</span>
+                                    <span style='color:red'>@data.ServiceStandard.ToString()   days remaining</span>
                                 }
                                 else
                                 {
@@ -281,8 +282,8 @@
                 </RadzenGrid>
                 <span>Showing 1 to @newRequestsPageSize of @numberOfNewRequests &nbsp;&nbsp; | &nbsp;&nbsp;</span>
                 <span>Show </span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@newRequestsPageSize" /><span>request</span>
-            </RadzenTabsItem>
-        
+            </RadzenTabsItem>*@
+
         </Tabs>
     </RadzenTabs>
 
