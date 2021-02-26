@@ -6,18 +6,21 @@
     </Header>
 
     <Body>
-        <div><b>Name:</b></div>
-        <div>Dr.Wendy Smith</div>
+        @if (Model != null)
+        {
+            <div><b>Name:</b></div>
+            <div>@Model.Name</div>
 
-        <br />
+            <br />
 
-        <div><b>MME number:</b></div>
-        <div>125</div>
+            <div><b>MME number:</b></div>
+            <div>@Model.MmeNumber</div>
 
-        <br />
+            <br />
 
-        <div><b>Date of expiry:</b></div>
-        <div>December 31, 2021</div>
+            <div><b>Date of expiry:</b></div>
+            <div>@Model.DateOfExpiry</div>
+        }
     </Body>
 
 </Card>
