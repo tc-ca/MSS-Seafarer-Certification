@@ -1,0 +1,26 @@
+﻿<Card HeaderClasses="csf-header">
+
+    <Header>
+        <h5>MME details</h5>
+        <CSF.Components.Buttons.Actions.CSFEditButton />
+    </Header>
+
+    <Body>
+        @if (Model != null)
+        {
+            <div><b>Name:</b></div>
+            <div>@Model.Name</div>
+
+            <br />
+
+            <div><b>MME number:</b></div>
+            <div>@Model.MmeNumber</div>
+
+            <br />
+
+            <div><b>Date of expiry:</b></div>
+            <div>@Model.DateOfExpiry</div>
+        }
+    </Body>
+
+</Card>

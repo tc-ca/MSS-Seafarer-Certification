@@ -9,5 +9,6 @@ namespace CSF.SRDashboard.Client.Models
     {
         public RequestDetailComponentModel RequestDetails { get; set; }
         public SeafarerDetailsModel SeafarerDetails { get; set; }
+        public MMEDetailComponentModel MMEDetail { get; set; }
     }
 }
