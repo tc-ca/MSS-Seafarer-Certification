@@ -1,0 +1,83 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using CSF.SRDashboard.Client.Models
+@using CSF.SRDashboard.Client.Shared
+
+@inject IStringLocalizer<Common> Localizer
+@inject NavigationManager navigationManger
+
+    <RadzenGrid @ref="this.RadzenGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@this.PageSize" AllowSorting="true"
+                Data="@this.Data" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
+                Value="@oneRow" RowSelect="@(args => oneRow = args)" ColumnWidth="200px">
+        <Columns>
+            <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="@Localizer["RequestNumber"]" Type="int">
+                <Template>
+                    <RadzenLink Style="color:#1B50B1; text-decoration: underline" Path="@($"requestdetails/" + @data.ServiceRequestNumber)" Text=@data.ServiceRequestNumber.ToString() />
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="DashboardRow" Context="data" Property="FullName" Title="@Localizer["FirstAndLastName"]" Type="string">
+                <Template>
+                    @data.FullName
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="DashboardRow" Context="data" Property="CDN" Title="@Localizer["CDN"]" Type="string">
+                <Template>
+                    @data.CDN
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="DashboardRow" Width="300px" Context="data" Property="RequestType" Title="@Localizer["RequestType"]" Type="string">
+                <Template>
+                    @data.RequestType
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="DashboardRow" Context="data" Property="AssignedTo" Title="@Localizer["AssignedTo"]" Type="string">
+                <Template>
+                    @data.AssignedTo
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceStandard" Title="@Localizer["ServiceStandard"]" Type="int">
+                <Template>
+                    @if (data.ServiceStandard < 8)
+                    {
+                        <span style='color:red'>@data.ServiceStandard.ToString()   @Localizer["DaysRemaining"]</span>
+                    }
+                    else
+                    {
+                        <span style='color:#4A5568'>@data.ServiceStandard.ToString()   @Localizer["DaysRemaining"]</span>
+                    }
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ProcessingPhase" Title="@Localizer["ProcessingPhase"]" Type="string">
+                <Template>
+                    @data.ProcessingPhase
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+    <span>Showing 1 to @this.PageSize of @TotalNumberOfRequests &nbsp;&nbsp; | &nbsp;&nbsp;</span>
+    <span>Show &nbsp;</span>
+    <RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@this.PageSize" /><span>&nbsp;request</span>
+
+    @code {
+        [Parameter]
+        public RadzenGrid<DashboardRow> RadzenGrid { get; set; }
+
+        [Parameter]
+        public List<DashboardRow> Data { get; set; }
+
+        [Parameter]
+        public int PageSize { get; set; }
+
+        [Parameter]
+        public int TotalNumberOfRequests { get; set; }
+
+        private DashboardRow oneRow;
+
+        private void OnRowDoubleClick(DashboardRow row)
+        {
+            var requestNumber = row.ServiceRequestNumber;
+
+            navigationManger.NavigateTo($"{navigationManger.BaseUri}/requestdetails/" + row.ServiceRequestNumber);
+        }
+    } 

@@ -13,6 +13,7 @@ namespace CSF.SRDashboard.Client.Pages
 {
     public partial class Index: ComponentBase
     {
+
         RadzenGrid<DashboardRow> newRequestsGrid;
         RadzenGrid<DashboardRow> inProgressGrid;
         RadzenGrid<DashboardRow> onHoldGrid;

@@ -1,0 +1,34 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+
+@inject IHttpContextAccessor httpContextAccessor
+@inject NavigationManager NavigationManager
+
+<section class="csf-toggle-button-container">
+    <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked="@(GetCurrentRequestCulture().Equals("en"))" id="EN" name="toggle" value="en" /><label for="EN">EN</label>
+    <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked="@(GetCurrentRequestCulture().Equals("fr"))" id="FR" name="toggle" value="fr" /><label for="FR">FR</label>
+</section>
+
+@code {
+    private void OnSelected(ChangeEventArgs e)
+    {
+        var culture = (string)e.Value;
+        var uri = new Uri(NavigationManager.Uri)
+        .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+        var query = $"?culture={Uri.EscapeDataString(culture)}&" +
+            $"redirectUri={Uri.EscapeDataString(uri)}";
+
+        NavigationManager.NavigateTo("/Culture/SetCulture" + query, forceLoad: true);
+    }
+
+    private string GetCurrentRequestCulture()
+    {
+        if(httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
+        {
+            return "en";
+        }
+        var culture = CookieRequestCultureProvider.ParseCookieValue(httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]);
+        return culture.Cultures[0].Value;
+    }
+}
