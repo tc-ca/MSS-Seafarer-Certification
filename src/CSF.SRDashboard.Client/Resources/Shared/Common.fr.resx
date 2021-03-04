@@ -120,17 +120,62 @@
   <data name="AssignedTo" xml:space="preserve">
     <value>Assigned to_fr</value>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments_fr</value>
+  </data>
+  <data name="BackToDashboard" xml:space="preserve">
+    <value>Back to dashboard_fr</value>
+  </data>
+  <data name="CandidateDocumentNumber" xml:space="preserve">
+    <value>Candidate document number_fr</value>
+  </data>
   <data name="CDN" xml:space="preserve">
     <value>CDN_fr</value>
+  </data>
+  <data name="CertificationSummary" xml:space="preserve">
+    <value>Certification summary_fr</value>
+  </data>
+  <data name="CurrentCertificaties" xml:space="preserve">
+    <value>Current certificaties_fr</value>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Date of birth_fr</value>
+  </data>
+  <data name="DateOfExpiry" xml:space="preserve">
+    <value>Date of expiry_fr</value>
   </data>
   <data name="DaysRemaining" xml:space="preserve">
     <value>days remaining_fr</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit_fr</value>
+  </data>
   <data name="FirstAndLastName" xml:space="preserve">
     <value>First and last name_fr</value>
   </data>
+  <data name="FitnessStatus" xml:space="preserve">
+    <value>Fitness status_fr</value>
+  </data>
+  <data name="MedicalSummary" xml:space="preserve">
+    <value>Medical summary_fr</value>
+  </data>
+  <data name="MPR" xml:space="preserve">
+    <value>MPR_fr</value>
+  </data>
+  <data name="NewOrRenewal" xml:space="preserve">
+    <value>New or renewal_fr</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes_fr</value>
+  </data>
   <data name="ProcessingPhase" xml:space="preserve">
     <value>Processing phase_fr</value>
+  </data>
+  <data name="RequestBoard" xml:space="preserve">
+    <value>Request Board_fr</value>
+  </data>
+  <data name="RequestDetails" xml:space="preserve">
+    <value>Request details_fr</value>
   </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request #_fr</value>
@@ -138,7 +183,34 @@
   <data name="RequestType" xml:space="preserve">
     <value>Request type_fr</value>
   </data>
+  <data name="SeafarerDetails" xml:space="preserve">
+    <value>Seafarer details_fr</value>
+  </data>
   <data name="ServiceStandard" xml:space="preserve">
     <value>Service standard_fr</value>
+  </data>
+  <data name="ShipSafetyBulletin" xml:space="preserve">
+    <value>Ship Safety Bulletin_fr</value>
+  </data>
+  <data name="StatusInProgress" xml:space="preserve">
+    <value>Status: In progress_fr</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary_fr</value>
+  </data>
+  <data name="TombstoneSummary" xml:space="preserve">
+    <value>Tombstone summary_fr</value>
+  </data>
+  <data name="TriageType" xml:space="preserve">
+    <value>Triage type_fr</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View_fr</value>
+  </data>
+  <data name="ViewFullMedicalFile" xml:space="preserve">
+    <value>View full medical file_fr</value>
+  </data>
+  <data name="ViewFullProfile" xml:space="preserve">
+    <value>View full profile_fr</value>
   </data>
 </root>

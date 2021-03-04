@@ -1,4 +1,9 @@
 ﻿<a class="csf-edit-action" href="#">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" />
-    <span>Edit</span>
+    <span>@Text</span>
 </a>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+} 

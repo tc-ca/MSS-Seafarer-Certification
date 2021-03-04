@@ -120,17 +120,59 @@
   <data name="AssignedTo" xml:space="preserve">
     <value>Assigned to</value>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="BackToDashboard" xml:space="preserve">
+    <value>Back to dashboard</value>
+  </data>
+  <data name="CandidateDocumentNumber" xml:space="preserve">
+    <value>Candidate document number</value>
+  </data>
   <data name="CDN" xml:space="preserve">
     <value>CDN</value>
+  </data>
+  <data name="CertificationSummary" xml:space="preserve">
+    <value>Certification summary</value>
+  </data>
+  <data name="CurrentCertificaties" xml:space="preserve">
+    <value>Current certificaties</value>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="DateOfExpiry" xml:space="preserve">
+    <value>Date of expiry</value>
   </data>
   <data name="DaysRemaining" xml:space="preserve">
     <value>days remaining</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="FirstAndLastName" xml:space="preserve">
     <value>First and last name</value>
   </data>
+  <data name="FitnessStatus" xml:space="preserve">
+    <value>Fitness status</value>
+  </data>
+  <data name="MedicalSummary" xml:space="preserve">
+    <value>Medical summary</value>
+  </data>
+  <data name="NewOrRenewal" xml:space="preserve">
+    <value>New or renewal</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
   <data name="ProcessingPhase" xml:space="preserve">
     <value>Processing phase</value>
+  </data>
+  <data name="RequestBoard" xml:space="preserve">
+    <value>Request Board</value>
+  </data>
+  <data name="RequestDetails" xml:space="preserve">
+    <value>Request details</value>
   </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request #</value>
@@ -138,7 +180,34 @@
   <data name="RequestType" xml:space="preserve">
     <value>Request type</value>
   </data>
+  <data name="SeafarerDetails" xml:space="preserve">
+    <value>Seafarer details</value>
+  </data>
   <data name="ServiceStandard" xml:space="preserve">
     <value>Service standard</value>
+  </data>
+  <data name="ShipSafetyBulletin" xml:space="preserve">
+    <value>Ship Safety Bulletin</value>
+  </data>
+  <data name="StatusInProgress" xml:space="preserve">
+    <value>Status: In progress</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="TombstoneSummary" xml:space="preserve">
+    <value>Tombstone summary</value>
+  </data>
+  <data name="TriageType" xml:space="preserve">
+    <value>Triage type</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ViewFullMedicalFile" xml:space="preserve">
+    <value>View full medical file</value>
+  </data>
+  <data name="ViewFullProfile" xml:space="preserve">
+    <value>View full profile</value>
   </data>
 </root>
