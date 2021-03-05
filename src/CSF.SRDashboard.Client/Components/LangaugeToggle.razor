@@ -28,10 +28,10 @@
     private string GetCurrentRequestCulture()
     {
         if (httpContextAccessor == null
-            && httpContextAccessor.HttpContext == null
-            && httpContextAccessor.HttpContext.Request == null
-            && httpContextAccessor.HttpContext.Request.Cookies == null
-            && httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
+            || httpContextAccessor.HttpContext == null
+            || httpContextAccessor.HttpContext.Request == null
+            || httpContextAccessor.HttpContext.Request.Cookies == null
+            || httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
         {
             return "en";
         }
