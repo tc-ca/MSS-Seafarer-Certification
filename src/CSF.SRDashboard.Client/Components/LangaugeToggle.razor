@@ -27,7 +27,7 @@
 
     private string GetCurrentRequestCulture()
     {
-        if (httpContextAccessor == null
+        /*if (httpContextAccessor == null
             && httpContextAccessor.HttpContext == null
             && httpContextAccessor.HttpContext.Request == null
             && httpContextAccessor.HttpContext.Request.Cookies == null
@@ -39,7 +39,7 @@
         if (culture != null)
         {
             MyCulture += string.Format("Culture Count: {0}", culture.Cultures.Count());
-        }
+        }*/
         return "en";//culture.Cultures.FirstOrDefault().Value;
         // MyCulture = culture.Cultures.FirstOrDefault().Value;
         // return culture.Cultures.FirstOrDefault().Value;
