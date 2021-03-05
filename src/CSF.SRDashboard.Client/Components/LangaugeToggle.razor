@@ -6,11 +6,14 @@
 @inject NavigationManager NavigationManager
 
 <section class="csf-toggle-button-container">
+    <p>@MyCulture</p>
     <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked="@(GetCurrentRequestCulture().Equals("en"))" id="EN" name="toggle" value="en" /><label for="EN">EN</label>
     <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked="@(GetCurrentRequestCulture().Equals("fr"))" id="FR" name="toggle" value="fr" /><label for="FR">FR</label>
 </section>
 
 @code {
+    private string MyCulture { get; set; }
+
     private void OnSelected(ChangeEventArgs e)
     {
         var culture = (string)e.Value;
@@ -29,6 +32,7 @@
             return "en";
         }
         var culture = CookieRequestCultureProvider.ParseCookieValue(httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]);
-        return culture.UICultures.Value;
+        MyCulture = culture.Cultures.FirstOrDefault().Value;
+        return culture.Cultures.FirstOrDefault().Value;
     }
 }
