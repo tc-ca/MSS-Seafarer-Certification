@@ -1,16 +1,16 @@
 ﻿@page "/requestdetails/{ServiceRequestId:int}"
-@using Models
 
+@inject IStringLocalizer<Common> Localizer
 
 <a href="/" class="link-back">
-    <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>Back to dashboard</span>
+    <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>@Localizer["BackToDashboard"]</span>
 </a>
 
-<h1>Request #@this.ServiceRequestId</h1>
+<h1>@string.Format("{0}{1}", this.Localizer["RequestNumber"], this.ServiceRequestId)</h1>
 
 <CSFTabControl>
     <TabPages>
-        <CSFTabPage Text="Summary">
+        <CSFTabPage Text="@Localizer["Summary"]">
             <section style="display:flex; justify-content:space-between; margin-top:53px;">
                 <section style="flex-basis:25%; height:25vh;">
                     <CSF.SRDashboard.Client.Components.ProcessingPhase />
@@ -36,11 +36,11 @@
 
             </section>
         </CSFTabPage>
-        <CSFTabPage Text="Notes">
+        <CSFTabPage Text="@Localizer["Notes"]">
 
         </CSFTabPage>
     </TabPages>
     <TabPageEndContent>
-        <span class="badge-pill">Status: In progress</span>
+        <span class="badge-pill">@Localizer["StatusInProgress"]</span>
     </TabPageEndContent>
 </CSFTabControl>
