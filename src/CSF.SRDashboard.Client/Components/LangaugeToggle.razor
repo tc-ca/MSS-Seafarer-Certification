@@ -36,7 +36,10 @@
             return "en";
         }
         var culture = CookieRequestCultureProvider.ParseCookieValue(httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]);
-        MyCulture += string.Format("Culture Count: {0}", culture.Cultures.Count());
+        if (culture != null)
+        {
+            MyCulture += string.Format("Culture Count: {0}", culture.Cultures.Count());
+        }
         return "en";//culture.Cultures.FirstOrDefault().Value;
         // MyCulture = culture.Cultures.FirstOrDefault().Value;
         // return culture.Cultures.FirstOrDefault().Value;
