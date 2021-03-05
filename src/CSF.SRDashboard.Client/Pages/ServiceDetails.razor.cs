@@ -1,10 +1,13 @@
 ﻿namespace CSF.SRDashboard.Client.Pages
 {
+    using CSF.SRDashboard.Client.DTO;
     using CSF.SRDashboard.Client.Models;
     using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
+    using Radzen.Blazor;
     using System;
+    using System.Collections.Generic;
 
     public partial class ServiceDetails
     {
@@ -20,7 +23,48 @@
         [Parameter]
         public int ServiceRequestId { get; set; }
 
-        public RequestDetailsPageModel requestDetailsPageData { get; set; }
+        public RequestDetailsPageModel RequestDetailsPageData { get; set; }
+
+        public List<NoteDTO> Notes { get; set; }
+
+        protected RadzenGrid<DashboardRow> NotesGrid;
+
+        protected List<DashboardRow> RequestsInNotes;
+
+        protected int NumberOfNotes;
+
+        protected int _NotesPageSize;
+
+        public List<DashboardRow> NotesData { get; set; }
+
+        DashboardRow oneRow;
+
+        protected int NotesPageSize
+        {
+            get
+            {
+                return _NotesPageSize;
+            }
+            set
+            {
+                _NotesPageSize = value;
+
+                StateHasChanged();
+
+                if (NotesGrid != null)
+                {
+                    NotesGrid.Reload();
+                }
+            }
+        }
+
+        void OnRowDoubleClick(DashboardRow row)
+        {
+            //var requestNumber = row.ServiceRequestNumber;
+
+            //navigationManger.NavigateTo($"{navigationManger.BaseUri}/requestdetails/" + row.ServiceRequestNumber);
+        }
+
         protected override void OnAfterRender(bool firstRender)
         {
             if (firstRender)
@@ -49,6 +93,34 @@
                     ExpiryDate = RandomDay()
                 };
 
+                // Notes mock
+
+                Notes = new List<NoteDTO>
+                {
+                    new NoteDTO
+                    {
+                        DateCreated = DateTime.Today,
+                        FirstName = "Chris",
+                        LastName = "Ikongo",
+                        Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+                    },
+                    new NoteDTO
+                    {
+                        DateCreated = RandomDay(),
+                        FirstName = "Lionel",
+                        LastName = "Messi",
+                        Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 563323"
+                    },
+                    new NoteDTO
+                    {
+                        DateCreated = RandomDay(),
+                        FirstName = "John",
+                        LastName = "Wick",
+                        Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 563323"
+                    }
+
+                };
+
                 InvokeAsync(StateHasChanged);
             }
             base.OnAfterRender(firstRender);
@@ -58,7 +130,7 @@
         {
             var utility = new Utility(MtoaArtifactService);
 
-            requestDetailsPageData = utility.CreateMockRequestDetailsData();
+            RequestDetailsPageData = utility.CreateMockRequestDetailsData();
 
             base.OnInitialized();
         }

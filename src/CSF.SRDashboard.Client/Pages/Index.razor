@@ -6,13 +6,17 @@
 
 <h1>Request Board</h1>
 <div>
-    <RadzenButton @attributes="SearchButtonAttribute" Text="Search" Icon="search"  Click="SearchButtonClicked" />
-    <RadzenButton @attributes="CreateNewRequestButtonAttribute" Text="Create new request" Icon="create" Click="CreateNewRequestButtonClicked"/>
+    <RadzenButton @attributes="SearchButtonAttribute" Text="Search" Icon="search" Click="SearchButtonClicked" />
+    <RadzenButton @attributes="CreateNewRequestButtonAttribute" Text="Create new request" Icon="create" Click="CreateNewRequestButtonClicked" />
     <br><br>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Launch demo modal
+    </button>
 </div>
 <br>
 <br>
 <div>
+
     <RadzenTabs>
         <Tabs>
             <RadzenTabsItem Text="In progress" Style="color:#1A202C">
@@ -286,7 +290,7 @@
 
         </Tabs>
     </RadzenTabs>
-
+    <CSF.SRDashboard.Client.Components.EditNotesDialog />
 </div>
 
 

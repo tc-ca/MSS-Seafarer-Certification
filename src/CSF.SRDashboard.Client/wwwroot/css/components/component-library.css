@@ -350,3 +350,7 @@ a.csf-edit-action {
     a.csf-edit-action span {
         margin-left: 5px;
     }
+
+.csf-model-header {
+    background-color: #1B50B1;
+}
