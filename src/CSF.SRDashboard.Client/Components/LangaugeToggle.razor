@@ -27,7 +27,8 @@
 
     private string GetCurrentRequestCulture()
     {
-        if (httpContextAccessor.HttpContext == null
+        if (httpContextAccessor == null
+            && httpContextAccessor.HttpContext == null
             && httpContextAccessor.HttpContext.Request == null
             && httpContextAccessor.HttpContext.Request.Cookies == null
             && httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
@@ -35,7 +36,9 @@
             return "en";
         }
         var culture = CookieRequestCultureProvider.ParseCookieValue(httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]);
-        MyCulture = culture.Cultures.FirstOrDefault().Value;
-        return culture.Cultures.FirstOrDefault().Value;
+        MyCulture += string.Format("Culture Count: {0}", culture.Cultures.Count());
+        return "en";//culture.Cultures.FirstOrDefault().Value;
+        // MyCulture = culture.Cultures.FirstOrDefault().Value;
+        // return culture.Cultures.FirstOrDefault().Value;
     }
 }
