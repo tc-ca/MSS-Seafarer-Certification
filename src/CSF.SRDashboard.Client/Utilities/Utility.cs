@@ -39,8 +39,7 @@ namespace CSF.SRDashboard.Client.Utilities
 
         public RequestGridsModel FillDataForGrids(RequestGridsModel requestGridsModel)
         {
-
-            var allRequests = this._artifactService.GetDashboardRowsInSequence();
+            var allRequests = this._artifactService.GetDashboardRowsInParallel();
             allRequests = this.AddMockServiceStandardAndFullName(allRequests);
             requestGridsModel.NewRequests = allRequests.Where(x => x.ProcessingPhase == Constants.New).ToList();
 

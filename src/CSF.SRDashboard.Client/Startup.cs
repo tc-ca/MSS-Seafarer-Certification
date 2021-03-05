@@ -15,6 +15,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Radzen;
 using CSF.SRDashboard.Client.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace CSF.SRDashboard.Client
 {
@@ -31,6 +38,42 @@ namespace CSF.SRDashboard.Client
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+
+            //services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
+
+
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+
+            //services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+            //    .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+
+
+            //services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
+            //{
+            //    options.Authority = options.Authority + "/v2.0/";
+            //    options.TokenValidationParameters.ValidateIssuer = false;
+            //});
+            // following is working
+            services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
+
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<HttpClient>();
@@ -41,6 +84,7 @@ namespace CSF.SRDashboard.Client
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +105,9 @@ namespace CSF.SRDashboard.Client
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
