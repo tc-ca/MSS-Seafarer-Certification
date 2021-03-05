@@ -24,7 +24,7 @@
 
     private string GetCurrentRequestCulture()
     {
-        if(httpContextAccessor.HttpContext != null && httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
+        if(httpContextAccessor.HttpContext == null && httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
         {
             return "en";
         }
