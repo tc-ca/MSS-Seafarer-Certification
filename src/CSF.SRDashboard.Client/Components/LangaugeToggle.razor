@@ -24,11 +24,11 @@
 
     private string GetCurrentRequestCulture()
     {
-        if(httpContextAccessor.HttpContext == null && httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
+        if (httpContextAccessor.HttpContext == null && httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == null)
         {
             return "en";
         }
         var culture = CookieRequestCultureProvider.ParseCookieValue(httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]);
-        return culture.Cultures[0].Value;
+        return culture.UICultures.Value;
     }
 }
