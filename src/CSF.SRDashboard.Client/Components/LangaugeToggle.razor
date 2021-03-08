@@ -6,9 +6,16 @@
 @inject NavigationManager NavigationManager
 
 <section class="csf-toggle-button-container">
-    <p>@MyCulture</p>
-    <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked="@Localizer["CurrentLanguage"].Equals("en"))" id="EN" name="toggle" value="en" /><label for="EN">EN</label>
-    <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked="@Localizer["CurrentLanguage"].Equals("fr"))" id="FR" name="toggle" value="fr" /><label for="FR">FR</label>
+    @if (Localizer["CurrentLanguage"].Value.Equals("en", StringComparison.InvariantCultureIgnoreCase))
+    {
+        <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked id="EN" name="toggle" value="en" /><label for="EN">EN</label>
+        <input type="radio" class="csf-toggle-button" @onchange="OnSelected" id="FR" name="toggle" value="fr" /><label for="FR">FR</label>
+    }
+    else {
+        <input type="radio" class="csf-toggle-button" @onchange="OnSelected" id="EN" name="toggle" value="en" /><label for="EN">EN</label>
+        <input type="radio" class="csf-toggle-button" @onchange="OnSelected" checked id="FR" name="toggle" value="fr" /><label for="FR">FR</label>
+    }
+
 </section>
 
 @code {
@@ -23,5 +30,10 @@
             $"redirectUri={Uri.EscapeDataString(uri)}";
 
         NavigationManager.NavigateTo("/Culture/SetCulture" + query, forceLoad: true);
+    }
+
+    private string getIsCheckedAttribute(string language)
+    {
+        return this.Localizer["CurrentLanguage"] == language ? "checked" : "";
     }
 }
