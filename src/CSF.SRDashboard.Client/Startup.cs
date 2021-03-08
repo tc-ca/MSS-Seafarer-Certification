@@ -49,7 +49,14 @@ namespace CSF.SRDashboard.Client
             });
 
             // Sign-in users with the Microsoft identity platform
-            services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
+            //services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
+                    // be sure to request all required permissions up-front
+                    .EnableTokenAcquisitionToCallDownstreamApi(new[] { "User.Read", "User.Read.All", "Mail.Read", "https://management.azure.com/user_impersonation" })
+                    .AddInMemoryTokenCaches()
+                    //.AddDistributedTokenCaches();
+                    ;
 
             services.AddControllersWithViews(options =>
             {

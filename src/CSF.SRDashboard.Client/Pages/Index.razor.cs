@@ -150,7 +150,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             if(! requestGridData.HasData)
             {
-                requestGridData = helper.FillDataForGrids( requestGridData);
+                requestGridData = helper.FillDataForGrids(requestGridData);
                 requestGridData.HasData = true;
             }
 
