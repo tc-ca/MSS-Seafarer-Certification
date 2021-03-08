@@ -24,7 +24,7 @@ namespace CSF.SRDashboard.Client.Shared
         protected override void OnInitialized()
         {
             _httpClient = HttpClientFactory.CreateClient();
-            var token = TokenAcquisitionService.GetAccessTokenForUserAsync(new string[] { "User.Read", "Mail.Read" }).GetAwaiter().GetResult();
+            var token = TokenAcquisitionService.GetAccessTokenForUserAsync(new string[] { "User.Read", "User.Read.All", "Mail.Read" }).GetAwaiter().GetResult();
 
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             var dataRequest = _httpClient.GetAsync("https://graph.microsoft.com/beta/me").GetAwaiter().GetResult();
