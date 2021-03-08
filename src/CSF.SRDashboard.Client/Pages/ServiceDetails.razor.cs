@@ -8,6 +8,7 @@
     using Radzen.Blazor;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public partial class ServiceDetails
     {
@@ -27,18 +28,19 @@
 
         public List<NoteDTO> Notes { get; set; }
 
-        protected RadzenGrid<DashboardRow> NotesGrid;
+        protected RadzenGrid<NoteDTO> NotesGrid;
 
-        protected List<DashboardRow> RequestsInNotes;
+        protected List<NoteDTO> RequestsInNotes;
 
         protected int NumberOfNotes;
 
         protected int _NotesPageSize;
 
-        public List<DashboardRow> NotesData { get; set; }
+        public List<NoteDTO> NotesData { get; set; }
 
-        DashboardRow oneRow;
+        NoteDTO OneRow;
 
+        // Number of items on the grid
         protected int NotesPageSize
         {
             get
@@ -58,7 +60,7 @@
             }
         }
 
-        void OnRowDoubleClick(DashboardRow row)
+        void OnRowDoubleClick(NoteDTO row)
         {
             //var requestNumber = row.ServiceRequestNumber;
 
@@ -94,7 +96,6 @@
                 };
 
                 // Notes mock
-
                 Notes = new List<NoteDTO>
                 {
                     new NoteDTO
@@ -121,6 +122,12 @@
 
                 };
 
+                NotesData = Notes;
+
+                NotesPageSize = Notes.Count;
+
+                OneRow = Notes.FirstOrDefault();
+
                 InvokeAsync(StateHasChanged);
             }
             base.OnAfterRender(firstRender);
@@ -131,6 +138,8 @@
             var utility = new Utility(MtoaArtifactService);
 
             RequestDetailsPageData = utility.CreateMockRequestDetailsData();
+
+            NotesGrid = new RadzenGrid<NoteDTO>();
 
             base.OnInitialized();
         }

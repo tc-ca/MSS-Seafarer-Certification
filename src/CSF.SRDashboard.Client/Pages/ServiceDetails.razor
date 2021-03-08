@@ -1,6 +1,7 @@
 ﻿@page "/requestdetails/{ServiceRequestId:int}"
 @using Models
 @using Utilities
+@using DTO
 
 
 <a href="/" class="link-back">
@@ -9,11 +10,12 @@
 
 <h1>Request #@this.ServiceRequestId</h1>
 
-<CSFTabControl>
-    <TabPages>
-        <CSFTabPage Text="Summary">
+
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="Summary" Style="color:#1A202C">
             <section style="display:flex; justify-content:space-between; margin-top:53px;">
-                <section style="flex-basis:25%; height:25vh;">
+                <section style="flex-basis:25%;">
                     <CSF.SRDashboard.Client.Components.ProcessingPhase />
                 </section>
                 <section style="flex-basis:73%; height:25vh;">
@@ -36,68 +38,41 @@
                 </section>
 
             </section>
-        </CSFTabPage>
-        <CSFTabPage Text="Notes">
+        </RadzenTabsItem>
 
-            <RadzenTabsItem Text="In progress" Style="color:#1A202C">
-                <RadzenGrid @ref="NotesGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                            FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
-                            Data="@NotesData" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
-                            Value="@oneRow" RowSelect="@(args => oneRow = args)" ColumnWidth="200px">
-                    <Columns>
-                        <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="Request #" Type="int">
-                            <Template>
-                                <RadzenLink Style="color:#1B50B1; text-decoration: underline" Path="@($"requestdetails/" + @data.ServiceRequestNumber)" Text=@data.ServiceRequestNumber.ToString() />
-                            </Template>
-                        </RadzenGridColumn>
-                        <RadzenGridColumn TItem="DashboardRow" Context="data" Property="FullName" Title="First and Last name" Type="string">
-                            <Template>
-                                @data.FullName
-                            </Template>
-                        </RadzenGridColumn>
-                        <RadzenGridColumn TItem="DashboardRow" Context="data" Property="CDN" Title="CDN" Type="string">
-                            <Template>
-                                @data.FullName
-                            </Template>
-                        </RadzenGridColumn>
-                        <RadzenGridColumn TItem="DashboardRow" Width="300px" Context="data" Property="RequestType" Title="Request type" Type="string">
-                            <Template>
-                                @data.CDN
-                            </Template>
-                        </RadzenGridColumn>
-                        <RadzenGridColumn TItem="DashboardRow" Context="data" Property="AssignedTo" Title="Assigned to" Type="string">
-                            <Template>
-                                @data.AssignedTo
-                            </Template>
-                        </RadzenGridColumn>
-                        <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceStandard" Title="Service Standard" Type="int">
-                            <Template>
-                                @*@if (data.ServiceStandard < 8)
-                                    <span style='color:red'>@data.ServiceStandard.ToString()   days remaining</span>
-                                }
-                                else
-                                {
-                                    <span style='color:#4A5568'>@data.ServiceStandard.ToString()   days remaining</span>
-                                }*@
+        <RadzenTabsItem Text="Notes" Style="color:#1A202C">
+            <RadzenGrid @ref="NotesGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
+                        Data="@NotesData" TItem="NoteDTO" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
+                        Value="@OneRow" RowSelect="@(args => OneRow = args)" ColumnWidth="200px">
+                <Columns>
+                    <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="DateOfCreated" Title="Date" Type="DateTime">
+                        <Template>
+                            @data.DateOfCreated
+                        </Template>
+                    </RadzenGridColumn>
+                    <RadzenGridColumn TItem="NoteDTO" Width="300px" Context="data" Property="Note" Title="Note" Type="string">
+                        <Template>
+                            @data.Note
+                        </Template>
+                    </RadzenGridColumn>
+                    <RadzenGridColumn TItem="NoteDTO" Context="data" Property="FullName" Title="Entered by" Type="string">
+                        <Template>
+                            @data.FullName
+                        </Template>
+                    </RadzenGridColumn>
+                    <RadzenGridColumn TItem="NoteDTO" Context="data" Property="Edit" Title="Edit" Type="string">
+                        <Template>
+                            <CSF.Components.Buttons.Actions.CSFEditButton />
+                        </Template>
+                    </RadzenGridColumn>
+                </Columns>
+            </RadzenGrid>
+            <span>Showing 1 to </span>
+            <span>Show &nbsp;</span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@NotesPageSize" /><span>&nbsp;request</span>
+        </RadzenTabsItem>
 
-                                <span>Days I think</span>
-                            </Template>
-                        </RadzenGridColumn>
-                        <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ProcessingPhase" Title="Processing phase" Type="string">
-                            <Template>
-                                @data.ProcessingPhase
-                            </Template>
-                        </RadzenGridColumn>
-                    </Columns>
-                </RadzenGrid>
-                <span>Showing 1 to </span>
-                <span>Show &nbsp;</span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@NotesPageSize" /><span>&nbsp;request</span>
-            </RadzenTabsItem>
+    </Tabs>
 
+</RadzenTabs>
 
-        </CSFTabPage>
-    </TabPages>
-    <TabPageEndContent>
-        <span class="badge-pill">Status: In progress</span>
-    </TabPageEndContent>
-</CSFTabControl>
