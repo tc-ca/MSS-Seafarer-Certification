@@ -110,7 +110,7 @@
                         DateCreated = RandomDay(),
                         FirstName = "Lionel",
                         LastName = "Messi",
-                        Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 563323"
+                        Note = "Alerts are available for any length of text, as well as an optional dismiss button."
                     },
                     new NoteDTO
                     {
@@ -118,6 +118,13 @@
                         FirstName = "John",
                         LastName = "Wick",
                         Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 563323"
+                    },
+                    new NoteDTO
+                    {
+                        DateCreated = new DateTime(2021,1,5),
+                        FirstName = "Bill",
+                        LastName = "Notes",
+                        Note = "Before getting started with Bootstrap’s modal component, be sure to read the following as our menu options have recently changed."
                     }
 
                 };
