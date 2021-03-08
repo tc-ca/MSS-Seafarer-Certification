@@ -138,6 +138,9 @@
   <data name="CurrentCertificaties" xml:space="preserve">
     <value>Current certificaties_fr</value>
   </data>
+  <data name="CurrentLanguage" xml:space="preserve">
+    <value>fr</value>
+  </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth_fr</value>
   </data>
