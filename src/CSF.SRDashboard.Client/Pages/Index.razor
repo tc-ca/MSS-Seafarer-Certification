@@ -1,7 +1,7 @@
 @page "/"
+@inject DialogService DialogService
 @using Utilities
 @using Models
-
 
 
 <h1>Request Board</h1>
@@ -9,12 +9,7 @@
     <RadzenButton @attributes="SearchButtonAttribute" Text="Search" Icon="search" Click="SearchButtonClicked" />
     <RadzenButton @attributes="CreateNewRequestButtonAttribute" Text="Create new request" Icon="create" Click="CreateNewRequestButtonClicked" />
     <br><br>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Launch demo modal
-    </button>
 </div>
-<br>
-<br>
 <div>
 
     <RadzenTabs>
@@ -290,11 +285,4 @@
 
         </Tabs>
     </RadzenTabs>
-    <CSF.SRDashboard.Client.Components.EditNotesDialog />
 </div>
-
-
-
-@code {
-
-}

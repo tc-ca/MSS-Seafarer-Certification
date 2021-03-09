@@ -41,6 +41,13 @@
         </RadzenTabsItem>
 
         <RadzenTabsItem Text="Notes" Style="color:#1A202C">
+
+            <section>
+                <input type="text" name="note" id="note" @bind="@this.NoteText" />
+                <input type="text" name="entered-by" id="entered-by" @bind="@this.Author"  />
+                <input type="button" @onclick="CreateNote" value="Save Note" />
+            </section>
+
             <RadzenGrid @ref="NotesGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                         FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
                         Data="@NotesData" TItem="NoteDTO" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"

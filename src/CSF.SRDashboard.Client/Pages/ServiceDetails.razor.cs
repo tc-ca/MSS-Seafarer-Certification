@@ -12,6 +12,10 @@
 
     public partial class ServiceDetails
     {
+        public string Author { get; set; }
+
+        public string NoteText { get; set; }
+
         [Inject]
         public IMtoaArtifactService MtoaArtifactService { get; set; }
 
@@ -25,8 +29,6 @@
         public int ServiceRequestId { get; set; }
 
         public RequestDetailsPageModel RequestDetailsPageData { get; set; }
-
-        public List<NoteDTO> Notes { get; set; }
 
         protected RadzenGrid<NoteDTO> NotesGrid;
 
@@ -96,7 +98,7 @@
                 };
 
                 // Notes mock
-                Notes = new List<NoteDTO>
+                var Notes = new List<NoteDTO>
                 {
                     new NoteDTO
                     {
@@ -144,6 +146,19 @@
             base.OnInitialized();
         }
 
+        protected void CreateNote()
+        {
+            var note = new NoteDTO
+            {
+                DateCreated = DateTime.Now,
+                FirstName = "Alex",
+                LastName = this.Author,
+                Note = string.Format("Note Text {0} - {1}", this.NoteText, this.NotesData.Count)
+            };
+
+            NotesData.Add(note);
+            this.NotesGrid.Reload();
+        }
 
     }
 }
