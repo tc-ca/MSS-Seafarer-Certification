@@ -64,21 +64,25 @@
                             @data.Note
                         </Template>
                     </RadzenGridColumn>
-                    <RadzenGridColumn TItem="NoteDTO" Context="data" Property="FullName" Title="Entered by" Type="string">
+                    <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="FullName" Title="Entered by" Type="string">
                         <Template>
                             @data.FullName
                         </Template>
                     </RadzenGridColumn>
-                    <RadzenGridColumn TItem="NoteDTO" Context="data" Property="Edit" Title="Edit" Type="string">
+                    <RadzenGridColumn TItem="NoteDTO" Filterable="false" Sortable="false" Width="50px" Context="data" Property="Edit" Title="Edit" Type="string">
                         <Template>
                             <CSF.Components.Buttons.Actions.CSFEditButton Click="@(args => this.OnEditButtonClick(data))" />
                         </Template>
                     </RadzenGridColumn>
                 </Columns>
             </RadzenGrid>
-            <span>Showing 1 to </span>
+            <br />
+            @*<span>Showing 1 to </span>
             <span>Show &nbsp;</span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@NotesPageSize" /><span>&nbsp;request</span>
+            <br />*@
+            <CSF.Components.Buttons.CSFButton Text="Add note"  />
         </RadzenTabsItem>
+
 
     </Tabs>
 
