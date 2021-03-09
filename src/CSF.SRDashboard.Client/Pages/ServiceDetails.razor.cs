@@ -12,7 +12,7 @@
 
     public partial class ServiceDetails
     {
-        public string Author { get; set; }
+        public int NoteId { get; set; } = -1;
 
         public string NoteText { get; set; }
 
@@ -102,6 +102,7 @@
                 {
                     new NoteDTO
                     {
+                        Id = 0,
                         DateCreated = DateTime.Today,
                         FirstName = "Chris",
                         LastName = "Ikongo",
@@ -109,6 +110,7 @@
                     },
                     new NoteDTO
                     {
+                        Id = 1,
                         DateCreated = RandomDay(),
                         FirstName = "Lionel",
                         LastName = "Messi",
@@ -116,6 +118,7 @@
                     },
                     new NoteDTO
                     {
+                        Id = 2,
                         DateCreated = RandomDay(),
                         FirstName = "John",
                         LastName = "Wick",
@@ -148,16 +151,39 @@
 
         protected void CreateNote()
         {
-            var note = new NoteDTO
+            if (this.isNewNote())
             {
-                DateCreated = DateTime.Now,
-                FirstName = "Alex",
-                LastName = this.Author,
-                Note = string.Format("Note Text {0} - {1}", this.NoteText, this.NotesData.Count)
-            };
+                var note = new NoteDTO
+                {
+                    Id = this.NotesData.Count,
+                    DateCreated = DateTime.Now,
+                    FirstName = "John",
+                    LastName = "Wick",
+                    Note = this.NoteText
+                };
 
-            NotesData.Add(note);
+                NotesData.Add(note);
+            }
+            else
+            {
+                var note = NotesData[this.NoteId];
+                note.Note = this.NoteText;
+                NotesData[this.NoteId] = note;
+            }
             this.NotesGrid.Reload();
+            this.NoteId = -1;
+            this.NoteText = string.Empty;
+        }
+
+        protected void OnEditButtonClick(NoteDTO note)
+        {
+            this.NoteId = note.Id;
+            this.NoteText = note.Note;
+        }
+
+        private bool isNewNote()
+        {
+            return this.NoteId < 0;
         }
 
     }

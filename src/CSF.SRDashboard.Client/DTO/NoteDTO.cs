@@ -7,6 +7,7 @@ namespace CSF.SRDashboard.Client.DTO
 {
     public class NoteDTO
     {
+        public int Id { get; set; }
 
         public DateTime DateCreated { get; set; }
 

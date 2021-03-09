@@ -42,9 +42,10 @@
 
         <RadzenTabsItem Text="Notes" Style="color:#1A202C">
 
-            <section>
+            <section style="border: 1px solid #1B50B1; border-radius: 4px;">
+                <label for="note">Enter your note here...</label>
+                <input type="hidden" @bind="this.NoteId" />
                 <input type="text" name="note" id="note" @bind="@this.NoteText" />
-                <input type="text" name="entered-by" id="entered-by" @bind="@this.Author"  />
                 <input type="button" @onclick="CreateNote" value="Save Note" />
             </section>
 
@@ -70,7 +71,7 @@
                     </RadzenGridColumn>
                     <RadzenGridColumn TItem="NoteDTO" Context="data" Property="Edit" Title="Edit" Type="string">
                         <Template>
-                            <CSF.Components.Buttons.Actions.CSFEditButton />
+                            <CSF.Components.Buttons.Actions.CSFEditButton Click="@(args => this.OnEditButtonClick(data))" />
                         </Template>
                     </RadzenGridColumn>
                 </Columns>
