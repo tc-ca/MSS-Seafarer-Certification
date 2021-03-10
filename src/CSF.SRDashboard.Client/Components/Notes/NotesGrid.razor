@@ -1,43 +1,46 @@
 ﻿@using DTO
+
+@inject IStringLocalizer<Common> Localizer
+
 @if (this.NotesData.Count > 0)
-{ 
+{
     <section style="margin-bottom:25px;">
         <RadzenGrid @ref="NotesRadzenGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
                     Data="@NotesData" TItem="NoteDTO" AllowColumnResize="true" ColumnWidth="200px">
             <Columns>
-                <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="DateOfCreated" Title="Date" Type="DateTime">
+                <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="DateOfCreated" Title="@Localizer["Date"]" Type="DateTime">
                     <Template>
                         @data.DateOfCreated
                     </Template>
                 </RadzenGridColumn>
-                <RadzenGridColumn TItem="NoteDTO" Width="300px" Context="data" Property="Note" Title="Note" Type="string">
+                <RadzenGridColumn TItem="NoteDTO" Width="300px" Context="data" Property="Note" Title="@Localizer["Note"]" Type="string">
                     <Template>
                         @data.Note
                     </Template>
                 </RadzenGridColumn>
-                <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="FullName" Title="Entered by" Type="string">
+                <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="FullName" Title="@Localizer["EnteredBy"]" Type="string">
                     <Template>
                         @data.FullName
                     </Template>
                 </RadzenGridColumn>
-                <RadzenGridColumn TItem="NoteDTO" Filterable="false" Sortable="false" Width="50px" Context="data" Property="Edit" Title="Edit" Type="string">
+                <RadzenGridColumn TItem="NoteDTO" Filterable="false" Sortable="false" Width="50px" Context="data" Property="Edit" Title="@Localizer["Edit"]" Type="string">
                     <Template>
-                        <CSF.Components.Buttons.Actions.CSFEditButton Click="@(args => DialogService.Open<NotesEditor>($"Edit note",
+                        <CSF.Components.Buttons.Actions.CSFEditButton Text="@Localizer["Edit"]" Click="@(args => DialogService.Open<NotesEditor>($"Edit note",
                                                                                        new Dictionary<string, object>() { { "Parent", this }, { "Note", data } }, null))" />
                     </Template>
                 </RadzenGridColumn>
             </Columns>
         </RadzenGrid>
     </section>
-    <CSF.Components.Buttons.CSFPrimaryButton Text="Add Note" Click="@(args => DialogService.Open<NotesEditor>($"Add a note",
+    <CSF.Components.Buttons.CSFPrimaryButton Text="@Localizer["AddNote"]" Click="@(args => DialogService.Open<NotesEditor>(Localizer["AddNote"],
                                                 new Dictionary<string, object>() { { "Parent", this }, { "Note", new NoteDTO() } }, null))" />
 }
 else
 {
-<section style="display:flex; flex-direction:column; align-items:center">
-    <p>No notes yet...</p>
-    <CSF.Components.Buttons.CSFPrimaryButton Text="Add Note" Click="@(args => DialogService.Open<NotesEditor>($"Add a note",
+    <section style="display:flex; flex-direction:column; align-items:center">
+        <p>@Localizer["NoNotes"]</p>
+        <CSF.Components.Buttons.CSFPrimaryButton Text="@Localizer["AddNote"]" Click="@(args => DialogService.Open<NotesEditor>(Localizer["AddNote"],
                                                 new Dictionary<string, object>() { { "Parent", this }, { "Note", new NoteDTO() } }, null))" />
-</section>
+    </section>
 }

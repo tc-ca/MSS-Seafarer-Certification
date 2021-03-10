@@ -1,9 +1,12 @@
 ﻿<a class="csf-edit-action" @onclick="@((args) => OnClick(args))">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" />
-    <span>Edit</span>
+    <span>@Text</span>
 </a>
 
 @code {
+    [Parameter]
+    public string Text { get; set; }
+
     [Parameter]
     public EventCallback<MouseEventArgs> Click { get; set; }
 
