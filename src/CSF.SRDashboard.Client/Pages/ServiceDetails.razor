@@ -2,6 +2,9 @@
 @using Models
 @using Utilities
 @using DTO
+@using Components.Notes 
+
+@inject DialogService DialogService
 
 
 <a href="/" class="link-back">
@@ -41,46 +44,7 @@
         </RadzenTabsItem>
 
         <RadzenTabsItem Text="Notes" Style="color:#1A202C">
-
-            <section style="border: 1px solid #1B50B1; border-radius: 4px;">
-                <label for="note">Enter your note here...</label>
-                <input type="hidden" @bind="this.NoteId" />
-                <input type="text" name="note" id="note" @bind="@this.NoteText" />
-                <input type="button" @onclick="CreateNote" value="Save Note" />
-            </section>
-
-            <RadzenGrid @ref="NotesGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                        FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
-                        Data="@NotesData" TItem="NoteDTO" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
-                        Value="@OneRow" RowSelect="@(args => OneRow = args)" ColumnWidth="200px">
-                <Columns>
-                    <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="DateOfCreated" Title="Date" Type="DateTime">
-                        <Template>
-                            @data.DateOfCreated
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="NoteDTO" Width="300px" Context="data" Property="Note" Title="Note" Type="string">
-                        <Template>
-                            @data.Note
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="NoteDTO" Width="100px" Context="data" Property="FullName" Title="Entered by" Type="string">
-                        <Template>
-                            @data.FullName
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="NoteDTO" Filterable="false" Sortable="false" Width="50px" Context="data" Property="Edit" Title="Edit" Type="string">
-                        <Template>
-                            <CSF.Components.Buttons.Actions.CSFEditButton Click="@(args => this.OnEditButtonClick(data))" />
-                        </Template>
-                    </RadzenGridColumn>
-                </Columns>
-            </RadzenGrid>
-            <br />
-            @*<span>Showing 1 to </span>
-            <span>Show &nbsp;</span><RadzenNumeric TValue="int" Min="1" Style="width: 55px" @bind-Value="@NotesPageSize" /><span>&nbsp;request</span>
-            <br />*@
-            <CSF.Components.Buttons.CSFButton Text="Add note"  />
+            <CSF.SRDashboard.Client.Components.Notes.NotesGrid NotesData="this.NotesData" />
         </RadzenTabsItem>
 
 

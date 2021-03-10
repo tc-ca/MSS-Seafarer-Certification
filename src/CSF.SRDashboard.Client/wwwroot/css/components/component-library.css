@@ -31,7 +31,8 @@ input.csf-toggle-button {
     cursor: pointer;
 }
 
-button.csf-component {
+button.csf-component,
+a.csf-component {
     font-weight: 600;
     line-height: 19px;
     color: #4A5568;
@@ -39,10 +40,20 @@ button.csf-component {
     border: 1px solid #4A5568;
     border-radius: 3px;
     padding: 6px;
+    cursor: pointer;
 }
 
     button.csf-component i {
         margin-right: 5px;
+    }
+
+    a.csf-component.primary {
+        background: #1B50B1;
+        color:#fff;
+    }
+
+    a.csf-component.primary:hover {
+        color:#fff;
     }
 
 /** 
@@ -340,15 +351,24 @@ button.csf-tab-button-active {
 /**
     CSF ACTION BUTTONS
 */
-a.csf-edit-action {
+a.csf-edit-action,
+a.csf-edit-action:link,
+a.csf-edit-action:visited,
+a.csf-edit-action:hover {
     color: #1B50B1;
     font-weight: 600;
     font-size: 14px;
     text-decoration: none;
+    cursor:pointer;
 }
 
     a.csf-edit-action span {
+        color: #1B50B1;
         margin-left: 5px;
+    }
+
+    a.csf-edit-action i {
+        color: #1B50B1;
     }
 
 .csf-model-header {
