@@ -16,27 +16,6 @@ namespace CSF.SRDashboard.Client.Utilities
             _artifactService = artifactService;
         }
 
-
-        public int FillDataForGrids(ref List<DashboardRow> newRequests,
-                                    ref List<DashboardRow> requestsInProgress,
-                                    ref List<DashboardRow> requestsOnHold,
-                                    ref List<DashboardRow> requestsCompleted,
-                                    ref List<DashboardRow> requestsNotSubmitted)
-        {
-
-            var allRequests = this._artifactService.GetDashboardRowsInSequence();
-            allRequests = this.AddMockServiceStandardAndFullName(allRequests);
-
-            newRequests = allRequests.Where(x => x.ProcessingPhase == Constants.New).ToList();
-            requestsInProgress = allRequests.Where(x => x.ProcessingPhase == Constants.InProgress).ToList();
-            requestsOnHold = allRequests.Where(x => x.ProcessingPhase == Constants.OnHold).ToList();
-            requestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
-            requestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
-
-            int numberOfTotalRequests = allRequests.Count;
-            return numberOfTotalRequests;
-        }
-
         public RequestGridsModel FillDataForGrids(RequestGridsModel requestGridsModel)
         {
             var allRequests = this._artifactService.GetDashboardRowsInParallel();
@@ -328,22 +307,24 @@ namespace CSF.SRDashboard.Client.Utilities
 
         }
 
-        public int FillMockDataForGrids(ref List<DashboardRow> newRequests,
-                                        ref List<DashboardRow> requestsInProgress,
-                                        ref List<DashboardRow> requestsOnHold,
-                                        ref List<DashboardRow> requestsCompleted,
-                                        ref List<DashboardRow> requestsNotSubmitted)
+        public RequestGridsModel FillMockDataForGrids(RequestGridsModel requestGridsModel)
         {
             var allRequests = this.FillMockRows();
 
-            newRequests = allRequests.Where(x => x.ProcessingPhase == Constants.New).ToList();
-            requestsInProgress = allRequests.Where(x => x.ProcessingPhase == Constants.InProgress).ToList();
-            requestsOnHold = allRequests.Where(x => x.ProcessingPhase == Constants.OnHold).ToList();
-            requestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
-            requestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
 
-            int numberOfTotalRequests = allRequests.Count; 
-            return numberOfTotalRequests;
+            allRequests = this.AddMockServiceStandardAndFullName(allRequests);
+            requestGridsModel.NewRequests = allRequests.Where(x => x.ProcessingPhase == Constants.New).ToList();
+
+            requestGridsModel.RequestsInProgress = allRequests.Where(x => x.ProcessingPhase == Constants.InProgress).ToList();
+
+            requestGridsModel.RequestsOnHold = allRequests.Where(x => x.ProcessingPhase == Constants.OnHold).ToList();
+
+            requestGridsModel.RequestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
+
+            requestGridsModel.RequestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
+
+            return requestGridsModel;
+
         }
 
         public RequestDetailsPageModel CreateMockRequestDetailsData()

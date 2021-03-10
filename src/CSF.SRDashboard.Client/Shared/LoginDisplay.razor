@@ -1,11 +1,21 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <div style="color: white">
-            @context.User.Identity.Name
+        @*<div style="color: white">
             <a href="AzureAD/Account/SignOut">Log out</a>
+        </div>*@
+        @if (photoDataString != null)
+        {
+            <img src="@photoDataString" alt="User profile image" with="35" height="35" style="border-radius: 50%; margin-right: 10px" />
+        }
+        else
+        {
+            <span style="color:#fff;margin-right:10px;">
+                <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.USER" Size="2" />
+            </span>
+        }
+        <div style="color: white">
+            @userDisplayName
         </div>
-
-
     </Authorized>
     <NotAuthorized>
         <a href="AzureAD/Account/SignIn">Log in</a>

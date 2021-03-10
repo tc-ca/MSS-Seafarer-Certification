@@ -19,12 +19,6 @@ namespace CSF.SRDashboard.Client.Pages
         RadzenGrid<DashboardRow> completedGrid;
         RadzenGrid<DashboardRow> notSubmittedGrid;
 
-        List<DashboardRow> requestsInProgress;
-        List<DashboardRow> requestsOnHold;
-        List<DashboardRow> requestsCompleted;
-        List<DashboardRow> requestsNotSubmitted;
-        List<DashboardRow> newRequests;
-
         int numberOfRequestsInProgress;
         int numberOfRequestsOnHold;
         int numberOfRequestsCompleted;
@@ -141,16 +135,14 @@ namespace CSF.SRDashboard.Client.Pages
         {
             Utility helper = new Utility(artifactService);
 
-            //use the following method for filling in some mock data when not getting data from MTOA
-            //totalNewRequest = helper.FillMockDataForGrids(ref newRequests,
-            //                                              ref requestsInProgress,
-            //                                              ref requestsOnHold,
-            //                                              ref requestsCompleted,
-            //                                              ref requestsNotSubmitted);
-
-            if(! requestGridData.HasData)
+            if (! requestGridData.HasData)
             {
+                //use the following line to get data from MTOA
                 requestGridData = helper.FillDataForGrids( requestGridData);
+
+                //use the following method for filling in some mock data when not getting data from MTOA
+                //requestGridData = helper.FillMockDataForGrids(requestGridData);
+
                 requestGridData.HasData = true;
             }
 
@@ -219,7 +211,6 @@ namespace CSF.SRDashboard.Client.Pages
 
             navigationManger.NavigateTo($"{navigationManger.BaseUri}/requestdetails/" + row.ServiceRequestNumber);
         }
-
 
         void OnPageSizeChange(int value, string name)
         {
