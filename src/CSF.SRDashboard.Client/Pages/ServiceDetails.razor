@@ -4,14 +4,15 @@
 @using DTO
 @using Components.Notes 
 
+@inject IStringLocalizer<Common> Localizer
 @inject DialogService DialogService
 
 
 <a href="/" class="link-back">
-    <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>Back to dashboard</span>
+    <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>@Localizer["BackToDashboard"]</span>
 </a>
 
-<h1>Request #@this.ServiceRequestId</h1>
+<h1>@string.Format("{0}{1}", this.Localizer["RequestNumber"], this.ServiceRequestId)</h1>
 
 
 <RadzenTabs>
@@ -43,7 +44,7 @@
             </section>
         </RadzenTabsItem>
 
-        <RadzenTabsItem Text="Notes" Style="color:#1A202C">
+        <RadzenTabsItem Text="@Localizer["Notes"]" Style="color:#1A202C">
             <CSF.SRDashboard.Client.Components.Notes.NotesGrid NotesData="this.NotesData" />
         </RadzenTabsItem>
 

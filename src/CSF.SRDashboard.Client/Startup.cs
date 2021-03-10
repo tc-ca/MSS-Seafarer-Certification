@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Radzen;
 using CSF.SRDashboard.Client.Models;
+using System.Globalization;
 
 namespace CSF.SRDashboard.Client
 {
@@ -33,6 +34,7 @@ namespace CSF.SRDashboard.Client
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddControllers();
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
@@ -41,6 +43,19 @@ namespace CSF.SRDashboard.Client
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
+
+            services.AddHttpContextAccessor();
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            var supportedCultures = new List<CultureInfo> { 
+                new CultureInfo("en"),
+                new CultureInfo("fr") 
+            };
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en");
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,12 +73,14 @@ namespace CSF.SRDashboard.Client
             }
 
             app.UseHttpsRedirection();
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
