@@ -9,7 +9,7 @@ namespace CSF.SRDashboard.Client.Shared
 {
     public partial class LoginDisplay
     {
-        [Inject]
+       [Inject]
         IHttpClientFactory HttpClientFactory { get; set; }
 
         [Inject]
@@ -26,7 +26,6 @@ namespace CSF.SRDashboard.Client.Shared
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             
             var basicInfoRequest = _httpClient.GetAsync("https://graph.microsoft.com/beta/me").GetAwaiter().GetResult();
-
             if (basicInfoRequest.IsSuccessStatusCode)
             {
                 var userData = System.Text.Json.JsonDocument.Parse(basicInfoRequest.Content.ReadAsStreamAsync().GetAwaiter().GetResult());
