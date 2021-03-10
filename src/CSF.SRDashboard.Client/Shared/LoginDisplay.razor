@@ -1,8 +1,8 @@
 ﻿<AuthorizeView>
     <Authorized>
-        @*<div style="color: white">
+        <div style="color: white">
             <a href="AzureAD/Account/SignOut">Log out</a>
-        </div>*@
+        </div>
         @if (photoDataString != null)
         {
             <img src="@photoDataString" alt="User profile image" with="35" height="35" style="border-radius: 50%; margin-right: 10px" />
