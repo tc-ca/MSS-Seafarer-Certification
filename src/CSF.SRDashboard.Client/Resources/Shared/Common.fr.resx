@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNote" xml:space="preserve">
+    <value>Add Note_fr</value>
+  </data>
   <data name="AssignedTo" xml:space="preserve">
     <value>Assigned to_fr</value>
   </data>
@@ -125,6 +128,9 @@
   </data>
   <data name="BackToDashboard" xml:space="preserve">
     <value>Back to dashboard_fr</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel_fr</value>
   </data>
   <data name="CandidateDocumentNumber" xml:space="preserve">
     <value>Candidate document number_fr</value>
@@ -141,6 +147,9 @@
   <data name="CurrentLanguage" xml:space="preserve">
     <value>fr</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date_fr</value>
+  </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth_fr</value>
   </data>
@@ -152,6 +161,12 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit_fr</value>
+  </data>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>Entered_br</value>
+  </data>
+  <data name="EnterNoteHere" xml:space="preserve">
+    <value>Enter your note here..._fr</value>
   </data>
   <data name="FirstAndLastName" xml:space="preserve">
     <value>First and last name_fr</value>
@@ -167,6 +182,12 @@
   </data>
   <data name="NewOrRenewal" xml:space="preserve">
     <value>New or renewal_fr</value>
+  </data>
+  <data name="NoNotes" xml:space="preserve">
+    <value>No notes_fr</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note_fr</value>
   </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes_fr</value>
@@ -185,6 +206,9 @@
   </data>
   <data name="RequestType" xml:space="preserve">
     <value>Request type_fr</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save_fr</value>
   </data>
   <data name="SeafarerDetails" xml:space="preserve">
     <value>Seafarer details_fr</value>

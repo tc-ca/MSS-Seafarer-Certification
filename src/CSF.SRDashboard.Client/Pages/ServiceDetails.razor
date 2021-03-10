@@ -1,6 +1,11 @@
 ﻿@page "/requestdetails/{ServiceRequestId:int}"
+@using Models
+@using Utilities
+@using Components.Notes 
 
 @inject IStringLocalizer<Common> Localizer
+@inject DialogService DialogService
+
 
 <a href="/" class="link-back">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.CHEVRON_LEFT" /> <span>@Localizer["BackToDashboard"]</span>
@@ -8,11 +13,12 @@
 
 <h1>@string.Format("{0}{1}", this.Localizer["RequestNumber"], this.ServiceRequestId)</h1>
 
-<CSFTabControl>
-    <TabPages>
-        <CSFTabPage Text="@Localizer["Summary"]">
+
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="Summary" Style="color:#1A202C">
             <section style="display:flex; justify-content:space-between; margin-top:53px;">
-                <section style="flex-basis:25%; height:25vh;">
+                <section style="flex-basis:25%;">
                     <CSF.SRDashboard.Client.Components.ProcessingPhase />
                 </section>
                 <section style="flex-basis:73%; height:25vh;">
@@ -24,7 +30,7 @@
 
                     <br />
 
-                    <CSF.SRDashboard.Client.Components.SeafarerDetails Model="requestDetailsPageData.SeafarerDetails" />
+                    <CSF.SRDashboard.Client.Components.SeafarerDetails Model="RequestDetailsPageData.SeafarerDetails" />
 
                     <br />
 
@@ -35,12 +41,14 @@
                 </section>
 
             </section>
-        </CSFTabPage>
-        <CSFTabPage Text="@Localizer["Notes"]">
+        </RadzenTabsItem>
 
-        </CSFTabPage>
-    </TabPages>
-    <TabPageEndContent>
-        <span class="badge-pill">@Localizer["StatusInProgress"]</span>
-    </TabPageEndContent>
-</CSFTabControl>
+        <RadzenTabsItem Text="@Localizer["Notes"]" Style="color:#1A202C">
+            <CSF.SRDashboard.Client.Components.Notes.NotesGrid NotesData="this.NotesData" />
+        </RadzenTabsItem>
+
+
+    </Tabs>
+
+</RadzenTabs>
+
