@@ -9,17 +9,17 @@
                     FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
                     Data="@NotesData" TItem="Note" AllowColumnResize="true" ColumnWidth="200px">
             <Columns>
-                <RadzenGridColumn TItem="Note" Width="100px" Context="data" Property="DateOfCreated" Title="@Localizer["Date"]" Type="DateTime">
+                <RadzenGridColumn TItem="Note" Width="100px" Context="data" Property="@nameof(Note.DateOfCreated)" Title="@Localizer["Date"]" Type="DateTime">
                     <Template>
                         @data.DateOfCreated
                     </Template>
                 </RadzenGridColumn>
-                <RadzenGridColumn TItem="Note" Width="300px" Context="data" Property="Note" Title="@Localizer["Note"]" Type="string">
+                <RadzenGridColumn TItem="Note" Width="300px" Context="data" Property="@nameof(Note.Text)" Title="@Localizer["Note"]" Type="string">
                     <Template>
                         @data.Text
                     </Template>
                 </RadzenGridColumn>
-                <RadzenGridColumn TItem="Note" Width="100px" Context="data" Property="FullName" Title="@Localizer["EnteredBy"]" Type="string">
+                <RadzenGridColumn TItem="Note" Width="100px" Context="data" Property="@nameof(Note.FullName)" Title="@Localizer["EnteredBy"]" Type="string">
                     <Template>
                         @data.FullName
                     </Template>

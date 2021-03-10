@@ -1,19 +1,41 @@
 ﻿namespace CSF.SRDashboard.Client.Components.Notes
 {
-    using CSF.SRDashboard.Client.Models;
-    using Microsoft.AspNetCore.Components;
     using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Components;
+    using Microsoft.Extensions.Localization;
+    using Microsoft.JSInterop;
+    using CSF.SRDashboard.Client.Models;
+    using CSF.SRDashboard.Client.Utilities;
+    using CSF.Web.Client.Shared;
+    using Microsoft.AspNetCore.Components.Web;
 
     public partial class NotesEditor
     {
         [Inject]
         Radzen.DialogService dialogService { get; set; }
 
+        [Inject] 
+        public IJSRuntime JSRuntime { get; set; }
+
+        [Inject] 
+        public IStringLocalizer<Common> Localizer { get; set; }
+
         [Parameter]
         public NotesGrid Parent { get; set; }
 
         [Parameter]
         public Note Note { get; set; }
+
+        private ElementReference NoteTextInput;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JSRuntime.FocusAsync(NoteTextInput);
+            }
+        }
 
         protected void CreateNote()
         {
@@ -44,6 +66,13 @@
             else
             {
                 this.dialogService.Close(false);
+            }
+        }
+        protected void KeyUpEvent(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+            {
+                this.CreateNote();
             }
         }
 
