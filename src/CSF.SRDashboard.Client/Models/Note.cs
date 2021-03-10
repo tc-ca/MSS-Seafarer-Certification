@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CSF.SRDashboard.Client.DTO
+﻿namespace CSF.SRDashboard.Client.Models
 {
-    public class NoteDTO
+    using System;
+    public class Note
     {
         public int Id { get; set; } = -1;
 
@@ -13,13 +9,12 @@ namespace CSF.SRDashboard.Client.DTO
 
         public string DateOfCreated { get { return DateCreated.ToString("MMMM dd, yyyy"); } }
 
-        public string Note { get; set; }
+        public string Text { get; set; }
 
         public string FullName { get { return FirstName + " " + LastName; } }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
     }
 }

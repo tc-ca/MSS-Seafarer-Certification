@@ -1,8 +1,7 @@
 ﻿namespace CSF.SRDashboard.Client.Components.Notes
 {
-    using CSF.SRDashboard.Client.DTO;
+    using CSF.SRDashboard.Client.Models;
     using Microsoft.AspNetCore.Components;
-    using Microsoft.AspNetCore.Components.Web;
     using System;
 
     public partial class NotesEditor
@@ -14,21 +13,21 @@
         public NotesGrid Parent { get; set; }
 
         [Parameter]
-        public NoteDTO Note { get; set; }
+        public Note Note { get; set; }
 
         protected void CreateNote()
         {
-            if (!string.IsNullOrEmpty(Note.Note))
+            if (!string.IsNullOrEmpty(Note.Text))
             {
                 if (this.isNewNote())
                 {
-                    var note = new NoteDTO
+                    var note = new Note
                     {
                         Id = Parent.NotesData.Count,
                         DateCreated = DateTime.Now,
                         FirstName = "John",
                         LastName = "Wick",
-                        Note = Note.Note
+                        Text = Note.Text
                     };
 
                     Parent.NotesData.Add(note);
@@ -36,7 +35,7 @@
                 else
                 {
                     var note = Parent.NotesData[Note.Id];
-                    note.Note = Note.Note;
+                    note.Text = Note.Text;
                     Parent.NotesData[Note.Id] = note;
                 }
                 Parent.Refresh();

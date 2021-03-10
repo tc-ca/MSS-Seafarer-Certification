@@ -1,14 +1,11 @@
 ﻿namespace CSF.SRDashboard.Client.Pages
 {
-    using CSF.SRDashboard.Client.DTO;
+    using System;
+    using System.Collections.Generic;
     using CSF.SRDashboard.Client.Models;
     using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
-    using Radzen.Blazor;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public partial class ServiceDetails
     {
@@ -18,6 +15,7 @@
         public RequestDetailComponentModel RequestDetailComponentModel { get; set; }
 
         public MMEDetailComponentModel MMEDetailComponentModel { get; set; }
+        
         /// <summary>
         /// Gets or sets the service request identification number.
         /// </summary>
@@ -26,11 +24,11 @@
 
         public RequestDetailsPageModel RequestDetailsPageData { get; set; }
 
-        public List<NoteDTO> NotesData { get; set; }
+        public List<Note> NotesData { get; set; }
 
         public ServiceDetails()
         {
-            this.NotesData = new List<NoteDTO>();
+            this.NotesData = new List<Note>();
         }
 
         protected override void OnAfterRender(bool firstRender)
@@ -62,39 +60,39 @@
                 };
                 
                 // Notes mock
-                var Notes = new List<NoteDTO>
+                var Notes = new List<Note>
                 {
-                    new NoteDTO
+                    new Note
                     {
                         Id = 0,
                         DateCreated = DateTime.Today,
                         FirstName = "Chris",
                         LastName = "Ikongo",
-                        Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+                        Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
                     },
-                    new NoteDTO
+                    new Note
                     {
                         Id = 1,
                         DateCreated = RandomDay(),
                         FirstName = "Lionel",
                         LastName = "Messi",
-                        Note = "Alerts are available for any length of text, as well as an optional dismiss button."
+                        Text = "Alerts are available for any length of text, as well as an optional dismiss button."
                     },
-                    new NoteDTO
+                    new Note
                     {
                         Id = 2,
                         DateCreated = RandomDay(),
                         FirstName = "John",
                         LastName = "Wick",
-                        Note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 563323"
+                        Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 563323"
                     },
-                    new NoteDTO
+                    new Note
                     {
                         Id = 3,
                         DateCreated = new DateTime(2021,1,5),
                         FirstName = "Bill",
                         LastName = "Notes",
-                        Note = "Before getting started with Bootstrap’s modal component, be sure to read the following as our menu options have recently changed."
+                        Text = "Before getting started with Bootstrap’s modal component, be sure to read the following as our menu options have recently changed."
                     }
 
                 };
