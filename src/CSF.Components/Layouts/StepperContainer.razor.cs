@@ -6,6 +6,12 @@
     {
         private int CurrentActiveStepIndex;
 
+        [Parameter]
+        public string ButtonText { get; set; }
+
+        [Parameter]
+        public string Title { get; set; }
+
         /// <summary>
         /// Gets or sets the ChildContenet of the StepperContainer.
         /// </summary>

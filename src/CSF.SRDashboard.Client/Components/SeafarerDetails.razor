@@ -1,28 +1,29 @@
-﻿
+﻿@inject IStringLocalizer<Common> Localizer
+
 <Card HeaderClasses="csf-header">
 
     <Header>
-        <h5>Seafarer details</h5>
-        <CSF.Components.Buttons.Actions.CSFEditButton />
+        <h5>@Localizer["SeafarerDetails"]</h5>
+        <CSF.Components.Buttons.Actions.CSFEditButton Text="@Localizer["Edit"]" />
     </Header>
 
     <Body>
         <RadzenAccordion Multiple="true">
             <Items>
-                <RadzenAccordionItem Text="Tombstone summary">
-                    <div><b>First and Last name:</b></div>
+                <RadzenAccordionItem Text="@Localizer["TombstoneSummary"]">
+                    <div><b>@Localizer["FirstAndLastName"]:</b></div>
                     <div>@Model.FirstName  @Model.LastName</div><br>
-                    <div><b>Candidate document number:</b></div>
+                    <div><b>@Localizer["CandidateDocumentNumber"]:</b></div>
                     <div>@Model.CDN</div><br>
-                    <div><b>Date of birth:</b></div>
+                    <div><b>@Localizer["DateOfBirth"]:</b></div>
                     <div>@Model.DateOfBirth.ToShortDateString()</div><br>
                     <RadzenButton Style="background-color: #F7F9FC;color: #1A202C;
-                        border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">View full profile</RadzenButton><br>
+                        border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">@Localizer["ViewFullProfile"]</RadzenButton><br>
                     <br />
                 </RadzenAccordionItem>
 
-                <RadzenAccordionItem Text="Medical summary" Style="width: 300px">
-                    <div><b>Fitness status:</b></div>
+                <RadzenAccordionItem Text="@Localizer["MedicalSummary"]" Style="width: 300px">
+                    <div><b>@Localizer["FitnessStatus"]:</b></div>
                     <div>@Model.FitnessStatus</div><br>
                     <div><b>Limitations:</b></div>
                     @if (Model.Limitations != null)
@@ -30,17 +31,17 @@
                         {
                             <div>@limitation</div><br>
                         }
-                    <div><b>Date of expiry:</b></div>
+                    <div><b>@Localizer["DateOfExpiry"]:</b></div>
                     <div>@Model.DateOfExpiry</div><br>
                     <RadzenButton Style="background-color: #F7F9FC;color: #1A202C;
                         border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">
-                        View full medical file
-                    </RadzenButton><br>
+                        @Localizer["ViewFullMedicalFile"]
+                    </RadzenButton><br />
                     <br />
                 </RadzenAccordionItem>
 
-                <RadzenAccordionItem Text="Certification summary">
-                    <div><b>Current certificates:</b></div>
+                <RadzenAccordionItem Text="@Localizer["CertificationSummary"]">
+                    <div><b>@Localizer["CurrentCertificates"]:</b></div>
                     @if (Model.CurrentCertificates != null)
                         @foreach (var certificate in Model.CurrentCertificates)
                         {
@@ -50,7 +51,7 @@
                     <br>
                     <RadzenButton Style="background-color: #F7F9FC;color: #1A202C;
                         border: 1px solid #1A202C;margin: 0px;padding: 0 1rem;font-size: 14px;">
-                        View full certification file
+                        @Localizer["ViewFullCertificationFile"]
                     </RadzenButton><br>
                     <br />
                 </RadzenAccordionItem>
