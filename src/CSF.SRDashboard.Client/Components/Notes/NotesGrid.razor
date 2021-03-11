@@ -1,0 +1,46 @@
+﻿@using Models
+
+@inject IStringLocalizer<Common> Localizer
+
+@if (this.NotesData.Count > 0)
+{
+    <section style="margin-bottom:25px;">
+        <RadzenGrid @ref="NotesRadzenGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@NotesPageSize" AllowSorting="true"
+                    Data="@NotesData" TItem="Note" AllowColumnResize="true" ColumnWidth="200px">
+            <Columns>
+                <RadzenGridColumn TItem="Note" Width="100px" Context="data" Property="@nameof(Note.DateOfCreated)" Title="@Localizer["Date"]" Type="DateTime">
+                    <Template>
+                        @data.DateOfCreated
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Note" Width="300px" Context="data" Property="@nameof(Note.Text)" Title="@Localizer["Note"]" Type="string">
+                    <Template>
+                        @data.Text
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Note" Width="100px" Context="data" Property="@nameof(Note.FullName)" Title="@Localizer["EnteredBy"]" Type="string">
+                    <Template>
+                        @data.FullName
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Note" Filterable="false" Sortable="false" Width="50px" Context="data" Property="Edit" Title="@Localizer["Edit"]" Type="string">
+                    <Template>
+                        <CSF.Components.Buttons.Actions.CSFEditButton Text="@Localizer["Edit"]" Click="@(args => DialogService.Open<NotesEditor>($"Edit note",
+                                                                                       new Dictionary<string, object>() { { "Parent", this }, { "Note", data } }, null))" />
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    </section>
+    <CSF.Components.Buttons.CSFPrimaryButton Text="@Localizer["AddNote"]" Click="@(args => DialogService.Open<NotesEditor>(Localizer["AddNote"],
+                                                new Dictionary<string, object>() { { "Parent", this }, { "Note", new Note() } }, null))" />
+}
+else
+{
+    <section style="display:flex; flex-direction:column; align-items:center">
+        <p>@Localizer["NoNotes"]</p>
+        <CSF.Components.Buttons.CSFPrimaryButton Text="@Localizer["AddNote"]" Click="@(args => DialogService.Open<NotesEditor>(Localizer["AddNote"],
+                                                new Dictionary<string, object>() { { "Parent", this }, { "Note", new Note() } }, null))" />
+    </section>
+}

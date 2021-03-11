@@ -1,4 +1,4 @@
-﻿<a class="csf-edit-action" href="#">
+﻿<a class="csf-edit-action" @onclick="@((args) => OnClick(args))">
     <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.EDIT" />
     <span>@Text</span>
 </a>
@@ -6,4 +6,12 @@
 @code {
     [Parameter]
     public string Text { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> Click { get; set; }
+
+    public async System.Threading.Tasks.Task OnClick(MouseEventArgs args)
+    {
+        await Click.InvokeAsync(args);
+    }
 } 

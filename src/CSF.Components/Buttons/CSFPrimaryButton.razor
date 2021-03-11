@@ -1,4 +1,6 @@
-﻿<a class="csf-component @this.CssClass" @onclick="@((args) => OnClick(args))">
+﻿@inherits CSFButton
+
+<a class="csf-component primary" @onclick="@((args) => OnClick(args))">
     @if (this.ChildContent != null)
     {
         @this.ChildContent
