@@ -13,11 +13,11 @@ namespace CSF.SRDashboard.Client.Services
         private readonly IConfiguration configuration;
         private HttpClient httpClient;
 
-        public GraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition TokenAcquisitionService)
+        public GraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService)
         {
             this.configuration = configuration;
             this.httpClient = httpClientFactory.CreateClient();
-            var token = TokenAcquisitionService.GetAccessTokenForUserAsync(new string[] { "User.Read" }).GetAwaiter().GetResult();
+            var token = tokenAcquisitionService.GetAccessTokenForUserAsync(new string[] { "User.Read" }).GetAwaiter().GetResult();
             this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
 
