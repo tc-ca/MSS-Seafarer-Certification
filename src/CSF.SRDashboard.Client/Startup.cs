@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Globalization;
+using CSF.SRDashboard.Client.Utilities;
 
 namespace CSF.SRDashboard.Client
 {
@@ -39,14 +40,12 @@ namespace CSF.SRDashboard.Client
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                    .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
-                    // be sure to request all required permissions up-front
-                    .EnableTokenAcquisitionToCallDownstreamApi(new[] { "User.Read" })
-                    .AddInMemoryTokenCaches()
-                    //.AddDistributedTokenCaches();
-                    ;
+            var updatedAzureAD = ConfigurationHelperService.UpdateConfigurationForAzureAD(Configuration);
 
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApp(updatedAzureAD)
+                    .EnableTokenAcquisitionToCallDownstreamApi(new[] { "User.Read" })
+                    .AddInMemoryTokenCaches();
 
             services.AddControllersWithViews(options =>
             {

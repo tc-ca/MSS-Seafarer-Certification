@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>8c012d54-ab63-4c89-b43c-77b0aa781f6a</UserSecretsId>
     <ApplicationInsightsResourceId>/subscriptions/fde9cf97-7bf0-4373-9fbd-eba18c6e0dfc/resourceGroups/TC-DevTest-Marine-Development/providers/microsoft.insights/components/cdnprototype-servicerequestdashboard-dev</ApplicationInsightsResourceId>
   </PropertyGroup>
 
