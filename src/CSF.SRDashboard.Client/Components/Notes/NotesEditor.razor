@@ -1,0 +1,9 @@
+﻿<section style="border: 1px solid #1B50B1;border-radius: 4px;padding: 27px;display: flex;flex-direction: column; font-weight:bold">
+    <label for="note" style="font-weight: bold;margin-bottom: 20px;">@Localizer["EnterNoteHere"]</label>
+    <input type="hidden" @bind="Note.Id" />
+    <input type="text" name="note" @onkeyup="@KeyUpEvent" id="note" @ref="NoteTextInput" @bind="Note.Text" style="border: 0;border-bottom: 1px solid #E2E8F0;line-height: 30px;" />
+    <section style="display: flex; margin-top: 27px; justify-content: flex-end;">
+        <input style="margin-right: 20px; background: #1B50B1; color:#fff" type="button" @onclick="CreateNote" value="@Localizer["Save"]" />
+        <input type="button" @onclick="CloseDialog" value="@Localizer["Cancel"]" />
+    </section>
+</section>

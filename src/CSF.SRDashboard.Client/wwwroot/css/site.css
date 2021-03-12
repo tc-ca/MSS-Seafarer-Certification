@@ -122,3 +122,14 @@ div.page-layout {
 section.csf-page-group {
     padding-right:140px;
 }
+
+/* RADZEN OVERRIDES */
+.rz-dialog-titlebar {
+    background: #1B50B1;
+    font-weight: 700;
+    color: #fff;
+}
+    .rz-dialog-titlebar .rzi.rzi-times {
+        color:#fff;
+    }
+
