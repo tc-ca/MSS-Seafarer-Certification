@@ -1,7 +1,7 @@
 ﻿
 namespace CSF.SRDashboard.Client.Services
 {
-    public interface IGraphApiService
+    public interface IUserGraphApiService
     {
         public string GetUserDisplayName();
         public string GetUserPhotoData();

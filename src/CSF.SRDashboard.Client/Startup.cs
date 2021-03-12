@@ -62,7 +62,7 @@ namespace CSF.SRDashboard.Client
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddSingleton<IRestClient, RestClient>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
-            services.AddTransient<IGraphApiService, GraphApiService>();
+            services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);

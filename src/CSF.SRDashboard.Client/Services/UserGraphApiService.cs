@@ -8,12 +8,12 @@ using System.Net.Http;
 
 namespace CSF.SRDashboard.Client.Services
 {
-    public class GraphApiService : IGraphApiService
+    public class UserGraphApiService : IUserGraphApiService
     {
         private readonly IConfiguration configuration;
         private HttpClient httpClient;
 
-        public GraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService)
+        public UserGraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService)
         {
             this.configuration = configuration;
             this.httpClient = httpClientFactory.CreateClient();

@@ -13,7 +13,7 @@ namespace CSF.SRDashboard.Client.Shared
         private string photoDataString;
 
         [Inject]
-        protected IGraphApiService graphService { get; set; }
+        protected IUserGraphApiService graphService { get; set; }
 
         protected override void OnInitialized()
         {
