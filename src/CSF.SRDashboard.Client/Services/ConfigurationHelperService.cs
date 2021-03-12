@@ -9,6 +9,13 @@ namespace CSF.SRDashboard.Client.Services
 {
     public class ConfigurationHelperService
     {
+        /// <summary>
+        /// Following method is used for inserting ClientId and SecientSecret values from Azure key-vault before configuring
+        /// Azure Active Directory related service. When configuring Azure Active Directory related service, inside appsettings.json
+        /// there has to be a section "AzureAd" with its related ClientId and ClientSecret
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns>AzureAd section of the configuration after updating it</returns>
         public static IConfigurationSection UpdateConfigurationForAzureAD(IConfiguration configuration )
         {
             AzureKeyVaultService keyVaultService = new AzureKeyVaultService(configuration);
