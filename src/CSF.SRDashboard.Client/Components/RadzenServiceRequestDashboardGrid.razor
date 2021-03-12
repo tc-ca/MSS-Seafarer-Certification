@@ -6,10 +6,14 @@
 @inject IStringLocalizer<Common> Localizer
 @inject NavigationManager navigationManger
 
+@*<RadzenGrid @ref="this.RadzenGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+            FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@this.PageSize" AllowSorting="true"
+            Data="@this.Data" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
+            Value="@oneRow" RowSelect="@(args => oneRow = args)" ColumnWidth="200px">*@
     <RadzenGrid @ref="this.RadzenGrid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                 FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="@this.PageSize" AllowSorting="true"
                 Data="@this.Data" TItem="DashboardRow" RowDoubleClick="@OnRowDoubleClick" AllowColumnResize="true"
-                Value="@oneRow" RowSelect="@(args => oneRow = args)" ColumnWidth="200px">
+                Value="@oneRow" RowSelect="@(args => oneRow = args)">
         <Columns>
             <RadzenGridColumn TItem="DashboardRow" Context="data" Property="ServiceRequestNumber" Title="@Localizer["RequestNumber"]" Type="int">
                 <Template>
@@ -80,4 +84,4 @@
 
             navigationManger.NavigateTo($"{navigationManger.BaseUri}/requestdetails/" + row.ServiceRequestNumber);
         }
-    } 
+    }

@@ -15,7 +15,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Radzen;
 using CSF.SRDashboard.Client.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Globalization;
+using CSF.SRDashboard.Client.Utilities;
 
 namespace CSF.SRDashboard.Client
 {
@@ -32,14 +40,29 @@ namespace CSF.SRDashboard.Client
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var updatedAzureAD = ConfigurationHelperService.UpdateConfigurationForAzureAD(Configuration);
+
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApp(updatedAzureAD)
+                    .EnableTokenAcquisitionToCallDownstreamApi(new[] { "User.Read" })
+                    .AddInMemoryTokenCaches();
+
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddControllers();
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddSingleton<IRestClient, RestClient>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
+            services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
@@ -77,6 +100,9 @@ namespace CSF.SRDashboard.Client
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
