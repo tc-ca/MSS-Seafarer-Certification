@@ -1,5 +1,29 @@
-﻿<h3>Find Seafarer</h3>
+﻿@page "/FindSeafarer"
+<h3>Find Seafarer</h3>
+
+<h1>Seafarers</h1>
+
+<div>
+  
+
+        <p>Enter one or more dearch field to view existing seafarers in the system</p>
+        <h4>Candidate Document Number (CDN)</h4>
+        <input class="form-text" @bind="CDNValue" />    
+        <h4>Last name</h4>
+        <input class="form-text" @bind="LastName" />
+        <h4>First Name</h4>
+        <input class="form-text" @bind="FirstName"/>
+        <h4>Date of birth</h4>
+        <input class="form-text" type="date" @bind="DOB" />
+        <button class="btn-primary">Search</button>
+   
+</div>
+
 
 @code {
+    private string CDNValue { get; set; }
+    private string LastName { get; set; }
+    private string FirstName { get; set; }
+    private DateTime DOB { get; set; }
 
 }
