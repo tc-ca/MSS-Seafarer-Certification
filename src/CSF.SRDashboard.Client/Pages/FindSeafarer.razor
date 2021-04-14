@@ -1,26 +1,29 @@
 ﻿@page "/FindSeafarer"
-<h3>Find Seafarer</h3>
-
 <h1>Seafarers</h1>
 
-<div class="">     
+<div class="border rounded col-8">
+    <h2>Find a seafarer</h2>
     <p>Enter one or more dearch field to view existing seafarers in the system</p>
-       
-       
-    <label for="CDNInput">Candidate Document Number (CDN)</label>
-    <input type="text" class="form-group" id="CNDInput" @bind="CDNValue" />
-    <label for="LastNameInput">Last Name</label>
-    <input type="text" class="form-group" id="LastNameInput" @bind="LastName" />
-    <label for="FirstNameInput">First Name</label>
-    <input type="text" class="form-group" id="FirstNameInput" @bind="FirstName"/>
-    <label for="DobInput">Date of birth</label>
-    <input type="date" class="form-text" id="DobInput"  @bind="DOB" />
-       
-    <button class="btn-primary" @onclick="OnClick">Search</button>
-   
+    <form style="width:400px">
+        <div class="form-group">
+            <label for="CDNInput">Candidate Document Number (CDN)</label>
+            <input type="text" class="form-control" id="CNDInput" @bind="CDNValue" />
+        </div>
+        <div class="form-group ">
+            <label for="LastNameInput">Last Name</label>
+            <input type="text" class="form-control" id="LastNameInput" @bind="LastName" />
+        </div>
+        <div class="form-group">
+            <label for="FirstNameInput">First Name</label>
+            <input type="text" class="form-control" id="FirstNameInput" @bind="FirstName" />
+        </div>
+        <div class="form-group">
+            <label for="DobInput">Date of birth</label>
+            <input type="date" class="form-control" id="DobInput" @bind="DOB" />
+        </div>
+        <button class="btn-primary" @onclick=OnClick>Search</button>
+    </form>
 </div>
-
-
 @code {
     private string CDNValue { get; set; }
     private string LastName { get; set; }
@@ -28,8 +31,8 @@
     private DateTime DOB { get; set; }
 
     private void OnClick()
-        {
-        Console.Write("button");
-        }
+    {
+        Console.Write($"button hehe: {CDNValue} {LastName} {FirstName} {DOB}");
+    }
 
 }
