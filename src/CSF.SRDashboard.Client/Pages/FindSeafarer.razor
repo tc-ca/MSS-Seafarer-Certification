@@ -3,19 +3,20 @@
 
 <h1>Seafarers</h1>
 
-<div>
-  
-
-        <p>Enter one or more dearch field to view existing seafarers in the system</p>
-        <h4>Candidate Document Number (CDN)</h4>
-        <input class="form-text" @bind="CDNValue" />    
-        <h4>Last name</h4>
-        <input class="form-text" @bind="LastName" />
-        <h4>First Name</h4>
-        <input class="form-text" @bind="FirstName"/>
-        <h4>Date of birth</h4>
-        <input class="form-text" type="date" @bind="DOB" />
-        <button class="btn-primary">Search</button>
+<div class="">     
+    <p>Enter one or more dearch field to view existing seafarers in the system</p>
+       
+       
+    <label for="CDNInput">Candidate Document Number (CDN)</label>
+    <input type="text" class="form-group" id="CNDInput" @bind="CDNValue" />
+    <label for="LastNameInput">Last Name</label>
+    <input type="text" class="form-group" id="LastNameInput" @bind="LastName" />
+    <label for="FirstNameInput">First Name</label>
+    <input type="text" class="form-group" id="FirstNameInput" @bind="FirstName"/>
+    <label for="DobInput">Date of birth</label>
+    <input type="date" class="form-text" id="DobInput"  @bind="DOB" />
+       
+    <button class="btn-primary" @onclick="OnClick">Search</button>
    
 </div>
 
@@ -25,5 +26,10 @@
     private string LastName { get; set; }
     private string FirstName { get; set; }
     private DateTime DOB { get; set; }
+
+    private void OnClick()
+        {
+        Console.Write("button");
+        }
 
 }
