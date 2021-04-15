@@ -1,5 +1,6 @@
 ﻿namespace CSF.Web.Client.Tests.Unit.Utilities
 {
+    using CSF.Common.Library;
     using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;

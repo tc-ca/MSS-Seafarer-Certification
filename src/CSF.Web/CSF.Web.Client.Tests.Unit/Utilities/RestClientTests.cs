@@ -1,5 +1,6 @@
 ﻿namespace CSF.Web.Client.Tests.Unit.Utilities
 {
+    using CSF.Common.Library;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;
@@ -36,7 +37,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedName = "John Wick";
             var expectedId = 1;
@@ -70,7 +71,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedStatusCode = HttpStatusCode.BadRequest;
 
@@ -102,7 +103,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedName = "John Wick";
             var expectedId = 1;
@@ -136,7 +137,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedStatusCode = HttpStatusCode.BadRequest;
 
@@ -167,7 +168,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedName = "John Wick";
             var expectedId = 1;
@@ -201,7 +202,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedStatusCode = HttpStatusCode.BadRequest;
 
@@ -232,7 +233,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedSuccess = true;
 
@@ -262,7 +263,7 @@
                 BaseAddress = new Uri("https://localhost/MTAPI-INT"),
             };
 
-            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object, this.keyValutService.Object);
+            var restClient = new RestClient(httpClient, this.configuration.Object, this.serviceLocator.Object);
             var expectedUri = new Uri("https://localhost/MTAPI-INT/apiTest");
             var expectedSuccess = false;
 

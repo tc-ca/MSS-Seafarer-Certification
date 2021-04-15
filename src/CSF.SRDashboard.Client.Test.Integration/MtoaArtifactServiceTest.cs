@@ -11,6 +11,7 @@ using FluentAssertions;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using CSF.Common.Library;
 
 namespace CSF.SRDashboard.Client.Test.Integration
 {
@@ -47,7 +48,7 @@ namespace CSF.SRDashboard.Client.Test.Integration
             var uri = this.configuration.GetSection("ServiceLocatorEndpoints")["Mtoa"];
 
             var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.Mtoa) == new System.Uri(uri));
-            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator, azureKeyVaultService);
+            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator);
 
         }
 

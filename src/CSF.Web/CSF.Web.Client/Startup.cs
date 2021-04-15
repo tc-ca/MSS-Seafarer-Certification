@@ -5,6 +5,7 @@ namespace CSF.Web.Client
     using System.Globalization;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using CSF.Common.Library;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Middleware;
     using CSF.Web.Client.Models;

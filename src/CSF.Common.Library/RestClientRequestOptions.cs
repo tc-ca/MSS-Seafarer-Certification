@@ -1,4 +1,8 @@
-﻿namespace CSF.Web.Client.Utilities
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CSF.Common.Library
 {
     /// <summary>
     /// Defines options for the rest client.
