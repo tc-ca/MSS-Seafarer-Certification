@@ -16,13 +16,23 @@ namespace CSF.SRDashboard.Client.Pages
 
         public string json { get; set; }
 
+        private seafarerForm sea = new seafarerForm();
+
+        public class seafarerForm
+        {
+            public string CDNValue { get; set; }
+            public string LastName { get; set; }
+            public string FirstName { get; set; }
+            public DateTime DOB { get; set; }
+
+        }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             this.Search();
         }
-
 
         public void Search()
         {
@@ -38,7 +48,6 @@ namespace CSF.SRDashboard.Client.Pages
             var result =  this.MpdisService.Search(dummy);
 
             json = JsonConvert.SerializeObject(result.Items, Formatting.Indented);
-
 
         }
 

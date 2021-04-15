@@ -2,3 +2,32 @@
 <h3>Find Seafarer</h3>
 
 <p>@json</p>
+
+<h1>Seafarers</h1>
+
+<div class="border rounded col-10">
+    <div class="container">
+        <h2>Find a seafarer</h2>
+        <p>Enter one or more dearch field to view existing seafarers in the system</p>
+        <form class="col-5 d-grid gap-3">
+            <div class="form-group">
+                <label for="CDNInput">Candidate Document Number (CDN)</label>
+                <input type="text" class="form-control" id="CNDInput" @bind="sea.CDNValue" />
+            </div>
+            <div class="form-group ">
+                <label for="LastNameInput">Last Name</label>
+                <input type="text" class="form-control" id="LastNameInput" @bind="sea.LastName" />
+            </div>
+            <div class="form-group">
+                <label for="FirstNameInput">First Name</label>
+                <input type="text" class="form-control" id="FirstNameInput" @bind="sea.FirstName" />
+            </div>
+            <div class="form-group">
+                <label for="DobInput">Date of birth</label>
+                <input type="date" class="form-control" id="DobInput" @bind="sea.DOB" />
+            </div>
+            <button class=" col-2 btn-primary rounded" @onclick=Search>Search</button>
+        </form>
+    </div>
+</div>
+
