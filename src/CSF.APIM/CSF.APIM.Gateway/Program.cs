@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,13 +12,6 @@ namespace CSF.APIM.Gateway
 {
     public class Program
     {
-        /* original API url
-         * 
-         * https://pokeapi.co/api/v2/pokemon
-           https://cat-fact.herokuapp.com/facts/
-         * 
-         */
-
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -27,9 +21,21 @@ namespace CSF.APIM.Gateway
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration(config => config.AddJsonFile($"Ocelot.{environment}.json"));
-                }).ConfigureLogging(logging=> logging.AddConsole()) ;
+                    webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                    {
+                        var hostingEnvironment = hostingContext.HostingEnvironment;
+                        if (hostingEnvironment.EnvironmentName == "dev")
+                        {
+                            var appAssembly = Assembly.Load(new AssemblyName(hostingEnvironment.ApplicationName));
+                            if (appAssembly != null)
+                            {
+                                config.AddUserSecrets(appAssembly, optional: true);
+                            }
+                        }
+                        config.AddJsonFile($"Ocelot.{hostingEnvironment.EnvironmentName}.json");
+                    }
+                    );
+                }).ConfigureLogging(logging => logging.AddConsole());
     }
 }
