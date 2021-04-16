@@ -30,7 +30,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         public int Rate { get; set; }
 
         [JsonProperty("deceasedStatus")]
-        public bool DeceasedStatus { get; set; }
+        public bool? DeceasedStatus { get; set; }
 
     }
 }

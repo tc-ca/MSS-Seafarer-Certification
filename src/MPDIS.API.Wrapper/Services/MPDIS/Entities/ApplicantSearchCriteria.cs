@@ -24,7 +24,10 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         public string LastName { get; set; }
 
         [JsonProperty("dateOfBirth")]
-        public string DateOfBirth { get; set; }
+        public string DateOfBirth { get { return DateOfBirthObj?.ToString("yyyy-MM-dd"); } }
+
+        [JsonIgnore]
+        public DateTime? DateOfBirthObj { get; set; }
 
     }
 }

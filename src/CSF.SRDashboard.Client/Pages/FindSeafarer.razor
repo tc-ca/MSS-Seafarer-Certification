@@ -1,4 +1,7 @@
 ﻿@page "/search"
+@using DSD.MSS.Blazor.Components.Core.Constants
+@using DSD.MSS.Blazor.Components.Core
+
 <h3>Find Seafarer</h3>
 
 <p>@json</p>
@@ -6,28 +9,27 @@
 <h1>Seafarers</h1>
 
 <div class="border rounded col-10">
-    <div class="container">
+    <div class="">
         <h2>Find a seafarer</h2>
         <p>Enter one or more dearch field to view existing seafarers in the system</p>
-        <form class="col-5 d-grid gap-3">
-            <div class="form-group">
-                <label for="CDNInput">Candidate Document Number (CDN)</label>
-                <input type="text" class="form-control" id="CNDInput" @bind="sea.CDNValue" />
+        <EditForm EditContext="@editContext" OnValidSubmit="Search">
+            <div class="col-5 d-grid gap-3">
+                <div class="form-group">
+                    <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>searchCriteria.Cdn)" @bind-Value="@searchCriteria.Cdn" />
+                </div>
+                <div class="form-group ">
+                    <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@searchCriteria.LastName"  ValidationFor="@(()=>searchCriteria.LastName)"/>
+                </div>
+                <div class="form-group">
+                    <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@searchCriteria.FirstName" ValidationFor="@(()=>searchCriteria.FirstName)" />
+                </div>
+                <div class="form-group">
+                    
+                    <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@searchCriteria.DateOfBirthObj" ValidationFor="@(()=>searchCriteria.DateOfBirthObj)" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Search</button>
             </div>
-            <div class="form-group ">
-                <label for="LastNameInput">Last Name</label>
-                <input type="text" class="form-control" id="LastNameInput" @bind="sea.LastName" />
-            </div>
-            <div class="form-group">
-                <label for="FirstNameInput">First Name</label>
-                <input type="text" class="form-control" id="FirstNameInput" @bind="sea.FirstName" />
-            </div>
-            <div class="form-group">
-                <label for="DobInput">Date of birth</label>
-                <input type="date" class="form-control" id="DobInput" @bind="sea.DOB" />
-            </div>
-            <button class=" col-2 btn-primary rounded" @onclick=Search>Search</button>
-        </form>
+        </EditForm>
     </div>
 </div>
 
