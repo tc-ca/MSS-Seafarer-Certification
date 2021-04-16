@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DSD.MSS.Blazor.Components.Table;
+using DSD.MSS.Blazor.Components.Table.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Caching.Memory;
 using MPDIS.API.Wrapper.Services.MPDIS;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using Newtonsoft.Json;
@@ -16,20 +19,17 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public IMpdisService MpdisService { get; set; }
-
+        protected Table<ApplicantSearchResultItem> TableRef { get; set; }
+        protected List<ApplicantSearchResultItem> tableData = new List<ApplicantSearchResultItem>();
+        public ApplicantSearchResult searchResult { get; set; }
         public string json { get; set; }
-
+        public bool ShowFilterHeader { get; set; } = true;
+        private const string tableSettingkey = "TableSettings";
+        protected TableSettings<ApplicantSearchResultItem> tableSettings { get; set; }
         public ApplicantSearchCriteria searchCriteria = new ApplicantSearchCriteria();
-       // protected seafarerForm sea { get; set; }
-
-        /*public class seafarerForm
-        {
-            public string CDNValue { get; set; }
-            public string LastName { get; set; }
-            public string FirstName { get; set; }
-            public DateTime? DOB { get; set; }
-
-        }*/
+        public bool showTable { get; set; } = true;
+        public bool showForm { get; set; } = false;
+        private IMemoryCache memoryCache;
 
         protected override void OnInitialized()
         {
@@ -43,13 +43,49 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Search()
         {
-           
-           
 
+            showTable = false;
+            showForm = true;
             var result =  this.MpdisService.Search(searchCriteria);
+            
+            tableData = (List<ApplicantSearchResultItem>)LoadData(result);
+            //TableRef.Update();
 
             json = JsonConvert.SerializeObject(result.Items, Formatting.Indented);
 
+        }
+       private IEnumerable<ApplicantSearchResultItem> LoadData(ApplicantSearchResult result) 
+        {
+        List<ApplicantSearchResultItem> list = result.Items;
+
+            return list;
+        }
+        
+        
+        protected void OnAfterTableDataLoaded()
+        {
+            if (tableSettings != null)
+            {
+                TableRef.ResetTableSettings(tableSettings);
+                tableSettings = null;
+            }
+        }
+        public void OnFilterChanged(TableSettings<ApplicantSearchResultItem> settings)
+        {
+
+            var cacheOptions = new MemoryCacheEntryOptions()
+            {
+                AbsoluteExpiration = DateTime.Now.AddHours(2)
+            };
+
+            if (TableRef != null)
+            {
+                memoryCache.Set("TableSettings", settings);
+            }
+        }
+        protected void HandleHeaderFilterChanged()
+        {
+            StateHasChanged();
         }
 
     }

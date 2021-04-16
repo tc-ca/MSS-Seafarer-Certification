@@ -4,12 +4,11 @@
 
 <h3>Find Seafarer</h3>
 
-<p>@json</p>
-
 <h1>Seafarers</h1>
 
-<div class="border rounded col-10">
+<div hidden="@showForm" class="border rounded col-10">
     <div class="">
+        <br />
         <h2>Find a seafarer</h2>
         <p>Enter one or more dearch field to view existing seafarers in the system</p>
         <EditForm EditContext="@editContext" OnValidSubmit="Search">
@@ -18,18 +17,30 @@
                     <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>searchCriteria.Cdn)" @bind-Value="@searchCriteria.Cdn" />
                 </div>
                 <div class="form-group ">
-                    <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@searchCriteria.LastName"  ValidationFor="@(()=>searchCriteria.LastName)"/>
+                    <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@searchCriteria.LastName" ValidationFor="@(()=>searchCriteria.LastName)" />
                 </div>
                 <div class="form-group">
                     <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@searchCriteria.FirstName" ValidationFor="@(()=>searchCriteria.FirstName)" />
                 </div>
                 <div class="form-group">
-                    
                     <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@searchCriteria.DateOfBirthObj" ValidationFor="@(()=>searchCriteria.DateOfBirthObj)" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
+
             </div>
         </EditForm>
     </div>
+    <br />
 </div>
 
+<div hidden="@showTable" id="table" class="border rounded col-10">
+        <Table TableClass="table table-striped table-hover"  OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
+               @ref="TableRef" DefaultPageSize="25" ShowSearchBar="@ShowFilterHeader"
+               Items="tableData"  HeaderFilterChanged="@(()=>HandleHeaderFilterChanged())">
+            <Column TableItem="ApplicantSearchResultItem" Title="Last Name" Field="@(x => x.LastName)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="First Name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="CDN #" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="Date Of Birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+    </div>
