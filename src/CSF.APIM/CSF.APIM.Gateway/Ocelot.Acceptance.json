@@ -1,29 +1,6 @@
 {
   "Routes": [
-    {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//tcappstest.tc.gc.ca",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/hello",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello/guid",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//tcappstest.tc.gc.ca",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/guid",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
+    // some test API end points
     {
       "DownstreamPathTemplate": "/api/v2/pokemon",
       "DownstreamScheme": "https",
@@ -36,6 +13,8 @@
       "UpstreamPathTemplate": "/pokemon",
       "UpstreamHttpMethod": [ "Get" ]
     },
+
+    // test end point, pokemon with id
     {
       "DownstreamPathTemplate": "/api/v2/pokemon/{Id}",
       "DownstreamScheme": "https",
@@ -49,24 +28,25 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
 
+
+    //MPDIS with authentication
     {
-      "DownstreamPathTemplate": "/facts/",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api-mpdis_wrapper/Mpdis/Applicant/{cdn}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//cat-fact.herokuapp.com",
-          "Port": "443"
+          "Host": "//wwwappsmssdev",
+          "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/catfacts",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/mpdis/applicants/{cdn}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     }
-  ],
 
-  "GlobalConfiguration": {
-    "BaseUrl": "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/4/csf-apim"
-  }
-
-
+  ]
 
 }
