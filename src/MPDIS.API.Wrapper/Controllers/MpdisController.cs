@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MPDIS.API.Wrapper.Services.MPDIS;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,14 @@ namespace MPDIS.API.Wrapper.Controllers
         {
             var applicantInformation = this.mpdisService.GetApplicantByCdn(candidateDocumentNumber);
             return Ok(applicantInformation);
+        }
+
+        [HttpPost]
+        [Route("applicants/search")]
+        public IActionResult Search(ApplicantSearchCriteria searchCriteria)
+        {
+            var applicantSearchResult = this.mpdisService.Search(searchCriteria);
+            return Ok(applicantSearchResult);
         }
     }
 }

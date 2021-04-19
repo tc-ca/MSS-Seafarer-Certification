@@ -13,5 +13,12 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         /// <param name="cdn">The applicant's cdn.</param>
         /// <returns>The applicant's information.</returns>
         ApplicantInformation GetApplicantByCdn(string cdn);
+
+        /// <summary>
+        /// Search for the applicant based on CDN number, First Name, Last Name, or date of birth
+        /// </summary>
+        /// <param name="searchCriteria"></param>
+        /// <returns>Results based on search criteria</returns>
+        ApplicantSearchResult Search(ApplicantSearchCriteria searchCriteria);
     }
 }
