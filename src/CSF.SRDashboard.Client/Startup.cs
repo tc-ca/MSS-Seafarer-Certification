@@ -69,6 +69,7 @@ namespace CSF.SRDashboard.Client
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
 
+            services.AddScoped<SessionState>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);

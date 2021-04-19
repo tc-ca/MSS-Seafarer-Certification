@@ -16,5 +16,9 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         [JsonProperty("items")]
         public  List<ApplicantSearchResultItem> Items { get; set; }
 
+        public ApplicantSearchResult()
+        {
+            Items = new List<ApplicantSearchResultItem>();
+        }
     }
 }
