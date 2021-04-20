@@ -1,6 +1,5 @@
 using CSF.SRDashboard.Client.Services;
 using CSF.Web.Client.Data.Services;
-using CSF.Web.Client.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +23,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Globalization;
 using CSF.SRDashboard.Client.Utilities;
+using MPDIS.API.Wrapper.Services.MPDIS;
+using CSF.Common.Library;
 
 namespace CSF.SRDashboard.Client
 {
@@ -59,10 +60,15 @@ namespace CSF.SRDashboard.Client
             services.AddServerSideBlazor();
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
-            services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
+            services.AddSingleton<IMpdisService, MpdisService>();
             services.AddSingleton<IRestClient, RestClient>();
+            services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
+
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
-            services.AddTransient<IUserGraphApiService, UserGraphApiService>();
+            //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
+            services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
+
+            services.AddScoped<SessionState>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
@@ -70,9 +76,9 @@ namespace CSF.SRDashboard.Client
             services.AddHttpContextAccessor();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            var supportedCultures = new List<CultureInfo> { 
+            var supportedCultures = new List<CultureInfo> {
                 new CultureInfo("en"),
-                new CultureInfo("fr") 
+                new CultureInfo("fr")
             };
             services.Configure<RequestLocalizationOptions>(options =>
             {

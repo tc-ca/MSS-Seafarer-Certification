@@ -1,5 +1,4 @@
 ﻿using System;
-using CSF.Web.Client.Shared;
 using CSF.Web.Client.TCComponents.Stepper;
 using Microsoft.Extensions.Localization;
 
@@ -10,9 +9,9 @@ namespace CSF.Web.Client.Services
         private int _currentIndex = 0;
 
         public BaseStepper Stepper { get; set; }
-        public IStringLocalizer<Common> CommonLocalizer { get; set; }
+        public IStringLocalizer<CSF.Web.Client.Shared.Common> CommonLocalizer { get; set; }
         
-        public UploadDocumentsStepper(IStringLocalizer<Common> CommonLocalizer)
+        public UploadDocumentsStepper(IStringLocalizer<CSF.Web.Client.Shared.Common> CommonLocalizer)
         {
             this.CommonLocalizer = CommonLocalizer;
             this.Stepper = new BaseStepper();
