@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.Utilities;
+using DSD.MSS.Blazor.Components.Table;
+using DSD.MSS.Blazor.Components.Table.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Caching.Memory;
 using MPDIS.API.Wrapper.Services.MPDIS;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using Newtonsoft.Json;
@@ -12,44 +17,41 @@ namespace CSF.SRDashboard.Client.Pages
 {
     public partial class FindSeafarer
     {
-        protected EditContext editContext;
+        protected EditContext EditContext;
+
+        [Inject]
+        public SessionState State { get; set; }
 
         [Inject]
         public IMpdisService MpdisService { get; set; }
 
-        public string json { get; set; }
+        public ApplicantSearchResult SearchResult { get; set; }
 
-        public ApplicantSearchCriteria searchCriteria = new ApplicantSearchCriteria();
-       // protected seafarerForm sea { get; set; }
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
 
-        /*public class seafarerForm
-        {
-            public string CDNValue { get; set; }
-            public string LastName { get; set; }
-            public string FirstName { get; set; }
-            public DateTime? DOB { get; set; }
-
-        }*/
+        public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-           
-            editContext = new EditContext(searchCriteria);
-            var isValid = editContext.Validate();
 
-            //this.Search();
+            if (State.SearchCriteria != null)
+            {
+                SearchCriteria = State.SearchCriteria;
+            }
+
+            State.ApplicantSearchResult = null;
+            EditContext = new EditContext(SearchCriteria);
         }
 
         public void Search()
         {
-           
-           
+            State.SearchCriteria = SearchCriteria;
 
-            var result =  this.MpdisService.Search(searchCriteria);
+            State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
 
-            json = JsonConvert.SerializeObject(result.Items, Formatting.Indented);
-
+            NavigationManager.NavigateTo("/SearchResults");
         }
 
     }
