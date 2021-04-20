@@ -100,7 +100,7 @@
         /// Gets or sets the applicant's mailing address identifier.
         /// </summary>
         [JsonProperty("mailingAddressId")]
-        public int MailingAddressId { get; set; }
+        public int? MailingAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's mailing address.
@@ -208,7 +208,7 @@
         /// Gets or sets the applicant's identity document identifier.
         /// </summary>
         [JsonProperty("identityDocId")]
-        public int IdentityDocumentId { get; set; }
+        public int? IdentityDocumentId { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's identity document rmarks.
@@ -232,7 +232,7 @@
         /// Gets or sets the applicant's citizenship document identifier.
         /// </summary>
         [JsonProperty("citizenshipDocId")]
-        public int CitizenshipDocumentId { get; set; }
+        public int? CitizenshipDocumentId { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's citizenship country.
@@ -256,13 +256,13 @@
         /// Gets or sets the applicant's physician exam date in unix epoch time.
         /// </summary>
         [JsonProperty("examDate")]
-        public long PhysicianExamDate { get; set; }
+        public long? PhysicianExamDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's physician exam expiration date in unix epoch time.
         /// </summary>
         [JsonProperty("expireDate")]
-        public long PhysicianExpirationDate { get; set; }
+        public long? PhysicianExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's physician assesment.
