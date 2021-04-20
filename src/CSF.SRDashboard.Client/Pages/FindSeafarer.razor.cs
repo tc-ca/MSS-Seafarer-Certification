@@ -43,18 +43,15 @@ namespace CSF.SRDashboard.Client.Pages
 
             State.ApplicantSearchResult = null;
             EditContext = new EditContext(SearchCriteria);
-
         }
 
         public void Search()
         {
-
             State.SearchCriteria = SearchCriteria;
 
             State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
 
             NavigationManager.NavigateTo("/SearchResults");
-
         }
 
     }

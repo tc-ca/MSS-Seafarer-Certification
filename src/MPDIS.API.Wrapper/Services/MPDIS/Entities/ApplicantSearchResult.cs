@@ -8,10 +8,8 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
 {
     public class ApplicantSearchResult
     {
-
         [JsonProperty("totalCount")]
         public long TotalCount { get; set; } = 0;
-
 
         [JsonProperty("items")]
         public  List<ApplicantSearchResultItem> Items { get; set; }

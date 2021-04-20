@@ -19,16 +19,11 @@ namespace CSF.SRDashboard.Client.Pages
         public SessionState State { get; set; }
         [Inject]
         public IMpdisService MpdisService { get; set; }
-
-        [Inject]
-        public IResultsService resultService { get; set; }
-
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
         protected TableSettings<ApplicantSearchResultItem> tableSettings { get; set; }
         public bool ShowFilterHeader { get; set; } = true;
         private const string tableSettingkey = "TableSettings";
         protected Table<ApplicantSearchResultItem> TableRef { get; set; }
-
         protected List<ApplicantSearchResultItem> TableData = new List<ApplicantSearchResultItem>();
         private readonly IMemoryCache memoryCache;
 
@@ -58,7 +53,6 @@ namespace CSF.SRDashboard.Client.Pages
         }
         public void OnFilterChanged(TableSettings<ApplicantSearchResultItem> settings)
         {
-
             var cacheOptions = new MemoryCacheEntryOptions()
             {
                 AbsoluteExpiration = DateTime.Now.AddHours(2)
@@ -73,7 +67,6 @@ namespace CSF.SRDashboard.Client.Pages
         {
             StateHasChanged();
         }
-
     }
 }
 
