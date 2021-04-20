@@ -57,5 +57,34 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 }
             }
         }
+
+        public ApplicantSearchResult Search(ApplicantSearchCriteria searchCriteria)
+        {
+            var serviceRequestPath = "applicants/search";
+            try
+            {
+                return this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+            }
+            catch (HttpRequestException httpRequestException)
+            {
+                this.logger.LogError(httpRequestException.Message, httpRequestException);
+                throw;
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.Message, e);
+                // We want to retry once
+                try
+                {
+                    return this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                }
+                catch (Exception exception)
+                {
+                    this.logger.LogError(exception.Message, exception);
+                    throw;
+                }
+            }
+        }
+
     }
 }

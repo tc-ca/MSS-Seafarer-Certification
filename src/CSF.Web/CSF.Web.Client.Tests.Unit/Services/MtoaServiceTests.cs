@@ -1,5 +1,6 @@
 ﻿namespace CSF.Web.Client.Tests.Unit.Services
 {
+    using CSF.Common.Library;
     using CSF.Web.Client.Data.DTO.MTAPI;
     using CSF.Web.Client.Services;
     using CSF.Web.Client.Utilities;
