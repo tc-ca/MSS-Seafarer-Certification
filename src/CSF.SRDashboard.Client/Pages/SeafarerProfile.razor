@@ -132,8 +132,17 @@
             <div class="tab-pane fade" id="requests">
                 <p>test</p>
             </div>
-            <div class="tab-pane fade" id="documents">
-                <p>test2</p>
+            <div class="tab-pane fade active" id="Documents">
+                <br />
+                <Table TableClass="table table-striped table-hover" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="CSF.SRDashboard.Client.Models.Document"
+                       @ref="TableRef" DefaultPageSize="25" ShowSearchBar="@ShowFilterHeader"
+                       Items="TableData" HeaderFilterChanged="@(()=>HandleHeaderFilterChanged())">
+                    <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Request ID" Field="@(x => x.RequestID)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+                    <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Documents" Field="@(x => x.Type)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+                    <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Language" Field="@(x => x.Language)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+                    <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Update date" Field="@(x => x.DateUploadFormatted)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                </Table>
             </div>
         </div>
     </div>

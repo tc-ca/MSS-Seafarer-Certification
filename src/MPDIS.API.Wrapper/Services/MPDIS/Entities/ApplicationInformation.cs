@@ -274,13 +274,13 @@
         /// Gets or sets the applicant's minister certification issue date in unix epoch time.
         /// </summary>
         [JsonProperty("ministerCertIssuedDate")]
-        public long MinisiterCertificationIssueDate { get; set; }
+        public long? MinisiterCertificationIssueDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's minister certification expiration date in unix epoch time.
         /// </summary>
         [JsonProperty("ministerCertExpireDate")]
-        public long MinisiterCertificationExpirationDate { get; set; }
+        public long? MinisiterCertificationExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's medical notes.
