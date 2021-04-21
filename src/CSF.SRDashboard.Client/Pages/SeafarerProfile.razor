@@ -3,20 +3,21 @@
 <a class="btn btn-link" href="javascript:history.back()"> Back to search results</a>
 <h3>@applicant.FirstName @applicant.LastName</h3>
 <div class="border rounded col-10">
-    <div class="bs-component">
+    
+    <div class="bs-component mt-3">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#summary">Summary</a>
+                <a class="nav-link" data-toggle="tab" href="#Summary">Summary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#requests">Requests</a>
+                <a class="nav-link" data-toggle="tab" href="#Requests">Requests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#documents">Documents</a>
+                <a class="nav-link" data-toggle="tab" href="#Documents">Documents</a>
             </li>
         </ul>
         <div id="profileTabs " class="tab-content">
-            <div class="tab-pane fade show active" id="summary">
+            <div class="tab-pane fade show active" id="Summary">
                 <div class="container">
                     <div class="row pt-3">
                         <div class="col">
@@ -129,13 +130,13 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="requests">
+            <div class="tab-pane fade" id="Requests">
                 <p>test</p>
             </div>
             <div class="tab-pane fade active" id="Documents">
                 <br />
                 <Table TableClass="table table-striped table-hover" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="CSF.SRDashboard.Client.Models.Document"
-                       @ref="TableRef" DefaultPageSize="25" ShowSearchBar="@ShowFilterHeader"
+                       @ref="TableRef" DefaultPageSize="25"
                        Items="TableData" HeaderFilterChanged="@(()=>HandleHeaderFilterChanged())">
                     <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Request ID" Field="@(x => x.RequestID)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
                     <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Documents" Field="@(x => x.Type)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />

@@ -32,8 +32,7 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject] 
         NavigationManager navigationManager { get; set; }
         public string currentRelativePath;
-        public SeafarerProfile()
-        {
+      
 
         protected override void OnInitialized()
         {
