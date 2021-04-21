@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
 {
+
     public class ApplicantSearchCriteria
     {
         [JsonProperty("page")]

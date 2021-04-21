@@ -1,22 +1,22 @@
 ﻿@page "/SeafarerProfile/{Cdn}"
 
-<a href="javascript:history.back()">Back to search results</a>
+<a class="btn btn-link" href="javascript:history.back()"> Back to search results</a>
 <h3>@applicant.FirstName @applicant.LastName</h3>
 <div class="border rounded col-10">
     <div class="bs-component">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#Summary">Summary</a>
+                <a class="nav-link" data-toggle="tab" href="#summary">Summary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-target="tab" href="#Requests">Requests</a>
+                <a class="nav-link" data-toggle="tab" href="#requests">Requests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-target="tab" href="#Documents">Documents</a>
+                <a class="nav-link" data-toggle="tab" href="#documents">Documents</a>
             </li>
         </ul>
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="Summary">
+        <div id="profileTabs " class="tab-content">
+            <div class="tab-pane fade show active" id="summary">
                 <div class="container">
                     <div class="row pt-3">
                         <div class="col">
@@ -129,11 +129,11 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="Requests">
-
+            <div class="tab-pane fade" id="requests">
+                <p>test</p>
             </div>
-            <div class="tab-pane fade" id="Documents">
-
+            <div class="tab-pane fade" id="documents">
+                <p>test2</p>
             </div>
         </div>
     </div>

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Forms;
 using MPDIS.API.Wrapper.Services.MPDIS;
+using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -18,6 +20,9 @@ namespace CSF.SRDashboard.Client.Pages
         public ApplicantInformation applicant = new ApplicantInformation();
         public DateTime DOB;
         public string fullDob { get; set; }
+        [Inject] 
+        NavigationManager navigationManager { get; set; }
+        public string currentRelativePath;
         public SeafarerProfile()
         {
 
