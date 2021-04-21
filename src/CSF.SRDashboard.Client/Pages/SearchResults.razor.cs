@@ -21,7 +21,7 @@ namespace CSF.SRDashboard.Client.Pages
         public IMpdisService MpdisService { get; set; }
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
         protected TableSettings<ApplicantSearchResultItem> tableSettings { get; set; }
-        public bool ShowFilterHeader { get; set; } = true;
+        public bool ShowFilterHeader { get; set; } = false;
         private const string tableSettingkey = "TableSettings";
         protected Table<ApplicantSearchResultItem> TableRef { get; set; }
         protected List<ApplicantSearchResultItem> TableData = new List<ApplicantSearchResultItem>();

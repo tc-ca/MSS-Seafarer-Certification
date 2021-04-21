@@ -4,6 +4,7 @@
 {
 
     <div id="table" class="border rounded col-10">
+        <br />
         <Table TableClass="table table-striped table-hover" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
                @ref="TableRef" DefaultPageSize="25" ShowSearchBar="@ShowFilterHeader"
                Items="TableData" HeaderFilterChanged="@(()=>HandleHeaderFilterChanged())">
