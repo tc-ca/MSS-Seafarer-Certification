@@ -21,7 +21,7 @@
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Priority" Field="@(x => x.Priority)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
-                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.WorkloadRequestTableItemPriorityComponent Priority="WorkloadRequestTableItem.Priority" />
+                <WorkloadRequestTableItemPriorityComponent Priority="WorkloadRequestTableItem.Priority" />
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Language" Field="@(x => x.Language)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
