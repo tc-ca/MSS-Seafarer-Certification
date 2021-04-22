@@ -10,7 +10,7 @@
         <h2>Find a seafarer</h2>
         <p>Enter one or more dearch field to view existing seafarers in the system</p>
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
-            <DataAnnotationsValidator />
+            <FluentValidationValidator />
             <ValidationSummary />
             <div class="col-5 d-grid gap-3">
                 <div class="form-group">
