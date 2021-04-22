@@ -11,7 +11,6 @@
         <p>Enter one or more dearch field to view existing seafarers in the system</p>
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
-            <ValidationSummary />
             <div class="col-5 d-grid gap-3">
                 <div class="form-group">
                     <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>SearchCriteria.Cdn)" @bind-Value="@SearchCriteria.Cdn" />
@@ -26,9 +25,7 @@
                     <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                <div hidden="@error">
-                    <p class="alert-danger">* At least one field is required</p>
-                </div>
+                <ValidationSummary />
             </div>
         </EditForm>
     </div>

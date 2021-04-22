@@ -3,6 +3,11 @@
 
 @if (State.ApplicantSearchResult != null)
 {
+    <div class="row">
+        <div class="col-10">
+           <a class="btn btn-light float-right" href="/Search">New search</a>
+        </div>
+    </div>
     <div hidden="@showTable" id="table" class="border rounded col-10">
 
         <Table TableClass="table table-striped table-hover mt-3" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
