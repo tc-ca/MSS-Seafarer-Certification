@@ -130,11 +130,11 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="Requests">
-                <p>test</p>
+            <div class="tab-pane fade flex-tabs" id="Requests">
+                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.WorkloadRequestTable />
             </div>
-            <div class="tab-pane fade active" id="Documents">
-                <button type="button" class="btn btn-primary float-right mt-3">
+            <div class="tab-pane fade flex-tabs" id="Documents">
+                <button type="button" class="btn btn-primary mt-3">
                     Add Document
                 </button>
                 <Table TableClass="table table-striped table-hover mt-3" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="CSF.SRDashboard.Client.Models.Document"
