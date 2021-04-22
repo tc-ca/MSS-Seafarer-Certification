@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Forms;
 using MPDIS.API.Wrapper.Services.MPDIS;
+using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Routing;
 using CSF.SRDashboard.Client.Models;
 using DSD.MSS.Blazor.Components.Table;
 using DSD.MSS.Blazor.Components.Table.Models;
@@ -27,6 +29,10 @@ namespace CSF.SRDashboard.Client.Pages
         protected List<Document> TableData = new List<Document>();
         private readonly IMemoryCache memoryCache;
         public string fullDob { get; set; }
+        [Inject] 
+        NavigationManager navigationManager { get; set; }
+        public string currentRelativePath;
+      
 
         protected override void OnInitialized()
         {

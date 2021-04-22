@@ -32,6 +32,9 @@ namespace CSF.SRDashboard.Client.Pages
 
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
+        public bool error { get; set; } = true;
+
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -47,12 +50,32 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Search()
         {
-            State.SearchCriteria = SearchCriteria;
+            var isValid = validate(SearchCriteria);
 
-            State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
+            if (isValid)
+            {
+                State.SearchCriteria = SearchCriteria;
 
-            NavigationManager.NavigateTo("/SearchResults");
+                State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
+
+                NavigationManager.NavigateTo("/SearchResults");
+            }
+            else
+            {
+                error = false;
+            }
         }
 
+        private bool validate(ApplicantSearchCriteria crit)
+        {
+            if(!String.IsNullOrEmpty(crit.Cdn) || !String.IsNullOrEmpty(crit.DateOfBirth) || !String.IsNullOrEmpty(crit.FirstName) || !String.IsNullOrEmpty(crit.LastName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
