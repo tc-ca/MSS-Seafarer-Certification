@@ -3,25 +3,25 @@
 
 @if (State.ApplicantSearchResult != null)
 {
-<div hidden="@showTable" id="table" class="border rounded col-10">
+    <div hidden="@showTable" id="table" class="border rounded col-10">
 
-    <Table TableClass="table table-striped table-hover" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
-           @ref="TableRef" DefaultPageSize="25" ShowSearchBar="@ShowFilterHeader"
-           Items="TableData" HeaderFilterChanged="@(() => HandleHeaderFilterChanged())">
-        <Column TableItem="ApplicantSearchResultItem" Title="Last Name" Field="@(x => x.LastName)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" >
-            <Template Context="ApplicantSearchResultItem">
-               
-                <a href="SeafarerProfile/@ApplicantSearchResultItem.Cdn">@ApplicantSearchResultItem.LastName</a>
-            </Template>    
-        </Column>
-        <Column TableItem="ApplicantSearchResultItem" Title="First Name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="true" Sortable="true" Width="25%" />
-        <Column TableItem="ApplicantSearchResultItem" Title="CDN #" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="true" Sortable="true" Width="25%" />
-        <Column TableItem="ApplicantSearchResultItem" Title="Date Of Birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="true" Sortable="true" Width="25%" />
-        <Pager ShowPageNumber="true" ShowTotalCount="true" />
-    </Table>
+        <Table TableClass="table table-striped table-hover mt-3" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
+               @ref="TableRef" DefaultPageSize="25"
+               Items="TableData" HeaderFilterChanged="@(() => HandleHeaderFilterChanged())">
+            <Column TableItem="ApplicantSearchResultItem" Title="Last Name" Field="@(x => x.LastName)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%">
+                <Template Context="ApplicantSearchResultItem">
 
-</div> }
-            else
-            {
-                <p class="alert-danger">No results found</p>
-            }
+                    <a href="SeafarerProfile/@ApplicantSearchResultItem.Cdn">@ApplicantSearchResultItem.LastName</a>
+                </Template>
+            </Column>
+            <Column TableItem="ApplicantSearchResultItem" Title="First Name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="true" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="CDN #" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="true" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="Date Of Birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="true" Sortable="true" Width="25%" />
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+
+    </div> }
+else
+{
+    <p class="alert-danger">No results found</p>
+}

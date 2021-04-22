@@ -3,7 +3,7 @@
 <a class="btn btn-link" href="javascript:history.back()"> Back to search results</a>
 <h3>@applicant.FirstName @applicant.LastName</h3>
 <div class="border rounded col-10">
-    
+
     <div class="bs-component mt-3">
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -134,8 +134,10 @@
                 <p>test</p>
             </div>
             <div class="tab-pane fade active" id="Documents">
-                <br />
-                <Table TableClass="table table-striped table-hover" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="CSF.SRDashboard.Client.Models.Document"
+                <button type="button" class="btn btn-primary float-right mt-3">
+                    Add Document
+                </button>
+                <Table TableClass="table table-striped table-hover mt-3" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="CSF.SRDashboard.Client.Models.Document"
                        @ref="TableRef" DefaultPageSize="25"
                        Items="TableData" HeaderFilterChanged="@(()=>HandleHeaderFilterChanged())">
                     <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Request ID" Field="@(x => x.RequestID)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
