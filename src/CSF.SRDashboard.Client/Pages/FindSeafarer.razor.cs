@@ -48,11 +48,11 @@ namespace CSF.SRDashboard.Client.Pages
             EditContext = new EditContext(SearchCriteria);
         }
 
+      /// <summary>
+      /// Runs a search after the criteria is met
+      /// </summary>
         public void Search()
         {
-           
-
-         
                 State.SearchCriteria = SearchCriteria;
 
                 State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
