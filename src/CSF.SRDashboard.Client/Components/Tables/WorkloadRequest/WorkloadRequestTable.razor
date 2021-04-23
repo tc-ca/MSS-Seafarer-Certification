@@ -1,6 +1,4 @@
-﻿@using CSF.Common.Library.Extensions.Enum
-@using Components.Tables.WorkloadRequest.Entities
-@using Services.WorkloadRequest.Enums
+﻿@using Components.Tables.WorkloadRequest.Entities
 
 <a href="#" class="btn btn-primary float-right mt-3">Add Request</a>
 
@@ -10,18 +8,18 @@
         <Column TableItem="WorkloadRequestTableItem" Title="Certificate" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="Request Type" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="Request Date" Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
-            <Template Context="WorkLoadRequest">
-                <span>@WorkLoadRequest.RequestDate.ToString("MMM d, yyyy")</span>
+            <Template Context="WorkloadRequestTableItem">
+                <span>@WorkloadRequestTableItem.RequestDate.ToString("MMM d, yyyy")</span>
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Status" Field="@(x => x.Status)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
-                <WorkloadRequestTableItemStatusComponent RequestStatus="WorkloadRequestTableItem.Status" />
+                <WorkloadRequestTableItemStatusComponent RequestStatus="@WorkloadRequestTableItem.Status" />
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Priority" Field="@(x => x.Priority)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
-                <WorkloadRequestTableItemPriorityComponent Priority="WorkloadRequestTableItem.Priority" />
+                <WorkloadRequestTableItemPriorityComponent Priority="@WorkloadRequestTableItem.Priority" />
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Language" Field="@(x => x.Language)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
