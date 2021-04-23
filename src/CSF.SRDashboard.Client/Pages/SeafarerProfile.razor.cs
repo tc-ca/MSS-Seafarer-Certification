@@ -22,7 +22,7 @@ namespace CSF.SRDashboard.Client.Pages
         public string fullDob { get; set; }
         public string currentRelativePath;
 
-        protected void OnInitialized()
+        protected override void OnInitialized()
         {
             this.LoadData();
         }
