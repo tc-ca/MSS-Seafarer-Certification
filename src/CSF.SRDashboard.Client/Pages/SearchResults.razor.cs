@@ -21,7 +21,7 @@ namespace CSF.SRDashboard.Client.Pages
         public IMpdisService MpdisService { get; set; }
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
         protected TableSettings<ApplicantSearchResultItem> tableSettings { get; set; }
-        public bool ShowFilterHeader { get; set; } = true;
+        public bool ShowFilterHeader { get; set; } = false;
         public bool ShowFirstNameFilter { get; set; } = true;
         public bool ShowLastNameFilter { get; set; } = true;
         public bool ShowCDNFilter { get; set; } = true;
