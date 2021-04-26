@@ -7,9 +7,9 @@
         <Table TableClass="table table-striped table-hover" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
                @ref="TableRef" DefaultPageSize="25" ShowSearchBar="@ShowFilterHeader"
                Items="TableData" HeaderFilterChanged="@(()=>HandleHeaderFilterChanged())">
-            <Column TableItem="ApplicantSearchResultItem" Title="Last Name" Field="@(x => x.LastName)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="Last Name" Field="@(x => x.LastName)"  DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
             <Column TableItem="ApplicantSearchResultItem" Title="First Name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
-            <Column TableItem="ApplicantSearchResultItem" Title="CDN #" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="CDN" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
             <Column TableItem="ApplicantSearchResultItem" Title="Date Of Birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
         </Table>
