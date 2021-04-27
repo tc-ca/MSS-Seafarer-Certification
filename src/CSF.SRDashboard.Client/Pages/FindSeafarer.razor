@@ -24,8 +24,10 @@
                 <div class="form-group ">
                     <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                 </div>
+                <div class="d-flex justify-content-end align-items-center">
                 <button type="submit" class="btn btn-primary btn-sm @buttonDisabled">Search</button>
-              @*  <span><i class="display:block fas fa-spinner fa-spin"></i></span>*@
+                <i class="d-block text-primary fa-2x fas fa-spinner fa-spin"></i>
+                </div>
                 <ValidationSummary />
             </div>
         </EditForm>
