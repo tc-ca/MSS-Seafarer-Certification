@@ -21,11 +21,20 @@ namespace CSF.SRDashboard.Client.Pages
         public IMpdisService MpdisService { get; set; }
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
         protected TableSettings<ApplicantSearchResultItem> tableSettings { get; set; }
-        public bool ShowFilterHeader { get; set; } = true;
+        public bool ShowFilterHeader { get; set; } = false;
+        public bool ShowFirstNameFilter { get; set; } = true;
+        public bool ShowLastNameFilter { get; set; } = true;
+        public bool ShowCDNFilter { get; set; } = true;
+        public bool ShowDOBFilter { get; set; } = true;
         private const string tableSettingkey = "TableSettings";
         protected Table<ApplicantSearchResultItem> TableRef { get; set; }
         protected List<ApplicantSearchResultItem> TableData = new List<ApplicantSearchResultItem>();
         private readonly IMemoryCache memoryCache;
+        NavigationManager navigationManager { get; set; }
+        public bool showTable { get; set; } = false;
+        public bool showError { get; set; } = true;
+
+
 
         protected override void OnInitialized()
         {
@@ -39,8 +48,16 @@ namespace CSF.SRDashboard.Client.Pages
             ApplicantSearchResult = State.ApplicantSearchResult;
 
             TableData = ApplicantSearchResult.Items;
+            if (TableData.Count == 0)
+            {
+                showTable = true;
+                showError = false;
+            }
+            else
+            {
 
-            StateHasChanged();
+                StateHasChanged();
+            }
         }
 
         protected void OnAfterTableDataLoaded()
@@ -50,6 +67,10 @@ namespace CSF.SRDashboard.Client.Pages
                 TableRef.ResetTableSettings(tableSettings);
                 tableSettings = null;
             }
+        }
+        public void showProfile(string cdn)
+        {
+            navigationManager.NavigateTo($"SeafarerProfile/{cdn}");
         }
         public void OnFilterChanged(TableSettings<ApplicantSearchResultItem> settings)
         {
@@ -63,9 +84,27 @@ namespace CSF.SRDashboard.Client.Pages
                 memoryCache.Set("TableSettings", settings);
             }
         }
-        protected void HandleHeaderFilterChanged()
+        private void HandleHeaderFilterChanged()
         {
             StateHasChanged();
+
+            
+        }
+        private void ToggleLastNameFilter()
+        {
+            ShowLastNameFilter = !ShowLastNameFilter;
+        }
+        private void ToggleFirstNameFilter()
+        {
+            ShowFirstNameFilter = !ShowFirstNameFilter;
+        }
+        private void ToggleCDNFilter()
+        {
+            ShowCDNFilter = !ShowCDNFilter;
+        }
+        private void ToogleDOBFilter()
+        {
+            ShowDOBFilter = ShowDOBFilter;
         }
     }
 }

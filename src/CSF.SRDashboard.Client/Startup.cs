@@ -25,6 +25,9 @@ using System.Globalization;
 using CSF.SRDashboard.Client.Utilities;
 using MPDIS.API.Wrapper.Services.MPDIS;
 using CSF.Common.Library;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+using CSF.SRDashboard.Client.PageValidators;
+using FluentValidation;
 
 namespace CSF.SRDashboard.Client
 {
@@ -63,7 +66,7 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IMpdisService, MpdisService>();
             services.AddSingleton<IRestClient, RestClient>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
-
+            services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
