@@ -21,6 +21,22 @@ h1, h2, h3, h4, h5, h6 {
     CSF-Button
 */
 button.csf-component,
+a.csf-profile {
+    background-color: transparent;
+    border: 1px solid #1b50b1;
+    border-radius: .25rem;
+    font-size: 1rem;
+    line-height:38px;
+    height:38px;
+    color: #1b50b1;
+}
+
+a.csf-profile:hover {
+    background-color: #1b50b1;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+button.csf-component,
 input.csf-toggle-button {
     cursor: pointer;
 }
