@@ -59,6 +59,7 @@ a.link-back {
     background: #1A202C;
     border: 0;
 }
+
 .top-row[b-ussj044e2c] {
     background: #4A5568;
 }
@@ -69,44 +70,50 @@ a.link-back {
 }
 
     .top-row section.header-bar button.notification-button {
-        margin-left:40px;
-        margin-right:30px;
+        margin-left: 40px;
+        margin-right: 30px;
     }
 
-    a.navbar-brand {
-        font-family: 'Nunito Sans' sans-serif;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 900;
-    }
+a.navbar-brand {
+    font-family: 'Nunito Sans' sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 900;
+}
+
 .sidebar[b-cht5mpaqgp] {
     background: #F7F9FC;
 }
+
 ul.nav[b-ussj044e2c] {
     margin-top: 30px;
 }
+
 .nav-item[b-ussj044e2c] a.active,
 .nav-item[b-ussj044e2c] a:hover {
     font-family: 'Nunito Sans' sans-serif;
     font-weight: bold;
     color: #1B50B1;
 }
-    .nav-item[b-ussj044e2c] a,
-    .nav-item[b-ussj044e2c] a:active,
-    .nav-item[b-ussj044e2c] a:focus {
-        color: #4D5D6C;
-    }
-/*
+
+.nav-item[b-ussj044e2c] a,
+.nav-item[b-ussj044e2c] a:active,
+.nav-item[b-ussj044e2c] a:focus {
+    color: #4D5D6C;
+}
+    /*
     CUSTOM
 */
-.nav-item[b-ussj044e2c] a i {
-    margin-right: 24px;
-}
+    .nav-item[b-ussj044e2c] a i {
+        margin-right: 24px;
+    }
+
 div.page-layout {
     display: flex;
 }
+
 section.csf-page-group {
-    padding-right:140px;
+    padding-right: 140px;
 }
 
 /* RADZEN OVERRIDES */
@@ -115,8 +122,9 @@ section.csf-page-group {
     font-weight: 700;
     color: #fff;
 }
+
     .rz-dialog-titlebar .rzi.rzi-times {
-        color:#fff;
+        color: #fff;
     }
 
 /* FLEX - TABS */
@@ -124,4 +132,20 @@ section.csf-page-group {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+/* Remove when fixed in DSD Component */
+#DobInput {
+    width: 100% !important;
+}
+
+
+
+/* Custom Table styling */
+tbody > tr:hover,
+tbody > tr:focus-within {
+    background: #E0E7F1 !important;
+    border-top: 3px solid #1B50B1 !important;
+    cursor: pointer;
+    outline: none;
 }

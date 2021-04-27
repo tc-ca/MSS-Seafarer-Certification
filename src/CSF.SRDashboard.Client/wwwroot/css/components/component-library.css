@@ -17,12 +17,6 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Rubik', sans-serif;
 }
 
-h1 {
-    font-weight: 700;
-    font-size: 1.75rem; 
-    margin:30px 0 50px 0;
-}
-
 /**
     CSF-Button
 */
@@ -65,12 +59,12 @@ a.csf-component {
 
     a.csf-component.primary {
         background: #1B50B1;
-        color:#fff;
+        color: #fff;
     }
 
-    a.csf-component.primary:hover {
-        color:#fff;
-    }
+        a.csf-component.primary:hover {
+            color: #fff;
+        }
 
 /** 
     CSF-Toggle-Button 
@@ -83,15 +77,18 @@ section.csf-toggle-button-container {
     border-radius: 3px;
     background: #1B50B1;
 }
+
 input[type="radio"].csf-toggle-button {
-    display:none;
+    display: none;
 }
+
     input[type="radio"].csf-toggle-button + label {
         background: #FFFFFF;
         padding: 5px 10px;
         font-weight: 700;
         margin: 0;
     }
+
     input[type="radio"].csf-toggle-button:checked + label {
         background: #E2E8F0;
     }
@@ -104,16 +101,16 @@ section.csf-flex-button-group {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin:30px 0;
+    margin: 30px 0;
 }
 
     section.csf-flex-button-group button {
         margin-right: 10px;
     }
 
-    section.csf-flex-button-group button:last-child {
-        margin:0px;
-    }
+        section.csf-flex-button-group button:last-child {
+            margin: 0px;
+        }
 
 section.csf-flex-table {
     display: flex;
@@ -135,7 +132,7 @@ section.csf-flex-table {
     }
 
     section.csf-flex-table section.csf-flex-table-body {
-        flex-direction:column;
+        flex-direction: column;
         color: #4D5D6C;
         font-weight: 600;
     }
@@ -154,58 +151,58 @@ section.csf-flex-table {
                 margin-bottom: 19px;
             }
 
-        section.csf-flex-table div,
-        section.csf-flex-table a {
-            flex-basis: 12.5%;
-            padding: 5px 3px;
-            text-align: center;
-            align-self: center;
+    section.csf-flex-table div,
+    section.csf-flex-table a {
+        flex-basis: 12.5%;
+        padding: 5px 3px;
+        text-align: center;
+        align-self: center;
+    }
+
+section.csf-flex-table-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+    section.csf-flex-table-footer div.csf-flex-table-footer-results {
+        flex-basis: 90%;
+        text-align: left;
+    }
+
+        section.csf-flex-table-footer div.csf-flex-table-footer-results span:first-child {
+            border-right: 2px solid #000;
+            padding-right: 20px;
         }
 
-        section.csf-flex-table-footer {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+        section.csf-flex-table-footer div.csf-flex-table-footer-results span:last-child {
+            padding-left: 20px;
         }
 
-            section.csf-flex-table-footer div.csf-flex-table-footer-results {
-                flex-basis: 90%;
-                text-align: left;
+        section.csf-flex-table-footer div.csf-flex-table-footer-results input[type="number"] {
+            font-weight: 800;
+            width: 50px;
+        }
+
+    section.csf-flex-table-footer div.csf-flex-table-footer-paging {
+        flex-basis: 10%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+        section.csf-flex-table-footer div.csf-flex-table-footer-paging a {
+            color: #4A5568
+        }
+
+            section.csf-flex-table-footer div.csf-flex-table-footer-paging a:hover {
+                text-decoration: none;
             }
 
-                section.csf-flex-table-footer div.csf-flex-table-footer-results span:first-child {
-                    border-right:2px solid #000;
-                    padding-right: 20px;
-                }
-
-                section.csf-flex-table-footer div.csf-flex-table-footer-results span:last-child {
-                    padding-left: 20px;
-                }
-
-                section.csf-flex-table-footer div.csf-flex-table-footer-results input[type="number"] {
-                    font-weight: 800;
-                    width: 50px;
-                }
-
-            section.csf-flex-table-footer div.csf-flex-table-footer-paging {
-                flex-basis: 10%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
+            section.csf-flex-table-footer div.csf-flex-table-footer-paging a.active,
+            section.csf-flex-table-footer div.csf-flex-table-footer-paging a:hover {
+                border-bottom: 2px solid #1A202C;
             }
-
-                section.csf-flex-table-footer div.csf-flex-table-footer-paging a {
-                    color: #4A5568
-                }
-
-                section.csf-flex-table-footer div.csf-flex-table-footer-paging a:hover {
-                    text-decoration: none;
-                }
-
-                    section.csf-flex-table-footer div.csf-flex-table-footer-paging a.active,
-                    section.csf-flex-table-footer div.csf-flex-table-footer-paging a:hover {
-                        border-bottom: 2px solid #1A202C;
-                    }
 
 /**
     CSF-Tab
@@ -228,11 +225,11 @@ button.csf-tab-button {
     color: #000000;
     padding: 10px;
     border: 0;
-    margin-right:15px;
+    margin-right: 15px;
 }
 
 section.csf-tab-button-group button:last-child {
-    margin-right:0;
+    margin-right: 0;
 }
 
 
@@ -375,7 +372,7 @@ a.csf-edit-action:hover {
     font-weight: 600;
     font-size: 14px;
     text-decoration: none;
-    cursor:pointer;
+    cursor: pointer;
 }
 
     a.csf-edit-action span {
@@ -389,4 +386,8 @@ a.csf-edit-action:hover {
 
 .csf-model-header {
     background-color: #1B50B1;
+}
+
+.csf-date-input {
+    min-width: 100%;
 }

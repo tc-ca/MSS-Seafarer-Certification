@@ -2,13 +2,18 @@
 
 @using CSF.SRDashboard.Client.Components.Icons.Constants
 
-<h1>Seafarers</h1>
+<div class="mt-4">
+    <h1>Seafarers</h1>
+</div>
 
-<div class="border rounded col-10">
-    <div class="">
-        <br />
-        <h2>Find a seafarer</h2>
-        <p>Enter one or more search field to view existing seafarers in the system</p>
+<div class="border rounded col-12">
+    <div class="mt-4">
+        <div class="col-12">
+            <h2>Find a seafarer</h2>
+            <p>Enter one or more dearch field to view existing seafarers in the system.</p>
+        </div>
+
+
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
             <div class="row">
@@ -26,7 +31,7 @@
                         <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                     </div>
                     <div class="d-flex justify-content-end align-items-center">
-                        <button id="SeafarerSearch" type="submit" class="btn btn-primary btn-sm">Search</button>
+                        <button id="SeafarerSearch" type="submit" class="btn btn-primary btn-sm mt-4 mb-4">Search</button>
                     </div>
                     <ValidationSummary />
                 </div>

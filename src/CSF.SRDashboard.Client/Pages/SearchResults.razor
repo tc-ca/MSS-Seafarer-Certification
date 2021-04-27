@@ -7,23 +7,23 @@
 
     <div hidden="@showTable" id="table" class="border rounded col-12 mb-4">
 
-        <div class="mt-2 mb-2">
+        <div class="mt-4">
             <a class="btn btn-light float-right" href="/Search">New search</a>
         </div>
 
-        <Table TableClass="table table-striped table-hover mt-3" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
+        <Table TableClass="table table-striped table-hover mt-4" TableHeadClass="font-weight-bold thead-light text-dark" OnAfterDataLoaded="OnAfterTableDataLoaded" TableItem="ApplicantSearchResultItem"
                @ref="TableRef" DefaultPageSize="25"
                Items="TableData" HeaderFilterChanged="@(() => HandleHeaderFilterChanged())" ShowSearchBar="@ShowFilterHeader">
-            <Column TableItem="ApplicantSearchResultItem" Title="Last Name" Field="@(x => x.LastName)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%">
+            <Column TableItem="ApplicantSearchResultItem" Title="Last name" Field="@(x => x.LastName)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%">
                 <Template Context="ApplicantSearchResultItem">
 
                     <a href="SeafarerProfile/@ApplicantSearchResultItem.Cdn">@ApplicantSearchResultItem.LastName</a>
                 </Template>
             </Column>
-            <Column TableItem="ApplicantSearchResultItem" Title="First Name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
-            <Column TableItem="ApplicantSearchResultItem" Title="CDN #" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="false" Sortable="false" Width="25%" />
-            <Column TableItem="ApplicantSearchResultItem" Title="Date Of Birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
-            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            <Column TableItem="ApplicantSearchResultItem"  Title="First name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="CDN" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="false" Sortable="false" Width="25%" />
+            <Column TableItem="ApplicantSearchResultItem" Title="Date of birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+            <Pager  ShowPageNumber="true" ShowTotalCount="true" />
         </Table>
 
     </div>
