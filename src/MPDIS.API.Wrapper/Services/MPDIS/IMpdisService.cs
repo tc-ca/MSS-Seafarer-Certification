@@ -20,5 +20,12 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         /// <param name="searchCriteria"></param>
         /// <returns>Results based on search criteria</returns>
         ApplicantSearchResult Search(ApplicantSearchCriteria searchCriteria);
+
+        /// <summary>
+        /// Gets the applicant's personal info without medical assessmentinfo from applicant-infomration
+        /// </summary>
+        /// <param name="applicantInfo">ApplicantInfomration object that is received from MPDIS call</param>
+        /// <returns>The applicant's personal info without medical assessmentinfo </returns>
+        PersonalInfo GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo);
     }
 }

@@ -86,5 +86,45 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
             }
         }
 
+        public PersonalInfo  GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo)
+        {
+            PersonalInfo personalInfo = new PersonalInfo();
+            if (applicantInfo != null)
+            {
+                personalInfo.FirstName = applicantInfo.FirstName;
+                personalInfo.LastName = applicantInfo.LastName;
+                personalInfo.Cdn = applicantInfo.Cdn;
+                personalInfo.DateOfBirth = applicantInfo.DateOfBith;
+                personalInfo.HomeAddress = applicantInfo.Address;
+                personalInfo.HomeAddressCity = applicantInfo.City;
+                personalInfo.HomeAddressProvince = applicantInfo.Province;
+                personalInfo.HomeAddressPostalCode = applicantInfo.PostalCode;
+                personalInfo.HomeAddressCountry = applicantInfo.HomeCountry;
+                personalInfo.PhoneNumber = applicantInfo.PhoneNumber;
+                personalInfo.SecondaryPhoneNumber = applicantInfo.SecondaryPhoneNumber;
+                personalInfo.Email = applicantInfo.Email;
+                personalInfo.Gender = applicantInfo.Gender;
+                personalInfo.Language = applicantInfo.SelectedLanguage;
+
+                if (applicantInfo.SameMailAddress)
+                {
+                    personalInfo.MailingAddress = applicantInfo.Address;
+                    personalInfo.MailingAddressCity = applicantInfo.City;
+                    personalInfo.MailingAddressProvince = applicantInfo.Province;
+                    personalInfo.MailingAddressPostalCode = applicantInfo.PostalCode;
+                    personalInfo.MailingAddressCountry = applicantInfo.HomeCountry;
+                }
+                else
+                {
+                    personalInfo.MailingAddress = applicantInfo.MailAddress;
+                    personalInfo.MailingAddressCity = applicantInfo.MailCity;
+                    personalInfo.MailingAddressProvince = applicantInfo.MailProvince;
+                    personalInfo.MailingAddressPostalCode = applicantInfo.MailPostalCode;
+                    personalInfo.MailingAddressCountry = applicantInfo.MailHomeCountry;
+                }
+            }
+
+            return personalInfo;
+        }
     }
 }
