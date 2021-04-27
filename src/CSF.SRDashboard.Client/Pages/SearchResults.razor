@@ -2,7 +2,7 @@
 
 <h1>Seafarers</h1>
 
-@if (State.ApplicantSearchResult != null)
+@if (State.ApplicantSearchResult.TotalCount != 0)
 {
 
     <div hidden="@showTable" id="table" class="border rounded col-12 mb-4">
@@ -26,10 +26,16 @@
             <Pager  ShowPageNumber="true" ShowTotalCount="true" />
         </Table>
 
-    </div> }
-else
-{
-    <div class="row">
-        <p class="alert-danger">No results found</p>
     </div>
-}
+    
+    }
+
+else 
+{
+<div class="row">
+    <p class="alert-danger">No results found</p>
+</div>
+<div class="row">
+    <a class="page-link" href="/Search">Return to search</a>
+</div>
+    }
