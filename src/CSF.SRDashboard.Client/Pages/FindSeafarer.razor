@@ -1,31 +1,32 @@
 ﻿@page "/search"
 
+<div class="mt-4">
+    <h1>Seafarers</h1>
+</div>
 
+<div class="border rounded col-12">
+    <div class="mt-4">
+        <div class="col-12">
+            <h2>Find a seafarer</h2>
+            <p>Enter one or more dearch field to view existing seafarers in the system.</p>
+        </div>
 
-<h1>Seafarers</h1>
-
-<div class="border rounded col-10">
-    <div class="">
-        <br />
-        <h2>Find a seafarer</h2>
-        <p>Enter one or more search field to view existing seafarers in the system</p>
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
-            <div class="col-5 d-grid gap-3">
+            <div class="col-3 d-grid gap-3">
                 <div class="form-group">
                     <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>SearchCriteria.Cdn)" @bind-Value="@SearchCriteria.Cdn" />
                 </div>
                 <div class="form-group ">
-                    <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
+                    <FormInputText Id="LastNameInput" Label="Last name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
                 </div>
                 <div class="form-group">
-                    <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
+                    <FormInputText Id="FirstNameInput" Label="First name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
                 </div>
-                <div class="form-group ">
-                    <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
+                <div class="form-group">
+                    <FormInputDate Id="DobInput" Label="Date of birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm @buttonDisabled">Search</button>
-              @*  <span><i class="display:block fas fa-spinner fa-spin"></i></span>*@
+                <button type="submit" class="btn btn-primary btn-sm mt-4 mb-4">Search</button>
                 <ValidationSummary />
             </div>
         </EditForm>
