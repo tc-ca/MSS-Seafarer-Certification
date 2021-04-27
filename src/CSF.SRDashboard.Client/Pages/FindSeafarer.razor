@@ -21,10 +21,11 @@
                 <div class="form-group">
                     <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
                 </div>
-                <div class="form-group">
+                <div class="form-group ">
                     <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                <button type="submit" class="btn btn-primary btn-sm @buttonDisabled">Search</button>
+              @*  <span><i class="display:block fas fa-spinner fa-spin"></i></span>*@
                 <ValidationSummary />
             </div>
         </EditForm>

@@ -308,6 +308,19 @@
                 return string.Format("{0} {1}", this.FirstName, this.LastName);
             }
         }
+        public string FullGender
+        {
+            get
+            {
+                if (string.Equals("M", this.Gender)) {
+                    return "Male";
+                        }
+                else
+                {
+                    return "Female";
+                }
+            }
+        }
 
         public string DateOfBirthString
         {

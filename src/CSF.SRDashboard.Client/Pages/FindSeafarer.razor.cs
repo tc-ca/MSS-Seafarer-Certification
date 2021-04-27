@@ -32,6 +32,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
+        public string buttonDisabled { get; set; }
+
         public bool error { get; set; } = true;
 
 
@@ -53,6 +55,8 @@ namespace CSF.SRDashboard.Client.Pages
       /// </summary>
         public void Search()
         {
+                buttonDisabled = "disabled";
+                
                 State.SearchCriteria = SearchCriteria;
 
                 State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
