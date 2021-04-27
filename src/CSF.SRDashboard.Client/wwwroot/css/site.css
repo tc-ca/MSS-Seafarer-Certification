@@ -139,6 +139,10 @@ section.csf-page-group {
     width: 100% !important;
 }
 
+.btn-clear:hover {
+    background: #DDE4F1;
+    border-color: #D4DDEC;
+}
 
 
 /* Custom Table styling */

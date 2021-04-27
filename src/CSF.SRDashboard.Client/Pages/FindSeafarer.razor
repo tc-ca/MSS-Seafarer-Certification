@@ -26,7 +26,12 @@
                 <div class="form-group">
                     <FormInputDate Id="DobInput" Label="Date of birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm mt-4 mb-4">Search</button>
+
+                <div class="mt-4 mb-4">
+                    <button type="button" class="btn btn-light btn-clear mr-3" @onclick="Clear">Clear</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+
                 <ValidationSummary />
             </div>
         </EditForm>

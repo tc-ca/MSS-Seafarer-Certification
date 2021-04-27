@@ -50,18 +50,27 @@ namespace CSF.SRDashboard.Client.Pages
             EditContext = new EditContext(SearchCriteria);
         }
 
-      /// <summary>
-      /// Runs a search after the criteria is met
-      /// </summary>
+        /// <summary>
+        /// Runs a search after the criteria is met
+        /// </summary>
         public void Search()
         {
-                buttonDisabled = "disabled";
-                
-                State.SearchCriteria = SearchCriteria;
+            buttonDisabled = "disabled";
 
-                State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
+            State.SearchCriteria = SearchCriteria;
 
-                NavigationManager.NavigateTo("/SearchResults");
-        }     
+            State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
+
+            NavigationManager.NavigateTo("/SearchResults");
+        }
+        /// <summary>
+        /// Clears the search field
+        /// </summary>
+        public void Clear()
+        {
+            SearchCriteria = new ApplicantSearchCriteria();
+
+            State.SearchCriteria = null;
+        }
     }
 }
