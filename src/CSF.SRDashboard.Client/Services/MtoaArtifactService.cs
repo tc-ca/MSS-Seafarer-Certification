@@ -33,7 +33,7 @@ namespace CSF.SRDashboard.Client.Services
 
         public List<ServiceRequest> GetAllRequestsForSeafarers( )
         {
-            List<ServiceRequest> allServiceRequests = null;
+            List<ServiceRequest> allServiceRequests = new List<ServiceRequest>();
             string serviceId = this.configuration.GetSection("MtoaServiceSettings")["ServiceId"];
             string pathTemplate = this.configuration.GetSection("MtoaServiceSettings")["GetServiceRequestsPath"];
             string path = string.Format(pathTemplate, serviceId );

@@ -119,3 +119,9 @@ section.csf-page-group {
         color:#fff;
     }
 
+/* FLEX - TABS */
+.tab-content > .active.flex-tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}

@@ -36,7 +36,7 @@
                 LastName = "WICK",
                 Cdn = "00000176",
                 DeceasedStatus = null,
-                DateOfBith = -399686400000,
+                DateOfBirth = -399686400000,
                 AddressId = 1926,
                 Address = "156 HENLEY ROAD",
                 City = "CHELSEA",

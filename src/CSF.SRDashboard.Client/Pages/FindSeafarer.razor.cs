@@ -32,6 +32,11 @@ namespace CSF.SRDashboard.Client.Pages
 
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
+        public string buttonDisabled { get; set; }
+
+        public bool error { get; set; } = true;
+
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -45,14 +50,18 @@ namespace CSF.SRDashboard.Client.Pages
             EditContext = new EditContext(SearchCriteria);
         }
 
+      /// <summary>
+      /// Runs a search after the criteria is met
+      /// </summary>
         public void Search()
         {
-            State.SearchCriteria = SearchCriteria;
+                buttonDisabled = "disabled";
+                
+                State.SearchCriteria = SearchCriteria;
 
-            State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
+                State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
 
-            NavigationManager.NavigateTo("/SearchResults");
-        }
-
+                NavigationManager.NavigateTo("/SearchResults");
+        }     
     }
 }
