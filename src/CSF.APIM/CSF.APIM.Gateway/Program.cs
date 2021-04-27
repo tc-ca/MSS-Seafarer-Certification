@@ -25,14 +25,6 @@ namespace CSF.APIM.Gateway
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
                         var hostingEnvironment = hostingContext.HostingEnvironment;
-                        if (hostingEnvironment.EnvironmentName == "dev")
-                        {
-                            var appAssembly = Assembly.Load(new AssemblyName(hostingEnvironment.ApplicationName));
-                            if (appAssembly != null)
-                            {
-                                config.AddUserSecrets(appAssembly, optional: true);
-                            }
-                        }
                         config.AddJsonFile($"Ocelot.{hostingEnvironment.EnvironmentName}.json");
                     }
                     );

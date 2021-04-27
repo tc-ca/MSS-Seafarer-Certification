@@ -1,37 +1,9 @@
 {
   "Routes": [
-    // some test API end points
-    {
-      "DownstreamPathTemplate": "/api/v2/pokemon",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//pokeapi.co",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/pokemon",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
 
-    // test end point, pokemon with id
+    //MPDIS applicant personal information without medical data
     {
-      "DownstreamPathTemplate": "/api/v2/pokemon/{Id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//pokeapi.co",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/pokemon/{Id}",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-
-
-    //MPDIS with authentication
-    {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api-mpdis_wrapper/Mpdis/Applicant/{cdn}",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/mpdis-wrapper/Mpdis/Applicant/{cdn}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -39,14 +11,13 @@
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/mpdis/applicants/{cdn}",
+      "UpstreamPathTemplate": "/mpdis/Applicant/{cdn}",
       "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       }
     }
-
   ]
 
 }

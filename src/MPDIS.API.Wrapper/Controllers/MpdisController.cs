@@ -23,8 +23,10 @@ namespace MPDIS.API.Wrapper.Controllers
         public IActionResult GetApplicantInformation(string candidateDocumentNumber)
         {
             var applicantInformation = this.mpdisService.GetApplicantByCdn(candidateDocumentNumber);
-            return Ok(applicantInformation);
+            var personalInfo = this.mpdisService.GetPersonalInfoFromApplicantInfo(applicantInformation);
+            return Ok(personalInfo);
         }
+
 
         [HttpPost]
         [Route("applicants/search")]
