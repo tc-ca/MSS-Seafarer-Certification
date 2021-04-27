@@ -1,6 +1,6 @@
 ﻿@page "/search"
 
-
+@using CSF.SRDashboard.Client.Components.Icons.Constants
 
 <h1>Seafarers</h1>
 
@@ -11,24 +11,28 @@
         <p>Enter one or more search field to view existing seafarers in the system</p>
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
-            <div class="col-5 d-grid gap-3">
-                <div class="form-group">
-                    <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>SearchCriteria.Cdn)" @bind-Value="@SearchCriteria.Cdn" />
+            <div class="row">
+                <div class="col-5 d-grid gap-3">
+                    <div class="form-group">
+                        <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>SearchCriteria.Cdn)" @bind-Value="@SearchCriteria.Cdn" />
+                    </div>
+                    <div class="form-group ">
+                        <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
+                    </div>
+                    <div class="form-group">
+                        <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
+                    </div>
+                    <div class="form-group ">
+                        <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button id="SeafarerSearch" type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </div>
+                    <ValidationSummary />
                 </div>
-                <div class="form-group ">
-                    <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
+                <div id="SpinnerContainer" style="display:none;" class="col-5 text-primary align-self-end">
+                    <CSF.SRDashboard.Client.Components.Icons.Spinner AnimationType="FontAwesomeSpinAnimationType.SPIN" Size="FontAwesomeIconSize.TWO" />
                 </div>
-                <div class="form-group">
-                    <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
-                </div>
-                <div class="form-group ">
-                    <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
-                </div>
-                <div class="d-flex justify-content-end align-items-center">
-                <button type="submit" class="btn btn-primary btn-sm @buttonDisabled">Search</button>
-                <i class="d-block text-primary fa-2x fas fa-spinner fa-spin"></i>
-                </div>
-                <ValidationSummary />
             </div>
         </EditForm>
     </div>
