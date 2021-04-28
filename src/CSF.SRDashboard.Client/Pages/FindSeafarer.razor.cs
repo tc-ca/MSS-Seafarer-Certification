@@ -1,20 +1,12 @@
-﻿using CSF.SRDashboard.Client.Services;
-using CSF.SRDashboard.Client.Utilities;
-using DSD.MSS.Blazor.Components.Table;
-using DSD.MSS.Blazor.Components.Table.Models;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Caching.Memory;
-using MPDIS.API.Wrapper.Services.MPDIS;
-using MPDIS.API.Wrapper.Services.MPDIS.Entities;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CSF.SRDashboard.Client.Pages
+﻿namespace CSF.SRDashboard.Client.Pages
 {
+    using CSF.SRDashboard.Client.Utilities;
+    using Microsoft.AspNetCore.Components;
+    using Microsoft.AspNetCore.Components.Forms;
+    using Microsoft.JSInterop;
+    using MPDIS.API.Wrapper.Services.MPDIS;
+    using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+
     public partial class FindSeafarer
     {
         protected EditContext EditContext;
@@ -30,24 +22,28 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        IJSRuntime JS { get; set; }
+
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
-        public string buttonDisabled { get; set; }
+        public bool IsSubmitting { get; set; } = false;
 
-        public bool error { get; set; } = true;
+        public string ButtonDisabled { get; set; }
 
+        public bool Error { get; set; } = true;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            if (State.SearchCriteria != null)
+            if (this.State.SearchCriteria != null)
             {
-                SearchCriteria = State.SearchCriteria;
+                this.SearchCriteria = State.SearchCriteria;
             }
 
-            State.ApplicantSearchResult = null;
-            EditContext = new EditContext(SearchCriteria);
+            this.State.ApplicantSearchResult = null;
+            this.EditContext = new EditContext(this.SearchCriteria);
         }
 
         /// <summary>
@@ -55,14 +51,16 @@ namespace CSF.SRDashboard.Client.Pages
         /// </summary>
         public void Search()
         {
-            buttonDisabled = "disabled";
-
-            State.SearchCriteria = SearchCriteria;
-
-            State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
-
-            NavigationManager.NavigateTo("/SearchResults");
+            if(this.IsSubmitting)
+                return;
+            _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
+            this.IsSubmitting = true;
+            this.ButtonDisabled = "disabled";
+            this.State.SearchCriteria = SearchCriteria;
+            this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
+            this.NavigationManager.NavigateTo("/SearchResults");
         }
+
         /// <summary>
         /// Clears the search field
         /// </summary>
