@@ -3,3 +3,8 @@
         element.focus();
     }
 }
+
+function DisableSeafarerSearchButton() {
+    $("#SeafarerSearch").prop('disabled', true);
+    $("#SpinnerContainer").show();
+}
