@@ -1,9 +1,9 @@
 ﻿@using Components.Tables.WorkloadRequest.Entities
 
-<a href="#" class="csf-profile float-right mt-3">Add Request</a>
+<a href="#" class="btn btn-outline-primary mt-3">Add Request</a>
 
 <div class="table-responsive mt-3">
-    <Table TableClass="table table-striped table-hover" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
+    <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
         <Column TableItem="WorkloadRequestTableItem" Title="RequestId" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="Certificate" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="Request Type" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
@@ -23,6 +23,8 @@
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Language" Field="@(x => x.Language)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        <div class="mt-4 mb-4">
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </div>
     </Table>
 </div>

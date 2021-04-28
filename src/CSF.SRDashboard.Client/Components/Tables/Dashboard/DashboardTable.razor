@@ -1,15 +1,17 @@
 ﻿@using CSF.SRDashboard.Client.Models
 
-<a href="#" class="csf-profile mt-3">
+<a href="#" class="btn btn-outline-primary mt-3">
     Add Document
 </a>
 
 <div class="table-responsive mt-3">
-    <Table TableClass="table table-striped table-hover mt-3" TableItem="CSF.SRDashboard.Client.Models.Document" DefaultPageSize="25" Items="TableData">
+    <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="CSF.SRDashboard.Client.Models.Document" DefaultPageSize="25" Items="TableData">
         <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Request ID" Field="@(x => x.RequestID)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
         <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Documents" Field="@(x => x.Type)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
         <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Language" Field="@(x => x.Language)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
         <Column TableItem="CSF.SRDashboard.Client.Models.Document" Title="Update date" Field="@(x => x.DateUploadFormatted)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
-        <Pager ShowPageNumber="true" ShowTotalCount="true" />
-    </Table>
+        <div class="mt-4 mb-4">
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </div>
+</Table>
 </div>
