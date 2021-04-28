@@ -67,7 +67,7 @@
         public void Clear()
         {
             SearchCriteria = new ApplicantSearchCriteria();
-
+            this.EditContext = new EditContext(this.SearchCriteria);
             State.SearchCriteria = null;
         }
     }
