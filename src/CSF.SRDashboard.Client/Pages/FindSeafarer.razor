@@ -5,15 +5,13 @@
 <div class="mt-4">
     <h1>Seafarers</h1>
 </div>
-
+<CSF.SRDashboard.Client.Components.SearchErrorComponent searchError="this.searchError" />
 <div class="border rounded col-12">
     <div class="mt-4">
         <div class="col-12">
             <h2>Find a seafarer</h2>
             <p>Enter one or more dearch field to view existing seafarers in the system.</p>
         </div>
-
-
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
             <div class="row">

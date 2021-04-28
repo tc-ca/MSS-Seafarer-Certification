@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
+using Microsoft.JSInterop;
+
 namespace CSF.SRDashboard.Client.Pages
 {
     public partial class FindSeafarer
@@ -68,33 +70,26 @@ namespace CSF.SRDashboard.Client.Pages
             var result = validator.Validate(SearchCriteria, options => options.IncludeRuleSets("criteria"));
             if (result.IsValid)
             {
-                State.SearchCriteria = SearchCriteria;
-                State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
-
-                if (State.ApplicantSearchResult.TotalCount > 0)
-                {
-                    NavigationManager.NavigateTo("/SearchResults");
-                }
-            } else
+                if (this.IsSubmitting)
+                    return;
+                _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
+                this.IsSubmitting = true;
+                this.ButtonDisabled = "disabled";
+                this.State.SearchCriteria = SearchCriteria;
+                this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
+                this.NavigationManager.NavigateTo("/SearchResults");
+            }
+            else
             {
                 this.searchError.error = errorType.CRITERIA;
-
-                showError();
             }
+           
         }
 
         public void showError()
         {
             this.error = !this.error;
         }
-            if(this.IsSubmitting)
-                return;
-            _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
-            this.IsSubmitting = true;
-            this.ButtonDisabled = "disabled";
-            this.State.SearchCriteria = SearchCriteria;
-            this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
-            this.NavigationManager.NavigateTo("/SearchResults");
+          
         }     
     }
-}
