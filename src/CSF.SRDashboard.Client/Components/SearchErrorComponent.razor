@@ -1,7 +1,7 @@
 ﻿<div class="row">
     <div class="col-sm-10">
         <div class="bs-component">
-            @if (this.searchError.error == PageValidators.errorType.CRITERIA)
+            @if (this.SearchError.Error == PageValidators.ErrorType.CRITERIA)
             {
                 <div class="alert alert-dismissible alert-warning fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -12,6 +12,27 @@
                     </p>
                 </div>
             }
-            </div>
+            else if(this.SearchError.Error == PageValidators.ErrorType.NO_RESULT){
+        <div class="alert alert-dismissible alert-warning fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            <h4 class="alert-heading">No match found!</h4>
+            <p class="mb-0">
+                We're sorry we weren't able to find any results for your search.
+                Please try another search.
+            </p>
+            <h4 class="alert-heading">Search tips:</h4>
+            <ul>
+                <li>
+                    <p>Check for typos or use a different search field.</p>
+                </li>
+                <li>
+                    <p>Enter at least one search entry.</p>
+                </li>
+            </ul>
+
+        </div>
+            }
+        </div>
     </div>
 </div>

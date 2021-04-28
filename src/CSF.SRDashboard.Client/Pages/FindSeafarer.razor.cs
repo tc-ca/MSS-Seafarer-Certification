@@ -41,10 +41,9 @@ namespace CSF.SRDashboard.Client.Pages
         public bool IsSubmitting { get; set; } = false;
 
         public string ButtonDisabled { get; set; }
-        public string buttonDisabled { get; set; }
-        public SearchErrorObj searchError = new SearchErrorObj();
-        public bool error { get; set; } = true;
 
+        public SearchErrorObject SearchError = new SearchErrorObject();
+      
         public bool Error { get; set; } = true;
 
         protected override void OnInitialized()
@@ -67,7 +66,7 @@ namespace CSF.SRDashboard.Client.Pages
         {
             var validator = new SearchValidator();
 
-            var result = validator.Validate(SearchCriteria, options => options.IncludeRuleSets("criteria"));
+            var result = validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("criteria"));
             if (result.IsValid)
             {
                 if (this.IsSubmitting)
@@ -75,21 +74,15 @@ namespace CSF.SRDashboard.Client.Pages
                 _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
                 this.IsSubmitting = true;
                 this.ButtonDisabled = "disabled";
-                this.State.SearchCriteria = SearchCriteria;
+                this.State.SearchCriteria = this.SearchCriteria;
                 this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
                 this.NavigationManager.NavigateTo("/SearchResults");
             }
             else
             {
-                this.searchError.error = errorType.CRITERIA;
+                this.SearchError.Error = ErrorType.CRITERIA;
             }
            
         }
-
-        public void showError()
-        {
-            this.error = !this.error;
-        }
-          
         }     
     }
