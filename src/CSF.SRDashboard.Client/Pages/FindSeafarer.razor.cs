@@ -46,9 +46,9 @@
             this.EditContext = new EditContext(this.SearchCriteria);
         }
 
-          /// <summary>
-          /// Runs a search after the criteria is met
-          /// </summary>
+        /// <summary>
+        /// Runs a search after the criteria is met
+        /// </summary>
         public void Search()
         {
             if(this.IsSubmitting)
@@ -59,6 +59,16 @@
             this.State.SearchCriteria = SearchCriteria;
             this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
             this.NavigationManager.NavigateTo("/SearchResults");
-        }     
+        }
+
+        /// <summary>
+        /// Clears the search field
+        /// </summary>
+        public void Clear()
+        {
+            SearchCriteria = new ApplicantSearchCriteria();
+            this.EditContext = new EditContext(this.SearchCriteria);
+            State.SearchCriteria = null;
+        }
     }
 }
