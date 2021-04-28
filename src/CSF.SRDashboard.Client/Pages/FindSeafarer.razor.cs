@@ -31,29 +31,36 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        IJSRuntime JS { get; set; }
+
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
+        public bool IsSubmitting { get; set; } = false;
+
+        public string ButtonDisabled { get; set; }
         public string buttonDisabled { get; set; }
         public SearchErrorObj searchError = new SearchErrorObj();
         public bool error { get; set; } = true;
 
+        public bool Error { get; set; } = true;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            if (State.SearchCriteria != null)
+            if (this.State.SearchCriteria != null)
             {
-                SearchCriteria = State.SearchCriteria;
+                this.SearchCriteria = State.SearchCriteria;
             }
 
-            State.ApplicantSearchResult = null;
-            EditContext = new EditContext(SearchCriteria);
+            this.State.ApplicantSearchResult = null;
+            this.EditContext = new EditContext(this.SearchCriteria);
         }
 
-      /// <summary>
-      /// Runs a search after the criteria is met
-      /// </summary>
+          /// <summary>
+          /// Runs a search after the criteria is met
+          /// </summary>
         public void Search()
         {
             var validator = new SearchValidator();
@@ -80,5 +87,14 @@ namespace CSF.SRDashboard.Client.Pages
         {
             this.error = !this.error;
         }
+            if(this.IsSubmitting)
+                return;
+            _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
+            this.IsSubmitting = true;
+            this.ButtonDisabled = "disabled";
+            this.State.SearchCriteria = SearchCriteria;
+            this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
+            this.NavigationManager.NavigateTo("/SearchResults");
+        }     
     }
 }
