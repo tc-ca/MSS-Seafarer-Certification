@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.Services;
+﻿using CSF.SRDashboard.Client.PageValidators;
+using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Table;
 using DSD.MSS.Blazor.Components.Table.Models;
@@ -12,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using FluentValidation;
 namespace CSF.SRDashboard.Client.Pages
 {
     public partial class FindSeafarer
@@ -33,7 +34,7 @@ namespace CSF.SRDashboard.Client.Pages
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
         public string buttonDisabled { get; set; }
-
+        public SearchErrorObj searchError = new SearchErrorObj();
         public bool error { get; set; } = true;
 
 
@@ -55,13 +56,29 @@ namespace CSF.SRDashboard.Client.Pages
       /// </summary>
         public void Search()
         {
-                buttonDisabled = "disabled";
-                
-                State.SearchCriteria = SearchCriteria;
+            var validator = new SearchValidator();
 
+            var result = validator.Validate(SearchCriteria, options => options.IncludeRuleSets("criteria"));
+            if (result.IsValid)
+            {
+                State.SearchCriteria = SearchCriteria;
                 State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
 
-                NavigationManager.NavigateTo("/SearchResults");
-        }     
+                if (State.ApplicantSearchResult.TotalCount > 0)
+                {
+                    NavigationManager.NavigateTo("/SearchResults");
+                }
+            } else
+            {
+                this.searchError.error = errorType.CRITERIA;
+
+                showError();
+            }
+        }
+
+        public void showError()
+        {
+            this.error = !this.error;
+        }
     }
 }

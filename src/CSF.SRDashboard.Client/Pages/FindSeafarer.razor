@@ -3,9 +3,11 @@
 
 
 <h1>Seafarers</h1>
-
+<div hidden="@error">
+<CSF.SRDashboard.Client.Components.SearchErrorComponent searchError="this.searchError"/>
+    </div>
 <div class="border rounded col-10">
-    <div class="">
+    <div>
         <br />
         <h2>Find a seafarer</h2>
         <p>Enter one or more search field to view existing seafarers in the system</p>
@@ -25,8 +27,6 @@
                     <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm @buttonDisabled">Search</button>
-              @*  <span><i class="display:block fas fa-spinner fa-spin"></i></span>*@
-                <ValidationSummary />
             </div>
         </EditForm>
     </div>
