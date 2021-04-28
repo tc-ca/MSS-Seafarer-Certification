@@ -23,8 +23,10 @@
             <Column TableItem="ApplicantSearchResultItem"  Title="First name" Field="@(x => x.FirstName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
             <Column TableItem="ApplicantSearchResultItem" Title="CDN" Field="@(x => x.Cdn)" DefaultShowHeaderFilter="false" Sortable="false" Width="25%" />
             <Column TableItem="ApplicantSearchResultItem" Title="Date of birth" Field="@(x => x.DateOfBirth)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
-            <Pager  ShowPageNumber="true" ShowTotalCount="true" />
-        </Table>
+            <div class="mt-4 mb-4">
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </div>
+</Table>
 
     </div>
     
