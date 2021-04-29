@@ -14,24 +14,26 @@
             <h2>Find a seafarer</h2>
             <p>Enter one or more dearch field to view existing seafarers in the system.</p>
         </div>
+
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
             <div class="row">
-                <div class="col-5 d-grid gap-3">
+                <div class="col-3 d-grid gap-3">
                     <div class="form-group">
                         <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" ValidationFor="@(()=>SearchCriteria.Cdn)" @bind-Value="@SearchCriteria.Cdn" />
                     </div>
                     <div class="form-group ">
-                        <FormInputText Id="LastNameInput" Label="Last Name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
+                        <FormInputText Id="LastNameInput" Label="Last name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
                     </div>
                     <div class="form-group">
-                        <FormInputText Id="FirstNameInput" Label="First Name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
+                        <FormInputText Id="FirstNameInput" Label="First name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
                     </div>
                     <div class="form-group ">
-                        <FormInputDate Id="DobInput" Label="Date of Birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
+                        <FormInputDate Id="DobInput" Label="Date of birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                     </div>
                     <div class="d-flex justify-content-end align-items-center">
-                        <button id="SeafarerSearch" type="submit" class="btn btn-primary btn-sm mt-4 mb-4">Search</button>
+                        <button id="SeafarerClear" type="button" class="btn btn-light btn-clear mr-3" @onclick="Clear">Clear</button>
+                        <button id="SeafarerSearch" type="submit" class="btn btn-primary mt-4 mb-4">Search</button>
                     </div>
                     <ValidationSummary />
                 </div>
