@@ -10,6 +10,6 @@ namespace CSF.SRDashboard.Client.Components
     public partial class SearchErrorComponent
     {
         [Parameter]
-       public SearchErrorObj searchError { get; set; }
+       public SearchErrorObject SearchError { get; set; }
     }
 }

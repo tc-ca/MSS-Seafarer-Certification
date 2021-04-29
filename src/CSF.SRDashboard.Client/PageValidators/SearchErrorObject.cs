@@ -5,15 +5,25 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.PageValidators
 {
-    public enum errorType
+    public enum ErrorType
     {
         CRITERIA,
         NO_RESULT
     }
-    public class SearchErrorObj
+    public class SearchErrorObject
     {
 
-        public string message { get; set; }
-        public errorType? error { get; set; }
+        public bool ErrorToggle { get; set; } = true;
+        public ErrorType? Error { get; set; }
+
+
+        public void HideError()
+        {
+            this.ErrorToggle = true;
+        }
+        public void ShowError()
+        {
+            this.ErrorToggle = false;
+        }
     }
 }

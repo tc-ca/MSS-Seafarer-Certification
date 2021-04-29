@@ -65,10 +65,11 @@ namespace CSF.SRDashboard.Client.Pages
         public void Search()
         {
             var validator = new SearchValidator();
-
+           
             var result = validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("criteria"));
             if (result.IsValid)
             {
+                this.SearchError.HideError();
                 if (this.IsSubmitting)
                     return;
                 _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
@@ -80,6 +81,7 @@ namespace CSF.SRDashboard.Client.Pages
             }
             else
             {
+                this.SearchError.ShowError();
                 this.SearchError.Error = ErrorType.CRITERIA;
             }
            

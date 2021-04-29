@@ -16,6 +16,8 @@ namespace CSF.SRDashboard.Client.PageValidators
         {
             this.RuleSet("criteria", () => { this.RuleFor(x => x).Must(x => x.atLeastOne()); });
 
+            
+
         }
     }
 }
