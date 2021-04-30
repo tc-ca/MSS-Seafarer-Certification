@@ -13,17 +13,17 @@ namespace CSF.SRDashboard.Client.PageValidators
     public class SearchErrorObject
     {
 
-        public bool ErrorToggle { get; set; } = true;
+        public bool IsErrorHidden { get; set; } = true;
         public ErrorType? Error { get; set; }
 
 
         public void HideError()
         {
-            this.ErrorToggle = true;
+            this.IsErrorHidden = true;
         }
         public void ShowError()
         {
-            this.ErrorToggle = false;
+            this.IsErrorHidden = false;
         }
     }
 }
