@@ -14,7 +14,9 @@ namespace CSF.SRDashboard.Client.PageValidators
     {
         public SearchValidator()
         {
-            this.RuleFor(x => x).Must(x => x.atLeastOne()).WithMessage("* At least one search criteria is required");
+            this.RuleSet("criteria", () => { this.RuleFor(x => x).Must(x => x.atLeastOne()); });
+
+            
 
         }
     }

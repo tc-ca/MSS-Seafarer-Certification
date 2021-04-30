@@ -1,12 +1,23 @@
-﻿namespace CSF.SRDashboard.Client.Pages
-{
-    using CSF.SRDashboard.Client.Utilities;
-    using Microsoft.AspNetCore.Components;
-    using Microsoft.AspNetCore.Components.Forms;
-    using Microsoft.JSInterop;
-    using MPDIS.API.Wrapper.Services.MPDIS;
-    using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+﻿using CSF.SRDashboard.Client.PageValidators;
+using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.Utilities;
+using DSD.MSS.Blazor.Components.Table;
+using DSD.MSS.Blazor.Components.Table.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Caching.Memory;
+using MPDIS.API.Wrapper.Services.MPDIS;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FluentValidation;
+using Microsoft.JSInterop;
 
+namespace CSF.SRDashboard.Client.Pages
+{
     public partial class FindSeafarer
     {
         protected EditContext EditContext;
@@ -31,6 +42,8 @@
 
         public string ButtonDisabled { get; set; }
 
+        public SearchErrorObject SearchError = new SearchErrorObject();
+      
         public bool Error { get; set; } = true;
 
         protected override void OnInitialized()
@@ -51,15 +64,27 @@
         /// </summary>
         public void Search()
         {
-            if(this.IsSubmitting)
-                return;
-            _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
-            this.IsSubmitting = true;
-            this.ButtonDisabled = "disabled";
-            this.State.SearchCriteria = SearchCriteria;
-            this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
-            this.NavigationManager.NavigateTo("/SearchResults");
-        }
+            var validator = new SearchValidator();
+           
+            var result = validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("criteria"));
+            if (result.IsValid)
+            {
+                this.SearchError.HideError();
+                if (this.IsSubmitting)
+                    return;
+                _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
+                this.IsSubmitting = true;
+                this.ButtonDisabled = "disabled";
+                this.State.SearchCriteria = this.SearchCriteria;
+                this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
+                this.NavigationManager.NavigateTo("/SearchResults");
+            }
+            else
+            {
+                this.SearchError.ShowError();
+                this.SearchError.Error = ErrorType.CRITERIA;
+            }   
+        }     
 
         /// <summary>
         /// Clears the search field
