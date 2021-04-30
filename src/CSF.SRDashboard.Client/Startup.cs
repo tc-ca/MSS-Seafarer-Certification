@@ -62,7 +62,9 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddSingleton<IMpdisService, MpdisService>();
             services.AddSingleton<IRestClient, RestClient>();
+
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
+            services.AddTransient<IGatewayService, GatewayService>();
 
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();

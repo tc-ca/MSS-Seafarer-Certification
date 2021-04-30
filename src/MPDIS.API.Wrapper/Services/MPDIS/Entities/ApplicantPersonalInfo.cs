@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
 {
-    public class PersonalInfo
+    public class ApplicantPersonalInfo
     {
         [JsonProperty("firstname")]
         public string FirstName { get; set; }

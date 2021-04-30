@@ -26,6 +26,6 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         /// </summary>
         /// <param name="applicantInfo">ApplicantInfomration object that is received from MPDIS call</param>
         /// <returns>The applicant's personal info without medical assessmentinfo </returns>
-        PersonalInfo GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo);
+        ApplicantPersonalInfo GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo);
     }
 }

@@ -63,7 +63,8 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
             var serviceRequestPath = "applicants/search";
             try
             {
-                return this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                var searchResult = this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                return this.FilterSearchResult(searchResult);
             }
             catch (HttpRequestException httpRequestException)
             {
@@ -76,7 +77,8 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 // We want to retry once
                 try
                 {
-                    return this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                    var searchResult = this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                    return this.FilterSearchResult(searchResult);
                 }
                 catch (Exception exception)
                 {
@@ -86,9 +88,9 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
             }
         }
 
-        public PersonalInfo  GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo)
+        public ApplicantPersonalInfo  GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo)
         {
-            PersonalInfo personalInfo = new PersonalInfo();
+            ApplicantPersonalInfo personalInfo = new ApplicantPersonalInfo();
             if (applicantInfo != null)
             {
                 personalInfo.FirstName = applicantInfo.FirstName;
@@ -125,6 +127,21 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
             }
 
             return personalInfo;
+        }
+   
+        // we want to filter out some sensitive info using the following method
+        public ApplicantSearchResult FilterSearchResult(ApplicantSearchResult searchResult)
+        {
+            if(searchResult != null)
+            {
+                foreach(var item in searchResult.Items)
+                {
+                    item.Image = null;
+                    item.DeceasedStatus = null;
+                }
+            }
+
+            return searchResult;
         }
     }
 }
