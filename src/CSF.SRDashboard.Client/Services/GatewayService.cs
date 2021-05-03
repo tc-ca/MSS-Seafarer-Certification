@@ -1,55 +1,33 @@
-﻿using CSF.Common.Library.Azure;
-using Microsoft.Extensions.Configuration;
+﻿using CSF.Common.Library;
 using Microsoft.Extensions.Logging;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
-using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace CSF.SRDashboard.Client.Services
 {
+    /// <inheritdoc/>
     public class GatewayService : IGatewayService
     {
-        private readonly IConfiguration configuration;
         private readonly ILogger<GatewayService> logger;
-        private  HttpClient httpClient;
-        private  IKeyVaultService keyVaultService;
 
-        public GatewayService( IConfiguration configuration, ILogger<GatewayService> logger, IHttpClientFactory httpClientFactory)
+        private readonly IRestClient gatewayRestClient;
+
+        public GatewayService(IEnumerable<IRestClient> restClientCollection)
         {
-            this.httpClient = httpClientFactory.CreateClient();
-            this.configuration = configuration;
-            var gatewayServiceUrl = configuration.GetSection("ServiceLocatorEndpoints")["GatewayToMPDIS"];
-            this.httpClient.BaseAddress = new Uri(gatewayServiceUrl);
-            this.logger = logger;
+            this.gatewayRestClient = restClientCollection.First(o => o.GetType() == typeof(GatewayRestClient));
         }
 
-        public void SetKeyVault(IKeyVaultService keyVaultService)
-        {
-            this.keyVaultService = keyVaultService;
-            var secretName = configuration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"];
-            var token = keyVaultService.GetSecretByName(secretName);
-            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        }
-
+        /// <inheritdoc/>
         public ApplicantPersonalInfo GetApplicantInfoByCdn(string cdn)
         {
             ApplicantPersonalInfo aplicantPeronalInfo = null;
-            HttpResponseMessage response;
-            string requestUri = this.httpClient.BaseAddress + $"Applicant/{cdn}";
+            string requestPath = $"Applicant/{cdn}";
 
             try
             {
-                response = this.httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    aplicantPeronalInfo = JsonConvert.DeserializeObject<ApplicantPersonalInfo>(result);
-                }
+                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -59,23 +37,15 @@ namespace CSF.SRDashboard.Client.Services
             return aplicantPeronalInfo;
         }
 
-
+        /// <inheritdoc/>
         public ApplicantSearchResult Search(ApplicantSearchCriteria searchCriteria)
         {
             ApplicantSearchResult searchResult = null;
-            string requestAction = "search";
-            var serializedContent = JsonConvert.SerializeObject(searchCriteria);
-            StringContent stringContent = new StringContent(serializedContent, Encoding.UTF8, "application/json");
+            string requestPath = "search";
 
             try
             {
-                var response = this.httpClient.PostAsync(requestAction, stringContent).GetAwaiter().GetResult();
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    searchResult = JsonConvert.DeserializeObject<ApplicantSearchResult>(result);
-                }
+                searchResult = this.gatewayRestClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {

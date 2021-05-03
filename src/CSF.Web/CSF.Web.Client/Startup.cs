@@ -109,7 +109,7 @@ namespace CSF.Web.Client
 
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
-            services.AddSingleton<IRestClient, RestClient>();
+            services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
 
             services.AddScoped<UploadDocumentsStepper>();
             services.AddScoped<UploadDocumentPageModel>();

@@ -61,7 +61,8 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddSingleton<IMpdisService, MpdisService>();
-            services.AddSingleton<IRestClient, RestClient>();
+            services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
+            services.AddSingleton<IRestClient, GatewayRestClient>();
 
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IGatewayService, GatewayService>();
@@ -90,7 +91,7 @@ namespace CSF.SRDashboard.Client
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IKeyVaultService kvService, IConfiguration appConfiguration)
         {
             if (env.IsDevelopment())
             {
@@ -118,6 +119,15 @@ namespace CSF.SRDashboard.Client
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            SetApplicationSecretsFromKeyVault(kvService, appConfiguration);
+        }
+
+        private void SetApplicationSecretsFromKeyVault(IKeyVaultService kvService, IConfiguration appConfiguration)
+        {
+            var secretName = appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"];
+            var token = kvService.GetSecretByName(secretName);
+            appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"] = token;
         }
     }
 }

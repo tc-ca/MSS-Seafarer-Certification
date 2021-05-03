@@ -1,62 +1,30 @@
-﻿using CSF.Common.Library.Azure;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSF.Common.Library
 {
-    public class GatewayRestClient : IGatewayRestClient
+    /// <summary>
+    /// This IRestClient implements security necessary to make valid calls against our custom API gateway.
+    /// </summary>
+    public class GatewayRestClient : AbstractRestClient
     {
-        private readonly HttpClient httpClient;
-        private readonly IServiceLocator serviceLocator;
+        private readonly string bearerToken;
 
-        public GatewayRestClient(HttpClient httpClient, IConfiguration configuration, IServiceLocator serviceLocator, IKeyVaultService keyVaultService)
+        public GatewayRestClient(HttpClient httpClient, IServiceLocator serviceLocator, IConfiguration appConfiguration) : base(httpClient, serviceLocator)
         {
-
-            this.serviceLocator = serviceLocator;
-            this.httpClient = httpClient;
-            var secretName = configuration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"];
-
-            var token = keyVaultService.GetSecretByName(secretName);
-            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
+            this.bearerToken = appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"];
         }
 
-
-        //public void Search(ApplicantSearchCriteria searchCriteria)
-        //{
-
-        //}
-
-        public async Task<TReturnMessage> GetAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path) where TReturnMessage : class, new()
+        /// <summary>
+        /// Override to insert bearer token into our calls.
+        /// </summary>
+        protected override void ResetRestClientHeaders()
         {
-            HttpResponseMessage response;
-
-            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
-
-
-            response = await this.httpClient.GetAsync(uri).ConfigureAwait(true);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                var ex = new HttpRequestException($"{response.StatusCode} -- {response.ReasonPhrase}");
-
-                // Stuff the Http StatusCode in the Data collection with key 'StatusCode'
-                ex.Data.Add("StatusCode", response.StatusCode);
-                throw ex;
-            }
-
-            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-
-            return JsonConvert.DeserializeObject<TReturnMessage>(result);
+            this.httpClient.DefaultRequestHeaders.Accept.Clear();
+            this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.bearerToken);
         }
-
-
-
     }
 }

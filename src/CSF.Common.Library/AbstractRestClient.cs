@@ -1,34 +1,29 @@
-﻿namespace CSF.Common.Library
-{
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Threading.Tasks;
-    using CSF.Common.Library.Azure;
-    using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 
-    /// <summary>
-    /// Rest client that can be used by the application to make API calls.
-    /// </summary>
-    public class RestClient : IRestClient
+namespace CSF.Common.Library
+{
+    public class AbstractRestClient : IRestClient
     {
         /// <summary>
         /// Best practice: Make HttpClient static and reuse.
         /// Creating a new instance for each request is an antipattern that can result in socket exhaustion.
         /// </summary>
-        private readonly HttpClient httpClient;
-        private readonly IServiceLocator serviceLocator;
+        protected readonly HttpClient httpClient;
+        protected readonly IServiceLocator serviceLocator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RestClient"/> class.
+        /// Initializes a new instance of the <see cref="UnauthenticatedRestClient"/> class.
         /// </summary>
         /// <param name="httpClient">The HttpClient.</param>
-        /// <param name="configuration">Application configuration.</param>
         /// <param name="serviceLocator">Service locator.</param>
-        /// <param name="azureKeyVaultService">Azure Key Vault instance for the application.</param>
-        public RestClient(HttpClient httpClient, IConfiguration configuration, IServiceLocator serviceLocator)
+        public AbstractRestClient(HttpClient httpClient, IServiceLocator serviceLocator)
         {
             this.serviceLocator = serviceLocator;
             this.httpClient = httpClient;
@@ -145,12 +140,6 @@
             return response.IsSuccessStatusCode;
         }
 
-        private void ResetRestClientHeaders()
-        {
-            this.httpClient.DefaultRequestHeaders.Accept.Clear();
-            this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
         /// <summary>
         /// Makes a POST call to the specified API.
         /// </summary>
@@ -189,5 +178,13 @@
             }
         }
 
+        /// <summary>
+        /// This method cleans the http request headers before every REST call.
+        /// </summary>
+        protected virtual void ResetRestClientHeaders()
+        {
+            this.httpClient.DefaultRequestHeaders.Accept.Clear();
+            this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
     }
 }
