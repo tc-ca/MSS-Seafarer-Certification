@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.JSInterop;
+using System.ComponentModel.DataAnnotations;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -42,9 +43,14 @@ namespace CSF.SRDashboard.Client.Pages
 
         public string ButtonDisabled { get; set; }
 
+        public SearchValidator validator = new SearchValidator();
+
         public SearchErrorObject SearchError = new SearchErrorObject();
       
         public bool Error { get; set; } = true;
+        public ValidationMessageStore ValidationMessageStore { get; private set; }
+
+        
 
         protected override void OnInitialized()
         {
@@ -63,10 +69,8 @@ namespace CSF.SRDashboard.Client.Pages
         /// Runs a search after the criteria is met
         /// </summary>
         public void Search()
-        {
-            var validator = new SearchValidator();
-           
-            var result = validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("criteria"));
+        { 
+            var result = this.validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("Criteria"));
             if (result.IsValid)
             {
                 this.SearchError.HideError();
@@ -77,13 +81,31 @@ namespace CSF.SRDashboard.Client.Pages
                 this.ButtonDisabled = "disabled";
                 this.State.SearchCriteria = this.SearchCriteria;
                 this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
-                this.NavigationManager.NavigateTo("/SearchResults");
+                if (this.State.ApplicantSearchResult.TotalCount > 0)
+                {
+                    this.NavigationManager.NavigateTo("/SearchResults");
+                }
+                else
+                {
+                    this.IsSubmitting = false;
+                    this.EditContext = new EditContext(this.SearchCriteria);
+                    
+                    this.SearchCriteria.IsInvalid = true;
+                    var results = this.validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("NoMatch"));
+                   
+                    this.ShowErrorMessages(results);
+                    this.SearchError.ShowError();
+                    this.SearchError.Error = ErrorType.NO_RESULT;
+                   
+                    
+                }
             }
             else
             {
                 this.SearchError.ShowError();
                 this.SearchError.Error = ErrorType.CRITERIA;
-            }   
+            }
+            this.SearchCriteria.IsInvalid = false;
         }     
 
         /// <summary>
@@ -94,6 +116,26 @@ namespace CSF.SRDashboard.Client.Pages
             SearchCriteria = new ApplicantSearchCriteria();
             this.EditContext = new EditContext(this.SearchCriteria);
             State.SearchCriteria = null;
+            this.ValidationMessageStore.Clear();
+        }
+        /// <summary>
+        /// Displays the errors if the specified search criteria was not found
+        /// </summary>
+        /// <param name="errors"></param>
+        private void ShowErrorMessages(FluentValidation.Results.ValidationResult errors)
+        { 
+            this.ValidationMessageStore = new ValidationMessageStore(this.EditContext);
+            foreach(var i in errors.Errors)
+            {
+                var fieldIdentfier = new FieldIdentifier(this.SearchCriteria, i.PropertyName);
+                ValidationMessageStore.Add(fieldIdentfier, i.ErrorMessage);
+            }
+            this.EditContext.NotifyValidationStateChanged();
+           
+        }
+        public void ClearMessages()
+        {
+             this.ValidationMessageStore.Clear();
         }
     }
 }
