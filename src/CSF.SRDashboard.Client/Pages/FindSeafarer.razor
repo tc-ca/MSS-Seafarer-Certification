@@ -19,17 +19,17 @@
             <FluentValidationValidator />
             <div class="row">
                 <div class="col-3 d-grid gap-3">
-                    <div class="form-group">
-                        <CSF.SRDashboard.Client.Components.MyFormInput Label="Candidate Document Number (CDN)" Id="CNDInput"  @bind-Value="@SearchCriteria.Cdn" ValidationFor="@(()=>SearchCriteria.Cdn)" @onclick="ClearMessages" />
+                    <div class="form-group" @onclick="ClearMessages">
+                        <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput"  @bind-Value="@SearchCriteria.Cdn" ValidationFor="@(()=>SearchCriteria.Cdn)" @onclick="(()=>ClearMessages())" />
                         
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group" @onclick="ClearMessages">
                         <FormInputText Id="LastNameInput" Label="Last name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
                     </div>
-                    <div class="form-group">
-                        <FormInputText Id="FirstNameInput" Label="First name" @bind-Value="@SearchCriteria.FirstName" onclick="ClearMessages()" ValidationFor="@(()=>SearchCriteria.FirstName)" />
+                    <div class="form-group" @onclick="ClearMessages">
+                        <FormInputText Id="FirstNameInput" Label="First name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group" @onclick="ClearMessages">
                         <FormInputDate Id="DobInput" Label="Date of birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                     <ValidationMessage For="()=> SearchCriteria.DateOfBirth"></ValidationMessage>
                     </div>

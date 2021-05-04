@@ -55,6 +55,7 @@ namespace CSF.SRDashboard.Client.Pages
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            
 
             if (this.State.SearchCriteria != null)
             {
@@ -63,6 +64,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             this.State.ApplicantSearchResult = null;
             this.EditContext = new EditContext(this.SearchCriteria);
+           
         }
 
         /// <summary>
@@ -135,7 +137,10 @@ namespace CSF.SRDashboard.Client.Pages
         }
         public void ClearMessages()
         {
-             this.ValidationMessageStore.Clear();
+            if (this.ValidationMessageStore != null)
+            {
+                this.ValidationMessageStore.Clear();
+            }
         }
     }
 }
