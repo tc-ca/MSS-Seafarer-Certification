@@ -25,6 +25,9 @@ using System.Globalization;
 using CSF.SRDashboard.Client.Utilities;
 using MPDIS.API.Wrapper.Services.MPDIS;
 using CSF.Common.Library;
+using CSF.API.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
+using CSF.API.Services.Repositories;
 
 namespace CSF.SRDashboard.Client
 {
@@ -62,8 +65,10 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddSingleton<IMpdisService, MpdisService>();
             services.AddSingleton<IRestClient, RestClient>();
-            services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
+            services.AddSingleton<IKeyVaultService, AzureKeyVaultService>();
+            
 
+services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
@@ -74,6 +79,17 @@ namespace CSF.SRDashboard.Client
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
 
             services.AddHttpContextAccessor();
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            
+            var keyVault = serviceProvider.GetService<IKeyVaultService>();
+
+            services.AddDbContext<ClientDBContext>(options =>
+            {
+
+                options.UseNpgsql(keyVault.GetSecretByName("DocumentStorageClientDbDatabase"));
+
+            });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             var supportedCultures = new List<CultureInfo> {

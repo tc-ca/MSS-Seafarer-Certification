@@ -32,6 +32,7 @@ namespace CSF.API
 
             services.AddSingleton<ICertificateTypeRepository, CertificateTypeRepository>();
             services.AddSingleton<IDocumentTypeRepository, DocumentTypeRepository>();
+            services.AddSingleton<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -88,6 +88,7 @@ namespace CSF.SRDashboard.Client.Services
         }
         public List<DashboardRow> GetDashboardRowsInParallel()
         {
+
             List<DashboardRow> dashbaordRows = new List<DashboardRow>();
             var allRequests = this.GetAllRequestsForSeafarers();
             List<Task<DashboardRow>> multipleTasks = new List<Task<DashboardRow>>();
