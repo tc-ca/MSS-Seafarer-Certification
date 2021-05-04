@@ -97,7 +97,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 personalInfo.FirstName = applicantInfo.FirstName;
                 personalInfo.LastName = applicantInfo.LastName;
                 personalInfo.Cdn = applicantInfo.Cdn;
-                personalInfo.DateOfBirth = applicantInfo.DateOfBith;
+                personalInfo.DateOfBirth = applicantInfo.DateOfBirth;
                 personalInfo.HomeAddress = applicantInfo.Address;
                 personalInfo.HomeAddressCity = applicantInfo.City;
                 personalInfo.HomeAddressProvince = applicantInfo.Province;
