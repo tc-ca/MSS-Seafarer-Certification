@@ -10,13 +10,13 @@ namespace CSF.SRDashboard.Client.Services
     /// <inheritdoc/>
     public class GatewayService : IGatewayService
     {
+        private readonly IRestClient gatewayRestClient;
         private readonly ILogger<GatewayService> logger;
 
-        private readonly IRestClient gatewayRestClient;
-
-        public GatewayService(IEnumerable<IRestClient> restClientCollection)
+        public GatewayService(IEnumerable<IRestClient> restClientCollection, ILogger<GatewayService> logger)
         {
             this.gatewayRestClient = restClientCollection.First(o => o.GetType() == typeof(GatewayRestClient));
+            this.logger = logger;
         }
 
         /// <inheritdoc/>
