@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
 {
+
     public class ApplicantSearchCriteria
     {
         [JsonProperty("page")]
@@ -29,5 +31,17 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         [JsonIgnore]
         public DateTime? DateOfBirthObj { get; set; }
 
+
+        public bool atLeastOne()
+        {
+            if (!String.IsNullOrEmpty(this.Cdn) || !String.IsNullOrEmpty(this.DateOfBirth) || !String.IsNullOrEmpty(this.FirstName) || !String.IsNullOrEmpty(this.LastName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

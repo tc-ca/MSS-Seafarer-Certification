@@ -1,10 +1,18 @@
-﻿using CSF.SRDashboard.Client.Services;
+﻿using CSF.SRDashboard.Client.PageValidators;
+using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Configuration;
 using MPDIS.API.Wrapper.Services.MPDIS;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FluentValidation;
+using Microsoft.JSInterop;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -14,9 +22,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public SessionState State { get; set; }
-
-        [Inject]
-        public IMpdisService MpdisService { get; set; }
 
         [Inject]
         public IConfiguration Configuration { get; set; }
@@ -29,30 +34,67 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        IJSRuntime JS { get; set; }
+
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
+
+        public bool IsSubmitting { get; set; } = false;
+
+        public string ButtonDisabled { get; set; }
+
+        public SearchErrorObject SearchError = new SearchErrorObject();
+      
+        public bool Error { get; set; } = true;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            if (State.SearchCriteria != null)
+            if (this.State.SearchCriteria != null)
             {
-                SearchCriteria = State.SearchCriteria;
+                this.SearchCriteria = State.SearchCriteria;
             }
 
-            State.ApplicantSearchResult = null;
-            EditContext = new EditContext(SearchCriteria);
+            this.State.ApplicantSearchResult = null;
+            this.EditContext = new EditContext(this.SearchCriteria);
         }
 
+        /// <summary>
+        /// Runs a search after the criteria is met
+        /// </summary>
         public void Search()
         {
-            State.SearchCriteria = SearchCriteria;
-            
-            var searchResult = GatewayService.Search(SearchCriteria);
-            State.ApplicantSearchResult = searchResult;
+            var validator = new SearchValidator();
+           
+            var result = validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("criteria"));
+            if (result.IsValid)
+            {
+                this.SearchError.HideError();
+                if (this.IsSubmitting)
+                    return;
+                _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
+                this.IsSubmitting = true;
+                this.ButtonDisabled = "disabled";
+                this.State.SearchCriteria = this.SearchCriteria;
+                this.State.ApplicantSearchResult = GatewayService.Search(this.SearchCriteria);
+                this.NavigationManager.NavigateTo("/SearchResults");
+            }
+            else
+            {
+                this.SearchError.ShowError();
+                this.SearchError.Error = ErrorType.CRITERIA;
+            }   
+        }     
 
-            NavigationManager.NavigateTo("/SearchResults");
+        /// <summary>
+        /// Clears the search field
+        /// </summary>
+        public void Clear()
+        {
+            SearchCriteria = new ApplicantSearchCriteria();
+            this.EditContext = new EditContext(this.SearchCriteria);
+            State.SearchCriteria = null;
         }
-
     }
 }

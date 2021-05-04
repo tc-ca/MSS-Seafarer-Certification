@@ -1,0 +1,19 @@
+﻿@using CSF.SRDashboard.Client.Components.Icons.Constants
+@using CSF.SRDashboard.Client.Components.Icons.Utilities
+
+<i class="d-inline-block fas fa-spinner @this.SpinnerClass @this.FontAwesomeSizeClassString @this.FontAwesomeSpinAnimationTypeClassString"></i>
+
+@code {
+    [Parameter]
+    public string SpinnerClass { get; set; }
+
+    [Parameter]
+    public FontAwesomeIconSize Size { get; set; }
+
+    [Parameter]
+    public FontAwesomeSpinAnimationType AnimationType { get; set; }
+
+    protected string FontAwesomeSizeClassString => FontAwesomeIconSizeStringifier.GetCssClassFromSize(this.Size);
+
+    protected string FontAwesomeSpinAnimationTypeClassString => FontAwesomeSpinAnimationTypeStringifier.GetCssClassFromAnimationType(this.AnimationType);
+}

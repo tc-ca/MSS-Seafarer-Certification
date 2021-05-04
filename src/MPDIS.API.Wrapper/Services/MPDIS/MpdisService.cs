@@ -87,6 +87,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 }
             }
         }
+       
 
         public ApplicantPersonalInfo  GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo)
         {

@@ -1,6 +1,7 @@
 ﻿namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
 {
     using Newtonsoft.Json;
+    using System;
 
     /// <summary>
     /// Defines the applicant information.
@@ -52,7 +53,7 @@
         /// Gets or sets the applicant's date of birth in unix epoch time.
         /// </summary>
         [JsonProperty("dateOfBirth")]
-        public long DateOfBith { get; set; }
+        public long DateOfBirth { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's address identifier.
@@ -100,7 +101,7 @@
         /// Gets or sets the applicant's mailing address identifier.
         /// </summary>
         [JsonProperty("mailingAddressId")]
-        public int MailingAddressId { get; set; }
+        public int? MailingAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's mailing address.
@@ -208,7 +209,7 @@
         /// Gets or sets the applicant's identity document identifier.
         /// </summary>
         [JsonProperty("identityDocId")]
-        public int IdentityDocumentId { get; set; }
+        public int? IdentityDocumentId { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's identity document rmarks.
@@ -232,7 +233,7 @@
         /// Gets or sets the applicant's citizenship document identifier.
         /// </summary>
         [JsonProperty("citizenshipDocId")]
-        public int CitizenshipDocumentId { get; set; }
+        public int? CitizenshipDocumentId { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's citizenship country.
@@ -256,13 +257,13 @@
         /// Gets or sets the applicant's physician exam date in unix epoch time.
         /// </summary>
         [JsonProperty("examDate")]
-        public long PhysicianExamDate { get; set; }
+        public long? PhysicianExamDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's physician exam expiration date in unix epoch time.
         /// </summary>
         [JsonProperty("expireDate")]
-        public long PhysicianExpirationDate { get; set; }
+        public long? PhysicianExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's physician assesment.
@@ -274,13 +275,13 @@
         /// Gets or sets the applicant's minister certification issue date in unix epoch time.
         /// </summary>
         [JsonProperty("ministerCertIssuedDate")]
-        public long MinisiterCertificationIssueDate { get; set; }
+        public long? MinisiterCertificationIssueDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's minister certification expiration date in unix epoch time.
         /// </summary>
         [JsonProperty("ministerCertExpireDate")]
-        public long MinisiterCertificationExpirationDate { get; set; }
+        public long? MinisiterCertificationExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's medical notes.
@@ -299,5 +300,36 @@
         /// </summary>
         [JsonProperty("citizenshipChecked")]
         public bool? CitizenshipChecked { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", this.FirstName, this.LastName);
+            }
+        }
+        public string FullGender
+        {
+            get
+            {
+                if (string.Equals("M", this.Gender)) {
+                    return "Male";
+                        }
+                else
+                {
+                    return "Female";
+                }
+            }
+        }
+
+        public string DateOfBirthString
+        {
+            get
+            {
+                DateTimeOffset offset = DateTimeOffset.FromUnixTimeMilliseconds(this.DateOfBirth);
+                var DOB = offset.DateTime;
+                return DOB.ToString("MMMM dd, yyyy");
+            }
+        }
     }
 }
