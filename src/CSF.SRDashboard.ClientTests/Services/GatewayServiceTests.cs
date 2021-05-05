@@ -57,7 +57,7 @@ namespace CSF.SRDashboard.Client.Services.Tests
         }
 
         [Fact()]
-        public void Search_UseRestClientWhenSearchCriteriaNotNullOrEmpty()
+        public void SearchForApplicants_UseRestClientWhenSearchCriteriaNotNullOrEmpty()
         {
             // Arrange: setup the mock client to check if PostAsync<T> gets called
             var stubOfApiPath = "search";
@@ -72,7 +72,7 @@ namespace CSF.SRDashboard.Client.Services.Tests
         }
 
         [Fact()]
-        public void Search_DoNotUseRestClientWhenSearchCriteriaIsNull_ReturnsNonNullObject()
+        public void SearchForApplicants_DoNotUseRestClientWhenSearchCriteriaIsNull_ReturnsNonNullObject()
         {
             // Arrange: setup the mock client to check if PostAsync<T> gets called
             var stubOfApiPath = "search";
@@ -88,7 +88,7 @@ namespace CSF.SRDashboard.Client.Services.Tests
         }
 
         [Fact()]
-        public void Search_DoNotUseRestClientWhenSearchCriteriaIsEmpty_ReturnsNonNullObject()
+        public void SearchForApplicants_DoNotUseRestClientWhenSearchCriteriaIsEmpty_ReturnsNonNullObject()
         {
             // Arrange: setup the mock client to check if PostAsync<T> gets called
             var stubOfApiPath = "search";
