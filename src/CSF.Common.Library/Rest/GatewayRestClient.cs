@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -12,6 +11,11 @@ namespace CSF.Common.Library
     {
         private readonly string bearerToken;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GatewayRestClient"/> class.
+        /// </summary>
+        /// <param name="httpClient">The HttpClient.</param>
+        /// <param name="serviceLocator">Service locator.</param>
         public GatewayRestClient(HttpClient httpClient, IServiceLocator serviceLocator, IConfiguration appConfiguration) : base(httpClient, serviceLocator)
         {
             this.bearerToken = appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"];
@@ -22,8 +26,8 @@ namespace CSF.Common.Library
         /// </summary>
         protected override void ResetRestClientHeaders()
         {
-            this.httpClient.DefaultRequestHeaders.Accept.Clear();
-            this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            base.ResetRestClientHeaders();
+
             this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.bearerToken);
         }
     }

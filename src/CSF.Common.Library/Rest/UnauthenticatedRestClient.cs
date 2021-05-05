@@ -1,5 +1,6 @@
 ﻿namespace CSF.Common.Library
 {
+    using System;
     using System.Net.Http;
 
     /// <summary>
@@ -13,6 +14,6 @@
         /// <param name="httpClient">The HttpClient.</param>
         /// <param name="serviceLocator">Service locator.</param>
         public UnauthenticatedRestClient(HttpClient httpClient, IServiceLocator serviceLocator) : base(httpClient, serviceLocator)
-        {}
+        { }
     }
 }

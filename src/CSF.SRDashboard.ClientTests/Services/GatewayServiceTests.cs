@@ -20,6 +20,7 @@ namespace CSF.SRDashboard.Client.Services.Tests
             Mock<IServiceLocator> mockServiceLocator = new Mock<IServiceLocator>();
             Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
 
+            // configure the mock of rest client, it must be a concrete type because GatewayService expects an implementation of type GatewayRestClient.
             mockConfiguration.Setup(moq => moq.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"]).Returns("stubOfTokenValue");
             this.mockRestClient = new Mock<GatewayRestClient>(new HttpClient(), mockServiceLocator.Object, mockConfiguration.Object);
             
@@ -27,34 +28,79 @@ namespace CSF.SRDashboard.Client.Services.Tests
         }
 
         [Fact()]
-        public void GetApplicantInfoByCdn_UseRestClientWhenCdnNotNull()
+        public void GetApplicantInfoByCdn_UseRestClientWhenCdnIsNotEmpty()
         {
             // Arrange: setup the mock client to check if GetAsync<T> gets called
-            mockRestClient.Setup(client => client.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, "mockPath")).Verifiable();
+            var stubOfApiPath = "Applicant/stubOfCdnString";
+            mockRestClient.Setup(client => client.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath)).Verifiable();
 
             // Act
             var returnedObject = gatewayServiceUnderTest.GetApplicantInfoByCdn("stubOfCdnString");
 
             // Assert
-            this.mockRestClient.Verify(prop => prop.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, "mockPath"), Times.Once);
+            this.mockRestClient.Verify(prop => prop.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath), Times.Once);
         }
 
         [Fact()]
-        public void GetApplicantInfoByCdn_DoNotUseRestClientWhenCdnNullOrEmpty_ReturnsNonNullObject()
+        public void GetApplicantInfoByCdn_DoNotUseRestClientWhenCdnIsEmpty_ReturnsNull()
         {
-            Assert.True(false, "This test needs an implementation");
+            // Arrange: setup the mock client to check if GetAsync<T> gets called
+            var stubOfApiPath = "Applicant/";
+            mockRestClient.Setup(client => client.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath)).Verifiable();
+
+            // Act
+            var returnedObject = gatewayServiceUnderTest.GetApplicantInfoByCdn("");
+
+            // Assert
+            this.mockRestClient.Verify(prop => prop.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath), Times.Never);
+            Assert.Null(returnedObject);
         }
 
         [Fact()]
-        public void Search_UseRestClientWhenCdnNotNullOrEmpty()
+        public void Search_UseRestClientWhenSearchCriteriaNotNullOrEmpty()
         {
-            Assert.True(false, "This test needs an implementation");
+            // Arrange: setup the mock client to check if PostAsync<T> gets called
+            var stubOfApiPath = "search";
+            ApplicantSearchCriteria applicantSearchCriteria = new ApplicantSearchCriteria { Cdn = "stubOfCdn" };
+            mockRestClient.Setup(client => client.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath, applicantSearchCriteria)).Verifiable();
+
+            // Act
+            var returnedObject = gatewayServiceUnderTest.SearchForApplicants(applicantSearchCriteria);
+
+            // Assert
+            this.mockRestClient.Verify(prop => prop.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath, applicantSearchCriteria), Times.Once);
         }
 
         [Fact()]
-        public void Search_DoNotUseRestClientWhenCdnNullOrEmpty_ReturnsNonNullObject()
+        public void Search_DoNotUseRestClientWhenSearchCriteriaIsNull_ReturnsNonNullObject()
         {
-            Assert.True(false, "This test needs an implementation");
+            // Arrange: setup the mock client to check if PostAsync<T> gets called
+            var stubOfApiPath = "search";
+            ApplicantSearchCriteria applicantSearchCriteria = null;
+            mockRestClient.Setup(client => client.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath, applicantSearchCriteria)).Verifiable();
+
+            // Act
+            var returnedObject = gatewayServiceUnderTest.SearchForApplicants(applicantSearchCriteria);
+
+            // Assert
+            this.mockRestClient.Verify(prop => prop.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath, applicantSearchCriteria), Times.Never);
+            Assert.NotNull(returnedObject);
+        }
+
+        [Fact()]
+        public void Search_DoNotUseRestClientWhenSearchCriteriaIsEmpty_ReturnsNonNullObject()
+        {
+            // Arrange: setup the mock client to check if PostAsync<T> gets called
+            var stubOfApiPath = "search";
+            ApplicantSearchCriteria applicantSearchCriteria = new ApplicantSearchCriteria();
+            mockRestClient.Setup(client => client.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath, applicantSearchCriteria)).Verifiable();
+
+            // Act
+            var returnedObject = gatewayServiceUnderTest.SearchForApplicants(applicantSearchCriteria);
+
+            // Assert
+            this.mockRestClient.Verify(prop => prop.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath, applicantSearchCriteria), Times.Never);
+            Assert.NotNull(returnedObject);
         }
     }
 }

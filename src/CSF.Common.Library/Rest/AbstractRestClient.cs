@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CSF.Common.Library
 {
-    public class AbstractRestClient : IRestClient
+    public abstract class AbstractRestClient : IRestClient
     {
         /// <summary>
         /// Best practice: Make HttpClient static and reuse.
@@ -19,7 +17,7 @@ namespace CSF.Common.Library
         protected readonly IServiceLocator serviceLocator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnauthenticatedRestClient"/> class.
+        /// Base constructor class.
         /// </summary>
         /// <param name="httpClient">The HttpClient.</param>
         /// <param name="serviceLocator">Service locator.</param>
@@ -29,14 +27,8 @@ namespace CSF.Common.Library
             this.httpClient = httpClient;
         }
 
-        /// <summary>
-        /// Makes a GET call to the specified API.
-        /// </summary>
-        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
-        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
-        /// <param name="path">Path to the API being called on the service.</param>
-        /// <returns>Return bject as specified by the API.</returns>
-        public async Task<TReturnMessage> GetAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path)
+        ///<inheritdoc/>
+        public virtual async Task<TReturnMessage> GetAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path)
             where TReturnMessage : class, new()
         {
             HttpResponseMessage response;
@@ -61,15 +53,8 @@ namespace CSF.Common.Library
             return JsonConvert.DeserializeObject<TReturnMessage>(result);
         }
 
-        /// <summary>
-        /// Makes a POST call to the specified API.
-        /// </summary>
-        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
-        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
-        /// <param name="path">Path to the API being called on the service.</param>
-        /// <param name="dataObject">Object to post to the API.</param>
-        /// <returns>Return object as specified by the API.</returns>
-        public async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
+        ///<inheritdoc/>
+        public virtual async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
         {
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
@@ -92,15 +77,8 @@ namespace CSF.Common.Library
             }
         }
 
-        /// <summary>
-        /// Makes a PUT call to the specified API.
-        /// </summary>
-        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
-        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
-        /// <param name="path">Path to the API being called on the service.</param>
-        /// <param name="dataObject">Object to put to the API.</param>
-        /// <returns>Return bject as specified by the API.</returns>
-        public async Task<TReturnMessage> PutAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
+        ///<inheritdoc/>
+        public virtual async Task<TReturnMessage> PutAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
         {
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
@@ -123,13 +101,8 @@ namespace CSF.Common.Library
             }
         }
 
-        /// <summary>
-        /// Makes a DELETE call to the specified API.
-        /// </summary>
-        /// <param name="serviceName">Name of the service as specified by <see cref="ServiceLocatorDomain"/>.</param>
-        /// <param name="path">Path to the API being called on the service.</param>
-        /// <returns>A boolean value representing result of operation.</returns>
-        public async Task<bool> DeleteAsync(ServiceLocatorDomain serviceName, string path)
+        ///<inheritdoc/>
+        public virtual async Task<bool> DeleteAsync(ServiceLocatorDomain serviceName, string path)
         {
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
 
@@ -140,13 +113,8 @@ namespace CSF.Common.Library
             return response.IsSuccessStatusCode;
         }
 
-        /// <summary>
-        /// Makes a POST call to the specified API.
-        /// </summary>
-        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
-        /// <param name="restClientRequestOptions">the rest client request options.</param>
-        /// <returns>Return object as specified by the API.</returns>
-        public async Task<TReturnMessage> PostAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions)
+        ///<inheritdoc/>
+        public virtual async Task<TReturnMessage> PostAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions)
             where TReturnMessage : class, new()
         {
             if (restClientRequestOptions == null)

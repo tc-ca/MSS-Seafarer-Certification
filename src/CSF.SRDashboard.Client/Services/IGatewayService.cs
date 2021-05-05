@@ -1,4 +1,5 @@
 ﻿using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+using System;
 
 namespace CSF.SRDashboard.Client.Services
 {
@@ -19,6 +20,6 @@ namespace CSF.SRDashboard.Client.Services
         /// </summary>
         /// <param name="searchCriteria">Object containing valid search criteria against the API endpoint.</param>
         /// <returns></returns>
-        ApplicantSearchResult Search(ApplicantSearchCriteria searchCriteria);
+        ApplicantSearchResult SearchForApplicants(ApplicantSearchCriteria searchCriteria);
     }
 }

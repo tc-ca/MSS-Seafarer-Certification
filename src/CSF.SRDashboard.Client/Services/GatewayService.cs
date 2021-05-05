@@ -15,7 +15,7 @@ namespace CSF.SRDashboard.Client.Services
 
         public GatewayService(IEnumerable<IRestClient> restClientCollection, ILogger<GatewayService> logger)
         {
-            this.gatewayRestClient = restClientCollection.First(o => o.GetType() == typeof(GatewayRestClient));
+            this.gatewayRestClient = restClientCollection.First(o => o is GatewayRestClient);
             this.logger = logger;
         }
 
@@ -24,6 +24,9 @@ namespace CSF.SRDashboard.Client.Services
         {
             ApplicantPersonalInfo aplicantPeronalInfo = null;
             string requestPath = $"Applicant/{cdn}";
+
+            if (string.IsNullOrEmpty(cdn))
+                return null;
 
             try
             {
@@ -38,14 +41,17 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         /// <inheritdoc/>
-        public ApplicantSearchResult Search(ApplicantSearchCriteria searchCriteria)
+        public ApplicantSearchResult SearchForApplicants(ApplicantSearchCriteria applicantSearchCriteria)
         {
             ApplicantSearchResult searchResult = null;
             string requestPath = "search";
 
+            if(applicantSearchCriteria == null || IsApplicantSearchCriteriaEmpty(applicantSearchCriteria))
+                    return new ApplicantSearchResult();
+
             try
             {
-                searchResult = this.gatewayRestClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
+                searchResult = this.gatewayRestClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.GatewayToMpdis, requestPath, applicantSearchCriteria).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -53,6 +59,21 @@ namespace CSF.SRDashboard.Client.Services
             }
 
             return searchResult;
+        }
+
+        private bool IsApplicantSearchCriteriaEmpty(ApplicantSearchCriteria applicantSearchCriteria)
+        {
+            if (
+                string.IsNullOrEmpty(applicantSearchCriteria.Cdn) &&
+                string.IsNullOrEmpty(applicantSearchCriteria.FirstName) &&
+                string.IsNullOrEmpty(applicantSearchCriteria.LastName) &&
+                string.IsNullOrEmpty(applicantSearchCriteria.DateOfBirth))
+                return true;
+            else
+            {
+                return false;
+            }
+
         }
     }
 }
