@@ -1,7 +1,7 @@
 ﻿@page "/SeafarerProfile/{Cdn}"
 
 <a class="btn btn-link text-secondary" href="javascript:history.back()"><i class="fas fa-angle-left"></i>Back to search results</a>
-<h3>@String.Format("{0} {1}", this.Applicant.FirstName, this.Applicant.LastName)</h3>
+<h3>@this.Applicant.FullName</h3>
 <div class="border rounded col-10">
 
     <div class="bs-component mt-3">
