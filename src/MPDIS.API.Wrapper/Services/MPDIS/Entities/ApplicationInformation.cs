@@ -1,6 +1,7 @@
 ﻿namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
 {
     using Newtonsoft.Json;
+    using System;
 
     /// <summary>
     /// Defines the applicant information.
@@ -52,7 +53,7 @@
         /// Gets or sets the applicant's date of birth in unix epoch time.
         /// </summary>
         [JsonProperty("dateOfBirth")]
-        public long DateOfBith { get; set; }
+        public long DateOfBirth { get; set; }
 
         /// <summary>
         /// Gets or sets the applicant's address identifier.
@@ -299,5 +300,36 @@
         /// </summary>
         [JsonProperty("citizenshipChecked")]
         public bool? CitizenshipChecked { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", this.FirstName, this.LastName);
+            }
+        }
+        public string FullGender
+        {
+            get
+            {
+                if (string.Equals("M", this.Gender)) {
+                    return "Male";
+                        }
+                else
+                {
+                    return "Female";
+                }
+            }
+        }
+
+        public string DateOfBirthString
+        {
+            get
+            {
+                DateTimeOffset offset = DateTimeOffset.FromUnixTimeMilliseconds(this.DateOfBirth);
+                var DOB = offset.DateTime;
+                return DOB.ToString("MMMM dd, yyyy");
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace CSF.SRDashboard.Client.Pages
     {
         [Parameter]
         public string Cdn { get; set; }
+
         [Inject]
         public IMpdisService MpdisService { get; set; }
 
@@ -41,7 +42,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         protected override void OnInitialized()
         {
-            base.OnInitialized();
             this.LoadData();
             // Get all documents
             Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
@@ -91,10 +91,6 @@ namespace CSF.SRDashboard.Client.Pages
         private void LoadData()
         {
             this.applicant = this.MpdisService.GetApplicantByCdn(Cdn);
-            DateTimeOffset offset = DateTimeOffset.FromUnixTimeMilliseconds(this.applicant.DateOfBith);
-            DOB = offset.DateTime;
-            fullDob = DOB.ToString("MMMM dd, yyyy");
-
         }
     }
 }

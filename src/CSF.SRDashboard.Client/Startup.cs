@@ -28,6 +28,9 @@ using CSF.Common.Library;
 using CSF.API.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using CSF.API.Services.Repositories;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+using CSF.SRDashboard.Client.PageValidators;
+using FluentValidation;
 
 namespace CSF.SRDashboard.Client
 {
@@ -66,12 +69,13 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IMpdisService, MpdisService>();
             services.AddSingleton<IRestClient, RestClient>();
             services.AddSingleton<IKeyVaultService, AzureKeyVaultService>();
-            
 
-services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
+
+            services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
+            services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
 
             services.AddScoped<SessionState>();
             services.AddScoped<DialogService>();
@@ -81,7 +85,7 @@ services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepositor
             services.AddHttpContextAccessor();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
-            
+
             var keyVault = serviceProvider.GetService<IKeyVaultService>();
 
             services.AddDbContext<ClientDBContext>(options =>

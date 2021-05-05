@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.Services;
+﻿using CSF.SRDashboard.Client.PageValidators;
+using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Table;
 using DSD.MSS.Blazor.Components.Table.Models;
@@ -12,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
+using Microsoft.JSInterop;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -30,52 +33,67 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        IJSRuntime JS { get; set; }
+
         public ApplicantSearchCriteria SearchCriteria = new ApplicantSearchCriteria();
 
-        public bool error { get; set; } = true;
+        public bool IsSubmitting { get; set; } = false;
 
+        public string ButtonDisabled { get; set; }
+
+        public SearchErrorObject SearchError = new SearchErrorObject();
+      
+        public bool Error { get; set; } = true;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            if (State.SearchCriteria != null)
+            if (this.State.SearchCriteria != null)
             {
-                SearchCriteria = State.SearchCriteria;
+                this.SearchCriteria = State.SearchCriteria;
             }
 
-            State.ApplicantSearchResult = null;
-            EditContext = new EditContext(SearchCriteria);
+            this.State.ApplicantSearchResult = null;
+            this.EditContext = new EditContext(this.SearchCriteria);
         }
 
+        /// <summary>
+        /// Runs a search after the criteria is met
+        /// </summary>
         public void Search()
         {
-            var isValid = validate(SearchCriteria);
-
-            if (isValid)
+            var validator = new SearchValidator();
+           
+            var result = validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("criteria"));
+            if (result.IsValid)
             {
-                State.SearchCriteria = SearchCriteria;
-
-                State.ApplicantSearchResult = MpdisService.Search(SearchCriteria);
-
-                NavigationManager.NavigateTo("/SearchResults");
+                this.SearchError.HideError();
+                if (this.IsSubmitting)
+                    return;
+                _ = JS.InvokeAsync<string>("DisableSeafarerSearchButton", null);
+                this.IsSubmitting = true;
+                this.ButtonDisabled = "disabled";
+                this.State.SearchCriteria = this.SearchCriteria;
+                this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
+                this.NavigationManager.NavigateTo("/SearchResults");
             }
             else
             {
-                error = false;
-            }
-        }
+                this.SearchError.ShowError();
+                this.SearchError.Error = ErrorType.CRITERIA;
+            }   
+        }     
 
-        private bool validate(ApplicantSearchCriteria crit)
+        /// <summary>
+        /// Clears the search field
+        /// </summary>
+        public void Clear()
         {
-            if(!String.IsNullOrEmpty(crit.Cdn) || !String.IsNullOrEmpty(crit.DateOfBirth) || !String.IsNullOrEmpty(crit.FirstName) || !String.IsNullOrEmpty(crit.LastName))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            SearchCriteria = new ApplicantSearchCriteria();
+            this.EditContext = new EditContext(this.SearchCriteria);
+            State.SearchCriteria = null;
         }
     }
 }

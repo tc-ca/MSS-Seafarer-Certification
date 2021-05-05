@@ -1,0 +1,30 @@
+﻿@using Components.Tables.WorkloadRequest.Entities
+
+<a href="#" class="btn btn-outline-primary mt-3">Add Request</a>
+
+<div class="table-responsive mt-3">
+    <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
+        <Column TableItem="WorkloadRequestTableItem" Title="RequestId" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="Certificate" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="Request Type" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="Request Date" Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+            <Template Context="WorkloadRequestTableItem">
+                <span>@WorkloadRequestTableItem.RequestDate.ToString("MMM d, yyyy")</span>
+            </Template>
+        </Column>
+        <Column TableItem="WorkloadRequestTableItem" Title="Status" Field="@(x => x.Status)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+            <Template Context="WorkloadRequestTableItem">
+                <WorkloadRequestTableItemStatusComponent RequestStatus="@WorkloadRequestTableItem.Status" />
+            </Template>
+        </Column>
+        <Column TableItem="WorkloadRequestTableItem" Title="Priority" Field="@(x => x.Priority)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+            <Template Context="WorkloadRequestTableItem">
+                <WorkloadRequestTableItemPriorityComponent Priority="@WorkloadRequestTableItem.Priority" />
+            </Template>
+        </Column>
+        <Column TableItem="WorkloadRequestTableItem" Title="Language" Field="@(x => x.Language)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <div class="mt-4 mb-4">
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </div>
+    </Table>
+</div>
