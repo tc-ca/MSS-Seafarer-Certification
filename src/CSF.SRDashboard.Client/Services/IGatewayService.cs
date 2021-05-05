@@ -13,7 +13,7 @@ namespace CSF.SRDashboard.Client.Services
         /// </summary>
         /// <param name="cdn">Candidate Document Number of the seafarer.</param>
         /// <returns></returns>
-        ApplicantPersonalInfo GetApplicantInfoByCdn(string cdn);
+        TrimmedApplicantInformation GetApplicantInfoByCdn(string cdn);
 
         /// <summary>
         /// Returns seafarer search results according to search criteria.

@@ -20,9 +20,9 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         /// <inheritdoc/>
-        public ApplicantPersonalInfo GetApplicantInfoByCdn(string cdn)
+        public TrimmedApplicantInformation GetApplicantInfoByCdn(string cdn)
         {
-            ApplicantPersonalInfo aplicantPeronalInfo = null;
+            TrimmedApplicantInformation aplicantPeronalInfo = null;
             string requestPath = $"Applicant/{cdn}";
 
             if (string.IsNullOrEmpty(cdn))
@@ -30,7 +30,7 @@ namespace CSF.SRDashboard.Client.Services
 
             try
             {
-                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
+                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<TrimmedApplicantInformation>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {

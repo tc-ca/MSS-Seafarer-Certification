@@ -30,12 +30,12 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         }
 
         /// <inheritdoc/>
-        public ApplicantInformation GetApplicantByCdn(string cdn)
+        public FullApplicantInformation GetApplicantByCdn(string cdn)
         {
             var serviceRequestPath = string.Format("applicants/cdn/{0}", cdn);
             try
             {
-                return this.restClient.GetAsync<ApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
+                return this.restClient.GetAsync<FullApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
             }
             catch (HttpRequestException httpRequestException)
             {
@@ -48,7 +48,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 // We want to retry once
                 try
                 {
-                    return this.restClient.GetAsync<ApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
+                    return this.restClient.GetAsync<FullApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
                 }
                 catch (Exception exception)
                 {
@@ -89,41 +89,41 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         }
        
 
-        public ApplicantPersonalInfo  GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo)
+        public TrimmedApplicantInformation  GetPersonalInfoFromApplicantInfo(FullApplicantInformation applicantInfo)
         {
-            ApplicantPersonalInfo personalInfo = new ApplicantPersonalInfo();
+            TrimmedApplicantInformation personalInfo = new TrimmedApplicantInformation();
             if (applicantInfo != null)
             {
                 personalInfo.FirstName = applicantInfo.FirstName;
                 personalInfo.LastName = applicantInfo.LastName;
                 personalInfo.Cdn = applicantInfo.Cdn;
                 personalInfo.DateOfBirth = applicantInfo.DateOfBirth;
-                personalInfo.HomeAddress = applicantInfo.Address;
-                personalInfo.HomeAddressCity = applicantInfo.City;
-                personalInfo.HomeAddressProvince = applicantInfo.Province;
-                personalInfo.HomeAddressPostalCode = applicantInfo.PostalCode;
-                personalInfo.HomeAddressCountry = applicantInfo.HomeCountry;
+                personalInfo.HomeAddress = applicantInfo.HomeAddress;
+                personalInfo.HomeAddressCity = applicantInfo.HomeAddressCity;
+                personalInfo.HomeAddressProvince = applicantInfo.HomeAddressProvince;
+                personalInfo.HomeAddressPostalCode = applicantInfo.HomeAddressPostalCode;
+                personalInfo.HomeAddressCountry = applicantInfo.HomeAddressCountry;
                 personalInfo.PhoneNumber = applicantInfo.PhoneNumber;
                 personalInfo.SecondaryPhoneNumber = applicantInfo.SecondaryPhoneNumber;
                 personalInfo.Email = applicantInfo.Email;
                 personalInfo.Gender = applicantInfo.Gender;
-                personalInfo.Language = applicantInfo.SelectedLanguage;
+                personalInfo.SelectedLanguage = applicantInfo.SelectedLanguage;
 
                 if (applicantInfo.SameMailAddress)
                 {
-                    personalInfo.MailingAddress = applicantInfo.Address;
-                    personalInfo.MailingAddressCity = applicantInfo.City;
-                    personalInfo.MailingAddressProvince = applicantInfo.Province;
-                    personalInfo.MailingAddressPostalCode = applicantInfo.PostalCode;
-                    personalInfo.MailingAddressCountry = applicantInfo.HomeCountry;
+                    personalInfo.MailingAddress = applicantInfo.HomeAddress;
+                    personalInfo.MailingAddressCity = applicantInfo.HomeAddressCity;
+                    personalInfo.MailingAddressProvince = applicantInfo.HomeAddressProvince;
+                    personalInfo.MailingAddressPostalCode = applicantInfo.HomeAddressPostalCode;
+                    personalInfo.MailingAddressCountry = applicantInfo.HomeAddressCountry;
                 }
                 else
                 {
-                    personalInfo.MailingAddress = applicantInfo.MailAddress;
-                    personalInfo.MailingAddressCity = applicantInfo.MailCity;
-                    personalInfo.MailingAddressProvince = applicantInfo.MailProvince;
-                    personalInfo.MailingAddressPostalCode = applicantInfo.MailPostalCode;
-                    personalInfo.MailingAddressCountry = applicantInfo.MailHomeCountry;
+                    personalInfo.MailingAddress = applicantInfo.MailingAddress;
+                    personalInfo.MailingAddressCity = applicantInfo.MailingAddressCity;
+                    personalInfo.MailingAddressProvince = applicantInfo.MailingAddressProvince;
+                    personalInfo.MailingAddressPostalCode = applicantInfo.MailingAddressPostalCode;
+                    personalInfo.MailingAddressCountry = applicantInfo.MailingAddressCountry;
                 }
             }
 

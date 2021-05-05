@@ -32,13 +32,13 @@ namespace CSF.SRDashboard.Client.Services.Tests
         {
             // Arrange: setup the mock client to check if GetAsync<T> gets called
             var stubOfApiPath = "Applicant/stubOfCdnString";
-            mockRestClient.Setup(client => client.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath)).Verifiable();
+            mockRestClient.Setup(client => client.GetAsync<TrimmedApplicantInformation>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath)).Verifiable();
 
             // Act
             var returnedObject = gatewayServiceUnderTest.GetApplicantInfoByCdn("stubOfCdnString");
 
             // Assert
-            this.mockRestClient.Verify(prop => prop.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath), Times.Once);
+            this.mockRestClient.Verify(prop => prop.GetAsync<TrimmedApplicantInformation>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath), Times.Once);
         }
 
         [Fact()]
@@ -46,13 +46,13 @@ namespace CSF.SRDashboard.Client.Services.Tests
         {
             // Arrange: setup the mock client to check if GetAsync<T> gets called
             var stubOfApiPath = "Applicant/";
-            mockRestClient.Setup(client => client.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath)).Verifiable();
+            mockRestClient.Setup(client => client.GetAsync<TrimmedApplicantInformation>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath)).Verifiable();
 
             // Act
             var returnedObject = gatewayServiceUnderTest.GetApplicantInfoByCdn("");
 
             // Assert
-            this.mockRestClient.Verify(prop => prop.GetAsync<ApplicantPersonalInfo>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath), Times.Never);
+            this.mockRestClient.Verify(prop => prop.GetAsync<TrimmedApplicantInformation>(ServiceLocatorDomain.GatewayToMpdis, stubOfApiPath), Times.Never);
             Assert.Null(returnedObject);
         }
 

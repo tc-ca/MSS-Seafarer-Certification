@@ -6,6 +6,6 @@
     public partial class SeafarerProfileComponent
     {
         [Parameter]
-        public ApplicantInformation Applicant { get; set; }
+        public TrimmedApplicantInformation Applicant { get; set; }
     }
 }

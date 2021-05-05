@@ -12,7 +12,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         /// </summary>
         /// <param name="cdn">The applicant's cdn.</param>
         /// <returns>The applicant's information.</returns>
-        ApplicantInformation GetApplicantByCdn(string cdn);
+        FullApplicantInformation GetApplicantByCdn(string cdn);
 
         /// <summary>
         /// Search for the applicant based on CDN number, First Name, Last Name, or date of birth
@@ -26,6 +26,6 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         /// </summary>
         /// <param name="applicantInfo">ApplicantInfomration object that is received from MPDIS call</param>
         /// <returns>The applicant's personal info without medical assessmentinfo </returns>
-        ApplicantPersonalInfo GetPersonalInfoFromApplicantInfo(ApplicantInformation applicantInfo);
+        TrimmedApplicantInformation GetPersonalInfoFromApplicantInfo(FullApplicantInformation applicantInfo);
     }
 }
