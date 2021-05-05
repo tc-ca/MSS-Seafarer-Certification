@@ -16,7 +16,7 @@ namespace CSF.SRDashboard.Client.Services.Tests
         
         public GatewayServiceTests()
         {
-            Mock<ILogger<GatewayService>> mockLogger = new Mock<ILogger<GatewayService>>(); ;
+            Mock<ILogger<GatewayService>> mockLogger = new Mock<ILogger<GatewayService>>();
             Mock<IServiceLocator> mockServiceLocator = new Mock<IServiceLocator>();
             Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
 
