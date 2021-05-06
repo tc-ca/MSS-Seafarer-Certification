@@ -45,7 +45,7 @@
             var restClientRequestOptions = new RestClientRequestOptions()
             {
                 Path = path,
-                ParameterContentType = "multipart/form-data",
+                ParameterContentType = "application/form-data",
                 DataObject = insertDocumentParameter,
                 ServiceName = ServiceLocatorDomain.Document
             };
