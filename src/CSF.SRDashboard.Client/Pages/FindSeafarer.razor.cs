@@ -50,7 +50,7 @@ namespace CSF.SRDashboard.Client.Pages
         public bool Error { get; set; } = true;
         public ValidationMessageStore ValidationMessageStore { get; private set; }
 
-        
+        public string CssError { get; set; }
 
         protected override void OnInitialized()
         {
@@ -93,8 +93,14 @@ namespace CSF.SRDashboard.Client.Pages
                     this.EditContext = new EditContext(this.SearchCriteria);
                     
                     this.SearchCriteria.IsInvalid = true;
+                    
                     var results = this.validator.Validate(this.SearchCriteria, options => options.IncludeRuleSets("NoMatch"));
                    
+                    if (this.SearchCriteria.DateOfBirth != null)
+                    {
+                        this.CssError = "csf-error";
+                    }
+
                     this.ShowErrorMessages(results);
                     this.SearchError.ShowError();
                     this.SearchError.Error = ErrorType.NO_RESULT;
@@ -118,7 +124,7 @@ namespace CSF.SRDashboard.Client.Pages
             SearchCriteria = new ApplicantSearchCriteria();
             this.EditContext = new EditContext(this.SearchCriteria);
             State.SearchCriteria = null;
-            this.ValidationMessageStore.Clear();
+            this.ClearMessages();
         }
         /// <summary>
         /// Displays the errors if the specified search criteria was not found
@@ -137,6 +143,7 @@ namespace CSF.SRDashboard.Client.Pages
         }
         public void ClearMessages()
         {
+            this.CssError = "";
             if (this.ValidationMessageStore != null)
             {
                 this.ValidationMessageStore.Clear();

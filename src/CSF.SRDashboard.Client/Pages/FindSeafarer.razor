@@ -10,15 +10,15 @@
     </div>
 <div class="border rounded col-12">
     <div class="mt-4">
-        <div class="col-12">
+        <div>
             <h2>Find a seafarer</h2>
-            <p>Enter one or more dearch field to view existing seafarers in the system.</p>
+            <p class="mt-5 mb-5">Enter one or more search criteria to view existing seafarers in the system.</p>
         </div>
 
         <EditForm EditContext="@EditContext" OnValidSubmit="Search">
             <FluentValidationValidator />
             <div class="row">
-                <div class="col-3 d-grid gap-3">
+                <div class="col-5 d-grid gap-3">
                     <div class="form-group" @onclick="ClearMessages">
                         <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput"  @bind-Value="@SearchCriteria.Cdn" ValidationFor="@(()=>SearchCriteria.Cdn)" @onclick="(()=>ClearMessages())" />
                         
@@ -30,7 +30,7 @@
                         <FormInputText Id="FirstNameInput" Label="First name" @bind-Value="@SearchCriteria.FirstName" ValidationFor="@(()=>SearchCriteria.FirstName)" />
                     </div>
                     <div class="form-group" @onclick="ClearMessages">
-                        <FormInputDate Id="DobInput" Label="Date of birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
+                        <FormInputDate class="@CssError" Id="DobInput" Label="Date of birth" @bind-Value="@SearchCriteria.DateOfBirthObj" ValidationFor="@(()=>SearchCriteria.DateOfBirthObj)" />
                     <ValidationMessage For="()=> SearchCriteria.DateOfBirth"></ValidationMessage>
                     </div>
                     <div class="d-flex justify-content-end align-items-center">
