@@ -23,7 +23,7 @@ namespace CSF.SRDashboard.Client.PageValidators
                 this.RuleFor(x => x.DateOfBirth).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that Date Of Birth. Try another?");
                 this.RuleFor(x => x.FirstName).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that First Name. Try another?");
             });
-
+            
         }
     }
 }

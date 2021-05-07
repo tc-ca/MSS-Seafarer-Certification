@@ -98,7 +98,7 @@ namespace CSF.SRDashboard.Client.Pages
                    
                     if (this.SearchCriteria.DateOfBirth != null)
                     {
-                        this.CssError = "csf-error";
+                        this.CssError = "invalid";
                     }
 
                     this.ShowErrorMessages(results);
