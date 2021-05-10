@@ -139,5 +139,11 @@
         /// </summary>
         [JsonProperty("citizenshipChecked")]
         public bool? CitizenshipChecked { get; set; }
+
+        /// <summary>
+        /// Gets or sets the applicant's decease status.
+        /// </summary>
+        [JsonProperty("deceasedStatus")]
+        public bool? DeceasedStatus { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CSF.Common.Library;
+using CSF.SRDashboard.Client.DTO;
 using Microsoft.Extensions.Logging;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using System;
@@ -20,9 +21,9 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         /// <inheritdoc/>
-        public TrimmedApplicantInformation GetApplicantInfoByCdn(string cdn)
+        public MpdisDto GetApplicantInfoByCdn(string cdn)
         {
-            TrimmedApplicantInformation aplicantPeronalInfo = null;
+            MpdisDto aplicantPeronalInfo = null;
             string requestPath = $"Applicant/{cdn}";
 
             if (string.IsNullOrEmpty(cdn))
@@ -30,7 +31,7 @@ namespace CSF.SRDashboard.Client.Services
 
             try
             {
-                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<TrimmedApplicantInformation>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
+                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<MpdisDto>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {

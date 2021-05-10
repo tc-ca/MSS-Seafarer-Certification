@@ -6,6 +6,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
     /// <summary>
     /// Variation of the <see cref="FullApplicantInformation"/> without Protected B data or anything else we do not need for our client application.
     /// </summary>
+    
     public class TrimmedApplicantInformation
     {
         /// <summary>
@@ -18,10 +19,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         /// Gets or sets the applicant's unique identifier.
         /// </summary>
         [JsonProperty("id")]
-        public int Id
-        {
-            get; set;
-        }
+        public int Id { get; set;}
 
         /// <summary>
         /// Gets or sets the applicant's first name.
@@ -50,7 +48,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         /// <summary>
         /// Gets or sets the applicant's address identifier.
         /// </summary>
-        [JsonProperty("addressid")]
+        [JsonProperty("addressId")]
         public int? HomeAddressId { get; set; }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         /// <summary>
         /// Gets or sets the applicant's mailing address.
         /// </summary>
-        [JsonProperty("mailAddress")]
+        [JsonProperty("mailingAddress")]
         public string MailingAddress { get; set; }
 
         /// <summary>
@@ -161,36 +159,14 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         [JsonProperty("selectedLang")]
         public string SelectedLanguage { get; set; }
 
-        public string FullName
-        {
-            get
-            {
-                return string.Format("{0} {1}", this.FirstName, this.LastName);
-            }
-        }
-        public string FullGender
-        {
-            get
-            {
-                if (string.Equals("M", this.Gender))
-                {
-                    return "Male";
-                }
-                else
-                {
-                    return "Female";
-                }
-            }
-        }
+        [JsonProperty("fullName")]
+        public string FullName { get; set; }
 
-        public string DateOfBirthString
-        {
-            get
-            {
-                DateTimeOffset offset = DateTimeOffset.FromUnixTimeMilliseconds(this.DateOfBirth);
-                var DOB = offset.DateTime;
-                return DOB.ToString("MMMM dd, yyyy");
-            }
-        }
+        [JsonProperty("dateOfBirthString")]
+        public string DateOfBirthString { get; set; }
+
+        [JsonProperty("fullGender")]
+        public string FullGender { get; set; }
     }
+
 }

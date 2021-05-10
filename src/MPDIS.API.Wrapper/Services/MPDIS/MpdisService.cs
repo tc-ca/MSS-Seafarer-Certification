@@ -108,6 +108,12 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 personalInfo.Email = applicantInfo.Email;
                 personalInfo.Gender = applicantInfo.Gender;
                 personalInfo.SelectedLanguage = applicantInfo.SelectedLanguage;
+                personalInfo.FullName = applicantInfo.FirstName + " " + applicantInfo.LastName;
+
+                DateTimeOffset offset = DateTimeOffset.FromUnixTimeMilliseconds(applicantInfo.DateOfBirth);
+                var dob = offset.DateTime;
+                personalInfo.DateOfBirthString = dob.ToString("MMMM dd, yyyy");
+                personalInfo.FullGender = (applicantInfo.Gender == "M" ) ? "Male" : "Female";
 
                 if (applicantInfo.SameMailAddress)
                 {

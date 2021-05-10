@@ -1,4 +1,5 @@
-﻿using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+﻿using CSF.SRDashboard.Client.DTO;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using System;
 
 namespace CSF.SRDashboard.Client.Services
@@ -13,7 +14,7 @@ namespace CSF.SRDashboard.Client.Services
         /// </summary>
         /// <param name="cdn">Candidate Document Number of the seafarer.</param>
         /// <returns></returns>
-        TrimmedApplicantInformation GetApplicantInfoByCdn(string cdn);
+        MpdisDto GetApplicantInfoByCdn(string cdn);
 
         /// <summary>
         /// Returns seafarer search results according to search criteria.
