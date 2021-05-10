@@ -31,6 +31,7 @@ namespace CSF.SRDashboard.Client.DTO
         public string SecondaryPhoneNumber { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
+        public string FullGender { get; set; }
         public string SelectedLanguage { get; set; }
         public string FullName { get; set; }
         public string DateOfBirthString { get; set; }
