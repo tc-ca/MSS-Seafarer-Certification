@@ -17,9 +17,9 @@
 
     //MPDIS applicant personal information without medical data
     // the actual url is like the following:
-    //http://tcappsmssdev/saf-sec-sur/4/mpdis-wrapper/mpdis/applicant/0185855Z
+    //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/0185855Z
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/mpdis-wrapper/mpdis/applicant/{cdn}",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/{cdn}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -37,9 +37,9 @@
 
     // Search with Criteria
     // the direct url is like the following:
-    //http://tcappsmssdev/saf-sec-sur/4/mpdis-wrapper/mpdis/applicants/search
+    //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/mpdis-wrapper/mpdis/applicants/search",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -55,6 +55,9 @@
       }
     }
 
-  ]
+  ],
 
+  "GlobalConfiguration": {
+    "BaseUrl": "https://wwwappsmssdev/Saf-Sec-Sur/4/csf-gmc-apigw-dev"
+  }
 }

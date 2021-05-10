@@ -1,45 +1,64 @@
 {
   "Routes": [
+
+    // pokemon api for testing
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello",
-      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/v2/pokemon",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//tcappstest",
-          "Port": "80"
+          "Host": "//pokeapi.co",
+          "Port": "443"
         }
       ],
-      "UpstreamPathTemplate": "/hello",
+      "UpstreamPathTemplate": "/pokemon",
       "UpstreamHttpMethod": [ "Get" ]
     },
+
+    //MPDIS applicant personal information without medical data
+    // the actual url is like the following:
+    //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/0185855Z
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api/api/hello/guid",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/{cdn}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//tcappstest",
+          "Host": "//tcappsmssdev",
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/guid",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/mpdis/Applicant/{cdn}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     },
+
+    // Search with Criteria
+    // the direct url is like the following:
+    //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api-mpdis_wrapper/Mpdis/Applicant/{cdn}",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//wwwappsmssdev",
+          "Host": "//tcappsmssdev",
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/applicant/{cdn}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/mpdis/search",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     }
+
   ],
 
   "GlobalConfiguration": {
-    "BaseUrl": "https://wwwappstest.tc.gc.ca/Saf-Sec-Sur/4/csf-apim"
+    "BaseUrl": "https://localhost:5000"
   }
 
 }
