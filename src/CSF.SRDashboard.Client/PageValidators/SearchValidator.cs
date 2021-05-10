@@ -14,10 +14,16 @@ namespace CSF.SRDashboard.Client.PageValidators
     {
         public SearchValidator()
         {
-            this.RuleSet("criteria", () => { this.RuleFor(x => x).Must(x => x.atLeastOne()); });
+            this.RuleSet("Criteria", () => { this.RuleFor(x => x).Must(x => x.atLeastOne()); });
 
+            this.RuleSet("NoMatch", () =>
+            {
+                this.RuleFor(x => x.Cdn).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that CDN. Try another?");
+                this.RuleFor(x => x.LastName).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that Last Name. Try another?");
+                this.RuleFor(x => x.DateOfBirth).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that Date Of Birth. Try another?");
+                this.RuleFor(x => x.FirstName).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that First Name. Try another?");
+            });
             
-
         }
     }
 }

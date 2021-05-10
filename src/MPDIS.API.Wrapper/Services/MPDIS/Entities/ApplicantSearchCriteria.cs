@@ -31,10 +31,13 @@ namespace MPDIS.API.Wrapper.Services.MPDIS.Entities
         [JsonIgnore]
         public DateTime? DateOfBirthObj { get; set; }
 
+        [JsonIgnore]
+        public bool IsInvalid { get; set; } = false;
+
 
         public bool atLeastOne()
         {
-            if (!String.IsNullOrEmpty(this.Cdn) || !String.IsNullOrEmpty(this.DateOfBirth) || !String.IsNullOrEmpty(this.FirstName) || !String.IsNullOrEmpty(this.LastName))
+            if (!String.IsNullOrWhiteSpace(this.Cdn) || !String.IsNullOrWhiteSpace(this.DateOfBirth) || !String.IsNullOrWhiteSpace(this.FirstName) || !String.IsNullOrWhiteSpace(this.LastName))
             {
                 return true;
             }
