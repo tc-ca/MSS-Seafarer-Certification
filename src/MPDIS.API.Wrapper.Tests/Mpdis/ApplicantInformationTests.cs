@@ -14,7 +14,7 @@
             var expectedApplicantInformationDto = this.ExpectedApplicantInformation();
 
             // Act
-            var applicantInformation = JsonConvert.DeserializeObject<ApplicantInformation>(jsonString);
+            var applicantInformation = JsonConvert.DeserializeObject<FullApplicantInformation>(jsonString);
 
             // Assert
             var properties = applicantInformation.GetType().GetProperties();
@@ -26,30 +26,29 @@
             }
         }
 
-        private ApplicantInformation ExpectedApplicantInformation()
+        private FullApplicantInformation ExpectedApplicantInformation()
         {
-            return new ApplicantInformation()
+            return new FullApplicantInformation()
             {
                 FromAces = false,
                 Id = 627,
                 FirstName = "JOHN",
                 LastName = "WICK",
                 Cdn = "00000176",
-                DeceasedStatus = null,
                 DateOfBirth = -399686400000,
-                AddressId = 1926,
-                Address = "156 HENLEY ROAD",
-                City = "CHELSEA",
-                Province = "300_006",
-                PostalCode = "B2V7N3",
-                HomeCountry = "008_CAN",
+                HomeAddressId = 1926,
+                HomeAddress = "156 HENLEY ROAD",
+                HomeAddressCity = "CHELSEA",
+                HomeAddressProvince = "300_006",
+                HomeAddressPostalCode = "B2V7N3",
+                HomeAddressCountry = "008_CAN",
                 SameMailAddress = true,
                 MailingAddressId = 1925,
-                MailAddress = null,
-                MailCity = null,
-                MailProvince = null,
-                MailPostalCode = null,
-                MailHomeCountry = null,
+                MailingAddress = null,
+                MailingAddressCity = null,
+                MailingAddressProvince = null,
+                MailingAddressPostalCode = null,
+                MailingAddressCountry = null,
                 ContactId = 1927,
                 PhoneNumber = "902-685-2419",
                 SecondaryPhoneNumber = null,

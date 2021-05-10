@@ -48,7 +48,7 @@ namespace CSF.SRDashboard.Client.Test.Integration
             var uri = this.configuration.GetSection("ServiceLocatorEndpoints")["Mtoa"];
 
             var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.Mtoa) == new System.Uri(uri));
-            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator);
+            return new UnauthenticatedRestClient(new System.Net.Http.HttpClient(), mockServiceLocator);
 
         }
 

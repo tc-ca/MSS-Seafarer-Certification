@@ -46,7 +46,7 @@
         private IRestClient BuildRestClient(IConfiguration configuration)
         {
             var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.Mpdis) == new System.Uri("https://mpdis-sddpm-dev.tc.gc.ca/mpdis-sddpm/auth/rest"));
-            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator);
+            return new UnauthenticatedRestClient(new System.Net.Http.HttpClient(), mockServiceLocator);
         }
     }
 }

@@ -1,18 +1,10 @@
 ﻿using CSF.SRDashboard.Client.PageValidators;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Utilities;
-using DSD.MSS.Blazor.Components.Table;
-using DSD.MSS.Blazor.Components.Table.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Caching.Memory;
-using MPDIS.API.Wrapper.Services.MPDIS;
+using Microsoft.Extensions.Configuration;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.JSInterop;
 using System.ComponentModel.DataAnnotations;
@@ -27,7 +19,10 @@ namespace CSF.SRDashboard.Client.Pages
         public SessionState State { get; set; }
 
         [Inject]
-        public IMpdisService MpdisService { get; set; }
+        public IConfiguration Configuration { get; set; }
+
+        [Inject]
+        public IGatewayService GatewayService { get; set; }
 
         public ApplicantSearchResult SearchResult { get; set; }
 
@@ -82,7 +77,7 @@ namespace CSF.SRDashboard.Client.Pages
                 this.IsSubmitting = true;
                 this.ButtonDisabled = "disabled";
                 this.State.SearchCriteria = this.SearchCriteria;
-                this.State.ApplicantSearchResult = MpdisService.Search(this.SearchCriteria);
+                this.State.ApplicantSearchResult = GatewayService.SearchForApplicants(this.SearchCriteria);
                 if (this.State.ApplicantSearchResult.TotalCount > 0)
                 {
                     this.NavigationManager.NavigateTo("/SearchResults");

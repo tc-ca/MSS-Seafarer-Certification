@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MPDIS.API.Wrapper.Services.MPDIS.Entities;
-using MPDIS.API.Wrapper.Services.MPDIS;
+using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.DTO;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -10,9 +10,9 @@ namespace CSF.SRDashboard.Client.Pages
         public string Cdn { get; set; }
 
         [Inject]
-        public IMpdisService MpdisService { get; set; }
+        public IGatewayService GatewayService { get; set; }
 
-        public ApplicantInformation Applicant { get; set; }
+        public MpdisApplicantDto Applicant { get; set; }
 
         protected override void OnInitialized()
         {
@@ -21,7 +21,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         private void LoadData()
         {
-            this.Applicant = this.MpdisService.GetApplicantByCdn(Cdn);
+            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
         }
     }
 }
