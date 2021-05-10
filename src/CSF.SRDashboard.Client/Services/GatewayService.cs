@@ -21,9 +21,9 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         /// <inheritdoc/>
-        public MpdisDto GetApplicantInfoByCdn(string cdn)
+        public MpdisApplicantDto GetApplicantInfoByCdn(string cdn)
         {
-            MpdisDto aplicantPeronalInfo = null;
+            MpdisApplicantDto aplicantPeronalInfo = null;
             string requestPath = $"Applicant/{cdn}";
 
             if (string.IsNullOrEmpty(cdn))
@@ -31,7 +31,7 @@ namespace CSF.SRDashboard.Client.Services
 
             try
             {
-                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<MpdisDto>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
+                aplicantPeronalInfo = this.gatewayRestClient.GetAsync<MpdisApplicantDto>(ServiceLocatorDomain.GatewayToMpdis, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {

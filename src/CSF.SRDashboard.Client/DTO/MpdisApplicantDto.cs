@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CSF.SRDashboard.Client.DTO
+﻿namespace CSF.SRDashboard.Client.DTO
 {
-    public class MpdisDto
+    public class MpdisApplicantDto
     {
         public bool FromAces { get; set; }
         public int Id { get; set; }
