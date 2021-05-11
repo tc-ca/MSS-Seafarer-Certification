@@ -6,7 +6,9 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using CSF.Common.Library.Extensions.IFormFile;
+    using System.Threading.Tasks;
+
     public class DocumentService : IDocumentService
     {
         private readonly IConfiguration configuration;
@@ -26,13 +28,13 @@
             this.logger = logger;
         }
 
-        public void InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata)
+        public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata)
         {
             var insertDocumentParameter = new InsertDocumentParameter()
             {
-                CorrelationId = correlationId,
                 UserName = userName,
-                File = file,
+                FileBytes = await file.GetBytes(),
+                FileName = file.FileName,                
                 FileContentType = fileContentType,
                 ShortDescription = shortDescription,
                 SubmissionMethod = submissionMethod,
@@ -45,19 +47,21 @@
             var restClientRequestOptions = new RestClientRequestOptions()
             {
                 Path = path,
-                ParameterContentType = "application/form-data",
+                ParameterContentType = "application/json",
                 DataObject = insertDocumentParameter,
                 ServiceName = ServiceLocatorDomain.Document
             };
 
             try
             {
-                var result = restClient.PostAsync<Object>(restClientRequestOptions).GetAwaiter().GetResult();
+                return await restClient.PostAsync<List<Guid>>(restClientRequestOptions);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
+            return new List<Guid>();
         }
     }
 }

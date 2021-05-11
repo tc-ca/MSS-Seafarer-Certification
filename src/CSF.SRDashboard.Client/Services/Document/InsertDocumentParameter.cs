@@ -1,35 +1,38 @@
 ﻿namespace CSF.SRDashboard.Client.Services.Document
 {
-    using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System.Text.Json.Serialization;
+
     public class InsertDocumentParameter
     {
-        [JsonProperty("correlationId")]
-        public int CorrelationId { get; set; }
-
-        [JsonProperty("userName")]
+        [JsonPropertyName("userName")]
         public string UserName { get; set; }
 
-        [JsonProperty("file")]
-        public IFormFile File { get; set; }
+        [JsonPropertyName("fileBytes")]
+        public byte[] FileBytes { get; set; }
 
-        [JsonProperty("fileContentType")]
+        [JsonPropertyName("fileName")]
+        public string FileName { get; set; }
+
+        [JsonPropertyName("fileSize")]
+        public long FileSize => this.FileBytes.Length;
+
+        [JsonPropertyName("fileContentType")]
         public string FileContentType { get; set; }
 
-        [JsonProperty("shortDescription")]
+        [JsonPropertyName("shortDescription")]
         public string ShortDescription { get; set; }
 
-        [JsonProperty("submissionMethod")]
+        [JsonPropertyName("submissionMethod")]
         public string SubmissionMethod { get; set; }
 
-        [JsonProperty("fileLanguage")]
+        [JsonPropertyName("fileLanguage")]
         public string FileLanguage { get; set; }
 
-        [JsonProperty("documentTypes")]
+        [JsonPropertyName("documentTypes")]
         public List<string> DocumentTypes { get; set; }
 
-        [JsonProperty("customMetadata")]
+        [JsonPropertyName("customMetadata")]
         public string CustomMetadata { get; set; }
     }
 }

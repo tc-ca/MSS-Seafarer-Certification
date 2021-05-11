@@ -37,12 +37,11 @@
             };
 
             // Act
-            documentService.InsertDocument(1, "John Wick", file, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty);
+            var result = documentService.InsertDocument(1, "John Wick", file, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Assert
-            Assert.True(true);
+            Assert.NotEmpty(result);
         }
-
 
         private IRestClient BuildRestClient()
         {
@@ -56,7 +55,7 @@
 
         private IConfigurationRoot BuildConfiguration()
         {
-            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \"https://document-storage-dev-api.azurewebsites.net/api/v1/\"}";
+            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \"https://localhost:44341/api/v1\"}";
             string partialAppSettings = "{" + azureSettings + "}";
 
             var builder = new ConfigurationBuilder();
