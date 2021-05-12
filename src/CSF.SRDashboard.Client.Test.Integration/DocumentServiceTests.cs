@@ -18,6 +18,7 @@
         private readonly IConfiguration configuration;
         private readonly IRestClient restClient;
         private readonly ILogger<DocumentService> logger;
+        private readonly string documentServiceAPIUri = "https://document-storage-dev-api.azurewebsites.net/api/v1";
 
         public DocumentServiceTests()
         {
@@ -74,7 +75,7 @@
 
         private IConfigurationRoot BuildConfiguration()
         {
-            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \"https://document-storage-dev-api.azurewebsites.net/api/v1\"}";
+            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \""+this.documentServiceAPIUri+"\"}";
             string partialAppSettings = "{" + azureSettings + "}";
 
             var builder = new ConfigurationBuilder();
