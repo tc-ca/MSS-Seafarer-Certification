@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Moq;
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
@@ -42,6 +43,24 @@
             // Assert
             Assert.NotEmpty(result);
         }
+         
+        [Fact]
+        public void WhenRetrievingDocument_Succeeds_ReturnsDocuments()
+        {
+            // Arrange
+            var documentService = new DocumentService(this.configuration, this.restClient, this.logger);
+            var documentIds = new List<Guid>()
+            {
+                new Guid("14980cb7-6d3b-4477-85ad-181aa82e103d"),
+                new Guid("caf99bf0-9593-4599-94c1-5a0e690a83cd")
+            };
+
+            // Act
+            var result = documentService.GetDocumentsWithDocumentIds(documentIds).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            // Assert
+            Assert.NotEmpty(result);
+        } 
 
         private IRestClient BuildRestClient()
         {
@@ -55,7 +74,7 @@
 
         private IConfigurationRoot BuildConfiguration()
         {
-            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \"https://localhost:44341/api/v1\"}";
+            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \"https://document-storage-dev-api.azurewebsites.net/api/v1\"}";
             string partialAppSettings = "{" + azureSettings + "}";
 
             var builder = new ConfigurationBuilder();

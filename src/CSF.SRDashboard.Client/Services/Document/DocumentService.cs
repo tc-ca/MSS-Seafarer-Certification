@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using CSF.Common.Library.Extensions.IFormFile;
     using System.Threading.Tasks;
+    using CSF.SRDashboard.Client.Services.Document.Entities;
 
     public class DocumentService : IDocumentService
     {
@@ -26,6 +27,27 @@
             this.configuration = configuration;
             this.restClient = restClient;
             this.logger = logger;
+        }
+
+        public async Task<List<DocumentInfo>> GetDocumentsWithDocumentIds(List<Guid> documentIds)
+        {
+            string queryString = string.Empty;
+            foreach(var documentId in documentIds)
+            {
+                queryString += $"documentGuid={documentId}&";
+            }
+            string path = string.Format("documents?{0}", queryString.TrimEnd('&'));
+
+            try
+            {
+                return await restClient.GetAsync<List<DocumentInfo>>(ServiceLocatorDomain.Document, path);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return new List<DocumentInfo>();
         }
 
         public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata)
