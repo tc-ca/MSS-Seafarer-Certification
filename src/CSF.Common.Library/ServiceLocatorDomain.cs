@@ -20,5 +20,10 @@
         /// MPDIS
         /// </summary>
         Mpdis,
+
+        /// <summary>
+        /// Gateway to MPDIS
+        /// </summary>
+        GatewayToMpdis,
     }
 }
