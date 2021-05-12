@@ -212,3 +212,18 @@ tbody > tr {
     box-shadow: 0px 0px 5px rgb(0 0 0 / 15%);
 }
 
+.collapse-header {
+    width: 740px;
+    height: 50px;
+    background: #1B50B1;
+    padding-left:20px;
+    padding-top: 10px;
+    color: #fff;
+}
+.small-buttons {
+    color:#1B50B1;
+}
+span.csf-span {
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+}
+

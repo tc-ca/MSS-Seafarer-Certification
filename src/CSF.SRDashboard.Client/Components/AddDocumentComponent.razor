@@ -1,0 +1,97 @@
+﻿<body>
+    <div class="col-8 border-bottom p-0 bg-white">
+        <h3>PERSON NAME - Add Document</h3>
+    </div>
+
+    <div style="width:707px;">
+        
+        <div class="accordion mt-5" id="AttachmentAcc">
+            <div class="row">
+                <div class="col-10">
+                    <p class="float-right">Required field<span class="text-danger">*</span></p>
+                </div>
+            </div>
+            <div class="collapse-header">
+                <div id="AttachmentHeading">
+                    <div class="row">
+                        <div class="col-10">
+                            <h4> Add attachments</h4>
+                        </div>
+                        <div class="col-2 d-flex align-content-center">
+                            <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseAttachment" aria-expanded="true" aria-controls="CollapseAttachment">
+                                View <span> <i class="fas fa-angle-down"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="CollapseAttachment" class="collapse show" aria-labelledby="AttachmentAcc">
+            <div class="mt-4 mb-4 ml-4">
+                <div class="card d-flex align-items-center" style="height:140px; background:#EEEEEE">
+
+                    <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
+                    <p>Drag and drop file here or click to select from your desktop</p>
+                    <InputFile>
+                    </InputFile>
+                </div>
+            </div>
+        </div>
+        <div class="accordion" id="AttachmentAcc">
+            <div class="collapse-header">
+                <div id="AttachmentHeading">
+                    <div class="row">
+                        <div class="col-10">
+                            <h4>Attachments</h4>
+                        </div>
+                        <div class="col-2 d-flex align-content-center">
+                            <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseForm" aria-expanded="true" aria-controls="CollapseForm">
+                                View <span> <i class="fas fa-angle-down"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="CollapseForm" class="collapse show" aria-labelledby="FormAcc">
+            <div class="card ml-4 mt-4">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-9">
+                            <i class="fas fa-paperclip"><span class="csf-span">ATTACHMENT NAME</span></i>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="small-buttons">
+                                <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                            </a>
+                        </div>
+
+                        <div class="col">
+                            <a href="# " class="small-buttons">
+                                <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
+                            <FluentValidationValidator />
+                            <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList"></InputMultipleSelect>
+                            <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.Languages" ValidationFor="@(() => this.DocumentForm.Languages)" OnChange="OnInputChange">
+                                @foreach (var item in this.DocumentForm.Languages)
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            </FormInputSelect>
+                            <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(()=>this.DocumentForm.Description)" />
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@code{
+
+}
