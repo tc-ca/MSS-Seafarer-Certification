@@ -69,7 +69,10 @@
             var uri = this.configuration.GetSection("ServiceLocatorEndpoints")["Document"];
 
             var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.Document) == new System.Uri(uri));
-            return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator);
+            //return new RestClient(new System.Net.Http.HttpClient(), configuration, mockServiceLocator);
+
+            return new UnauthenticatedRestClient(new System.Net.Http.HttpClient(), mockServiceLocator);
+
 
         }
 
