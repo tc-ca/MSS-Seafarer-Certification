@@ -1,17 +1,36 @@
 ﻿<div class="row" hidden="@this.SearchError.IsErrorHidden">
-    <div class="col-sm-10">
+    <div class="col-sm-12">
         <div class="bs-component">
-            @if (this.SearchError.Error == PageValidators.ErrorType.CRITERIA)
-            {
-                <div class="alert alert-dismissible alert-warning fade show" role="alert">
-                    <button type="submit" class="close" @onclick="() => this.SearchError.HideError()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
+           
+            <div class="alert alert-dismissible alert-warning fade show" role="alert">
+                <button type="submit" class="close" @onclick="() => this.SearchError.HideError()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @if (this.SearchError.Error == PageValidators.ErrorType.CRITERIA)
+                {
                     <h4 class="alert-heading">Enter at least one search criteria</h4>
                     <p class="mb-0">
                         Please provide at least one search criteria.
                     </p>
-                </div>
-            }
+                }
+                else if (this.SearchError.Error == PageValidators.ErrorType.NO_RESULT)
+                {
+                    <h4 class="alert-heading">No match found!</h4>
+                    <p class="mb-0">
+                        We're sorry we weren't able to find any results for your search.
+                        Please try another search.
+                    </p>
+                    <h4 class="alert-heading">Search tips:</h4>
+                    <ul style="list-style-type: disc">
+                        <li>
+                            Check for typos or use a different search field.
+                        </li>
+                        <li>
+                            Enter at least one search entry.
+                        </li>
+                    </ul>
+
+                }
+            </div>
+            
         </div>
     </div>
 </div>

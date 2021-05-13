@@ -25,7 +25,7 @@ namespace CSF.API.Services.Repositories
                 var document = context.ClientXrefDocuments.Where(x => x.DocumentId == id)
                     .Select(x => new DocumentInfo
                     {
-                        Cdn = x.ClientId,
+                        Cdn = x.CdnTxt,
                         DocumentId = x.DocumentId,
                         DateStartDte = x.DateStartDte.Value,
                         DateEndDte = x.DateEndDte ?? null
@@ -44,7 +44,7 @@ namespace CSF.API.Services.Repositories
         {
             try
             {
-                var documents = context.ClientXrefDocuments.Where(x => x.ClientId.Equals(cdn)).Select(x => new DocumentInfo
+                var documents = context.ClientXrefDocuments.Where(x => x.CdnTxt.Equals(cdn)).Select(x => new DocumentInfo
                 {
                     Cdn = cdn,
                     DocumentId = x.DocumentId,
@@ -69,7 +69,7 @@ namespace CSF.API.Services.Repositories
                 var documents = context.ClientXrefDocuments.Where(x => ids.Contains(x.DocumentId))
                     .Select(x => new DocumentInfo
                     {
-                        Cdn = x.ClientId,
+                        Cdn = x.CdnTxt,
                         DocumentId = x.DocumentId,
                         DateStartDte = x.DateStartDte.Value,
                         DateEndDte = x.DateEndDte ?? null
@@ -89,7 +89,7 @@ namespace CSF.API.Services.Repositories
             {
                 var doc = new ClientXrefDocument
                 {
-                    ClientId = document.Cdn,
+                    CdnTxt = document.Cdn,
                     DocumentId = document.DocumentId,
                     DateStartDte = document.DateStartDte,
                     DateEndDte = document.DateEndDte
@@ -111,7 +111,7 @@ namespace CSF.API.Services.Repositories
         {
             try
             {
-                var documentDB = context.ClientXrefDocuments.Where(x => x.ClientId == document.Cdn).Single();
+                var documentDB = context.ClientXrefDocuments.Where(x => x.CdnTxt == document.Cdn).Single();
 
                 documentDB.DocumentId = document.DocumentId;
                 documentDB.DateStartDte = document.DateStartDte;

@@ -30,12 +30,12 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         }
 
         /// <inheritdoc/>
-        public ApplicantInformation GetApplicantByCdn(string cdn)
+        public FullApplicantInformation GetApplicantByCdn(string cdn)
         {
             var serviceRequestPath = string.Format("applicants/cdn/{0}", cdn);
             try
             {
-                return this.restClient.GetAsync<ApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
+                return this.restClient.GetAsync<FullApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
             }
             catch (HttpRequestException httpRequestException)
             {
@@ -48,7 +48,7 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 // We want to retry once
                 try
                 {
-                    return this.restClient.GetAsync<ApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
+                    return this.restClient.GetAsync<FullApplicantInformation>(ServiceLocatorDomain.Mpdis, serviceRequestPath).GetAwaiter().GetResult();
                 }
                 catch (Exception exception)
                 {
@@ -63,7 +63,8 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
             var serviceRequestPath = "applicants/search";
             try
             {
-                return this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                var searchResult = this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                return this.FilterSearchResult(searchResult);
             }
             catch (HttpRequestException httpRequestException)
             {
@@ -76,7 +77,8 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
                 // We want to retry once
                 try
                 {
-                    return this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                    var searchResult = this.restClient.PostAsync<ApplicantSearchResult>(ServiceLocatorDomain.Mpdis, serviceRequestPath, searchCriteria).GetAwaiter().GetResult();
+                    return this.FilterSearchResult(searchResult);
                 }
                 catch (Exception exception)
                 {
@@ -87,5 +89,66 @@ namespace MPDIS.API.Wrapper.Services.MPDIS
         }
        
 
+        public TrimmedApplicantInformation  GetPersonalInfoFromApplicantInfo(FullApplicantInformation applicantInfo)
+        {
+            TrimmedApplicantInformation personalInfo = new TrimmedApplicantInformation();
+            if (applicantInfo != null)
+            {
+                personalInfo.FirstName = applicantInfo.FirstName;
+                personalInfo.LastName = applicantInfo.LastName;
+                personalInfo.Cdn = applicantInfo.Cdn;
+                personalInfo.DateOfBirth = applicantInfo.DateOfBirth;
+                personalInfo.HomeAddress = applicantInfo.HomeAddress;
+                personalInfo.HomeAddressCity = applicantInfo.HomeAddressCity;
+                personalInfo.HomeAddressProvince = applicantInfo.HomeAddressProvince;
+                personalInfo.HomeAddressPostalCode = applicantInfo.HomeAddressPostalCode;
+                personalInfo.HomeAddressCountry = applicantInfo.HomeAddressCountry;
+                personalInfo.PhoneNumber = applicantInfo.PhoneNumber;
+                personalInfo.SecondaryPhoneNumber = applicantInfo.SecondaryPhoneNumber;
+                personalInfo.Email = applicantInfo.Email;
+                personalInfo.Gender = applicantInfo.Gender;
+                personalInfo.SelectedLanguage = applicantInfo.SelectedLanguage;
+                personalInfo.FullName = applicantInfo.FirstName + " " + applicantInfo.LastName;
+
+                DateTimeOffset offset = DateTimeOffset.FromUnixTimeMilliseconds(applicantInfo.DateOfBirth);
+                var dob = offset.DateTime;
+                personalInfo.DateOfBirthString = dob.ToString("MMMM dd, yyyy");
+                personalInfo.FullGender = (applicantInfo.Gender == "M" ) ? "Male" : "Female";
+
+                if (applicantInfo.SameMailAddress)
+                {
+                    personalInfo.MailingAddress = applicantInfo.HomeAddress;
+                    personalInfo.MailingAddressCity = applicantInfo.HomeAddressCity;
+                    personalInfo.MailingAddressProvince = applicantInfo.HomeAddressProvince;
+                    personalInfo.MailingAddressPostalCode = applicantInfo.HomeAddressPostalCode;
+                    personalInfo.MailingAddressCountry = applicantInfo.HomeAddressCountry;
+                }
+                else
+                {
+                    personalInfo.MailingAddress = applicantInfo.MailingAddress;
+                    personalInfo.MailingAddressCity = applicantInfo.MailingAddressCity;
+                    personalInfo.MailingAddressProvince = applicantInfo.MailingAddressProvince;
+                    personalInfo.MailingAddressPostalCode = applicantInfo.MailingAddressPostalCode;
+                    personalInfo.MailingAddressCountry = applicantInfo.MailingAddressCountry;
+                }
+            }
+
+            return personalInfo;
+        }
+   
+        // we want to filter out some sensitive info using the following method
+        public ApplicantSearchResult FilterSearchResult(ApplicantSearchResult searchResult)
+        {
+            if(searchResult != null)
+            {
+                foreach(var item in searchResult.Items)
+                {
+                    item.Image = null;
+                    item.DeceasedStatus = null;
+                }
+            }
+
+            return searchResult;
+        }
     }
 }

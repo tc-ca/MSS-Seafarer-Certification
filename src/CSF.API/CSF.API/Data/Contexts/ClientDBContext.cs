@@ -27,17 +27,17 @@ namespace CSF.API.Data.Contexts
 
             modelBuilder.Entity<ClientXrefDocument>(entity =>
             {
-                entity.HasKey(e => new { e.ClientId, e.DocumentId })
+                entity.HasKey(e => new { e.CdnTxt, e.DocumentId })
                     .HasName("client_xref_document_pkey");
 
                 entity.HasComment("Table linking clients to all related documents from the Document Storage service.");
 
-                entity.HasIndex(e => e.ClientId, "client_id_idx")
+                entity.HasIndex(e => e.CdnTxt, "client_id_idx")
                     .HasMethod("hash")
                     .HasOperators(new[] { "varchar_ops" })
                     .UseCollation(new[] { ".utf8" });
 
-                entity.Property(e => e.ClientId).HasComment("The unique identifier of the client.");
+                entity.Property(e => e.CdnTxt).HasComment("The unique identifier of the client.");
 
                 entity.Property(e => e.DocumentId)
                     .HasDefaultValueSql("uuid_generate_v4()")

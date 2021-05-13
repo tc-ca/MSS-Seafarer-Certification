@@ -10,6 +10,9 @@ using DSD.MSS.Blazor.Components.Table.Models;
 using Microsoft.Extensions.Caching.Memory;
 using CSF.API.Services.Repositories;
 using CSF.API.Data.Entities;
+using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.Services.Document;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -19,12 +22,15 @@ namespace CSF.SRDashboard.Client.Pages
         public string Cdn { get; set; }
 
         [Inject]
-        public IMpdisService MpdisService { get; set; }
-
+        public IGatewayService GatewayService { get; set; }
         [Inject]
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
+        [Inject]
+        private NavigationManager navigationManager { get; set; }
 
-        public ApplicantInformation applicant = new ApplicantInformation();
+        public MpdisApplicantDto Applicant { get; set; }
 
         public List<DocumentInfo> Documents { get; set; }
 
@@ -34,11 +40,9 @@ namespace CSF.SRDashboard.Client.Pages
         protected Table<Document> TableRef { get; set; }
         protected List<Document> TableData = new List<Document>();
         private readonly IMemoryCache memoryCache;
-        public string fullDob { get; set; }
-        [Inject]
-        NavigationManager navigationManager { get; set; }
-        public string currentRelativePath;
 
+        public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
+        public string currentRelativePath;
 
         protected override void OnInitialized()
         {
@@ -46,20 +50,31 @@ namespace CSF.SRDashboard.Client.Pages
             // Get all documents
             Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
 
-            //TODO:: Call document servie to get info for each document
+            var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
-            foreach (var x in Documents)
+
+            // Call document servie to get info for each document
+            DocumentInfos = DocumentService.GetDocumentsWithDocumentIds(documentIds).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            foreach (var x in DocumentInfos)
             {
                 TableData.Add(new Document
                 {
-                    FileName = x.DocumentId.ToString(),
-                    Language = "English",
-                    RequestID = "123456",
-                    Type = "MME Report",
-                    DateUploaded = x.DateStartDte
+                    DocumentId = x.DocumentId,
+                    FileName = x.FileName,
+                    Language = x.Language,
+                    Type = x.FileType,
+                    DateUploaded = x.DateCreated.Value,
+                    DocumentUrl = x.DocumentUrl
                 });
             }
-            //ClientXrefDocumentRepository.Insert(new API.Data.Entities.DocumentInfo { Cdn = Cdn, DocumentId = new Guid("483584a1-05e8-44f4-9e86-0eb11533bdff"), DateStartDte = DateTime.UtcNow });
+
+            //ClientXrefDocumentRepository.Insert(new DocumentInfo
+            //{
+            //    Cdn = Cdn,
+            //    DocumentId = new Guid("74d98d84-eaab-450c-bbe2-9b8ba9025bc4"),
+            //    DateStartDte = DateTime.UtcNow
+            //});
 
         }
 
@@ -90,7 +105,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         private void LoadData()
         {
-            this.applicant = this.MpdisService.GetApplicantByCdn(Cdn);
+            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
         }
     }
 }

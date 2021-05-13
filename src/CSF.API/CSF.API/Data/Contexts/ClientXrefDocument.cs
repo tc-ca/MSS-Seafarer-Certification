@@ -12,8 +12,8 @@ namespace CSF.API.Data.Contexts
     public partial class ClientXrefDocument
     {
         [Key]
-        [Column("client_id")]
-        public string ClientId { get; set; }
+        [Column("cdn_txt")]
+        public string CdnTxt { get; set; }
         [Key]
         [Column("document_id")]
         public Guid DocumentId { get; set; }
