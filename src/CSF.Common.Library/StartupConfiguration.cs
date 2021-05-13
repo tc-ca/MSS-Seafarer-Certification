@@ -10,7 +10,7 @@
         {
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
-            services.AddSingleton<IRestClient, RestClient>();
+            services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();

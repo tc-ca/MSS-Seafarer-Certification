@@ -1,6 +1,7 @@
 {
   "Routes": [
-    // some test API end points
+
+    // pokemon api for testing
     {
       "DownstreamPathTemplate": "/api/v2/pokemon",
       "DownstreamScheme": "https",
@@ -14,33 +15,40 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
 
-    // test end point, pokemon with id
+    //MPDIS applicant personal information without medical data
+    // the actual url is like the following:
+    //http://tcappsmssdev/saf-sec-sur/4/mpdis-wrapper/mpdis/applicant/0185855Z
     {
-      "DownstreamPathTemplate": "/api/v2/pokemon/{Id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "//pokeapi.co",
-          "Port": "443"
-        }
-      ],
-      "UpstreamPathTemplate": "/pokemon/{Id}",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-
-
-    //MPDIS with authentication
-    {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-api-mpdis_wrapper/Mpdis/Applicant/{cdn}",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/mpdis-wrapper/mpdis/applicant/{cdn}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//wwwappsmssdev",
+          "Host": "//tcappsmssdev",
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/mpdis/applicants/{cdn}",
+      "UpstreamPathTemplate": "/mpdis/Applicant/{cdn}",
       "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    // Search with Criteria
+    // the direct url is like the following:
+    //http://tcappsmssdev/saf-sec-sur/4/mpdis-wrapper/mpdis/applicants/search
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/mpdis-wrapper/mpdis/applicants/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappsmssdev",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/mpdis/search",
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
