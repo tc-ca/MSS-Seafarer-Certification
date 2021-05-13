@@ -13,6 +13,7 @@ using CSF.API.Data.Entities;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Services.Document;
+using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -44,21 +45,20 @@ namespace CSF.SRDashboard.Client.Pages
         public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
         public string currentRelativePath;
 
-        protected override void OnInitialized()
+        protected async override Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
             this.LoadData();
-            // Get all documents
             Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
 
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
-
             // Call document servie to get info for each document
-            DocumentInfos = DocumentService.GetDocumentsWithDocumentIds(documentIds).ConfigureAwait(false).GetAwaiter().GetResult();
+            DocumentInfos = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
 
             foreach (var x in DocumentInfos)
             {
-                TableData.Add(new Document
+                this.TableData.Add(new Document
                 {
                     DocumentId = x.DocumentId,
                     FileName = x.FileName,
@@ -68,14 +68,6 @@ namespace CSF.SRDashboard.Client.Pages
                     DocumentUrl = x.DocumentUrl
                 });
             }
-
-            //ClientXrefDocumentRepository.Insert(new DocumentInfo
-            //{
-            //    Cdn = Cdn,
-            //    DocumentId = new Guid("74d98d84-eaab-450c-bbe2-9b8ba9025bc4"),
-            //    DateStartDte = DateTime.UtcNow
-            //});
-
         }
 
         protected void OnAfterTableDataLoaded()
