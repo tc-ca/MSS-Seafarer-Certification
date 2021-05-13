@@ -1,6 +1,6 @@
 ﻿@using Components.Tables.WorkloadRequest.Entities
 
-<a href="#" class="btn btn-outline-primary mt-3">Add Request</a>
+<a @onclick="CreateNewRequest" class="btn btn-outline-primary mt-3">Add Request</a>
 
 <div class="table-responsive mt-3">
     <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">

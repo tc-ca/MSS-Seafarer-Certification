@@ -1,6 +1,6 @@
 ﻿@page "/SeafarerProfile/{Cdn}"
 
-<a class="btn btn-link text-secondary" href="javascript:history.back()"><i class="fas fa-angle-left"></i>Back to search results</a>
+<a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left"></i>Back to search results</a>
 <h3>@this.Applicant.FullName</h3>
 <div class="border rounded col-10">
 
@@ -21,7 +21,7 @@
                 <CSF.SRDashboard.Client.Components.Seafarer.SeafarerProfileComponent Applicant="@this.Applicant" />
             </div>
             <div class="tab-pane fade flex-tabs" id="Requests">
-                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.WorkloadRequestTable  />
+                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.WorkloadRequestTable Applicant="@this.Applicant" />
             </div>
             <div class="tab-pane fade flex-tabs" id="Documents">
                 <CSF.SRDashboard.Client.Components.Tables.Dashboard.DashboardTable />
