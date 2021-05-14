@@ -12,6 +12,7 @@ namespace CSF.SRDashboard.Client.Models
         public List<SelectListItem> DocumentTypeList { get; set; }
         public List<string> Languages { get; set; }
         public string Description { get; set; }
+        public int SelectValue { get; set; }
     public AddDocumentModel()
         {
             DocumentTypeList = new List<SelectListItem>();
@@ -46,6 +47,7 @@ namespace CSF.SRDashboard.Client.Models
                 "English",
                 "French"
             };
+            this.SelectValue = -1;
         }
     }
 }

@@ -16,6 +16,8 @@ namespace CSF.SRDashboard.Client.PageValidators
         {
             this.RuleSet("Criteria", () => { this.RuleFor(x => x).Must(x => x.atLeastOne()); });
 
+            
+
             this.RuleSet("NoMatch", () =>
             {
                 this.RuleFor(x => x.Cdn).Empty().When(x => x.IsInvalid).WithMessage("Sorry, we couldn't find that CDN. Try another?");

@@ -7,9 +7,9 @@ namespace CSF.SRDashboard.Client.Pages
 {
     public partial class SeafarerProfile
     {
+       
         [Parameter]
         public string Cdn { get; set; }
-
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
