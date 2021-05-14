@@ -9,6 +9,8 @@
     {
         [Parameter]
         public List<Document> TableData { get; set; } = new List<Document>();
+        [Inject]
+        public NavigationManager NavigationManager { get; private set; }
 
         protected override void OnInitialized()
         {
@@ -30,6 +32,10 @@
                 Type = "Test results",
                 DateUploaded = new DateTime(2019, 12, 14)
             });
+        }
+        private void AddDocumentRedirect()
+        {
+            this.NavigationManager.NavigateTo("/AddAttachment");
         }
     }
 }

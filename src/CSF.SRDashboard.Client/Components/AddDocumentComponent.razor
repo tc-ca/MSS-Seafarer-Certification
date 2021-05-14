@@ -1,9 +1,9 @@
 ﻿<body>
-    <div class="row">
-        <div class="col-8 border-bottom p-0 bg-white">
-            <h3>PERSON NAME - attachment</h3>
+    <div class="row border-bottom">
+        <div class="col-8 p-0 bg-white">
+            <h3>@this.state.mpdisApplicant.FullName - attachment</h3>
         </div>
-        <div class="col">
+        <div class="col-1">
             <button class="btn btn-light">Cancel</button>
         </div>
         <div class="col">
@@ -34,15 +34,7 @@
             </div>
         </div>
         <div id="CollapseAttachment" class="collapse show" aria-labelledby="AttachmentAcc">
-            <div class="mt-4 mb-4 ml-4">
-                <div class="card d-flex align-items-center" style="height:140px; background:#EEEEEE">
-
-                    <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
-                    <p>Drag and drop file here or click to select from your desktop</p>
-                    <InputFile>
-                    </InputFile>
-                </div>
-            </div>
+            <UploadDocumentComponent @bind-File="File"/>
         </div>
         <div class="accordion" id="AttachmentAcc">
             <div class="collapse-header">
@@ -65,7 +57,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-9">
-                            <i class="fas fa-paperclip"><span class="csf-span">ATTACHMENT NAME</span></i>
+                            <i class="fas fa-paperclip"><span class="csf-span">@FileName</span></i>
                         </div>
                         <div class="col">
                             <a href="#" class="small-buttons">

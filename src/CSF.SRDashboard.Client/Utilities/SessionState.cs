@@ -1,4 +1,5 @@
-﻿using MPDIS.API.Wrapper.Services.MPDIS.Entities;
+﻿using CSF.SRDashboard.Client.DTO;
+using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace CSF.SRDashboard.Client.Utilities
 
         public ApplicantSearchCriteria SearchCriteria { get; set; }
 
+        public MpdisApplicantDto mpdisApplicant { get; set; }
     }
 }

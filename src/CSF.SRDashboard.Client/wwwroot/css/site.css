@@ -227,3 +227,7 @@ span.csf-span {
     font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
 }
 
+.border-dashed {
+    border-style: dashed;
+    border-color: #BDC1C6;
+}
