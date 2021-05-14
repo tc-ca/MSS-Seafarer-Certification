@@ -14,6 +14,7 @@ using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Services.Document;
 using System.Threading.Tasks;
+using CSF.Common.Library.Azure;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -30,7 +31,8 @@ namespace CSF.SRDashboard.Client.Pages
         public IDocumentService DocumentService { get; set; }
         [Inject]
         private NavigationManager navigationManager { get; set; }
-
+        [Inject]
+        public IAzureBlobService AzureBlobService { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<DocumentInfo> Documents { get; set; }
@@ -41,6 +43,7 @@ namespace CSF.SRDashboard.Client.Pages
         protected Table<Document> TableRef { get; set; }
         protected List<Document> TableData = new List<Document>();
         private readonly IMemoryCache memoryCache;
+
 
         public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
         public string currentRelativePath;
@@ -58,6 +61,9 @@ namespace CSF.SRDashboard.Client.Pages
 
             foreach (var x in DocumentInfos)
             {
+
+                var link = await this.AzureBlobService.GetDownloadLinkAsync("documents", x.DocumentUrl, DateTime.UtcNow.AddHours(8));
+
                 this.TableData.Add(new Document
                 {
                     DocumentId = x.DocumentId,
@@ -65,7 +71,8 @@ namespace CSF.SRDashboard.Client.Pages
                     Language = x.Language,
                     Type = x.FileType,
                     DateUploaded = x.DateCreated.Value,
-                    DocumentUrl = x.DocumentUrl
+                    DocumentUrl = x.DocumentUrl,
+                    DownloadLink = link
                 });
             }
         }
