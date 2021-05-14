@@ -14,6 +14,7 @@ using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Services.Document;
 using System.Threading.Tasks;
+using CSF.SRDashboard.Client.Utilities;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -44,6 +45,9 @@ namespace CSF.SRDashboard.Client.Pages
 
         public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
         public string currentRelativePath;
+        
+        [Inject]
+        public SessionState state { get; set; }
 
         protected async override Task OnInitializedAsync()
         {

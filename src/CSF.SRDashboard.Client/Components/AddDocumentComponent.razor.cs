@@ -1,4 +1,7 @@
-﻿using CSF.SRDashboard.Client.Models;
+﻿using CSF.API.Data.Entities;
+using CSF.API.Services.Repositories;
+using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Core.Models;
@@ -32,7 +35,12 @@ namespace CSF.SRDashboard.Client.Components
         public SessionState state { get; set; }
 
         [Inject]
+        public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
+
+        [Inject]
         public IDocumentService DocumentServe { get; set; }
+
+        public DocumentInfo DocumentInfo { get; set; }
 
         protected override void OnInitialized()
         {
@@ -49,9 +57,15 @@ namespace CSF.SRDashboard.Client.Components
             var isValid = EditContext.Validate();
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
             Console.WriteLine("Valid Submit");
+            
             var result = this.DocumentServe.InsertDocument(0, "User", (IFormFile)File, "", DocumentForm.Description, "Dashboard", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, "");
-
+            this.DocumentInfo = PopulateDocumentInfo(this.state.mpdisApplicant);
+           
+            ClientXrefDocumentRepository.Insert(this.DocumentInfo);
         }
+       
+        
+        
         private List<string> PopulateDocumentTypes(List<SelectListItem> list)
         {
             List<string> DocumentTypes = new List<string>();
@@ -63,6 +77,23 @@ namespace CSF.SRDashboard.Client.Components
                 }
             }
             return DocumentTypes;
+        }
+        private DocumentInfo PopulateDocumentInfo(MpdisApplicantDto applicantInfo)
+        {
+            this.DocumentInfo = new DocumentInfo();
+
+            this.DocumentInfo.Cdn = applicantInfo.Cdn;
+            this.DocumentInfo.DocumentId = new Guid();
+            this.DocumentInfo.DateStartDte = DateTime.UtcNow;
+            
+            
+            return DocumentInfo;
+
+        }
+        private FormFile PopulateFormFile(IBrowserFile file)
+        {
+            FileToUpload = new FormFile();
+
         }
     }
   
