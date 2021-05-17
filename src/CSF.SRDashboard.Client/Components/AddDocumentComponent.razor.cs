@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,11 +58,15 @@ namespace CSF.SRDashboard.Client.Components
             var isValid = EditContext.Validate();
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
             Console.WriteLine("Valid Submit");
-            
-            var result = this.DocumentServe.InsertDocument(0, "User", (IFormFile)File, "", DocumentForm.Description, "Dashboard", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, "");
-            this.DocumentInfo = PopulateDocumentInfo(this.state.mpdisApplicant);
-           
-            ClientXrefDocumentRepository.Insert(this.DocumentInfo);
+            if (this.File != null)
+            {
+                this.FileToUpload = this.PopulateFormFile(this.File);
+
+                var result = this.DocumentServe.InsertDocument(0, "User", FileToUpload, "", DocumentForm.Description, "Dashboard", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, "");
+                this.DocumentInfo = PopulateDocumentInfo(this.state.mpdisApplicant);
+
+                ClientXrefDocumentRepository.Insert(this.DocumentInfo);
+            }
         }
        
         
@@ -83,7 +88,7 @@ namespace CSF.SRDashboard.Client.Components
             this.DocumentInfo = new DocumentInfo();
 
             this.DocumentInfo.Cdn = applicantInfo.Cdn;
-            this.DocumentInfo.DocumentId = new Guid();
+            this.DocumentInfo.DocumentId = Guid.NewGuid();
             this.DocumentInfo.DateStartDte = DateTime.UtcNow;
             
             
@@ -92,7 +97,14 @@ namespace CSF.SRDashboard.Client.Components
         }
         private FormFile PopulateFormFile(IBrowserFile file)
         {
-            FileToUpload = new FormFile();
+            var result = ClientXrefDocumentRepository.GetDocumentsByCdn("00123456");
+
+            Stream stream;
+            stream = file.OpenReadStream(file.Size);
+
+            FormFile FileToUpload = new FormFile(stream,0,file.Size,file.Name, file.Name);
+            stream.Dispose();
+            return FileToUpload;
 
         }
     }
