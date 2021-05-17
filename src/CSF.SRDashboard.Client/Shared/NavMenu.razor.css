@@ -19,7 +19,6 @@
 }
 
 .nav-item {
-    color: #095C9D;
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
 }
@@ -40,19 +39,13 @@
         align-items: center;
         line-height: 3rem;
     }
-    .nav-item[b-ussj044e2c] a:focus {
-        color: #095C9D;
-    }
 
 .nav-item ::deep a.active {
     background-color: #E0E7F1;
+    font-weight: normal;
     color: white;
 }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
 
 @media (min-width: 641px) {
     .navbar-toggler {
