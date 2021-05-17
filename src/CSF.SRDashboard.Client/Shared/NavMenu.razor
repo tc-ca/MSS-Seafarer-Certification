@@ -10,8 +10,13 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
+            <NavLink class="nav-link" href="search" Match="NavLinkMatch.All">
+                <i class="fas fa-search"></i> @Localizer["Seafarer Search"]
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <i class="fas fa-clipboard"></i> @Localizer["RequestBoard"]
+                <i class="fas fa-clipboard"></i> @Localizer["Workspace"]
             </NavLink>
         </li>
         <li class="nav-item px-3">

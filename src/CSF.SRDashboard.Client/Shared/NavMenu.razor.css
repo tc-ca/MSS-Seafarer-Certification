@@ -19,6 +19,7 @@
 }
 
 .nav-item {
+    color: #095C9D;
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
 }
@@ -32,16 +33,19 @@
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
+        color: #095C9D;
         border-radius: 4px;
         height: 3rem;
         display: flex;
         align-items: center;
         line-height: 3rem;
     }
+    .nav-item[b-ussj044e2c] a:focus {
+        color: #095C9D;
+    }
 
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
+    background-color: #E0E7F1;
     color: white;
 }
 
