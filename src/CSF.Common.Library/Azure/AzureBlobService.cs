@@ -48,6 +48,34 @@ namespace CSF.Common.Library.Azure
             return blob;
         }
 
+        public async Task<string> GetDownloadLinkAsync(string container, string fileUrl, DateTime expiryTime)
+        {
+            string ext = Path.GetExtension(fileUrl);
+            Uri uri = new Uri(fileUrl);
+
+            string fileName = Path.GetFileName(uri.LocalPath);
+
+            var blobContainer = await azureBlobConnectionFactory.GetBlobContainer(container).ConfigureAwait(false);
+
+            var blob = blobContainer.GetBlockBlobReference(fileName);
+
+            //Create an ad-hoc Shared Access Policy with read permissions which will expire
+            SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
+            {
+                Permissions = SharedAccessBlobPermissions.Read,
+                SharedAccessExpiryTime = expiryTime,
+            };
+
+            //Set content-disposition header for force download
+            SharedAccessBlobHeaders headers = new SharedAccessBlobHeaders()
+            {
+                ContentDisposition = string.Format("attachment;filename=\"{0}\"", fileName),
+            };
+
+            var sasToken = blob.GetSharedAccessSignature(policy, headers);
+            return blob.Uri.AbsoluteUri + sasToken;
+        }
+
         private static string UniqueFileName(string currentFileName)
         {
             string ext = Path.GetExtension(currentFileName);
@@ -56,5 +84,7 @@ namespace CSF.Common.Library.Azure
 
             return string.Format(CultureInfo.InvariantCulture, "{0}_{1}{2}", nameWithNoExt, DateTime.UtcNow.Ticks, ext);
         }
+
+
     }
 }

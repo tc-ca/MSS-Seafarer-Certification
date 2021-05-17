@@ -31,8 +31,13 @@
 
         public async Task<List<DocumentInfo>> GetDocumentsWithDocumentIds(List<Guid> documentIds)
         {
+            if (documentIds == null || documentIds.Count == 0)
+            {
+                return new List<DocumentInfo>();
+            }
+
             string queryString = string.Empty;
-            foreach(var documentId in documentIds)
+            foreach (var documentId in documentIds)
             {
                 queryString += $"documentGuid={documentId}&";
             }
@@ -56,7 +61,7 @@
             {
                 UserName = userName,
                 FileBytes = await file.GetBytes(),
-                FileName = file.FileName,                
+                FileName = file.FileName,
                 FileContentType = fileContentType,
                 ShortDescription = shortDescription,
                 SubmissionMethod = submissionMethod,
