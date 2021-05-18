@@ -33,11 +33,12 @@ namespace CSF.Common.Library
         {
             HttpResponseMessage response;
 
-            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var baseUri = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
+            var full_uri = baseUri + "/" + path;
 
             // Here is actual call to target service
             this.ResetRestClientHeaders();
-            response = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
+            response = await this.httpClient.GetAsync(full_uri).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -57,22 +58,38 @@ namespace CSF.Common.Library
         public virtual async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
         {
-            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var baseUri = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
+            var full_uri = baseUri + "/" + path;
 
+            string result = null;
             var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
 
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
                 this.ResetRestClientHeaders();
-                var response = await this.httpClient.PostAsync(uri, stringContent).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
+                var response = await this.httpClient.PostAsync(full_uri, stringContent).ConfigureAwait(false);
 
-                if (!response.IsSuccessStatusCode)
+                try
                 {
-                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
+                    }
+
+                    result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                }
+                catch(HttpRequestException ex)
+                {
+                    var stop = ex.Message + " " + ex.InnerException;
+                }
+                catch(Exception ex)
+                {
+                    var stop = ex.Message + " " + ex.InnerException;
                 }
 
-                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<TReturnMessage>(result);
             }
         }

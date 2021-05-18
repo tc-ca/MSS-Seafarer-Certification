@@ -20,5 +20,10 @@
         /// Gateway to MPDIS
         /// </summary>
         GatewayToMpdis,
+
+        /// <summary>
+        /// Work load management service
+        /// </summary>
+        WorkLoadManagement
     }
 }

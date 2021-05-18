@@ -59,6 +59,7 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IGatewayService, GatewayService>();
             services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
             services.AddSingleton<IRestClient, GatewayRestClient>();
+            services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
 
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
