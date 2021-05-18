@@ -42,8 +42,6 @@
 
 .nav-item ::deep a.active {
     background-color: #E0E7F1;
-    font-weight: normal;
-    color: white;
 }
 
 
