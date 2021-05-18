@@ -96,7 +96,6 @@ ul.nav[b-ussj044e2c] {
 .nav-item[b-ussj044e2c] a.active,
 .nav-item[b-ussj044e2c] a:hover {
     font-family: Helvetica;
-    font-weight: bold;
     color: #143c85;
 }
 
@@ -110,7 +109,7 @@ ul.nav[b-ussj044e2c] {
     CUSTOM
 */
     .nav-item[b-ussj044e2c] a i {
-        margin-right: 24px;
+        margin-right: 16px;
     }
 
 div.page-layout {
