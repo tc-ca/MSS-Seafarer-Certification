@@ -7,18 +7,37 @@
     <Collapse HeaderTitleTextColor="#FFFFFF" Title="Request information" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
 
         <BodyContent>
-            <EditForm EditContext="@EditContext">
+
+            <EditForm EditContext="@EditContext" OnValidSubmit="SaveChanges">
                 <FluentValidationValidator />
                 <div class="row">
                     <div class="col-5 d-grid gap-3">
-                        <div class="form-group" @onclick="ClearMessages">
-                            <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" @bind-Value="@Applicant.Cdn" Required="false" />
+                        <div class="form-group">
+                            <FormInputText Label="Request ID " Id="RequestID" @bind-Value="@RequestModel.RequestID" ValidationFor="@(()=>RequestModel.RequestID)" />
 
                         </div>
+
+                        <div class="form-group">
+                            <FormInputText Label="Request type" Id="RequestType" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)" Required="true" />
+
+                        </div>
+
+                        <div class="form-group">
+                            <FormInputText Label="Certificate type" Id="CNDInput" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true" />
+
+                        </div>
+
+                        <div class="form-group">
+                            <FormInputText Label="Submission method" Id="CNDInput" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true" />
+
+                        </div>
+
+                        <FormInputSelect  />
                     </div>
 
                 </div>
             </EditForm>
+
         </BodyContent>
 
     </Collapse>
