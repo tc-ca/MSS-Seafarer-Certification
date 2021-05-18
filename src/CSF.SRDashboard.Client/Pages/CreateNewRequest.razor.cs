@@ -20,6 +20,8 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
 
+        public string Comment { get; set; }
+
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
@@ -27,13 +29,33 @@ namespace CSF.SRDashboard.Client.Pages
 
         public RequestModel RequestModel { get; set; }
 
+        public List<Dropdown> RequestTypes = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "FAX" },
+            new Dropdown { ID = "2", Text = "MAIL"},
+            new Dropdown{ID = "3", Text = "EMAIL"},
+            new Dropdown{ID = "4", Text = "FAX"}
+
+        };
+
+        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "New certificate" },
+            new Dropdown { ID = "2", Text = "Renewal certificate" }
+
+        };
+
+        public List<Dropdown> CertificateTypes = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "Pdf" },
+            new Dropdown { ID = "2", Text = "doc" }
+
+        };
+
         bool show = false;
 
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
-            this.Applicant = new MpdisApplicantDto { FullName = "Chris", Cdn = Cdn };
+            this.Applicant = new MpdisApplicantDto { FullName = "Chris Ikongo", Cdn = Cdn };
 
             //this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             RequestModel = new RequestModel
