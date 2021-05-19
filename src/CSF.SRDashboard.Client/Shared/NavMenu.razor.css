@@ -18,9 +18,22 @@
     top: -2px;
 }
 
+.fa-search {
+    font-size: 18px;
+}
+
+.fa-clipboard {
+    font-size: 18px;
+}
+.fa-fw {
+    text-align: left;
+    width: 1.25em;
+}
+
 .nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+    padding-left: 7px;
+    font-size: 16px;
+    letter-spacing: 0.01em;
 }
 
 
@@ -30,11 +43,12 @@
 
     .nav-item ::deep a {
         color: #095C9D;
-        border-radius: 4px;
-        height: 3rem;
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+        height: 52px;
         display: flex;
         align-items: center;
-        line-height: 3rem;
+        line-height: 18px;
     }
 
 .nav-item ::deep a.active {
