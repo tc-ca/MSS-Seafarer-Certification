@@ -25,8 +25,8 @@
                             <h4> Add attachments</h4>
                         </div>
                         <div class="col-2 d-flex align-content-center">
-                            <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseAttachment" aria-expanded="true" aria-controls="CollapseAttachment">
-                                View <span> <i class="fas fa-angle-down"></i></span>
+                            <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseAttachment" aria-expanded="false" aria-controls="CollapseAttachment" @onclick="FlipArrow">
+                                View <span> <i class="@this.ArrowClass"></i></span>
                             </button>
                         </div>
                     </div>
@@ -36,6 +36,8 @@
         <div id="CollapseAttachment" class="collapse show" aria-labelledby="AttachmentAcc">
             <UploadDocumentComponent @bind-File="File"/>
         </div>
+       @if (this.File != null)
+       {
         <div class="accordion" id="AttachmentAcc">
             <div class="collapse-header">
                 <div id="AttachmentHeading">
@@ -44,8 +46,8 @@
                             <h4>Attachments</h4>
                         </div>
                         <div class="col-2 d-flex align-content-center">
-                            <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseForm" aria-expanded="true" aria-controls="CollapseForm">
-                                View <span> <i class="fas fa-angle-down"></i></span>
+                            <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseForm" aria-expanded="true" aria-controls="CollapseForm" @onclick="FlipArrow">
+                                View <span> <i class="@this.ArrowClass"></i></span>
                             </button>
                         </div>
                     </div>
@@ -60,15 +62,15 @@
                             <i class="fas fa-paperclip"><span class="csf-span">@FileName</span></i>
                         </div>
                         <div class="col">
-                            <a href="#" class="small-buttons">
+                            <button class="small-buttons" @onclick="RemoveAttachment">
                                 <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
-                            </a>
+                            </button>
                         </div>
 
                         <div class="col">
-                            <a href="# " class="small-buttons">
+                            <button href="# " class="small-buttons">
                                 <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -76,19 +78,20 @@
                     <div class="form-group">
                         <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
                             <FluentValidationValidator />
-                            <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList"></InputMultipleSelect>
+                            <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle" ></InputMultipleSelect>
                             <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)" OnChange="OnInputChange">
                                 @foreach (var item in this.DocumentForm.Languages)
                                 {
                                     <option value="@item">@item</option>
                                 }
                             </FormInputSelect>
-                            <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(()=>this.DocumentForm.Description)" />
+                            <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
                         </EditForm>
                     </div>
                 </div>
             </div>
         </div>
+       }
     </div>
 </body>
 @code{

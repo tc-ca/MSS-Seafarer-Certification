@@ -20,13 +20,10 @@ namespace CSF.SRDashboard.Client.Components
     {
         [Parameter]
         public IBrowserFile File { get; set; }
-
         public IFormFile FileToUpload { get; set; }
-
         [Parameter]
         public string ProfileName { get; set; }
         public string FileName { get { if (File == null) return String.Empty; return File.Name; } }
-       
         public List<string> DocumentTypes { get; set; }
         [Parameter]
         public AddDocumentModel DocumentForm { get; set; }
@@ -34,19 +31,20 @@ namespace CSF.SRDashboard.Client.Components
         public EditContext EditContext { get; set; }
         [Inject]
         public SessionState state { get; set; }
-
         [Inject]
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
-
         [Inject]
         public IDocumentService DocumentServe { get; set; }
-
         public DocumentInfo DocumentInfo { get; set; }
+        public string MultipleSelectTitle { get; set; }
+        private bool AccordionExpanded { get; set; } = true;
+        public string ArrowClass { get; set; } = "fas fa-angle-down";
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.DocumentForm = new AddDocumentModel();
+            this.MultipleSelectTitle = "Select";
         }
 
         private void OnInputChange(EventArgs e)
@@ -68,8 +66,16 @@ namespace CSF.SRDashboard.Client.Components
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
             }
         }
-       
-        
+
+        private string FormatSelectTitle(List<string> strings)
+        {
+            string formattedString="";
+            foreach(var i in strings)
+            {
+                formattedString = i+" ";
+            }
+            return formattedString;
+        }
         
         private List<string> PopulateDocumentTypes(List<SelectListItem> list)
         {
@@ -107,6 +113,26 @@ namespace CSF.SRDashboard.Client.Components
             return FileToUpload;
 
         }
+        private void UpdateSelectTitle()
+        {
+            Console.WriteLine("lol");
+        }
+        public void FlipArrow()
+        {
+            this.AccordionExpanded = !this.AccordionExpanded;
+            if (this.AccordionExpanded) {
+                this.ArrowClass = "fas fa-angle-down";
+                    }
+            else
+            {
+                this.ArrowClass = "fas fa-angle-right";
+            }
+
+        }
+       public void RemoveAttachment()
+        {
+            this.File = null;
+        }
     }
-  
+   
 }

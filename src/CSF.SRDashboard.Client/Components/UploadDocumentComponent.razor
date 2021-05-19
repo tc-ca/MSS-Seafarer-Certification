@@ -1,23 +1,25 @@
 ﻿<div class="mt-4 mb-4 ml-4">
-    <div class="card d-flex align-items-center @UploadClass" style="height:140px; background:#EEEEEE">
+    <div class="card d-flex align-items-center @UploadClass">
+            <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
+            Drag and drop file here or click to select from your desktop
+        @if(this.File == null){  
+          
+        <InputFile id="documentUpload" OnChange="OnFileUpload" />
+        }
 
-        <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
-        Drag and drop file here or click to select from your desktop
-        <InputFile  id="documentUpload" OnChange="OnFileUpload" >
-        </InputFile>
     </div>
 </div>
 @code{
 
-        [Parameter]
-        public IBrowserFile File { get => file; set { if (file == value) return;
-                this.file = value;
-                FileChanged.InvokeAsync(value);
-            }
+    [Parameter]
+    public IBrowserFile File { get => file; set { if (file == value) return;
+            this.file = value;
+            FileChanged.InvokeAsync(value);
         }
+    }
 
     private IBrowserFile file;
-    string UploadClass = "";
+    public string UploadClass { get; set; } = "file-drop-zone";
 
     [Parameter]
     public EventCallback<IBrowserFile> FileChanged { get; set; }
@@ -26,9 +28,13 @@
     {
         if (e.File != null)
         {
-            UploadClass = "border-dashed";
+            this.UploadClass = "file-drop-zone-disabled";
             this.File = e.File;
 
+        }
+        else
+        {
+            this.UploadClass = "file-drop-zone";
         }
     }
 

@@ -221,7 +221,9 @@ tbody > tr {
     color: #fff;
 }
 .small-buttons {
-    color:#1B50B1;
+    color: #1B50B1;
+    border: 0px;
+    background-color: inherit;
 }
 span.csf-span {
     font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
@@ -230,4 +232,29 @@ span.csf-span {
 .border-dashed {
     border-style: dashed;
     border-color: #BDC1C6;
+    background-color: inherit;
+}
+.multiple-select {
+    background-color: #F7F9FC !important;
+    color: #4D5D6C !important;
+    border: 1px solid #ced4da !important
+}
+.file-drop-zone {
+    border: 4px dashed #DAA159;
+    display: flex;
+    background-color: #EEEEEE;
+    height: 140px;
+    color: #808080;
+}
+.file-drop-zone input[type=file]{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.file-drop-zone-disabled {
+    border: 4px dashed #BDC1C6;
+    color: #BDC1C6;
+    background-color: #EEEEEE;
 }
