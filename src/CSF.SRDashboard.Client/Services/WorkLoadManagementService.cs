@@ -1,9 +1,11 @@
 ﻿using CSF.Common.Library;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
+using CSF.SRDashboard.Client.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services
@@ -99,6 +101,55 @@ namespace CSF.SRDashboard.Client.Services
             return workItems;
         }
 
+
+
+        public WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService)
+        {
+            var Cdn = requestModel.Cdn;
+            var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
+
+            // -- Contact
+            ContactInformationDTO contact = new ContactInformationDTO();
+            contact.Id = Guid.NewGuid().ToString();
+            contact.Name = applicantInfo.FullName;
+            contact.AddressLine1 = applicantInfo.HomeAddress;
+            contact.City = applicantInfo.HomeAddressCity;
+            contact.Province = applicantInfo.HomeAddressProvince;
+            contact.Country = applicantInfo.HomeAddressCountry;
+            contact.PostalCode = applicantInfo.HomeAddressPostalCode;
+            contact.Phone = applicantInfo.PhoneNumber;
+            contact.Email = applicantInfo.Email;
+            contact.PrimaryContactInd = true;
+            contact.Cdn = requestModel.Cdn;
+            
+            //-- Detail
+            WorkItemDetail itemDetail = new WorkItemDetail();
+            itemDetail.RequestType = requestModel.RequestType;
+            itemDetail.CertificateType = requestModel.CertificateType;
+            itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.ApplicantName = requestModel.ApplicantFullName;
+            itemDetail.Cdn = requestModel.Cdn;
+            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.Comments = requestModel.Comments;
+            string itemDetailString = JsonSerializer.Serialize(itemDetail);
+
+            WorkItemDTO workItem = new WorkItemDTO();
+            workItem.InitialDetail = itemDetailString;
+            workItem.Detail = itemDetailString;
+
+            workItem.ApplicantContact = contact;
+            workItem.ReceivedDateUTC = DateTime.Now;
+            workItem.LastUpdatedDateUTC = DateTime.Now;
+
+            workItem.SameApplicantSubmitterInd = true;
+            workItem.LineOfBusinessId = Constants.MarineMedical;
+            // WorkItemStatuses
+            workItem.WorkItemStatus = new WorkItemStatusDTO(); // TODO: remove this line after Krakens remove this mandtory field
+
+            var uploadedWorkItem = this.AddWorkItem(workItem);
+
+            return uploadedWorkItem;
+        }
     }
 
 }

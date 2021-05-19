@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSF.SRDashboard.Client.Models;
+using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -25,6 +28,9 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
+        [Inject]
+        public IWorkLoadManagementService WorkLoadService { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
@@ -32,8 +38,8 @@ namespace CSF.SRDashboard.Client.Pages
         public List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "FAX" },
             new Dropdown { ID = "2", Text = "MAIL"},
-            new Dropdown{ID = "3", Text = "EMAIL"},
-            new Dropdown{ID = "4", Text = "FAX"}
+            new Dropdown { ID = "3", Text = "EMAIL"},
+            new Dropdown { ID = "4", Text = "FAX"}
 
         };
 
@@ -44,9 +50,7 @@ namespace CSF.SRDashboard.Client.Pages
         };
 
         public List<Dropdown> CertificateTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "Pdf" },
-            new Dropdown { ID = "2", Text = "doc" }
-
+            new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
         };
 
         bool show = false;
@@ -60,8 +64,8 @@ namespace CSF.SRDashboard.Client.Pages
             //this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             RequestModel = new RequestModel
             {
-                RequestID = "5",
-                Cdn = "1"
+                //RequestID = "5",
+                Cdn = this.Cdn
 
             };
             this.EditContext = new EditContext(RequestModel);
@@ -73,7 +77,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void SaveChanges()
         {
-
+            var uploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
         }
 
     }
