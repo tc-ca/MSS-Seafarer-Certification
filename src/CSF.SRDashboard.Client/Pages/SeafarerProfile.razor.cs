@@ -7,6 +7,7 @@
     using CSF.SRDashboard.Client.Models;
     using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Services.Document;
+    using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
     using System;
     using System.Collections.Generic;
@@ -27,6 +28,8 @@
         private NavigationManager navigationManager { get; set; }
         [Inject]
         public IAzureBlobService AzureBlobService { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<DocumentInfo> Documents { get; set; }
@@ -39,6 +42,8 @@
         public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
 
         public string currentRelativePath;
+
+        
 
         protected async override Task OnInitializedAsync()
         {
@@ -77,7 +82,7 @@
         private void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.state.mpdisApplicant = this.Applicant;
+            this.State.mpdisApplicant = this.Applicant;
 
         }
     }

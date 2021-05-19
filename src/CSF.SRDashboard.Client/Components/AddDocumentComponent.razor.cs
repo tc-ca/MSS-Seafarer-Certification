@@ -30,7 +30,7 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public EditContext EditContext { get; set; }
         [Inject]
-        public SessionState state { get; set; }
+        public SessionState State { get; set; }
         [Inject]
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
         [Inject]
@@ -55,13 +55,17 @@ namespace CSF.SRDashboard.Client.Components
         {
             var isValid = EditContext.Validate();
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
+            if(this.DocumentTypes.Count <= 0)
+            {
+
+            }
             Console.WriteLine("Valid Submit");
             if (this.File != null)
             {
                 this.FileToUpload = this.PopulateFormFile(this.File);
 
-                var result = this.DocumentServe.InsertDocument(0, "User", FileToUpload, "", DocumentForm.Description, "Dashboard", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, "");
-                this.DocumentInfo = PopulateDocumentInfo(this.state.mpdisApplicant);
+                var result = documentService.InsertDocument(1, "John Wick", FileToUpload, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
+                this.DocumentInfo = PopulateDocumentInfo(this.State.mpdisApplicant);
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
             }

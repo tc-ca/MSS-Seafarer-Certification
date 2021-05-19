@@ -15,6 +15,9 @@ namespace CSF.SRDashboard.Client.Components.Tables.Dashboard
         {
             base.OnInitialized();
         }
-
+        public void AddDocumentRedirect()
+        {
+            NavigationManager.NavigateTo("/AddAttachment");
+        }
     }
 }
