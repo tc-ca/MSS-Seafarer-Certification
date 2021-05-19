@@ -31,9 +31,13 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
+        public bool MostRecentCommentsIsCollapsed { get; private set; }
 
         public List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "FAX" },
@@ -53,24 +57,23 @@ namespace CSF.SRDashboard.Client.Pages
             new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
         };
 
-        bool show = false;
 
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
-            this.Applicant = new MpdisApplicantDto { FullName = "Chris Ikongo", Cdn = Cdn };
+            this.Applicant = new MpdisApplicantDto();
 
-            //this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             RequestModel = new RequestModel
             {
                 //RequestID = "5",
-                Cdn = this.Cdn
+                Cdn = this.Cdn,
+                
 
             };
             this.EditContext = new EditContext(RequestModel);
 
-            show = true;
             StateHasChanged();
 
         }
@@ -80,5 +83,14 @@ namespace CSF.SRDashboard.Client.Pages
             var uploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
         }
 
+        private void SetMostRecentCommentsCollapseState()
+        {
+            MostRecentCommentsIsCollapsed = !MostRecentCommentsIsCollapsed;
+        }
+
+        public void ViewProfile()
+        {
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
     }
 }
