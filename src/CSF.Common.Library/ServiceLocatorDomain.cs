@@ -7,6 +7,11 @@
     public enum ServiceLocatorDomain
     {
         /// <summary>
+        /// TC DocumentService
+        /// </summary>
+        Document,
+
+        /// <summary>
         /// MyTC Account
         /// </summary>
         Mtoa,

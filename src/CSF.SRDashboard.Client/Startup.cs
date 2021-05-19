@@ -3,6 +3,7 @@ using CSF.Common.Library.Azure;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.PageValidators;
 using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -59,6 +60,7 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IGatewayService, GatewayService>();
             services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
             services.AddSingleton<IRestClient, GatewayRestClient>();
+            services.AddSingleton<IDocumentService, DocumentService>();
             services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
 
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
