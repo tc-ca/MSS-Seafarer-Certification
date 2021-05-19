@@ -43,7 +43,7 @@ namespace CSF.SRDashboard.Client.Pages
             new Dropdown { ID = "1", Text = "FAX" },
             new Dropdown { ID = "2", Text = "MAIL"},
             new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "FAX"}
+            new Dropdown { ID = "4", Text = "EMER"}
 
         };
 
@@ -67,9 +67,10 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             RequestModel = new RequestModel
             {
-                //RequestID = "5",
                 Cdn = this.Cdn,
-                
+                SubmissionMethod = "1",
+                CertificateType = "1",
+                RequestType = "2"
 
             };
             this.EditContext = new EditContext(RequestModel);

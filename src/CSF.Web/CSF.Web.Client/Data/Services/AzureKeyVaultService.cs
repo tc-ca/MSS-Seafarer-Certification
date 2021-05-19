@@ -12,15 +12,15 @@
     /// </summary>
     public class AzureKeyVaultService : IKeyVaultService
     {
-        private string dNs;
+        private string Dns;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKeyVaultService"/> class.
         /// </summary>
-        /// <param name="dNS">DNS for the key vault.</param>
+        /// <param name="configuration">Configuration</param>
         public AzureKeyVaultService(IConfiguration configuration)
         {
-            this.dNs = configuration.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"];
+            this.Dns = configuration.GetSection("AzureKeyVaultSettings")["KeyVaultServiceEndpoint"];
         }
 
         /// <summary>
@@ -32,7 +32,7 @@
         {
             using (var keyVaultClient = GetKeyVaultClient())
             {
-                var sercret = keyVaultClient.GetSecretAsync(vaultBaseUrl: this.dNs, secretName: secretName).GetAwaiter().GetResult();
+                var sercret = keyVaultClient.GetSecretAsync(vaultBaseUrl: this.Dns, secretName: secretName).GetAwaiter().GetResult();
 
                 return sercret.Value;
             }
@@ -48,7 +48,7 @@
 
             using (var keyVaultClient = GetKeyVaultClient())
             {
-                secrets = keyVaultClient.GetSecretsAsync(vaultBaseUrl: this.dNs).GetAwaiter().GetResult();
+                secrets = keyVaultClient.GetSecretsAsync(vaultBaseUrl: this.Dns).GetAwaiter().GetResult();
             }
 
             return secrets;
