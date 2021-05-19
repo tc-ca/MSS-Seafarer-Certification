@@ -25,7 +25,7 @@ namespace CSF.Common.Library.Azure
         {
             if (azureKeyVaultService != null)
             {
-                this.connectionString = azureKeyVaultService.GetSecretByName("BlobStorage");
+                this.connectionString = azureKeyVaultService.GetSecretByName("DocumentBlobStorage");
             }
         }
 
@@ -54,7 +54,7 @@ namespace CSF.Common.Library.Azure
             return this.cloudBlobContainer;
         }
 
-        private CloudBlobClient GetClient()
+        public CloudBlobClient GetClient()
         {
             // TODO : fail gracefully when connection string is invalid
             if (!CloudStorageAccount.TryParse(connectionString: this.connectionString, out CloudStorageAccount cloudStorageAccount))

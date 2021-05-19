@@ -23,5 +23,7 @@ namespace CSF.SRDashboard.Client.Models
 
         public string DocumentUrl { get; set; }
 
+        public string DownloadLink { get; set; }
+
     }
 }

@@ -24,6 +24,7 @@ using Radzen;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace CSF.SRDashboard.Client
 {
@@ -67,6 +68,9 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IRestClient, GatewayRestClient>();
             services.AddSingleton<IDocumentService, DocumentService>();
 
+
+            services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
+
             services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
@@ -76,6 +80,7 @@ namespace CSF.SRDashboard.Client
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
 
+            services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddScoped<SessionState>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
