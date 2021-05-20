@@ -10,12 +10,14 @@ namespace CSF.SRDashboard.Client.Models
     public class AddDocumentModel
     {
         public List<SelectListItem> DocumentTypeList { get; set; }
-        public List<string> Languages { get; set; }
+        public List<SelectListItem> Languages { get; set; }
         public string Description { get; set; }
         public int SelectValue { get; set; }
-    public AddDocumentModel()
+        public AddDocumentModel()
         {
             DocumentTypeList = new List<SelectListItem>();
+
+            Languages = new List<SelectListItem>();
 
             DocumentTypeList.Add(new SelectListItem()
             {
@@ -42,11 +44,11 @@ namespace CSF.SRDashboard.Client.Models
                 Text = "Other",
                 Value = false
             });
-            Languages = new List<string>()
-            {
-                "English",
-                "French"
-            };
+
+
+            Languages.Add(new SelectListItem { Id = "1", Text = "EN", Value = false });
+            Languages.Add(new SelectListItem { Id = "2", Text = "FR", Value = false });
+
             this.SelectValue = -1;
         }
     }

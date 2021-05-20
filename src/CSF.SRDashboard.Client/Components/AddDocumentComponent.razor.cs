@@ -31,6 +31,8 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public EditContext EditContext { get; set; }
         [Inject]
+        public NavigationManager NavigationManager { get; private set; }
+        [Inject]
         public SessionState State { get; set; }
         [Inject]
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
@@ -64,7 +66,13 @@ namespace CSF.SRDashboard.Client.Components
             if (this.FileToUpload != null)
             {
                 var result = await DocumentServe.InsertDocument(1, "John Wick", FileToUpload, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty);
-                this.DocumentInfo = PopulateDocumentInfo(this.State.mpdisApplicant);
+                this.DocumentInfo = new DocumentInfo
+                {
+                    Cdn = this.State.mpdisApplicant.Cdn,
+                    DateStartDte = DateTime.UtcNow,
+                    DocumentId = result[0]
+                };
+
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
             }
@@ -92,51 +100,7 @@ namespace CSF.SRDashboard.Client.Components
             }
             return DocumentTypes;
         }
-        private DocumentInfo PopulateDocumentInfo(MpdisApplicantDto applicantInfo)
-        {
-            this.DocumentInfo = new DocumentInfo();
 
-            this.DocumentInfo.Cdn = applicantInfo.Cdn;
-            this.DocumentInfo.DocumentId = Guid.NewGuid();
-            this.DocumentInfo.DateStartDte = DateTime.UtcNow;
-
-
-            return DocumentInfo;
-
-        }
-        private async Task<IFormFile> PopulateFormFile(IBrowserFile file)
-        {
-            try
-            {
-                MemoryStream ms = new MemoryStream();
-                await file.OpenReadStream().CopyToAsync(ms);
-                var bytes = ms.ToArray();
-
-                IFormFile file56 = new FormFile(ms, 0, file.Size, file.Name, file.Name)
-                {
-                    Headers = new HeaderDictionary(),
-                    ContentType = file.ContentType
-                };
-
-
-                var t = new MediaTypeHeaderValue("application/octet-stream");
-                //new StringContent(rcString, Encoding.UTF8, "application/json")
-
-                //new StringContent()
-
-                //FileToUpload.ContentType = new MediaTypeHeaderValue("application/octet-stream").; ;
-                //FileToUpload.Headers = new HeaderDictionary();
-                ///stream.Close();
-                return file56;
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-
-
-        }
         private void UpdateSelectTitle()
         {
             Console.WriteLine("lol");
@@ -154,6 +118,16 @@ namespace CSF.SRDashboard.Client.Components
             }
 
         }
+
+        public void HandleCancel()
+        {
+            if (this.FileToUpload != null)
+            {
+                this.FileToUpload = null;
+            }
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.State.mpdisApplicant.Cdn}");
+        }
+
         public void RemoveAttachment()
         {
             this.FileToUpload = null;

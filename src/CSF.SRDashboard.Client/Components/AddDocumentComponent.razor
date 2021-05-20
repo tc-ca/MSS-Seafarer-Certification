@@ -1,13 +1,20 @@
-﻿<body>
-    <div class="row border-bottom">
-        <div class="col-8 p-0 bg-white">
-            <h3>@this.State.mpdisApplicant.FullName - attachment</h3>
-        </div>
-        <div class="col-1">
-            <button class="btn btn-light">Cancel</button>
-        </div>
-        <div class="col">
-            <button @onclick="HandleValidSubmit" class="btn btn-outline-primary">Save attachment</button>
+﻿@if (this.State.mpdisApplicant == null)
+{
+<p>No seafarers selected</p> }
+else
+{
+<body>
+    <div class="border-bottom">
+        <div class="row mt-3 mb-3">
+            <div class="col-8 bg-white">
+                <h3>@this.State.mpdisApplicant.FullName - attachment</h3>
+            </div>
+            <div class="col-1">
+                <button @onclick="HandleCancel" class="btn btn-light">Cancel</button>
+            </div>
+            <div class="col">
+                <button @onclick="HandleValidSubmit" class="btn btn-outline-primary">Save attachment</button>
+            </div>
         </div>
     </div>
     <div style="width:707px;">
@@ -38,63 +45,57 @@
         </div>
         @if (this.FileToUpload != null)
         {
-            <div class="accordion" id="AttachmentAcc">
-                <div class="collapse-header">
-                    <div id="AttachmentHeading">
-                        <div class="row">
-                            <div class="col-10">
-                                <h4>Attachments</h4>
-                            </div>
-                            <div class="col-2 d-flex align-content-center">
-                                <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseForm" aria-expanded="true" aria-controls="CollapseForm" @onclick="FlipArrow">
-                                    View <span> <i class="@this.ArrowClass"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+<div class="accordion" id="AttachmentAcc">
+    <div class="collapse-header">
+        <div id="AttachmentHeading">
+            <div class="row">
+                <div class="col-10">
+                    <h4>Attachments</h4>
+                </div>
+                <div class="col-2 d-flex align-content-center">
+                    <button class="btn btn-link float-right text-white" type="button" data-toggle="collapse" data-target="#CollapseForm" aria-expanded="true" aria-controls="CollapseForm" @onclick="FlipArrow">
+                        View <span> <i class="@this.ArrowClass"></i></span>
+                    </button>
                 </div>
             </div>
-            <div id="CollapseForm" class="collapse show" aria-labelledby="FormAcc">
-                <div class="card ml-4 mt-4">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-9">
-                                <i class="fas fa-paperclip"><span class="csf-span">@FileName</span></i>
-                            </div>
-                            <div class="col">
-                                <button class="small-buttons" @onclick="RemoveAttachment">
-                                    <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
-                                </button>
-                            </div>
-
-                            <div class="col">
-                                <button href="# " class="small-buttons">
-                                    <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
-                                <FluentValidationValidator />
-                                <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle"></InputMultipleSelect>
-                                <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)" OnChange="OnInputChange">
-                                    @foreach (var item in this.DocumentForm.Languages)
-                                        {
-                                        <option value="@item">@item</option>
-                                        }
-                                </FormInputSelect>
-                                <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
-                            </EditForm>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+        </div>
     </div>
-</body>
-@code{
+</div>
+                    <div id="CollapseForm" class="collapse show" aria-labelledby="FormAcc">
+                        <div class="card ml-4 mt-4">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <i class="fas fa-paperclip"><span class="csf-span">@FileName</span></i>
+                                    </div>
+                                    <div class="col">
+                                        <button class="small-buttons" @onclick="RemoveAttachment">
+                                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                                        </button>
+                                    </div>
 
-
-}
+                                    <div class="col">
+                                        <button href="# " class="small-buttons">
+                                            <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
+                                        <FluentValidationValidator />
+                                        <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle"></InputMultipleSelect>
+                                        <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)" OnChange="OnInputChange">
+                                            @foreach (var item in this.DocumentForm.Languages)
+                                                    {
+                        <option value="@item.Id">@item.Text</option>}
+                                        </FormInputSelect>
+                                        <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
+                                    </EditForm>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+    </div>
+</body>}
