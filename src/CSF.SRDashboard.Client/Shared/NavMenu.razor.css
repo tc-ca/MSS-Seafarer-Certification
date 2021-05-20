@@ -18,37 +18,36 @@
     top: -2px;
 }
 
-.nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+.fa-fw {
+    text-align: left;
+    width: 1.25em;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
+.nav-item {
+    font-size: 1rem;
+    letter-spacing: 0.01rem;
+}
+
 
     .nav-item:last-of-type {
         padding-bottom: 1rem;
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
+        color: #095C9D;
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+        height: 52px;
         display: flex;
         align-items: center;
-        line-height: 3rem;
+        line-height: 1.125rem;
     }
 
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
+    color: #095C9D;
+    background-color: #E0E7F1;
 }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
 
 @media (min-width: 641px) {
     .navbar-toggler {

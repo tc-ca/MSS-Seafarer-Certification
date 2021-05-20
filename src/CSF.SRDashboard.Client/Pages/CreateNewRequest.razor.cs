@@ -39,7 +39,7 @@ namespace CSF.SRDashboard.Client.Pages
         public RequestModel RequestModel { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
 
-        public List<Dropdown> RequestTypes = new List<Dropdown> {
+        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "FAX" },
             new Dropdown { ID = "2", Text = "MAIL"},
             new Dropdown { ID = "3", Text = "EMAIL"},
@@ -47,7 +47,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         };
 
-        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
+        public List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "New certificate" },
             new Dropdown { ID = "2", Text = "Renewal certificate" }
 
@@ -68,9 +68,9 @@ namespace CSF.SRDashboard.Client.Pages
             RequestModel = new RequestModel
             {
                 Cdn = this.Cdn,
-                SubmissionMethod = "1",
+                SubmissionMethod = "2",
                 CertificateType = "1",
-                RequestType = "2"
+                RequestType = "1"
 
             };
             this.EditContext = new EditContext(RequestModel);

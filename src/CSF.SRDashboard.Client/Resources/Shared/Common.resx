@@ -193,7 +193,7 @@
     <value>Processing phase</value>
   </data>
   <data name="RequestBoard" xml:space="preserve">
-    <value>Request Board</value>
+    <value>Request board</value>
   </data>
   <data name="RequestDetails" xml:space="preserve">
     <value>Request details</value>
@@ -209,6 +209,9 @@
   </data>
   <data name="SeafarerDetails" xml:space="preserve">
     <value>Seafarer details</value>
+  </data>
+  <data name="SeafarerSearch" xml:space="preserve">
+    <value>Seafarer search</value>
   </data>
   <data name="ServiceStandard" xml:space="preserve">
     <value>Service standard</value>
