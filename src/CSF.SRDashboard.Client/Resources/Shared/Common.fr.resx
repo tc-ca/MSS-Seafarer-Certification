@@ -196,7 +196,7 @@
     <value>Processing phase_fr</value>
   </data>
   <data name="RequestBoard" xml:space="preserve">
-    <value>Request Board_fr</value>
+    <value>Request board_fr</value>
   </data>
   <data name="RequestDetails" xml:space="preserve">
     <value>Request details_fr</value>
@@ -212,6 +212,9 @@
   </data>
   <data name="SeafarerDetails" xml:space="preserve">
     <value>Seafarer details_fr</value>
+  </data>
+  <data name="SeafarerSearch" xml:space="preserve">
+    <value>Seafarer search_fr</value>
   </data>
   <data name="ServiceStandard" xml:space="preserve">
     <value>Service standard_fr</value>

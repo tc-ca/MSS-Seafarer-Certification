@@ -90,26 +90,26 @@ a.navbar-brand {
 }
 
 ul.nav[b-ussj044e2c] {
-    margin-top: 30px;
+    margin-top: 8px;
 }
 
 .nav-item[b-ussj044e2c] a.active,
 .nav-item[b-ussj044e2c] a:hover {
-    font-family: 'Nunito Sans' sans-serif;
-    font-weight: bold;
-    color: #1B50B1;
+    font-family: Helvetica;
+    color: #143c85;
 }
 
 .nav-item[b-ussj044e2c] a,
 .nav-item[b-ussj044e2c] a:active,
 .nav-item[b-ussj044e2c] a:focus {
-    color: #4D5D6C;
+    color: #095C9D;
+    font-family: Helvetica;
 }
     /*
     CUSTOM
 */
     .nav-item[b-ussj044e2c] a i {
-        margin-right: 24px;
+        margin-right: 16px;
     }
 
 div.page-layout {
