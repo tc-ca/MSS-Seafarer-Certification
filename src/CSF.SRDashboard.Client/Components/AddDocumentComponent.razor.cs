@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Components
@@ -35,6 +36,10 @@ namespace CSF.SRDashboard.Client.Components
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
         [Inject]
         public IDocumentService DocumentServe { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+      
+
         public DocumentInfo DocumentInfo { get; set; }
         public string MultipleSelectTitle { get; set; }
         private bool AccordionExpanded { get; set; } = true;
@@ -59,12 +64,11 @@ namespace CSF.SRDashboard.Client.Components
             {
 
             }
-            Console.WriteLine("Valid Submit");
             if (this.File != null)
             {
-                this.FileToUpload = this.PopulateFormFile(this.File);
-
-                var result = documentService.InsertDocument(1, "John Wick", FileToUpload, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
+                this.FileToUpload = this.PopulateFormFile(this.File).ConfigureAwait(false).GetAwaiter().GetResult(); 
+               
+                var result = this.DocumentServe.InsertDocument(0, "User", FileToUpload, string.Empty, DocumentForm.Description, "FAX", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
                 this.DocumentInfo = PopulateDocumentInfo(this.State.mpdisApplicant);
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
@@ -105,21 +109,42 @@ namespace CSF.SRDashboard.Client.Components
             return DocumentInfo;
 
         }
-        private FormFile PopulateFormFile(IBrowserFile file)
+        private async Task<IFormFile> PopulateFormFile(IBrowserFile file)
         {
-            var result = ClientXrefDocumentRepository.GetDocumentsByCdn("00123456");
+            //var filebytes = file.OpenReadStream();
+          //  byte[] lol= await GetBytes(filebytes);
+           // MemoryStream stream = new MemoryStream(lol);
+            
+            IFormFile FileToUpload = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("lol")), 0, file.Size, "Data", file.Name)
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = file.ContentType
+               
+                
+            };
+           // filebytes = await GetBytes(FileToUpload);
+         
+             
 
-            Stream stream;
-            stream = file.OpenReadStream(file.Size);
-
-            FormFile FileToUpload = new FormFile(stream,0,file.Size,file.Name, file.Name);
-            stream.Dispose();
+          //  IFormFile FileToUpload = new FormFile(new MemoryStream());
+          
             return FileToUpload;
 
         }
+
+        public async Task<byte[]> GetBytes(Stream formFile)
+        {
+            byte[] buffer = new byte[formFile.Length];
+            using (var memoryStream = new MemoryStream())
+            {
+               await formFile.CopyToAsync(memoryStream);
+               
+                return memoryStream.ToArray();
+            }
+        }
         private void UpdateSelectTitle()
         {
-            Console.WriteLine("lol");
+          
         }
         public void FlipArrow()
         {
@@ -133,7 +158,17 @@ namespace CSF.SRDashboard.Client.Components
             }
 
         }
-       public void RemoveAttachment()
+        public void HandleCancel()
+        {
+            if(this.File != null)
+            {
+                this.File = null;
+            }
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.State.mpdisApplicant.Cdn}");
+        }
+
+
+        public void RemoveAttachment()
         {
             this.File = null;
         }

@@ -19,7 +19,10 @@
     }
 
     private IBrowserFile file;
+
     public string UploadClass { get; set; } = "file-drop-zone";
+    private string uploadclass { get; set; }
+
 
     [Parameter]
     public EventCallback<IBrowserFile> FileChanged { get; set; }
@@ -31,10 +34,6 @@
             this.UploadClass = "file-drop-zone-disabled";
             this.File = e.File;
 
-        }
-        else
-        {
-            this.UploadClass = "file-drop-zone";
         }
     }
 

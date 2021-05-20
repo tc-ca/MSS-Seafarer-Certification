@@ -258,3 +258,6 @@ span.csf-span {
     color: #BDC1C6;
     background-color: #EEEEEE;
 }
+input[type=checkbox]{
+    margin-right: 0.5rem;
+}
