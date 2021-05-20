@@ -66,9 +66,9 @@ namespace CSF.SRDashboard.Client.Components
             }
             if (this.File != null)
             {
-                this.FileToUpload = this.PopulateFormFile(this.File).ConfigureAwait(false).GetAwaiter().GetResult(); 
-               
-                var result = this.DocumentServe.InsertDocument(0, "User", FileToUpload, string.Empty, DocumentForm.Description, "FAX", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
+                this.FileToUpload = this.PopulateFormFile(this.File).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                var result = this.DocumentServe.InsertDocument(0, "User", FileToUpload, string.Empty, DocumentForm.Description, "FAX", DocumentForm.Languages[DocumentForm.SelectValue], this.DocumentTypes, string.Empty);
                 this.DocumentInfo = PopulateDocumentInfo(this.State.mpdisApplicant);
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);

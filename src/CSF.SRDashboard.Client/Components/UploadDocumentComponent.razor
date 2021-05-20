@@ -1,10 +1,15 @@
 ﻿<div class="mt-4 mb-4 ml-4">
     <div class="card d-flex align-items-center @UploadClass">
-            <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
-            Drag and drop file here or click to select from your desktop
-        @if(this.File == null){  
-          
-        <InputFile id="documentUpload" OnChange="OnFileUpload" />
+        <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
+        Drag and drop file here or click to select from your desktop
+        @if (this.File == null)
+        {
+
+            <InputFile id="documentUpload" OnChange="OnFileUpload" />
+        }
+        else
+        {
+            <InputFile id="documentUpload" OnChange="OnFileUpload" hidden />
         }
 
     </div>
@@ -33,6 +38,7 @@
         {
             this.UploadClass = "file-drop-zone-disabled";
             this.File = e.File;
+            
 
         }
     }
