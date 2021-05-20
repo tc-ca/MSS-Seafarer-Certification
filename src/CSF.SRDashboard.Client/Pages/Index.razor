@@ -2,36 +2,3 @@
 @using Models
 
 @inject IStringLocalizer<Index> Localizer
-
-<div>
-    <RadzenButton @attributes="SearchButtonAttribute" Text="@Localizer["Search"]" Icon="search" Click="SearchButtonClicked" />
-    <RadzenButton @attributes="CreateNewRequestButtonAttribute" Text="@Localizer["CreateNewRequest"]" Icon="create" Click="CreateNewRequestButtonClicked" />
-    <br><br>
-</div>
-<div>
-
-    <RadzenTabs>
-        <Tabs>
-            <RadzenTabsItem Text="@Localizer["InProgress"]" Style="color:#1A202C">
-                <CSF.SRDashboard.Client.Components.RadzenServiceRequestDashboardGrid PageSize="@inProgressPageSize" RadzenGrid="@inProgressGrid" Data="@requestGridData.RequestsInProgress" TotalNumberOfRequests="@numberOfRequestsInProgress" />
-            </RadzenTabsItem>
-
-            <RadzenTabsItem Text="@Localizer["OnHold"]">
-                <CSF.SRDashboard.Client.Components.RadzenServiceRequestDashboardGrid PageSize="@onHoldPageSize" RadzenGrid="@onHoldGrid" Data="@requestGridData.RequestsOnHold" TotalNumberOfRequests="@numberOfRequestsOnHold" />
-            </RadzenTabsItem>
-
-            <RadzenTabsItem Text="@Localizer["Completed"]">
-                <CSF.SRDashboard.Client.Components.RadzenServiceRequestDashboardGrid PageSize="@completedPageSize" RadzenGrid="@completedGrid" Data="@requestGridData.RequestsCompleted" TotalNumberOfRequests="@numberOfRequestsCompleted" />
-            </RadzenTabsItem>
-
-            <RadzenTabsItem Text="@Localizer["NotSubmitted"]">
-                <CSF.SRDashboard.Client.Components.RadzenServiceRequestDashboardGrid PageSize="@notSubmittedPageSize" RadzenGrid="@notSubmittedGrid" Data="@requestGridData.RequestsNotSubmitted" TotalNumberOfRequests="@numberOfRequestNotSubmitted" />
-            </RadzenTabsItem>
-
-            <RadzenTabsItem Text="@Localizer["NewRequest"]">
-                <CSF.SRDashboard.Client.Components.RadzenServiceRequestDashboardGrid PageSize="@newRequestsPageSize" RadzenGrid="@newRequestsGrid" Data="@requestGridData.NewRequests" TotalNumberOfRequests="@numberOfNewRequests" />
-            </RadzenTabsItem>
-        </Tabs>
-    </RadzenTabs>
-
-</div>
