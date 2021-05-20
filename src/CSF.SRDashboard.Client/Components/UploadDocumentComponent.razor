@@ -1,41 +1,9 @@
 ﻿<div class="mt-4 mb-4 ml-4">
     <div class="card d-flex align-items-center @UploadClass">
-            <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
-            Drag and drop file here or click to select from your desktop
-        @if(this.File == null){  
-          
+        <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
+        Drag and drop file here or click to select from your desktop
+
         <InputFile id="documentUpload" OnChange="OnFileUpload" />
-        }
 
     </div>
 </div>
-@code{
-
-    [Parameter]
-    public IBrowserFile File { get => file; set { if (file == value) return;
-            this.file = value;
-            FileChanged.InvokeAsync(value);
-        }
-    }
-
-    private IBrowserFile file;
-    public string UploadClass { get; set; } = "file-drop-zone";
-
-    [Parameter]
-    public EventCallback<IBrowserFile> FileChanged { get; set; }
-
-    public void OnFileUpload(InputFileChangeEventArgs e)
-    {
-        if (e.File != null)
-        {
-            this.UploadClass = "file-drop-zone-disabled";
-            this.File = e.File;
-
-        }
-        else
-        {
-            this.UploadClass = "file-drop-zone";
-        }
-    }
-
-}

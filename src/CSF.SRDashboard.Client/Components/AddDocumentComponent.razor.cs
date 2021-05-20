@@ -12,18 +12,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Components
 {
     public partial class AddDocumentComponent
     {
-        [Parameter]
-        public IBrowserFile File { get; set; }
         public IFormFile FileToUpload { get; set; }
         [Parameter]
         public string ProfileName { get; set; }
-        public string FileName { get { if (File == null) return String.Empty; return File.Name; } }
+        public string FileName { get { if (FileToUpload == null) return String.Empty; return FileToUpload.FileName; } }
         public List<string> DocumentTypes { get; set; }
         [Parameter]
         public AddDocumentModel DocumentForm { get; set; }
@@ -49,22 +50,20 @@ namespace CSF.SRDashboard.Client.Components
 
         private void OnInputChange(EventArgs e)
         {
-         
+
         }
-        private void HandleValidSubmit()
+        private async void HandleValidSubmit()
         {
             var isValid = EditContext.Validate();
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
-            if(this.DocumentTypes.Count <= 0)
+            if (this.DocumentTypes.Count <= 0)
             {
 
             }
             Console.WriteLine("Valid Submit");
-            if (this.File != null)
+            if (this.FileToUpload != null)
             {
-                this.FileToUpload = this.PopulateFormFile(this.File);
-
-                var result = documentService.InsertDocument(1, "John Wick", FileToUpload, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
+                var result = await DocumentServe.InsertDocument(1, "John Wick", FileToUpload, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty);
                 this.DocumentInfo = PopulateDocumentInfo(this.State.mpdisApplicant);
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
@@ -73,14 +72,14 @@ namespace CSF.SRDashboard.Client.Components
 
         private string FormatSelectTitle(List<string> strings)
         {
-            string formattedString="";
-            foreach(var i in strings)
+            string formattedString = "";
+            foreach (var i in strings)
             {
-                formattedString = i+" ";
+                formattedString = i + " ";
             }
             return formattedString;
         }
-        
+
         private List<string> PopulateDocumentTypes(List<SelectListItem> list)
         {
             List<string> DocumentTypes = new List<string>();
@@ -100,21 +99,42 @@ namespace CSF.SRDashboard.Client.Components
             this.DocumentInfo.Cdn = applicantInfo.Cdn;
             this.DocumentInfo.DocumentId = Guid.NewGuid();
             this.DocumentInfo.DateStartDte = DateTime.UtcNow;
-            
-            
+
+
             return DocumentInfo;
 
         }
-        private FormFile PopulateFormFile(IBrowserFile file)
+        private async Task<IFormFile> PopulateFormFile(IBrowserFile file)
         {
-            var result = ClientXrefDocumentRepository.GetDocumentsByCdn("00123456");
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                await file.OpenReadStream().CopyToAsync(ms);
+                var bytes = ms.ToArray();
 
-            Stream stream;
-            stream = file.OpenReadStream(file.Size);
+                IFormFile file56 = new FormFile(ms, 0, file.Size, file.Name, file.Name)
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = file.ContentType
+                };
 
-            FormFile FileToUpload = new FormFile(stream,0,file.Size,file.Name, file.Name);
-            stream.Dispose();
-            return FileToUpload;
+
+                var t = new MediaTypeHeaderValue("application/octet-stream");
+                //new StringContent(rcString, Encoding.UTF8, "application/json")
+
+                //new StringContent()
+
+                //FileToUpload.ContentType = new MediaTypeHeaderValue("application/octet-stream").; ;
+                //FileToUpload.Headers = new HeaderDictionary();
+                ///stream.Close();
+                return file56;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
 
         }
         private void UpdateSelectTitle()
@@ -124,19 +144,20 @@ namespace CSF.SRDashboard.Client.Components
         public void FlipArrow()
         {
             this.AccordionExpanded = !this.AccordionExpanded;
-            if (this.AccordionExpanded) {
+            if (this.AccordionExpanded)
+            {
                 this.ArrowClass = "fas fa-angle-down";
-                    }
+            }
             else
             {
                 this.ArrowClass = "fas fa-angle-right";
             }
 
         }
-       public void RemoveAttachment()
+        public void RemoveAttachment()
         {
-            this.File = null;
+            this.FileToUpload = null;
         }
     }
-   
+
 }
