@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
 using Microsoft.AspNetCore.Components;
 
@@ -10,6 +11,8 @@ namespace CSF.SRDashboard.Client.Components.Tables.Dashboard
         public List<Document> TableData { get; set; } = new List<Document>();
         [Inject]
         public NavigationManager NavigationManager { get; private set; }
+        [Parameter]
+        public MpdisApplicantDto Applicant { get; set; }
 
         protected override void OnInitialized()
         {
@@ -17,7 +20,7 @@ namespace CSF.SRDashboard.Client.Components.Tables.Dashboard
         }
         public void AddDocumentRedirect()
         {
-            NavigationManager.NavigateTo("/AddAttachment");
+            NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}/AddAttachment");
         }
     }
 }

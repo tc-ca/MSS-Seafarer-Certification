@@ -11,7 +11,8 @@ namespace CSF.SRDashboard.Client.PageValidators
     {
         public AddAttachmentValidator()
         {
-            this.RuleFor(x => x.Description).NotNull().WithMessage("**");
+            this.RuleFor(x => x.SelectValue).GreaterThan(-1).WithMessage("Please select at least one value");
+
         }
     }
 }

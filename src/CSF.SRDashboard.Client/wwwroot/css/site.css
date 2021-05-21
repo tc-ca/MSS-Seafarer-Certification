@@ -263,3 +263,17 @@ span.csf-span {
 input[type=checkbox]{
     margin-right: 0.5rem;
 }
+.TestToast {
+    animation: fadeout 1.5;
+    
+    
+   
+}
+@keyframes fadeout {
+from{
+    opacity: 1;
+}
+to{
+    opacity: 0;
+}
+}

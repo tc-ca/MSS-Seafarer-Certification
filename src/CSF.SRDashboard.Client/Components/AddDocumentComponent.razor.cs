@@ -2,6 +2,7 @@
 using CSF.API.Services.Repositories;
 using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
+using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Core.Models;
@@ -21,6 +22,8 @@ namespace CSF.SRDashboard.Client.Components
 {
     public partial class AddDocumentComponent
     {
+        [Parameter]
+        public string Cdn { get; set; }
         public IFormFile FileToUpload { get; set; }
         [Parameter]
         public string ProfileName { get; set; }
@@ -38,13 +41,21 @@ namespace CSF.SRDashboard.Client.Components
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
         [Inject]
         public IDocumentService DocumentServe { get; set; }
+        [Inject]
+        public IGatewayService GatewayService { get; set; }
+        public MpdisApplicantDto Applicant { get; set; }
         public DocumentInfo DocumentInfo { get; set; }
         public string MultipleSelectTitle { get; set; }
+        public string Language { get; set; }
         private bool AccordionExpanded { get; set; } = true;
-        public string ArrowClass { get; set; } = "fas fa-angle-down";
+
+
 
         protected override void OnInitialized()
         {
+            this.Applicant = new MpdisApplicantDto();
+
+            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             base.OnInitialized();
             this.DocumentForm = new AddDocumentModel();
             this.MultipleSelectTitle = "Select";
@@ -58,6 +69,8 @@ namespace CSF.SRDashboard.Client.Components
         {
             var isValid = EditContext.Validate();
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
+            this.Language = this.DocumentForm.Languages[this.DocumentForm.SelectValue-1].Text;
+          
             if (this.DocumentTypes.Count <= 0)
             {
 
@@ -65,16 +78,18 @@ namespace CSF.SRDashboard.Client.Components
             Console.WriteLine("Valid Submit");
             if (this.FileToUpload != null)
             {
-                var result = await DocumentServe.InsertDocument(1, "John Wick", FileToUpload, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty);
+                var result = await DocumentServe.InsertDocument(1, "John Wick", FileToUpload, string.Empty, this.DocumentForm.Description, "FAX", this.Language, this.DocumentTypes, string.Empty);
                 this.DocumentInfo = new DocumentInfo
                 {
-                    Cdn = this.State.mpdisApplicant.Cdn,
+                    Cdn = this.Applicant.Cdn,
                     DateStartDte = DateTime.UtcNow,
                     DocumentId = result[0]
                 };
 
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
+                this.State.FileUploadDTO.FileUploadComplete = true;
+                this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
             }
         }
 
@@ -100,23 +115,11 @@ namespace CSF.SRDashboard.Client.Components
             }
             return DocumentTypes;
         }
+        
 
         private void UpdateSelectTitle()
         {
-            Console.WriteLine("lol");
-        }
-        public void FlipArrow()
-        {
-            this.AccordionExpanded = !this.AccordionExpanded;
-            if (this.AccordionExpanded)
-            {
-                this.ArrowClass = "fas fa-angle-down";
-            }
-            else
-            {
-                this.ArrowClass = "fas fa-angle-right";
-            }
-
+          
         }
 
         public void HandleCancel()
@@ -125,7 +128,7 @@ namespace CSF.SRDashboard.Client.Components
             {
                 this.FileToUpload = null;
             }
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.State.mpdisApplicant.Cdn}");
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
         }
 
         public void RemoveAttachment()
