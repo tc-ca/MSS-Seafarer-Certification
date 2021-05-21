@@ -246,13 +246,14 @@ span.csf-span {
     height: 140px;
     color: #808080;
 }
-.file-drop-zone input[type=file]{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
+    .file-drop-zone input[type=file], .file-drop-zone-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+   
 .file-drop-zone-disabled {
     border: 4px dashed #BDC1C6;
     color: #BDC1C6;
@@ -260,6 +261,7 @@ span.csf-span {
     height: 140px;
     background-color: #EEEEEE;
 }
+
 input[type=checkbox]{
     margin-right: 0.5rem;
 }
@@ -276,4 +278,10 @@ from{
 to{
     opacity: 0;
 }
+}
+.AttachmentScreenHeader {
+    border-bottom: 1px solid #dee2e6 !important;
+    background-color: #fff;
+    position: sticky;
+    top: auto;
 }

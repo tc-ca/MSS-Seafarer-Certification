@@ -47,16 +47,18 @@ namespace CSF.SRDashboard.Client.Components
         public DocumentInfo DocumentInfo { get; set; }
         public string MultipleSelectTitle { get; set; }
         public string Language { get; set; }
+        public ValidationMessageStore ValidationMessageStore { get; private set; }
         private bool AccordionExpanded { get; set; } = true;
 
 
 
         protected override void OnInitialized()
         {
-            this.Applicant = new MpdisApplicantDto();
-
-            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+           
             base.OnInitialized();
+            this.Applicant = new MpdisApplicantDto();
+            this.ValidationMessageStore = new ValidationMessageStore(this.EditContext);
+            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             this.DocumentForm = new AddDocumentModel();
             this.MultipleSelectTitle = "Select";
         }
@@ -67,18 +69,17 @@ namespace CSF.SRDashboard.Client.Components
         }
         private async void HandleValidSubmit()
         {
-            var isValid = EditContext.Validate();
+            
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
-            this.Language = this.DocumentForm.Languages[this.DocumentForm.SelectValue-1].Text;
-          
-            if (this.DocumentTypes.Count <= 0)
-            {
+            var isValid = Validate();
 
-            }
+           
+
             Console.WriteLine("Valid Submit");
-            if (this.FileToUpload != null)
+            if (isValid)
             {
-                var result = await DocumentServe.InsertDocument(1, "John Wick", FileToUpload, string.Empty, this.DocumentForm.Description, "FAX", this.Language, this.DocumentTypes, string.Empty);
+                this.Language = this.DocumentForm.Languages[this.DocumentForm.SelectValue - 1].Text;
+                var result = await DocumentServe.InsertDocument(1, "User", FileToUpload, string.Empty, this.DocumentForm.Description, "FAX", this.Language, this.DocumentTypes, string.Empty);
                 this.DocumentInfo = new DocumentInfo
                 {
                     Cdn = this.Applicant.Cdn,
@@ -88,11 +89,31 @@ namespace CSF.SRDashboard.Client.Components
 
 
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
-                this.State.FileUploadDTO.FileUploadComplete = true;
+                this.State.FileUploadDTO.FileUploadComplete = true; //bug if navigated to this page directly
                 this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
             }
         }
+       
+        
+        private bool Validate()
+        {
+            if (this.DocumentForm.SelectValue <= -1)
+            {
+               return false;
 
+            }
+           
+            if (this.DocumentTypes.Count <= 0)
+            {
+
+                return false;
+            }
+            if(this.FileToUpload == null)
+            {
+                return false;
+            }
+            return true;
+        }
         private string FormatSelectTitle(List<string> strings)
         {
             string formattedString = "";
@@ -133,6 +154,7 @@ namespace CSF.SRDashboard.Client.Components
 
         public void RemoveAttachment()
         {
+            this.ValidationMessageStore.Clear();
             this.FileToUpload = null;
         }
     }

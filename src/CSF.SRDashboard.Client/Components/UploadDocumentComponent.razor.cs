@@ -25,7 +25,7 @@ namespace CSF.SRDashboard.Client.Components
 
         private IFormFile formFile;
 
-        public string UploadClass { get; set; } = "file-drop-zone";
+      
 
         [Parameter]
         public EventCallback<IBrowserFile> FileChanged { get; set; }
@@ -33,12 +33,12 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public EventCallback<IFormFile> FormFileChanged { get; set; }
 
+        public string UploadClass => this.FormFile == null ? "file-drop-zone" : "file-drop-zone-disabled";
         public async void OnFileUpload(InputFileChangeEventArgs e)
         {
-            if (e.File != null)
+            if (e.File != null && !string.Equals(e.File.ContentType, "application/x-msdownload"))
             {
-                this.UploadClass = "file-drop-zone-disabled";
-
+                
                 MemoryStream ms = new MemoryStream();
                 await e.File.OpenReadStream(e.File.Size).CopyToAsync(ms);
                 var bytes = ms.ToArray();
@@ -51,12 +51,7 @@ namespace CSF.SRDashboard.Client.Components
 
                 this.FormFile = NewFormFile;
 
-            }
-            else
-            {
-                this.UploadClass = "file-drop-zone";
-            }
+            }  
         }
-
     }
 }
