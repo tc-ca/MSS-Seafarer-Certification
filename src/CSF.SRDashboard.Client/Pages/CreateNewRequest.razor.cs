@@ -13,6 +13,7 @@ using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CSF.SRDashboard.Client.PageValidators;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -37,6 +38,11 @@ namespace CSF.SRDashboard.Client.Pages
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
+
+        public RequestValidator validator = new RequestValidator();
+
+        public WorkItemDTO UploadedRequest { get; set; }
+
         public bool MostRecentCommentsIsCollapsed { get; private set; }
 
         public List<Dropdown> SubmissionMethods = new List<Dropdown> {
@@ -67,11 +73,7 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             RequestModel = new RequestModel
             {
-                Cdn = this.Cdn,
-                SubmissionMethod = "2",
-                CertificateType = "1",
-                RequestType = "1"
-
+                Cdn = Cdn
             };
             this.EditContext = new EditContext(RequestModel);
 
@@ -81,7 +83,13 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void SaveChanges()
         {
-            var uploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
+            var isValid = EditContext.Validate();
+
+            var t = this.validator.Validate(this.RequestModel);
+
+            UploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
+
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?requestId=" + UploadedRequest.Id);
         }
 
         private void SetMostRecentCommentsCollapseState()

@@ -8,6 +8,7 @@
     using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Services.Document;
     using Microsoft.AspNetCore.Components;
+    using Microsoft.AspNetCore.WebUtilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -40,6 +41,8 @@
 
         public string currentRelativePath;
 
+        private int RequestID;
+
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -66,6 +69,13 @@
                     DocumentUrl = documentInfo.DocumentUrl,
                     DownloadLink = link
                 });
+            }
+
+            var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+            
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var _requestId))
+            {
+                RequestID = Convert.ToInt32(_requestId);
             }
         }
 
