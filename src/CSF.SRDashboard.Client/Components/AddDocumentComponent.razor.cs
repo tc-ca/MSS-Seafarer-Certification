@@ -95,6 +95,10 @@ namespace CSF.SRDashboard.Client.Components
         }
        
         
+        /// <summary>
+        /// Checks if the form is validated
+        /// </summary>
+        /// <returns></returns>
         private bool Validate()
         {
             if (this.DocumentForm.SelectValue <= -1)
@@ -114,16 +118,11 @@ namespace CSF.SRDashboard.Client.Components
             }
             return true;
         }
-        private string FormatSelectTitle(List<string> strings)
-        {
-            string formattedString = "";
-            foreach (var i in strings)
-            {
-                formattedString = i + " ";
-            }
-            return formattedString;
-        }
-
+        /// <summary>
+        /// populates the list of document types from the form
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         private List<string> PopulateDocumentTypes(List<SelectListItem> list)
         {
             List<string> DocumentTypes = new List<string>();
@@ -138,11 +137,9 @@ namespace CSF.SRDashboard.Client.Components
         }
         
 
-        private void UpdateSelectTitle()
-        {
-          
-        }
-
+        /// <summary>
+        /// cancels and returns to the profile page
+        /// </summary>
         public void HandleCancel()
         {
             if (this.FileToUpload != null)
@@ -152,6 +149,9 @@ namespace CSF.SRDashboard.Client.Components
             this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
         }
 
+       /// <summary>
+       /// Removes the attachment
+       /// </summary>
         public void RemoveAttachment()
         {
             this.ValidationMessageStore.Clear();
