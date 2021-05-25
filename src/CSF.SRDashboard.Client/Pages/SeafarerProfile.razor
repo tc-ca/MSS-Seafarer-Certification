@@ -6,9 +6,9 @@
 <h3>@this.Applicant.FullName</h3>
 
 <div class="border rounded col-10 mb-3">
-    <AlertComponent  AlertType="@alertType" EnableShow="@IsAlertEnabled" Dismisable="true">
+    <AlertComponent ShowIcon="false" AlertType="@alertType" EnableShow="@IsAlertEnabled" Dismisable="true">
         <ChildContent>
-            <p>You successfully created request #@requestId for <strong> @Applicant.FullName </strong></p><br>
+            <p>You successfully created request #@requestId for <strong> @Applicant.FullName </strong></p>
         </ChildContent>
     </AlertComponent>
     <div class="bs-component mt-3">
