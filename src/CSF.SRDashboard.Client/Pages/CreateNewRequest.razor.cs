@@ -81,6 +81,7 @@ namespace CSF.SRDashboard.Client.Pages
         public void SaveChanges()
         {
             var uploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn +"/" +uploadedRequest.Id);
         }
 
         private void SetMostRecentCommentsCollapseState()

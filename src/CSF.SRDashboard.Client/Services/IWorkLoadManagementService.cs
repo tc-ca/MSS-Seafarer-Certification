@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
+﻿using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace CSF.SRDashboard.Client.Services
         WorkItemDTO AddWorkItem(WorkItemDTO workItem);
         List<WorkItemDTO> GetByCdnNumber(string cdn);
         WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService);
+        List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn);
     }
 }

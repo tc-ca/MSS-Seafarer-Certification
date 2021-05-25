@@ -1,4 +1,5 @@
 ﻿using CSF.Common.Library;
+using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using Microsoft.Extensions.Logging;
@@ -84,8 +85,7 @@ namespace CSF.SRDashboard.Client.Services
         public List<WorkItemDTO> GetByCdnNumber(string cdn)
         {
             List<WorkItemDTO> workItems = null;
-            string requestPath = $"api/v1/workitems/applicants/cdn/{cdn}/workitems";
-
+            string requestPath = $"api/v1/workitems/applicants/ContactUniqueId/{cdn}/workitems";
             if (string.IsNullOrEmpty(cdn))
                 return null;
 
@@ -102,6 +102,36 @@ namespace CSF.SRDashboard.Client.Services
         }
 
 
+        public List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn)
+        {
+            List<WorkloadRequestTableItem> tableItems =null;
+
+            var workItems = this.GetByCdnNumber(cdn);
+            if(workItems != null)
+            {
+                tableItems = new List<WorkloadRequestTableItem>();
+
+                foreach (var workItem in workItems)
+                {
+                    var tableItem = new WorkloadRequestTableItem();
+
+                    if (workItem.Detail != null)
+                    {
+                        var detail =JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
+                        tableItem.Certificate = detail.CertificateType;
+                        tableItem.RequestType = detail.RequestType;
+                    }
+
+                    tableItem.RequestId = workItem.Id.ToString();
+                    tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
+                    tableItem.Status =  workItem.WorkItemStatus.StatusAdditionalDetails;
+
+                    tableItems.Add(tableItem);
+                }
+            }
+
+            return tableItems;
+        }
 
         public WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
@@ -120,7 +150,7 @@ namespace CSF.SRDashboard.Client.Services
             contact.Phone = applicantInfo.PhoneNumber;
             contact.Email = applicantInfo.Email;
             contact.PrimaryContactInd = true;
-            contact.Cdn = requestModel.Cdn;
+            contact.ContactUniqueId = requestModel.Cdn;
             
             //-- Detail
             WorkItemDetail itemDetail = new WorkItemDetail();
@@ -144,8 +174,8 @@ namespace CSF.SRDashboard.Client.Services
             workItem.SameApplicantSubmitterInd = true;
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
-            workItem.WorkItemStatus = new WorkItemStatusDTO(); // TODO: remove this line after Krakens remove this mandtory field
-
+            workItem.WorkItemStatus = new WorkItemStatusDTO();
+            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;

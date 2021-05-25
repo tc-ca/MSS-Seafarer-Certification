@@ -26,7 +26,7 @@
                                 <FormInputSelect Label="Request type" Id="RequestType" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)" Required="true">
                                     @foreach (var item in RequestTypes)
                                     {
-                                        <option value="@item.ID">@item.Text</option>
+                                        <option value="@item.Text">@item.Text</option>
                                     }
                                 </FormInputSelect>
                             </div>
@@ -35,7 +35,7 @@
                                 <FormInputSelect Label="Certificate type" Id="CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true">
                                     @foreach (var item in CertificateTypes)
                                     {
-                                        <option value="@item.ID">@item.Text</option>
+                                        <option value="@item.Text">@item.Text</option>
                                     }
                                 </FormInputSelect>
                             </div>
@@ -44,7 +44,7 @@
                                 <FormInputSelect Label="Submission method" Id="SubmissionMethod" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true">
                                     @foreach (var item in SubmissionMethods)
                                     {
-                                        <option value="@item.ID">@item.Text</option>
+                                        <option value="@item.Text">@item.Text</option>
                                     }
                                 </FormInputSelect>
                             </div>

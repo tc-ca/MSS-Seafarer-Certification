@@ -20,6 +20,13 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string Email { get; set; }
         public string PrefferedContactMethod { get; set; }
         public bool PrimaryContactInd { get; set; }
-        public string Cdn { get; set; }
+        public string ContactUniqueId { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDateUTC { get; set; }
+        public string LastUpdatedBy { get; set; }
+        public DateTime? LastUpdatedDateUTC { get; set; }
+        public bool? DeletedInd { get; set; }
+        public string DeletedBy { get; set; }
+        public DateTime? DeletedDateUTC { get; set; }
     }
 }

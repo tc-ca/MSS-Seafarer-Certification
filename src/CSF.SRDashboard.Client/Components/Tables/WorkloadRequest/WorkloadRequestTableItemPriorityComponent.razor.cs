@@ -11,7 +11,10 @@
         public bool HasError {  
             get
             {
-                return this.Priority.Equals("request more info", StringComparison.InvariantCultureIgnoreCase);
+                if (this.Priority != null)
+                    return this.Priority.Equals("request more info", StringComparison.InvariantCultureIgnoreCase);
+                else
+                    return false;
             }
         }
 
@@ -19,7 +22,10 @@
         {
             get
             {
-                return this.Priority.Equals("missing info", StringComparison.InvariantCultureIgnoreCase);
+                if (this.Priority != null)
+                    return this.Priority.Equals("missing info", StringComparison.InvariantCultureIgnoreCase);
+                else
+                    return false;
             }
         }
 
