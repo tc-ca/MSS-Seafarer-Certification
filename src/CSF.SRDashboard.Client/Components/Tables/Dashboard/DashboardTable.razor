@@ -1,8 +1,8 @@
 ﻿@using CSF.SRDashboard.Client.Models
 
-<a href="#" class="btn btn-outline-primary mt-3">
+<button @onclick="AddDocumentRedirect" class="btn btn-outline-primary mt-3">
     Add Document
-</a>
+</button>
 
 <div class="table-responsive mt-3">
     <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="CSF.SRDashboard.Client.Models.Document" DefaultPageSize="25" Items="TableData">

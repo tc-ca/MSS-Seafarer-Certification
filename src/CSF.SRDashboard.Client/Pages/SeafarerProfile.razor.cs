@@ -7,6 +7,7 @@
     using CSF.SRDashboard.Client.Models;
     using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Services.Document;
+    using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
     using System;
     using System.Collections.Generic;
@@ -14,9 +15,9 @@
     using System.Threading.Tasks;
     public partial class SeafarerProfile
     {
+       
         [Parameter]
         public string Cdn { get; set; }
-
         [Inject]
         public IGatewayService GatewayService { get; set; }
         [Inject]
@@ -27,7 +28,11 @@
         private NavigationManager navigationManager { get; set; }
         [Inject]
         public IAzureBlobService AzureBlobService { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
+        public FileUploadDTO FileUploadDTO = new FileUploadDTO();
+        public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
 
@@ -40,12 +45,24 @@
 
         public string currentRelativePath;
 
+        
+
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+           
+            if (this.State.FileUploadDTO == null)
+            {
+                this.State.FileUploadDTO = new FileUploadDTO();
+            }
+            if (this.State.FileUploadDTO.FileUploadComplete)
+            {
+                this.ShowToast = true;
+            }
+
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
-
+            
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
@@ -77,6 +94,9 @@
         private void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+            this.FileUploadDTO.Cdn = this.Applicant.Cdn;
+            this.FileUploadDTO.FullName = this.Applicant.FullName;
+            this.State.FileUploadDTO = this.FileUploadDTO;
         }
     }
 }
