@@ -95,14 +95,14 @@ namespace CSF.SRDashboard.Client.Components
             {
                 var SelectedLanguage = this.DocumentForm.Languages[this.DocumentForm.SelectValue - 1].Text;
                 this.Language = SelectedLanguage; 
-                var result = await DocumentServe.InsertDocument(1, "User", FileToUpload, string.Empty, this.DocumentForm.Description, "FAX", this.Language, this.DocumentTypes, string.Empty);
-                if (result.Count > 0)
+                var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", FileToUpload, string.Empty, this.DocumentForm.Description, "FAX", this.Language, this.DocumentTypes, string.Empty);
+                if (addedDocumentIds.Count > 0)
                 {
                     this.DocumentInfo = new DocumentInfo
                     {
                         Cdn = this.Applicant.Cdn,
                         DateStartDte = DateTime.UtcNow,
-                        DocumentId = result[0]
+                        DocumentId = addedDocumentIds[0]
                     };
                     this.State.FileUploadDTO.FileUploadComplete = true;
                 }
