@@ -1,16 +1,20 @@
 ﻿@page "/SeafarerProfile/{Cdn}"
 @page "/SeafarerProfile/{Cdn}/{requestId:int}"
 @inject IJSRuntime JS
-<a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left"></i>Back to search results</a>
+<a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left mr-2"></i>Back to search results</a>
 
 <h3>@this.Applicant.FullName</h3>
-
-<div class="border rounded col-10 mb-3">
+<div>
     <AlertComponent ShowIcon="false" AlertType="@alertType" EnableShow="@IsAlertEnabled" Dismisable="true">
         <ChildContent>
             <p>You successfully created request #@requestId for <strong> @Applicant.FullName </strong></p>
         </ChildContent>
     </AlertComponent>
+</div>
+
+<div class="border rounded col-12 mb-3">
+
+
     <div class="bs-component mt-3">
         <ul class="nav nav-tabs">
             <li class="nav-item">

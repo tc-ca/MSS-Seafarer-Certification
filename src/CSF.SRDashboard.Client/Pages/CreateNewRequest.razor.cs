@@ -71,26 +71,24 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = new MpdisApplicantDto();
 
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+
             RequestModel = new RequestModel
             {
-                Cdn = Cdn
+                Cdn = Applicant.Cdn
             };
+
             this.EditContext = new EditContext(RequestModel);
 
             StateHasChanged();
-
         }
 
         public void SaveChanges()
         {
             var isValid = EditContext.Validate();
 
-            var t = this.validator.Validate(this.RequestModel);
-
             UploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
 
-            var uploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn +"/" +uploadedRequest.Id);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn +"/" +UploadedRequest.Id);
         }
 
         private void SetMostRecentCommentsCollapseState()
