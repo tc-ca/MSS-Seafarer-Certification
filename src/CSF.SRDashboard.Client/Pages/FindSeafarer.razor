@@ -20,7 +20,6 @@
                 <div class="col-5 d-grid gap-3">
                        <div class="form-group" @onclick="ClearMessages">
                         <FormInputText Label="Candidate Document Number (CDN)" Id="CNDInput" @bind-Value="@SearchCriteria.Cdn" ValidationFor="@(()=>SearchCriteria.Cdn)" @onclick="(()=>ClearMessages())" />
-
                     </div>
                     <div class="form-group" @onclick="ClearMessages">
                         <FormInputText Id="LastNameInput" Label="Last name" @bind-Value="@SearchCriteria.LastName" ValidationFor="@(()=>SearchCriteria.LastName)" />
@@ -35,7 +34,6 @@
                     <div class="d-flex justify-content-end align-items-center">
                         <button id="SeafarerClear" type="button" class="btn btn-light btn-clear mr-3" @onclick="Clear">Clear</button>
                         <button id="SeafarerSearch" type="submit" class="btn btn-primary">Search</button>
-
                     </div>
                 </div>
                 <div class="row">

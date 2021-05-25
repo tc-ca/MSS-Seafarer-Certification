@@ -38,7 +38,6 @@
                 ContentType = "application/pdf"
             };
             
-
             // Act
             var result = documentService.InsertDocument(1, "John Wick", file, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
 

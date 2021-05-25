@@ -283,5 +283,5 @@ to{
     border-bottom: 1px solid #dee2e6 !important;
     background-color: #fff;
     position: sticky;
-    top: auto;
+    top: 0;
 }

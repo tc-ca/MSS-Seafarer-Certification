@@ -13,17 +13,16 @@ namespace CSF.SRDashboard.Client.Pages
     {
         [Parameter]
         public string Cdn { get; set; }
+        
         protected EditContext EditContext;
+        
         public AddDocumentModel DocumentForm { get; set; }
         
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.DocumentForm = new AddDocumentModel();
             this.EditContext = new EditContext(this.DocumentForm);
-          
-
         }
     }
 }

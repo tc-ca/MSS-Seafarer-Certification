@@ -25,8 +25,6 @@ namespace CSF.SRDashboard.Client.Components
 
         private IFormFile formFile;
 
-      
-
         [Parameter]
         public EventCallback<IBrowserFile> FileChanged { get; set; }
 
@@ -38,7 +36,6 @@ namespace CSF.SRDashboard.Client.Components
         {
             if (e.File != null && !string.Equals(e.File.ContentType, "application/x-msdownload"))
             {
-                
                 MemoryStream ms = new MemoryStream();
                 await e.File.OpenReadStream(e.File.Size).CopyToAsync(ms);
                 var bytes = ms.ToArray();
@@ -48,9 +45,7 @@ namespace CSF.SRDashboard.Client.Components
                     Headers = new HeaderDictionary(),
                     ContentType = e.File.ContentType
                 };
-
                 this.FormFile = NewFormFile;
-
             }  
         }
     }
