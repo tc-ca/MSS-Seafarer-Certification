@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using CSF.SRDashboard.Client.Services;
-using CSF.SRDashboard.Client.DTO;
-using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest;
-using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
-using System.Collections.Generic;
-using DSD.MSS.Blazor.Components.Core.Constants;
-using Microsoft.JSInterop;
-
-namespace CSF.SRDashboard.Client.Pages
+﻿namespace CSF.SRDashboard.Client.Pages
 {
     using CSF.API.Data.Entities;
     using CSF.API.Services.Repositories;
@@ -22,6 +13,10 @@ namespace CSF.SRDashboard.Client.Pages
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+    using DSD.MSS.Blazor.Components.Core.Constants;
+    using Microsoft.JSInterop;
+
     public partial class SeafarerProfile
     {
         [Parameter]
@@ -66,14 +61,22 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
-        public MpdisApplicantDto Applicant { get; set; }
 
-        protected async override Task OnInitializedAsync()
+
         public List<WorkloadRequestTableItem> tableItems;
 
 
-        protected override void OnInitialized()
+        protected async override Task OnInitializedAsync()
         {
+            if (requestId != 0)
+            {
+                IsAlertEnabled = true;
+            }
+            else
+            {
+                IsAlertEnabled = false;
+            }
+
             await base.OnInitializedAsync();
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
@@ -112,15 +115,7 @@ namespace CSF.SRDashboard.Client.Pages
         {
             StateHasChanged();
         }
-            if(requestId != 0)
-            {
-                IsAlertEnabled = true;
-            }
-            else
-            {
-                IsAlertEnabled = false;
-            }    
-        }
+
 
         protected override async void OnAfterRender(bool firstRender)
         {
