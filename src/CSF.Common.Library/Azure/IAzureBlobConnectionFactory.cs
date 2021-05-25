@@ -14,5 +14,8 @@ namespace CSF.Common.Library.Azure
         /// <param name="container">The container connection string.</param>
         /// <returns>The azure cloud blob storage.</returns>
         Task<CloudBlobContainer> GetBlobContainer(string container = null);
+
+
+        CloudBlobClient GetClient();
     }
 }

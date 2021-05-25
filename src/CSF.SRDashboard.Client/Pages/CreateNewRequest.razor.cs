@@ -13,6 +13,7 @@ using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CSF.SRDashboard.Client.PageValidators;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -37,17 +38,22 @@ namespace CSF.SRDashboard.Client.Pages
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
+
+        public RequestValidator validator = new RequestValidator();
+
+        public WorkItemDTO UploadedRequest { get; set; }
+
         public bool MostRecentCommentsIsCollapsed { get; private set; }
 
-        public List<Dropdown> RequestTypes = new List<Dropdown> {
+        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "FAX" },
             new Dropdown { ID = "2", Text = "MAIL"},
             new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "FAX"}
+            new Dropdown { ID = "4", Text = "EMER"}
 
         };
 
-        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
+        public List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "New certificate" },
             new Dropdown { ID = "2", Text = "Renewal certificate" }
 
@@ -67,10 +73,7 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             RequestModel = new RequestModel
             {
-                //RequestID = "5",
-                Cdn = this.Cdn,
-                
-
+                Cdn = Cdn
             };
             this.EditContext = new EditContext(RequestModel);
 
@@ -80,6 +83,12 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void SaveChanges()
         {
+            var isValid = EditContext.Validate();
+
+            var t = this.validator.Validate(this.RequestModel);
+
+            UploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
+
             var uploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn +"/" +uploadedRequest.Id);
         }

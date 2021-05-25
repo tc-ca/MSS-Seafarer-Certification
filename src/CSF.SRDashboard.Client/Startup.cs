@@ -16,11 +16,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using MPDIS.API.Wrapper.Services.MPDIS;
+using CSF.API.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
+using CSF.API.Services.Repositories;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using Radzen;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace CSF.SRDashboard.Client
 {
@@ -57,25 +61,44 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<HttpClient>();
             services.AddSingleton<IServiceLocator, ServiceLocator>();
             services.AddSingleton<IMpdisService, MpdisService>();
+            services.AddSingleton<IKeyVaultService, AzureKeyVaultService>();
+
             services.AddSingleton<IGatewayService, GatewayService>();
             services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
             services.AddSingleton<IRestClient, GatewayRestClient>();
             services.AddSingleton<IDocumentService, DocumentService>();
             services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
 
+
+            services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
+
+            services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
 
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
+            services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
 
+            services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddScoped<SessionState>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
 
             services.AddHttpContextAccessor();
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            var keyVault = serviceProvider.GetService<IKeyVaultService>();
+
+            services.AddDbContext<ClientDBContext>(options =>
+            {
+
+                options.UseNpgsql(keyVault.GetSecretByName("DocumentStorageClientDbDatabase"));
+
+            });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             var supportedCultures = new List<CultureInfo> {

@@ -12,13 +12,9 @@ namespace CSF.SRDashboard.Client.PageValidators
 
         public RequestValidator()
         {
-            RuleFor(x => x.RequestType).NotEmpty();
-            RuleFor(x => x.CertificateType).NotEmpty();
-            RuleFor(x => x.SubmissionMethod).NotEmpty();
-            RuleFor(x => x.ApplicantFullName).NotEmpty();
-            RuleFor(x => x.Cdn).NotEmpty();
-            RuleFor(x => x.Cdn).NotEmpty();
-            RuleFor(x => x.Cdn).NotEmpty();
+            RuleFor(x => x.RequestType).NotEmpty().WithMessage("Request type is required");
+            RuleFor(x => x.CertificateType).NotEmpty().WithMessage("Certificate type is required");
+            RuleFor(x => x.SubmissionMethod).NotEmpty().WithMessage("Submission method is required");
 
         }
 
