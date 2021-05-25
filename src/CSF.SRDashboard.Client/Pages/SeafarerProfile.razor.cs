@@ -7,6 +7,7 @@
     using CSF.SRDashboard.Client.Models;
     using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Services.Document;
+    using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.WebUtilities;
     using System;
@@ -19,6 +20,7 @@
 
     public partial class SeafarerProfile
     {
+       
         [Parameter]
         public string Cdn { get; set; }
 
@@ -44,7 +46,11 @@
         private NavigationManager navigationManager { get; set; }
         [Inject]
         public IAzureBlobService AzureBlobService { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
+        public FileUploadDTO FileUploadDTO = new FileUploadDTO();
+        public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
 
@@ -78,9 +84,19 @@
             }
 
             await base.OnInitializedAsync();
+           
+            if (this.State.FileUploadDTO == null)
+            {
+                this.State.FileUploadDTO = new FileUploadDTO();
+            }
+            if (this.State.FileUploadDTO.FileUploadComplete)
+            {
+                this.ShowToast = true;
+            }
+
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
-
+            
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
@@ -129,6 +145,9 @@
         private void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+            this.FileUploadDTO.Cdn = this.Applicant.Cdn;
+            this.FileUploadDTO.FullName = this.Applicant.FullName;
+            this.State.FileUploadDTO = this.FileUploadDTO;
             tableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
             alertType = AlertTypes.Success;
         }

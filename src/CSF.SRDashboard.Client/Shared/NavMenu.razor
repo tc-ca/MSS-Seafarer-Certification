@@ -8,27 +8,16 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
+    <ul class="nav flex-column pl-2">
         <li class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <i class="fas fa-lg fa-clipboard fa-fw"></i> @Localizer["RequestBoard"]
+                <i class="fas fa-lg fa-clipboard fa-fw text-left"></i> @Localizer["RequestBoard"]
             </NavLink>
         </li>
         <li class="nav-item">
             <NavLink class="nav-link" href="search" Match="NavLinkMatch.All">
-                <i class="fas fa-lg fa-search fa-fw"></i> @Localizer["SeafarerSearch"]
+                <i class="fas fa-lg fa-search fa-fw text-left"></i> @Localizer["SeafarerSearch"]
             </NavLink>
         </li>
     </ul>
 </div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
