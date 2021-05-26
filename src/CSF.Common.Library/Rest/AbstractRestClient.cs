@@ -34,7 +34,6 @@ namespace CSF.Common.Library
             HttpResponseMessage response;
 
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
-
             // Here is actual call to target service
             this.ResetRestClientHeaders();
             response = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
@@ -58,21 +57,30 @@ namespace CSF.Common.Library
             where TReturnMessage : class, new()
         {
             var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
-
+            string result = null;
             var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
 
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
                 this.ResetRestClientHeaders();
                 var response = await this.httpClient.PostAsync(uri, stringContent).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
 
-                if (!response.IsSuccessStatusCode)
+                try
                 {
-                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
+                    }
+
+                    result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    var stop = ex.Message + " " + ex.InnerException;
                 }
 
-                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<TReturnMessage>(result);
             }
         }

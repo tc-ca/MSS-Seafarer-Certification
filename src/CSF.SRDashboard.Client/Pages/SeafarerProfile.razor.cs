@@ -9,15 +9,33 @@
     using CSF.SRDashboard.Client.Services.Document;
     using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
+    using Microsoft.AspNetCore.WebUtilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+    using DSD.MSS.Blazor.Components.Core.Constants;
+    using Microsoft.JSInterop;
+
     public partial class SeafarerProfile
     {
        
         [Parameter]
         public string Cdn { get; set; }
+
+        [Parameter]
+        public int requestId { get; set; }
+
+        [Parameter]
+        public AlertTypes alertType { get; set; }
+
+        [Parameter]
+        public bool IsAlertEnabled { get; set; }
+
+        [Parameter]
+        public RenderFragment AlertMessageContent { get; set; }
+
         [Inject]
         public IGatewayService GatewayService { get; set; }
         [Inject]
@@ -45,10 +63,26 @@
 
         public string currentRelativePath;
 
-        
+        private int RequestID;
+        [Inject]
+        public IWorkLoadManagementService WorkLoadService { get; set; }
+
+
+
+        public List<WorkloadRequestTableItem> tableItems;
+
 
         protected async override Task OnInitializedAsync()
         {
+            if (requestId != 0)
+            {
+                IsAlertEnabled = true;
+            }
+            else
+            {
+                IsAlertEnabled = false;
+            }
+
             await base.OnInitializedAsync();
            
             if (this.State.FileUploadDTO == null)
@@ -84,11 +118,28 @@
                     DownloadLink = link
                 });
             }
+
+            var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+            
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var _requestId))
+            {
+                RequestID = Convert.ToInt32(_requestId);
+            }
         }
 
         protected void HandleHeaderFilterChanged()
         {
             StateHasChanged();
+        }
+
+
+        protected override async void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            if (IsAlertEnabled)
+            {
+                await JS.InvokeVoidAsync("SetTab");
+            }
         }
 
         private void LoadData()
@@ -97,6 +148,8 @@
             this.FileUploadDTO.Cdn = this.Applicant.Cdn;
             this.FileUploadDTO.FullName = this.Applicant.FullName;
             this.State.FileUploadDTO = this.FileUploadDTO;
+            tableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
+            alertType = AlertTypes.Success;
         }
     }
 }

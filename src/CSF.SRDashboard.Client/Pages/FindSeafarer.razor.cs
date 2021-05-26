@@ -78,7 +78,7 @@ namespace CSF.SRDashboard.Client.Pages
                 this.ButtonDisabled = "disabled";
                 this.State.SearchCriteria = this.SearchCriteria;
                 this.State.ApplicantSearchResult = GatewayService.SearchForApplicants(this.SearchCriteria);
-                if (this.State.ApplicantSearchResult.TotalCount > 0)
+                if (this.State.ApplicantSearchResult != null && this.State.ApplicantSearchResult.TotalCount > 0)
                 {
                     this.NavigationManager.NavigateTo("/SearchResults");
                 }

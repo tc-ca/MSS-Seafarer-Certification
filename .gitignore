@@ -352,3 +352,4 @@ healthchecksdb
 /src/CSF.SRDashboard.Client/Properties/ServiceDependencies/TestSeafarer - Web Deploy/secrets1.arm.json
 /src/CSF.SRDashboard.Client/Properties/serviceDependencies.TestSeafarer - Web Deploy.json
 /src/CSF.APIM/CSF.APIM.Gateway/.config/dotnet-tools.json
+/src/CSF.SRDashboard.Client/Pages/Test.razor
