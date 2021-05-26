@@ -49,7 +49,7 @@ namespace CSF.SRDashboard.Client.Services
         {
             List<WorkItemDTO> workItems = null;
 
-            string requestPath = $"api/v1/workitems/{lineOfBusinessId}/lob-workitems";
+            string requestPath = $"api/v1/workitems/lineofbusinesses/{lineOfBusinessId}/workitems";
 
             if (string.IsNullOrEmpty(lineOfBusinessId))
                 return null;
