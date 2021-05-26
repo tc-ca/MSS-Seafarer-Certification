@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services
 {
-    public class WorkLoadManagementService :  IWorkLoadManagementService
+    public class WorkLoadManagementService : IWorkLoadManagementService
     {
         private readonly IRestClient restClient;
         private readonly ILogger<WorkLoadManagementService> logger;
@@ -47,12 +47,12 @@ namespace CSF.SRDashboard.Client.Services
 
         public List<WorkItemDTO> GetByLineOfBusinessId(string lineOfBusinessId)
         {
-            List<WorkItemDTO> workItems = null;
+            List<WorkItemDTO> workItems = new List<WorkItemDTO>();
 
             string requestPath = $"api/v1/workitems/lineofbusinesses/{lineOfBusinessId}/workitems";
 
             if (string.IsNullOrEmpty(lineOfBusinessId))
-                return null;
+                return workItems;
 
             try
             {
@@ -81,13 +81,13 @@ namespace CSF.SRDashboard.Client.Services
 
             return workItem;
         }
-       
+
         public List<WorkItemDTO> GetByCdnNumber(string cdn)
         {
-            List<WorkItemDTO> workItems = null;
+            List<WorkItemDTO> workItems = new List<WorkItemDTO>();
             string requestPath = $"api/v1/workitems/applicants/ContactUniqueId/{cdn}/workitems";
             if (string.IsNullOrEmpty(cdn))
-                return null;
+                return workItems;
 
             try
             {
@@ -104,30 +104,26 @@ namespace CSF.SRDashboard.Client.Services
 
         public List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn)
         {
-            List<WorkloadRequestTableItem> tableItems =null;
+            List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();
 
             var workItems = this.GetByCdnNumber(cdn);
-            if(workItems != null)
+
+            foreach (var workItem in workItems)
             {
-                tableItems = new List<WorkloadRequestTableItem>();
+                var tableItem = new WorkloadRequestTableItem();
 
-                foreach (var workItem in workItems)
+                if (workItem.Detail != null)
                 {
-                    var tableItem = new WorkloadRequestTableItem();
-
-                    if (workItem.Detail != null)
-                    {
-                        var detail =JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
-                        tableItem.Certificate = detail.CertificateType;
-                        tableItem.RequestType = detail.RequestType;
-                    }
-
-                    tableItem.RequestId = workItem.Id.ToString();
-                    tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
-                    tableItem.Status =  workItem.WorkItemStatus.StatusAdditionalDetails;
-
-                    tableItems.Add(tableItem);
+                    var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
+                    tableItem.Certificate = detail.CertificateType;
+                    tableItem.RequestType = detail.RequestType;
                 }
+
+                tableItem.RequestId = workItem.Id.ToString();
+                tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
+                tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
+
+                tableItems.Add(tableItem);
             }
 
             return tableItems;
@@ -151,7 +147,7 @@ namespace CSF.SRDashboard.Client.Services
             contact.Email = applicantInfo.Email;
             contact.PrimaryContactInd = true;
             contact.ContactUniqueId = requestModel.Cdn;
-            
+
             //-- Detail
             WorkItemDetail itemDetail = new WorkItemDetail();
             itemDetail.RequestType = requestModel.RequestType;

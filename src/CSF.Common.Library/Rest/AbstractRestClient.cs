@@ -33,12 +33,10 @@ namespace CSF.Common.Library
         {
             HttpResponseMessage response;
 
-            var baseUri = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
-            var full_uri = baseUri + "/" + path;
-
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
             // Here is actual call to target service
             this.ResetRestClientHeaders();
-            response = await this.httpClient.GetAsync(full_uri).ConfigureAwait(false);
+            response = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -58,16 +56,14 @@ namespace CSF.Common.Library
         public virtual async Task<TReturnMessage> PostAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new()
         {
-            var baseUri = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
-            var full_uri = baseUri + "/" + path;
-
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
             string result = null;
             var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
 
             using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
             {
                 this.ResetRestClientHeaders();
-                var response = await this.httpClient.PostAsync(full_uri, stringContent).ConfigureAwait(false);
+                var response = await this.httpClient.PostAsync(uri, stringContent).ConfigureAwait(false);
 
                 try
                 {
@@ -79,13 +75,8 @@ namespace CSF.Common.Library
                     }
 
                     result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
                 }
-                catch(HttpRequestException ex)
-                {
-                    var stop = ex.Message + " " + ex.InnerException;
-                }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     var stop = ex.Message + " " + ex.InnerException;
                 }
