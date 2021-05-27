@@ -15,23 +15,29 @@
     using System.Threading.Tasks;
     public partial class SeafarerProfile
     {
-       
         [Parameter]
         public string Cdn { get; set; }
+        
         [Inject]
         public IGatewayService GatewayService { get; set; }
+        
         [Inject]
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
+        
         [Inject]
         public IDocumentService DocumentService { get; set; }
+        
         [Inject]
         private NavigationManager navigationManager { get; set; }
+        
         [Inject]
         public IAzureBlobService AzureBlobService { get; set; }
+        
         [Inject]
         public SessionState State { get; set; }
+        
         public MpdisApplicantDto Applicant { get; set; }
-        public FileUploadDTO FileUploadDTO = new FileUploadDTO();
+        
         public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
@@ -51,14 +57,7 @@
         {
             await base.OnInitializedAsync();
            
-            if (this.State.FileUploadDTO == null)
-            {
-                this.State.FileUploadDTO = new FileUploadDTO();
-            }
-            if (this.State.FileUploadDTO.FileUploadComplete)
-            {
-                this.ShowToast = true;
-            }
+          
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
@@ -90,13 +89,11 @@
         {
             StateHasChanged();
         }
-
         private void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.FileUploadDTO.Cdn = this.Applicant.Cdn;
-            this.FileUploadDTO.FullName = this.Applicant.FullName;
-            this.State.FileUploadDTO = this.FileUploadDTO;
+            
+            
         }
     }
 }
