@@ -37,7 +37,7 @@ namespace CSF.SRDashboard.Client.Components
         
         [Parameter]
         public EditContext EditContext { get; set; }
-
+        
         [Inject]
         public NavigationManager NavigationManager { get; private set; }
         
@@ -85,7 +85,7 @@ namespace CSF.SRDashboard.Client.Components
             this.DocumentForm = new AddDocumentModel();
             this.MultipleSelectTitle = "Select";
         }
-        
+
         private async void HandleValidSubmit()
         {
             this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);

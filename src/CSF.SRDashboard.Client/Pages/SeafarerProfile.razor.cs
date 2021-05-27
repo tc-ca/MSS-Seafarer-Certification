@@ -15,6 +15,7 @@
     using System.Threading.Tasks;
     public partial class SeafarerProfile
     {
+       
         [Parameter]
         public string Cdn { get; set; }
         
