@@ -18,29 +18,42 @@ namespace CSF.SRDashboard.Client.Test.Integration.WorkLoadManagement
     {
         private readonly IConfiguration configuration;
         private readonly IRestClient restClient;
-        private readonly ILogger<IWorkLoadManagementService> logger;
+        private readonly ILogger<WorkLoadManagementService> logger;
         private IWorkLoadManagementService workLoadManagementService;
-        //IEnumerable<IRestClient> restClientCollection, ILogger<WorkLoadManagementService> logger
-        [Fact]
-        public void Test()
+        private string workLoadManagementAPI = "http://work-management-service-dev.azurewebsites.net";
+
+        public WorkLoadManagementServiceTests()
         {
-            Assert.True(true);
+            this.configuration = this.BuildConfiguration();
+            this.restClient = BuildRestClient();
+            this.logger = new Mock<ILogger<WorkLoadManagementService>>().Object;
         }
+
+        [Fact]
+        public void GetByWorkItemById_Succeeds_WhenWorkItemNotNull()
+        {
+            // Arrange
+            this.workLoadManagementService = new WorkLoadManagementService(this.restClient, this.logger);
+
+            // Act
+            var workItem = this.workLoadManagementService.GetByWorkItemById(1000098);
+
+            // Assert
+            Assert.NotNull(workItem);
+        }
+
         private IRestClient BuildRestClient()
         {
             var azureKeyVaultService = new AzureKeyVaultService(this.configuration);
-            var uri = this.configuration.GetSection("ServiceLocatorEndpoints")["Document"];
+            var uri = this.configuration.GetSection("ServiceLocatorEndpoints")["WorkLoadManagement"];
 
-            var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.Document) == new System.Uri(uri));
-
+            var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.WorkLoadManagement) == new System.Uri(uri));
             return new UnauthenticatedRestClient(new System.Net.Http.HttpClient(), mockServiceLocator);
-
-
         }
 
         private IConfigurationRoot BuildConfiguration()
         {
-            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"Document\": \"" + this.documentServiceAPIUri + "\"}";
+            string azureSettings = "\"AzureKeyVaultSettings\": {\"KeyVaultServiceEndpoint\": \"https://kv-seafarer-acc.vault.azure.net/\",\"SecretNames\": {\"MtoaApiKey\": \"MtoaApiKey\",\"MtoaJwtToken\": \"MtoaJwt\"}},\"ServiceLocatorEndpoints\": {\"WorkLoadManagement\": \"" + this.workLoadManagementAPI + "\"}";
             string partialAppSettings = "{" + azureSettings + "}";
 
             var builder = new ConfigurationBuilder();
