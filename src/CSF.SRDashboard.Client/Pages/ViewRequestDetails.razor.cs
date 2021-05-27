@@ -1,36 +1,31 @@
 ﻿using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using Microsoft.AspNetCore.Components;
-
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using DSD.MSS.Blazor.Components.Core;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CSF.SRDashboard.Client.Models;
-using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using CSF.SRDashboard.Client.PageValidators;
 
 namespace CSF.SRDashboard.Client.Pages
 {
-    public partial class CreateNewRequest
+    public partial class ViewRequestDetails
     {
         protected EditContext EditContext;
-
         [Parameter]
         public string Cdn { get; set; }
 
-        public string Comment { get; set; }
+        [Parameter]
+        public int RequestId { get; set; }
+        [Inject]
+        IStringLocalizer<Shared.Common> Localizer { get; set; }
+        [Inject]
+        public IWorkLoadManagementService WorkLoadService { get; set; }
 
         [Inject]
         public IGatewayService GatewayService { get; set; }
-
-        [Inject]
-        public IWorkLoadManagementService WorkLoadService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -38,19 +33,6 @@ namespace CSF.SRDashboard.Client.Pages
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
-
-        public RequestValidator validator = new RequestValidator();
-
-        public WorkItemDTO UploadedRequest { get; set; }
-
-        public bool MostRecentCommentsIsCollapsed { get; private set; }
-
-        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "FAX" },
-            new Dropdown { ID = "2", Text = "MAIL"},
-            new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "EMER"}
-        };
 
         public List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "New certificate" },
@@ -61,6 +43,18 @@ namespace CSF.SRDashboard.Client.Pages
             new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
         };
 
+        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "FAX" },
+            new Dropdown { ID = "2", Text = "MAIL"},
+            new Dropdown { ID = "3", Text = "EMAIL"},
+            new Dropdown { ID = "4", Text = "EMER"}
+        };
+
+        public Dictionary<string, object> InputAtt = new Dictionary<string, object>
+        {
+            {"disabled", "true"},
+            //{"disabled", "disabled"}
+        };
 
         protected async override Task OnInitializedAsync()
         {
@@ -72,26 +66,15 @@ namespace CSF.SRDashboard.Client.Pages
 
             RequestModel = new RequestModel
             {
-                Cdn = Applicant.Cdn
+                RequestID = RequestId,
+                CertificateType = "1",
+                RequestType = "2",
+                SubmissionMethod = "3"
             };
 
             this.EditContext = new EditContext(RequestModel);
 
             StateHasChanged();
-        }
-
-        public void SaveChanges()
-        {
-            var isValid = EditContext.Validate();
-
-            UploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
-
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn +"/" +UploadedRequest.Id);
-        }
-
-        private void SetMostRecentCommentsCollapseState()
-        {
-            MostRecentCommentsIsCollapsed = !MostRecentCommentsIsCollapsed;
         }
 
         public void ViewProfile()
