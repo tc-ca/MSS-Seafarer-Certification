@@ -38,8 +38,6 @@
         public SessionState State { get; set; }
         
         public MpdisApplicantDto Applicant { get; set; }
-        
-        public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
 
