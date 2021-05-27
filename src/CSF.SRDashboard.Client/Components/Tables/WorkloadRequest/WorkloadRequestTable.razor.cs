@@ -22,7 +22,8 @@
                 RequestDate = DateTime.Now,
                 Status = "In Progress".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
                 Priority = "Request more info",
-                Language = "E"
+                AssignedTo = "John Medicalman",
+                ProcessingPhase = "In limbo"
             });
             this.TableData.Add(new WorkloadRequestTableItem()
             {
@@ -32,7 +33,8 @@
                 RequestDate = DateTime.Now,
                 Status = "Pending".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
                 Priority = "Missing info",
-                Language = "E"
+                AssignedTo = "John Medicalman",
+                ProcessingPhase = "In limbo"
             });
             this.TableData.Add(new WorkloadRequestTableItem()
             {
@@ -42,7 +44,8 @@
                 RequestDate = DateTime.Now,
                 Status = "Complete".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
                 Priority = "Received",
-                Language = "E"
+                AssignedTo = "John Medicalman",
+                ProcessingPhase = "In limbo"
             });
         }
 
