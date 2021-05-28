@@ -17,7 +17,7 @@ namespace CSF.SRDashboard.Client.Test.Integration.WorkLoadManagement
     public class WorkLoadManagementServiceTests
     {
         private readonly IConfiguration configuration;
-        private readonly IRestClient restClient;
+        private readonly IEnumerable<IRestClient> restClient;
         private readonly ILogger<WorkLoadManagementService> logger;
         private IWorkLoadManagementService workLoadManagementService;
         private string workLoadManagementAPI = "http://work-management-service-dev.azurewebsites.net";
@@ -42,13 +42,15 @@ namespace CSF.SRDashboard.Client.Test.Integration.WorkLoadManagement
             Assert.NotNull(workItem);
         }
 
-        private IRestClient BuildRestClient()
+        private IEnumerable<IRestClient> BuildRestClient()
         {
+            var restClients = new List<IRestClient>();
             var azureKeyVaultService = new AzureKeyVaultService(this.configuration);
             var uri = this.configuration.GetSection("ServiceLocatorEndpoints")["WorkLoadManagement"];
 
             var mockServiceLocator = Mock.Of<IServiceLocator>(x => x.GetServiceUri(ServiceLocatorDomain.WorkLoadManagement) == new System.Uri(uri));
-            return new UnauthenticatedRestClient(new System.Net.Http.HttpClient(), mockServiceLocator);
+            restClients.Add(new UnauthenticatedRestClient(new System.Net.Http.HttpClient(), mockServiceLocator));
+            return restClients;
         }
 
         private IConfigurationRoot BuildConfiguration()

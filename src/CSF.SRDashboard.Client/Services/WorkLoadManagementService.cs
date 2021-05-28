@@ -23,13 +23,6 @@ namespace CSF.SRDashboard.Client.Services
             this.logger = logger;
         }
 
-        public WorkLoadManagementService(IRestClient restClient, ILogger<WorkLoadManagementService> logger)
-        {
-            this.restClient = restClient;
-            this.logger = logger;
-        }
-
-
         public WorkItemDTO GetByWorkItemById(int id)
         {
             WorkItemDTO workItem = null;
