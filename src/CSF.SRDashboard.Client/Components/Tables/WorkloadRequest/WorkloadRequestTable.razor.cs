@@ -52,5 +52,10 @@
         protected void OnAfterTableDataLoaded()
         {
         }
+        public void RowClicked(WorkloadRequestTableItem tableItem)
+        {
+          //redirect to request view
+            
+        }
     }
 }

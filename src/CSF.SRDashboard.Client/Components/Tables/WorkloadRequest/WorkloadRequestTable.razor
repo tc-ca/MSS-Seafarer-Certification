@@ -3,7 +3,7 @@
 <a href="#" class="btn btn-outline-primary mt-3 float-right">Add Request</a>
 
 <div class="table-responsive">
-    <Table TableClass="table table-striped table-hover mt-3" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
+    <Table TableClass="table table-striped table-hover mt-3" RowClickAction="RowClicked" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
         <Column TableItem="WorkloadRequestTableItem" Title="Request ID" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="Assigned to" Field="@(x => x.AssignedTo)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="Request Type" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
