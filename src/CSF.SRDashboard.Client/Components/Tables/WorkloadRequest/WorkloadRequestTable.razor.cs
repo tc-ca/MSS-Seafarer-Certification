@@ -9,6 +9,9 @@
 
     public partial class WorkloadRequestTable
     {
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
+
         [Parameter]
         public List<WorkloadRequestTableItem> TableData { get; set; } = new List<WorkloadRequestTableItem>();
 
@@ -54,8 +57,8 @@
         }
         public void RowClicked(WorkloadRequestTableItem tableItem)
         {
-          //redirect to request view
-            
+            // will change later. Need to ask about url of ViewRequestDetails.
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + "345" +"/view-request-details/RequestId:" + tableItem.RequestId);
         }
     }
 }
