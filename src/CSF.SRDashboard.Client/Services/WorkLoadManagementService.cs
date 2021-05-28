@@ -23,7 +23,6 @@ namespace CSF.SRDashboard.Client.Services
             this.logger = logger;
         }
 
-
         public WorkItemDTO GetByWorkItemById(int id)
         {
             WorkItemDTO workItem = null;
