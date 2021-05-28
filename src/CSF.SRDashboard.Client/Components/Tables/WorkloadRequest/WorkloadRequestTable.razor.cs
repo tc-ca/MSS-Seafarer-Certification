@@ -21,7 +21,7 @@
                 RequestType = "Renewal",
                 RequestDate = DateTime.Now,
                 Status = "In Progress".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
-                Priority = "Request more info",
+                Priority = "Urgent",
                 AssignedTo = "John Medicalman",
                 ProcessingPhase = "In limbo"
             });
@@ -32,7 +32,7 @@
                 RequestType = "Renewal",
                 RequestDate = DateTime.Now,
                 Status = "Pending".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
-                Priority = "Missing info",
+                Priority = "High",
                 AssignedTo = "John Medicalman",
                 ProcessingPhase = "In limbo"
             });
@@ -43,7 +43,7 @@
                 RequestType = "New",
                 RequestDate = DateTime.Now,
                 Status = "Complete".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
-                Priority = "Received",
+                Priority = "Low",
                 AssignedTo = "John Medicalman",
                 ProcessingPhase = "In limbo"
             });

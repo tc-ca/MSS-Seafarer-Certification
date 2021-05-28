@@ -53,7 +53,7 @@
                                 <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
                                     <FluentValidationValidator />
                                     <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle"></InputMultipleSelect>
-                                    <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)" OnChange="OnInputChange">
+                                    <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
                                         @foreach (var item in this.DocumentForm.Languages)
                                             {
                                             <option value="@item.Id">@item.Text</option>}

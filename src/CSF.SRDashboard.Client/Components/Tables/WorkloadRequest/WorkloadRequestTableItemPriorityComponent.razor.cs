@@ -19,7 +19,7 @@
         {
             get
             {
-                return this.Priority.Equals("missing info", StringComparison.InvariantCultureIgnoreCase);
+                return this.Priority.Equals("Urgent", StringComparison.InvariantCultureIgnoreCase);
             }
         }
 
