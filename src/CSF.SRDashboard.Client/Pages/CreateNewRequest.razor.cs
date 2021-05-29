@@ -1,8 +1,6 @@
 ﻿using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Services;
 using Microsoft.AspNetCore.Components;
-
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using DSD.MSS.Blazor.Components.Core;
 using System;
@@ -24,8 +22,6 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
 
-        public string Comment { get; set; }
-
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
@@ -35,9 +31,12 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        public string Comment { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
+
 
         public RequestValidator validator = new RequestValidator();
 
@@ -50,13 +49,11 @@ namespace CSF.SRDashboard.Client.Pages
             new Dropdown { ID = "2", Text = "MAIL"},
             new Dropdown { ID = "3", Text = "EMAIL"},
             new Dropdown { ID = "4", Text = "EMER"}
-
         };
 
         public List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "New certificate" },
             new Dropdown { ID = "2", Text = "Renewal certificate" }
-
         };
 
         public List<Dropdown> CertificateTypes = new List<Dropdown> {

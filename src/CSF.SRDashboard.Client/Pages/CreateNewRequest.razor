@@ -80,37 +80,5 @@
                 </BodyContent>
             </Collapse>
         </div>
-
-        @*<div class="mt-3 mb-3">
-                <Collapse HeaderTitleTextColor="#FFFFFF" Title="Comments" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
-                    <BodyContent>
-                        <FormInputTextArea Id="Comment" Rows="2" Cols="50" @bind-Value="@Comment" ValidationFor="@(()=>Comment)" />
-                        <div class="d-flex justify-content-end align-items-center">
-                            <button id="SeafarerSearch" type="button" class="btn btn-primary">Add comment</button>
-                        </div>
-
-                        <span>
-                            Most recent
-
-                            @if (MostRecentCommentsIsCollapsed)
-                            {
-                                <i class="fas fa-caret-up ml-2" @onclick="SetMostRecentCommentsCollapseState" style="cursor: pointer;"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-caret-down ml-2" @onclick="SetMostRecentCommentsCollapseState" style="cursor: pointer;"></i>
-                            }
-
-                        </span>
-                        <div class="mt-3 mb-3" style="border-top: 2px solid #dee2e6"></div>
-                        @if (!MostRecentCommentsIsCollapsed)
-                        {
-                            <p>No comments available</p>
-                        }
-
-                    </BodyContent>
-                </Collapse>
-            </div>*@
-
     </div>
 </EditForm>

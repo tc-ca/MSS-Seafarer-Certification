@@ -17,13 +17,11 @@ namespace CSF.SRDashboard.Client.Services
         private readonly IRestClient restClient;
         private readonly ILogger<WorkLoadManagementService> logger;
 
-
         public WorkLoadManagementService(IEnumerable<IRestClient> restClientCollection, ILogger<WorkLoadManagementService> logger)
         {
             this.restClient = restClientCollection.First(o => o is UnauthenticatedRestClient);
             this.logger = logger;
         }
-
 
         public WorkItemDTO GetByWorkItemById(int id)
         {
