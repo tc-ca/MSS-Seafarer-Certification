@@ -51,7 +51,7 @@ namespace CSF.SRDashboard.Client.Services
             string requestPath = $"api/v1/workitems/{lineOfBusinessId}/lob-workitems";
 
             if (string.IsNullOrEmpty(lineOfBusinessId))
-                return workItems;
+                return workItems ;
 
             try
             {
