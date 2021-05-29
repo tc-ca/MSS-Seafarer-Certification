@@ -73,15 +73,13 @@ namespace CSF.Common.Library
                     {
                         return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
                     }
-
                     result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    return JsonConvert.DeserializeObject<TReturnMessage>(result);
                 }
                 catch (Exception ex)
                 {
-                    var stop = ex.Message + " " + ex.InnerException;
+                    throw;
                 }
-
-                return JsonConvert.DeserializeObject<TReturnMessage>(result);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using CSF.Common.Library;
 using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using Microsoft.Extensions.Logging;
@@ -133,22 +134,45 @@ namespace CSF.SRDashboard.Client.Services
         {
             var Cdn = requestModel.Cdn;
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
+            var contact = this.GetContacInfoDtoFromApplicant(applicantInfo);
+            var itemDetailString = GetItemDetailFromRequestModel(requestModel);
 
-            // -- Contact
+            WorkItemDTO workItem = new WorkItemDTO();
+            workItem.InitialDetail = itemDetailString;
+            workItem.Detail = itemDetailString;
+            workItem.ApplicantContact = contact;
+            workItem.ReceivedDateUTC = DateTime.Now;
+            workItem.LastUpdatedDateUTC = DateTime.Now;
+            workItem.SameApplicantSubmitterInd = true;
+            workItem.LineOfBusinessId = Constants.MarineMedical;
+            // WorkItemStatuses
+            workItem.WorkItemStatus = new WorkItemStatusDTO();
+            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            var uploadedWorkItem = this.AddWorkItem(workItem);
+
+            return uploadedWorkItem;
+        }
+
+        private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant)
+        {
             ContactInformationDTO contact = new ContactInformationDTO();
             contact.Id = Guid.NewGuid().ToString();
-            contact.Name = applicantInfo.FullName;
-            contact.AddressLine1 = applicantInfo.HomeAddress;
-            contact.City = applicantInfo.HomeAddressCity;
-            contact.Province = applicantInfo.HomeAddressProvince;
-            contact.Country = applicantInfo.HomeAddressCountry;
-            contact.PostalCode = applicantInfo.HomeAddressPostalCode;
-            contact.Phone = applicantInfo.PhoneNumber;
-            contact.Email = applicantInfo.Email;
+            contact.Name = applicant.FullName;
+            contact.AddressLine1 = applicant.HomeAddress;
+            contact.City = applicant.HomeAddressCity;
+            contact.Province = applicant.HomeAddressProvince;
+            contact.Country = applicant.HomeAddressCountry;
+            contact.PostalCode = applicant.HomeAddressPostalCode;
+            contact.Phone = applicant.PhoneNumber;
+            contact.Email = applicant.Email;
             contact.PrimaryContactInd = true;
-            contact.ContactUniqueId = requestModel.Cdn;
+            contact.ContactUniqueId = applicant.Cdn;
 
-            //-- Detail
+            return contact;
+        }
+
+        private string GetItemDetailFromRequestModel(RequestModel requestModel)
+        {
             WorkItemDetail itemDetail = new WorkItemDetail();
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
@@ -159,22 +183,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
-            WorkItemDTO workItem = new WorkItemDTO();
-            workItem.InitialDetail = itemDetailString;
-            workItem.Detail = itemDetailString;
-
-            workItem.ApplicantContact = contact;
-            workItem.ReceivedDateUTC = DateTime.Now;
-            workItem.LastUpdatedDateUTC = DateTime.Now;
-
-            workItem.SameApplicantSubmitterInd = true;
-            workItem.LineOfBusinessId = Constants.MarineMedical;
-            // WorkItemStatuses
-            workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
-            var uploadedWorkItem = this.AddWorkItem(workItem);
-
-            return uploadedWorkItem;
+            return itemDetailString;
         }
     }
 
