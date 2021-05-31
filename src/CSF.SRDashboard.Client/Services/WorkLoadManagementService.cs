@@ -113,8 +113,8 @@ namespace CSF.SRDashboard.Client.Services
                     var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
                     tableItem.Certificate = detail.CertificateType;
                     tableItem.RequestType = detail.RequestType;
+                    tableItem.ApplicantCDN = detail.Cdn;
                 }
-
                 tableItem.RequestId = workItem.Id.ToString();
                 tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
                 if (workItem.WorkItemStatus != null)
@@ -143,8 +143,8 @@ namespace CSF.SRDashboard.Client.Services
                     var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
                     tableItem.Certificate = detail.CertificateType;
                     tableItem.RequestType = detail.RequestType;
+                    tableItem.ApplicantCDN = detail.Cdn;
                 }
-
                 tableItem.RequestId = workItem.Id.ToString();
                 tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
                 tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
