@@ -1,4 +1,6 @@
-﻿<body>
+﻿@if (this.Applicant != null)
+{
+<body>
     <div class="AttachmentScreenHeader">
         <div class="row mt-3 mb-3">
             <div class="col-8 bg-white">
@@ -22,7 +24,7 @@
             </div>
             <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
                 <BodyContent>
-                    <UploadDocumentComponent @bind-FormFile="FileToUpload" />
+                    <UploadDocumentComponent @bind-FormFile="this.FileToUpload" />
                 </BodyContent>
             </Collapse>
         </div>
@@ -52,10 +54,14 @@
                             <div class="form-group">
                                 <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
                                     <FluentValidationValidator />
-                                    <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle"></InputMultipleSelect>
+                                    <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle">
+                                        <SelectedItemTemplate Context="SelectItem">
+                                            <span>@SelectItem, </span>
+                                        </SelectedItemTemplate>
+                                    </InputMultipleSelect>
                                     <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
                                         @foreach (var item in this.DocumentForm.Languages)
-                                            {
+                                        {
                                             <option value="@item.Id">@item.Text</option>}
                                     </FormInputSelect>
                                     <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
@@ -66,5 +72,9 @@
                 </BodyContent>
             </Collapse>}
         </div>
-      
-    </body>
+</body>
+}
+else
+{
+    <p>An error has occured</p>
+}

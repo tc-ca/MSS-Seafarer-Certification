@@ -78,7 +78,7 @@ namespace CSF.SRDashboard.Client.Pages
                 this.ButtonDisabled = "disabled";
                 this.State.SearchCriteria = this.SearchCriteria;
                 this.State.ApplicantSearchResult = GatewayService.SearchForApplicants(this.SearchCriteria);
-                if (this.State.ApplicantSearchResult.TotalCount > 0)
+                if (this.HasSearchResults())
                 {
                     this.NavigationManager.NavigateTo("/SearchResults");
                 }
@@ -143,6 +143,13 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 this.ValidationMessageStore.Clear();
             }
+        }
+
+        private bool HasSearchResults()
+        {
+            var applicantSearchResult = this.State.ApplicantSearchResult;
+            bool hasResults = applicantSearchResult != null && (applicantSearchResult.TotalCount > 0);
+            return hasResults;
         }
     }
 }

@@ -9,15 +9,33 @@
     using CSF.SRDashboard.Client.Services.Document;
     using CSF.SRDashboard.Client.Utilities;
     using Microsoft.AspNetCore.Components;
+    using Microsoft.AspNetCore.WebUtilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+    using DSD.MSS.Blazor.Components.Core.Constants;
+    using Microsoft.JSInterop;
+
     public partial class SeafarerProfile
     {
        
         [Parameter]
         public string Cdn { get; set; }
+
+        [Parameter]
+        public int RequestId { get; set; }
+
+        [Parameter]
+        public AlertTypes AlertType { get; set; }
+
+        [Parameter]
+        public bool IsAlertEnabled { get; set; }
+
+        [Parameter]
+        public RenderFragment AlertMessageContent { get; set; }
+
         [Inject]
         public IGatewayService GatewayService { get; set; }
         [Inject]
@@ -31,7 +49,7 @@
         [Inject]
         public SessionState State { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
-        public FileUploadDTO FileUploadDTO = new FileUploadDTO();
+       
         public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
@@ -45,20 +63,18 @@
 
         public string currentRelativePath;
 
-        
+        private int RequestID;
+        [Inject]
+        public IWorkLoadManagementService WorkLoadService { get; set; }
+
+        public List<WorkloadRequestTableItem> TableItems;
 
         protected async override Task OnInitializedAsync()
         {
+            this.IsAlertEnabled = this.RequestId != 0;
+
             await base.OnInitializedAsync();
-           
-            if (this.State.FileUploadDTO == null)
-            {
-                this.State.FileUploadDTO = new FileUploadDTO();
-            }
-            if (this.State.FileUploadDTO.FileUploadComplete)
-            {
-                this.ShowToast = true;
-            }
+
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
@@ -84,6 +100,13 @@
                     DownloadLink = link
                 });
             }
+
+            var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+            
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
+            {
+                RequestID = Convert.ToInt32(requestId);
+            }
         }
 
         protected void HandleHeaderFilterChanged()
@@ -91,12 +114,21 @@
             StateHasChanged();
         }
 
+
+        protected override async void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            if (IsAlertEnabled)
+            {
+                await JS.InvokeVoidAsync("SetTab");
+            }
+        }
+
         private void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.FileUploadDTO.Cdn = this.Applicant.Cdn;
-            this.FileUploadDTO.FullName = this.Applicant.FullName;
-            this.State.FileUploadDTO = this.FileUploadDTO;
+            this.TableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
+            this.AlertType = AlertTypes.Success;
         }
     }
 }
