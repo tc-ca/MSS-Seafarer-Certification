@@ -21,18 +21,5 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string StatusAdditionalDetails { get; set; }
 
         public string StatusChangeEmployeeId { get; set; }
-
-        public RequestStatus RequestStatus { get {
-                switch (this.StatusAdditionalDetails)
-                {
-                    case "New": return RequestStatus.NEW;
-                    case "Complete": return RequestStatus.COMPLETE;
-                    case "In Progress": return RequestStatus.IN_PROGRESS;
-                    case "Pending": return RequestStatus.PENDING;
-                    case "Unknown": return RequestStatus.UNKNOWN;
-                }
-                return RequestStatus.UNKNOWN;
-            }
-            set { } }
     }
 }
