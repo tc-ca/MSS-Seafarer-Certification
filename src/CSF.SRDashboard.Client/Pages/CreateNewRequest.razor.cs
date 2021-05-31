@@ -37,7 +37,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         public RequestModel RequestModel { get; set; }
 
-
         public RequestValidator validator = new RequestValidator();
 
         public WorkItemDTO UploadedRequest { get; set; }
