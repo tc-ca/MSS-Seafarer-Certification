@@ -19,7 +19,7 @@
                         <div class="col-5 d-grid gap-3">
                             <div class="form-group">
                                 <FormInputSelect Label="Request type" Id="RequestType" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)" Required="true">
-                                    @foreach (var item in RequestTypes)
+                                    @foreach (var item in Constants.RequestTypes)
                                     {
                                         <option value="@item.Text">@item.Text</option>
                                     }
@@ -28,7 +28,7 @@
 
                             <div class="form-group">
                                 <FormInputSelect Label="Certificate type" Id="CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true">
-                                    @foreach (var item in CertificateTypes)
+                                    @foreach (var item in Constants.CertificateTypes)
                                     {
                                         <option value="@item.Text">@item.Text</option>
                                     }
@@ -37,7 +37,7 @@
 
                             <div class="form-group">
                                 <FormInputSelect Label="Submission method" Id="SubmissionMethod" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true">
-                                    @foreach (var item in SubmissionMethods)
+                                    @foreach (var item in Constants.SubmissionMethods)
                                     {
                                         <option value="@item.Text">@item.Text</option>
                                     }
