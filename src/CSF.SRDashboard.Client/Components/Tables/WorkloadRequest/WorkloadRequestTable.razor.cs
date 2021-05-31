@@ -10,23 +10,23 @@
 
     public partial class WorkloadRequestTable
     {
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
+
         [Parameter]
         public List<WorkloadRequestTableItem> TableData { get; set; } = new List<WorkloadRequestTableItem>();
 
         [Parameter]
         public MpdisApplicantDto Applicant { get; set; }
 
-        [Inject]
-        NavigationManager NavigationManager { get; set; }
-
         public void CreateNewRequest()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request");
         }
+
         public void RowClicked(WorkloadRequestTableItem tableItem)
         {
-          //redirect to request view
-            
+            this.NavigationManager.NavigateTo($"SeafarerProfile/{this.Applicant.Cdn}/view-request-details/{tableItem.RequestId}");
         }
     }
 }
