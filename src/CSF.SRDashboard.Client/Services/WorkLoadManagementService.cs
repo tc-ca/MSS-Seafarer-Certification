@@ -113,6 +113,7 @@ namespace CSF.SRDashboard.Client.Services
                     var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
                     tableItem.Certificate = detail.CertificateType;
                     tableItem.RequestType = detail.RequestType;
+                    tableItem.ApplicantCDN = detail.Cdn;
                 }
 
                 tableItem.RequestId = workItem.Id.ToString();
