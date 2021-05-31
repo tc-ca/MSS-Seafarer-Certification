@@ -1,0 +1,84 @@
+﻿@page "/SeafarerProfile/{Cdn}/create-new-request"
+
+<h3>@this.Applicant.FullName - request</h3>
+
+<EditForm EditContext="@EditContext" OnValidSubmit="SaveChanges">
+    <FluentValidationValidator />
+    <div class="d-flex justify-content-end align-items-center">
+        <button id="SeafarerSave" type="submit" class="btn btn-outline-primary">Save request</button>
+    </div>
+
+    <div class="mt-3 mb-3" style="border-top: 2px solid #dee2e6"></div>
+
+    <div class="col-8">
+
+        <div class="mt-3 mb-3">
+            <Collapse HeaderTitleTextColor="#FFFFFF" Title="Request information" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                <BodyContent>
+                    <div class="row">
+                        <div class="col-5 d-grid gap-3">
+                            <div class="form-group">
+                                <FormInputSelect Label="Request type" Id="RequestType" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)" Required="true">
+                                    @foreach (var item in RequestTypes)
+                                    {
+                                        <option value="@item.Text">@item.Text</option>
+                                    }
+                                </FormInputSelect>
+                            </div>
+
+                            <div class="form-group">
+                                <FormInputSelect Label="Certificate type" Id="CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true">
+                                    @foreach (var item in CertificateTypes)
+                                    {
+                                        <option value="@item.Text">@item.Text</option>
+                                    }
+                                </FormInputSelect>
+                            </div>
+
+                            <div class="form-group">
+                                <FormInputSelect Label="Submission method" Id="SubmissionMethod" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true">
+                                    @foreach (var item in SubmissionMethods)
+                                    {
+                                        <option value="@item.Text">@item.Text</option>
+                                    }
+                                </FormInputSelect>
+                            </div>
+                        </div>
+                    </div>
+                </BodyContent>
+            </Collapse>
+        </div>
+
+        <div class="mt-3 mb-3">
+            <Collapse HeaderTitleTextColor="#FFFFFF" Title="Applicant details" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                <BodyContent>
+                    <div class="border rounded">
+                        <div class="mt-2">
+                            <div class="row">
+                                <div class="col mr-3">
+                                    <div class="float-right" style="cursor: pointer;" @onclick="ViewProfile">
+                                        <a style="color: #1B50B1;">
+                                            <i class="fas fa-eye mr-2"></i>View profile
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col">
+                                <h6 class="font-weight-bold">First name</h6>
+                                <p>@this.Applicant.FullName</p>
+                            </div>
+
+                            <div class="col">
+                                <h6 class="font-weight-bold">CDN:</h6>
+                                <p>@this.Applicant.Cdn</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </BodyContent>
+            </Collapse>
+        </div>
+    </div>
+</EditForm>

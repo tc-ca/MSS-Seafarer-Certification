@@ -1,6 +1,6 @@
 ﻿@using Components.Tables.WorkloadRequest.Entities
 
-<a href="#" class="btn btn-outline-primary mt-3 float-right">Add Request</a>
+<a @onclick="CreateNewRequest" class="btn btn-outline-primary mt-3">Add Request</a>
 
 <div class="table-responsive">
     <Table TableClass="table table-striped table-hover mt-3" RowClickAction="RowClicked" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
@@ -15,7 +15,7 @@
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Status" Field="@(x => x.Status)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
-                <WorkloadRequestTableItemStatusComponent RequestStatus="@WorkloadRequestTableItem.Status" />
+                <WorkloadRequestTableItemStatusComponent />
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title="Processing phase" Field="@(x => x.ProcessingPhase)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />

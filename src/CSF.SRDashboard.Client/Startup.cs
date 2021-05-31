@@ -67,6 +67,7 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
             services.AddSingleton<IRestClient, GatewayRestClient>();
             services.AddSingleton<IDocumentService, DocumentService>();
+            services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
 
 
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();

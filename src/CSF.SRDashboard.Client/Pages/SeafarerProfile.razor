@@ -1,15 +1,22 @@
 ﻿@page "/SeafarerProfile/{Cdn}"
-<a class="btn btn-link text-secondary" href="javascript:history.back()"><i class="fas fa-angle-left"></i>Back to search results</a>
-<h3>@this.Applicant.FullName</h3>
-<div class="border rounded col-10">
+@page "/SeafarerProfile/{Cdn}/{requestId:int}"
+@inject IJSRuntime JS
+<a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left mr-2"></i>Back to search results</a>
 
+<h3>@this.Applicant.FullName</h3>
+    <AlertComponent ShowIcon="false" AlertType="@AlertType" EnableShow="@IsAlertEnabled" Dismisable="true">
+        <ChildContent>
+            <p>You successfully created request #@RequestId for <strong> @Applicant.FullName </strong></p>
+        </ChildContent>
+    </AlertComponent>
+<div class="border rounded col-12 mb-3">
     <div class="bs-component mt-3">
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#Summary">Summary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#Requests">Requests</a>
+                <a class="nav-link" id="requestLink" data-toggle="tab" href="#Requests">Requests</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#Documents">Documents</a>
@@ -21,7 +28,7 @@
                 <CSF.SRDashboard.Client.Components.Seafarer.SeafarerProfileComponent Applicant="@this.Applicant" />
             </div>
             <div class="tab-pane fade flex-tabs" id="Requests">
-                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.WorkloadRequestTable />
+                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.WorkloadRequestTable TableData="TableItems" Applicant="@this.Applicant" />
             </div>
             <div class="tab-pane fade flex-tabs" id="Documents">
                 <CSF.SRDashboard.Client.Components.Tables.Dashboard.DashboardTable Applicant="this.Applicant" TableData="@TableData" />
