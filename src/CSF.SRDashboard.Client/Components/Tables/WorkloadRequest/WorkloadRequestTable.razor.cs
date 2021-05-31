@@ -19,17 +19,14 @@
         [Parameter]
         public MpdisApplicantDto Applicant { get; set; }
 
-        [Inject]
-        NavigationManager NavigationManager { get; set; }
-
         public void CreateNewRequest()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request");
         }
+
         public void RowClicked(WorkloadRequestTableItem tableItem)
         {
-            // temp-cdn will be replaced with {cdn} or an equivalent
-            this.NavigationManager.NavigateTo($"SeafarerProfile/temp-cdn/view-request-details/RequestId:{tableItem.RequestId}");
+            this.NavigationManager.NavigateTo($"SeafarerProfile/{this.Applicant.Cdn}/view-request-details/{tableItem.RequestId}");
         }
     }
 }
