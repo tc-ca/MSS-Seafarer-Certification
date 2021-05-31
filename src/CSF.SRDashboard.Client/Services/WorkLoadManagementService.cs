@@ -35,12 +35,6 @@ namespace CSF.SRDashboard.Client.Services
             try
             {
                 workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
-
-                if (workItem.Detail != null)
-                {
-                    workItem.ItemDetail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.InitialDetailJson);
-                }
-
             }
             catch (Exception ex)
             {
@@ -54,7 +48,7 @@ namespace CSF.SRDashboard.Client.Services
         {
             List<WorkItemDTO> workItems = new List<WorkItemDTO>();
 
-            string requestPath = $"api/v1/workitems/lineofbusinesses/{lineOfBusinessId}/workitems";
+            string requestPath = $"api/v1/workitems/{lineOfBusinessId}/lob-workitems";
 
             if (string.IsNullOrEmpty(lineOfBusinessId))
                 return workItems ;
@@ -142,7 +136,7 @@ namespace CSF.SRDashboard.Client.Services
             var itemDetailString = GetItemDetailFromRequestModel(requestModel);
 
             WorkItemDTO workItem = new WorkItemDTO();
-            workItem.InitialDetailJson = itemDetailString;
+            workItem.InitialDetail = itemDetailString;
             workItem.Detail = itemDetailString;
             workItem.ApplicantContact = contact;
             workItem.ReceivedDateUTC = DateTime.Now;
