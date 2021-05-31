@@ -57,8 +57,8 @@
         }
         public void RowClicked(WorkloadRequestTableItem tableItem)
         {
-            // will change later. Need to ask about url of ViewRequestDetails.
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + "345" +"/view-request-details/RequestId:" + tableItem.RequestId);
+            // temp-cdn will be replaced with {cdn} or an equivalent
+            this.NavigationManager.NavigateTo($"SeafarerProfile/temp-cdn/view-request-details/RequestId:{tableItem.RequestId}");
         }
     }
 }
