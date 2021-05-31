@@ -21,9 +21,9 @@
                 RequestType = "Renewal",
                 RequestDate = DateTime.Now,
                 Status = "In Progress".ToEnum<RequestStatus>(RequestStatus.UNKNOWN),
-                Priority = "Urgent",
+                Priority = "",
                 AssignedTo = "John Medicalman",
-                ProcessingPhase = "In limbo"
+                ProcessingPhase = ""
             });
             this.TableData.Add(new WorkloadRequestTableItem()
             {
