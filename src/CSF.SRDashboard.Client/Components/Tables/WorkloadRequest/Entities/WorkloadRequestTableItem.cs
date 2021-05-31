@@ -12,9 +12,25 @@
             public string RequestType { get; set; }
 
             public DateTime RequestDate { get; set; }
-            public RequestStatus Status { get; set; }
-            public string ProcessingPhase { get; set; }
-            public string Priority { get; set; }
+            public string Status { get; set; }
+            public RequestStatus RequestStatus
+            {
+            get
+            {
+                switch (this.Status)
+                {
+                    case "New": return RequestStatus.NEW;
+                    case "Complete": return RequestStatus.COMPLETE;
+                    case "In Progress": return RequestStatus.IN_PROGRESS;
+                    case "Pending": return RequestStatus.PENDING;
+                    case "Unknown": return RequestStatus.UNKNOWN;
+                }
+                return RequestStatus.UNKNOWN;
+            }
+            set { }
+        }
+        public string ProcessingPhase { get; set; }
+        public string Priority { get; set; }
           
     }
 }
