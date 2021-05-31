@@ -45,10 +45,10 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         public List<WorkItemDTO> GetByLineOfBusinessId(string lineOfBusinessId)
-        {
-            List<WorkItemDTO> workItems = new List<WorkItemDTO>();
+         {
+            List<WorkItemDTO> workItems = null;
 
-            string requestPath = $"api/v1/workitems/{lineOfBusinessId}/lob-workitems";
+            string requestPath = $"api/v1/workitems/lineofbusinesses/{lineOfBusinessId}/workitems";
 
             if (string.IsNullOrEmpty(lineOfBusinessId))
                 return workItems ;
@@ -99,7 +99,34 @@ namespace CSF.SRDashboard.Client.Services
 
             return workItems;
         }
+     
+        public List<WorkloadRequestTableItem> GetAllInRequestTableFormat()
+        {
+            List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();
+            var workItems = this.GetByLineOfBusinessId(Constants.MarineMedical);
+            foreach (var workItem in workItems)
+            {
+                var tableItem = new WorkloadRequestTableItem();
 
+                if (workItem.Detail != null)
+                {
+                    var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
+                    tableItem.Certificate = detail.CertificateType;
+                    tableItem.RequestType = detail.RequestType;
+                }
+
+                tableItem.RequestId = workItem.Id.ToString();
+                tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
+                if (workItem.WorkItemStatus != null)
+                {
+                    tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
+                }
+                tableItems.Add(tableItem);
+            }
+
+            return tableItems;
+
+        }
 
         public List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn)
         {
@@ -120,7 +147,7 @@ namespace CSF.SRDashboard.Client.Services
 
                 tableItem.RequestId = workItem.Id.ToString();
                 tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
-                tableItem.Status = workItem.WorkItemStatus.RequestStatus;
+                tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
 
                 tableItems.Add(tableItem);
             }

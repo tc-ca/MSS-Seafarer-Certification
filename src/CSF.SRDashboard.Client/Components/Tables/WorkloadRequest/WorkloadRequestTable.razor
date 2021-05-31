@@ -13,7 +13,7 @@
                 <WorkloadRequestTableItemPriorityComponent Priority="@WorkloadRequestTableItem.Priority" />
             </Template>
         </Column>
-        <Column TableItem="WorkloadRequestTableItem" Title="Status" Field="@(x => x.Status)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+        <Column TableItem="WorkloadRequestTableItem" Title="Status" Field="@(x => x.RequestStatus)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
                 <WorkloadRequestTableItemStatusComponent />
             </Template>
