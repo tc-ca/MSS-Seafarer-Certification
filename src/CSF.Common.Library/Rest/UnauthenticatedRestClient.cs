@@ -14,6 +14,13 @@
         /// <param name="httpClient">The HttpClient.</param>
         /// <param name="serviceLocator">Service locator.</param>
         public UnauthenticatedRestClient(HttpClient httpClient, IServiceLocator serviceLocator) : base(httpClient, serviceLocator)
-        { }
+        {
+        }
+
+        protected override void ResetRestClientHeaders()
+        {
+            base.ResetRestClientHeaders();
+            this.httpClient.DefaultRequestHeaders.Authorization = null;
+        }
     }
 }
