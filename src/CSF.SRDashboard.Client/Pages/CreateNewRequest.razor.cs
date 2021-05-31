@@ -45,23 +45,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         public bool MostRecentCommentsIsCollapsed { get; private set; }
 
-        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "FAX" },
-            new Dropdown { ID = "2", Text = "MAIL"},
-            new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "EMER"}
-        };
-
-        public List<Dropdown> RequestTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "New certificate" },
-            new Dropdown { ID = "2", Text = "Renewal certificate" }
-        };
-
-        public List<Dropdown> CertificateTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
-        };
-
-
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();

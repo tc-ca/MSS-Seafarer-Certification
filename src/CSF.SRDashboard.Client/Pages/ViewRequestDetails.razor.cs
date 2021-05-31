@@ -1,4 +1,5 @@
 ﻿using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using Microsoft.AspNetCore.Components;
@@ -14,13 +15,16 @@ namespace CSF.SRDashboard.Client.Pages
     public partial class ViewRequestDetails
     {
         protected EditContext EditContext;
+
         [Parameter]
         public string Cdn { get; set; }
 
         [Parameter]
         public int RequestId { get; set; }
+
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
+
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
@@ -32,23 +36,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public MpdisApplicantDto Applicant { get; set; }
 
+        public WorkItemDTO WorkItemDTO { get; set; }
         public RequestModel RequestModel { get; set; }
-
-        public List<Dropdown> RequestTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "New certificate" },
-            new Dropdown { ID = "2", Text = "Renewal certificate" }
-        };
-
-        public List<Dropdown> CertificateTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
-        };
-
-        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "FAX" },
-            new Dropdown { ID = "2", Text = "MAIL"},
-            new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "EMER"}
-        };
 
         public Dictionary<string, object> InputAtt = new Dictionary<string, object>
         {
@@ -64,12 +53,14 @@ namespace CSF.SRDashboard.Client.Pages
 
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
+            WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
+            
             RequestModel = new RequestModel
             {
-                RequestID = RequestId,
-                CertificateType = "1",
-                RequestType = "2",
-                SubmissionMethod = "3"
+                RequestID = WorkItemDTO.Id,
+                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.CertificateType)).Single().ID,
+                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType)).Single().ID,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod)).Single().ID
             };
 
             this.EditContext = new EditContext(RequestModel);

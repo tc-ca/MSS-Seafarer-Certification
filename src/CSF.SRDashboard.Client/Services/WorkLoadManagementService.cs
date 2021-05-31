@@ -35,6 +35,12 @@ namespace CSF.SRDashboard.Client.Services
             try
             {
                 workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+
+                if (workItem.Detail != null)
+                {
+                    workItem.ItemDetail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.InitialDetailJson);
+                }
+
             }
             catch (Exception ex)
             {
@@ -159,7 +165,7 @@ namespace CSF.SRDashboard.Client.Services
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
             WorkItemDTO workItem = new WorkItemDTO();
-            workItem.InitialDetail = itemDetailString;
+            workItem.InitialDetailJson = itemDetailString;
             workItem.Detail = itemDetailString;
 
             workItem.ApplicantContact = contact;

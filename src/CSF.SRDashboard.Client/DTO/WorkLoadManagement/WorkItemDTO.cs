@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,9 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string DeletionReason { get; set; }
         public string LastUpdatedBy { get; set; }
         public System.DateTimeOffset? LastUpdatedDateUTC { get; set; }
-        public string InitialDetail { get; set; }
+        [JsonProperty("InitialDetail")]
+        public string InitialDetailJson { get; set; }
+        public WorkItemDetail ItemDetail { get; set; }
         public string Detail { get; set; }
         public ContactInformationDTO SubmitterContact { get; set; }
         public ContactInformationDTO ApplicantContact { get; set; }

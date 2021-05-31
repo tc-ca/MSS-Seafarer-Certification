@@ -14,21 +14,21 @@
                             <FormInputText Id="RequestID" Label="@Localizer["RequestID"]" @attributes="InputAtt" Required="required" @bind-Value="@RequestModel.RequestID" ValidationFor="@(()=>RequestModel.RequestID)" />
 
                             <FormInputSelect Label="@Localizer["RequestType"]" Id="RequestType" ShowDefaultOption="false" @attributes="InputAtt" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)">
-                                @foreach (var item in RequestTypes)
+                                @foreach (var item in Constants.RequestTypes)
                                 {
                                     <option value="@item.ID">@item.Text</option>
                                 }
                             </FormInputSelect>
 
                             <FormInputSelect Id="CertificateType" Label="@Localizer["CertificateType"]"  ShowDefaultOption="false" SelectLabel="@RequestModel.CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true">
-                                @foreach (var item in CertificateTypes)
+                                @foreach (var item in Constants.CertificateTypes)
                                 {
                                     <option value="@item.ID">@item.Text</option>
                                 }
                             </FormInputSelect>
 
                             <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]"  ShowDefaultOption="false" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true">
-                                @foreach (var item in SubmissionMethods)
+                                @foreach (var item in Constants.SubmissionMethods)
                                 {
                                     <option value="@item.ID">@item.Text</option>
                                 }

@@ -2,18 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
 {
     public class WorkItemDetail
     {
+        //{"Cdn": "0058678M", "Comments": null, "RequestType": "New certificate", "ApplicantName": null, "HasAttachments": false, 
+        //"CertificateType": "Marine Medical Cerficate - 2 year validity", "SubmissionMethod": "MAIL"}
+        [JsonPropertyName("Cdn")]
         public string Cdn { get; set; }
+        [JsonPropertyName("ApplicantName")]
         public string ApplicantName { get; set; }
+        [JsonPropertyName("RequestType")]
         public string RequestType { get; set; }
+        [JsonPropertyName("CertificateType")]
         public string CertificateType { get; set; }
+        [JsonPropertyName("SubmissionMethod")]
         public string SubmissionMethod { get; set; }
+        [JsonPropertyName("HasAttachments")]
         public bool HasAttachments { get; set; }
+        [JsonPropertyName("Comments")]
         public List<RequestComment> Comments { get; set; }
     }
 }
