@@ -120,7 +120,7 @@ namespace CSF.SRDashboard.Client.Services
 
                 tableItem.RequestId = workItem.Id.ToString();
                 tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
-                tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
+                tableItem.Status = workItem.WorkItemStatus.RequestStatus;
 
                 tableItems.Add(tableItem);
             }

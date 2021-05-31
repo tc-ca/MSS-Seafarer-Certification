@@ -15,20 +15,20 @@
             }
         }
 
-        public bool HasWarning
+       /* public bool HasWarning
         {
             get
             {
                 return this.Priority.Equals("Urgent", StringComparison.InvariantCultureIgnoreCase);
             }
         }
-
+*/
         public string GetTextCssClass()
         {
             if (this.HasError)
                 return "text-danger";
-            if (this.HasWarning)
-                return "text-warning";
+           /* if (this.HasWarning)
+                return "text-warning";*/
             return "";
         }
     }

@@ -6,6 +6,9 @@
     /// </summary>
     public enum RequestStatus
     {
+        [Description("New")]
+        NEW,
+
         [Description("Complete")]
         COMPLETE,
 
