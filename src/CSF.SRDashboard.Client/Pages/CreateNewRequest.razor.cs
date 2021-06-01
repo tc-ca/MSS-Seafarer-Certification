@@ -71,10 +71,19 @@ namespace CSF.SRDashboard.Client.Pages
 
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
-            RequestModel = new RequestModel
+            if(RequestId.Equals(null))
             {
-                Cdn = Applicant.Cdn
-            };
+                RequestModel = new RequestModel
+                {
+                    Cdn = Applicant.Cdn
+                };
+            }
+            else
+            {
+                RequestModel = PopulateRequestmodel();
+            }
+
+           
 
             this.EditContext = new EditContext(RequestModel);
 
