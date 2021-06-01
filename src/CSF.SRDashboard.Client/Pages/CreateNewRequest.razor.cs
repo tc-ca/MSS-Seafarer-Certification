@@ -71,7 +71,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
-            if(RequestId.Equals(null))
+            if(RequestId.Equals(0))
             {
                 RequestModel = new RequestModel
                 {
