@@ -45,7 +45,7 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         public List<WorkItemDTO> GetByLineOfBusinessId(string lineOfBusinessId)
-         {
+        {
             List<WorkItemDTO> workItems = null;
 
             string requestPath = $"api/v1/workitems/lineofbusinesses/{lineOfBusinessId}/workitems";
@@ -99,7 +99,7 @@ namespace CSF.SRDashboard.Client.Services
 
             return workItems;
         }
-     
+
         public List<WorkloadRequestTableItem> GetAllInRequestTableFormat()
         {
             List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();
@@ -145,6 +145,7 @@ namespace CSF.SRDashboard.Client.Services
                     tableItem.RequestType = detail.RequestType;
                     tableItem.ApplicantCDN = detail.Cdn;
                 }
+
                 tableItem.RequestId = workItem.Id.ToString();
                 tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
                 tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;

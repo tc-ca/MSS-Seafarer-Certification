@@ -1,54 +1,48 @@
-﻿@if (this.Applicant != null)
-{
-<body>
-    <div class="AttachmentScreenHeader">
-        <div class="row mt-3 mb-3">
-            <div class="col-8 bg-white">
-                <h3>@this.Applicant.FullName - attachment</h3>
-            </div>
-            <div class="col-1">
-                <button @onclick="HandleCancel" class="btn btn-light">Cancel</button>
-            </div>
-            <div class="col">
-                <button @onclick="HandleValidSubmit" class="btn btn-primary">Save attachment</button>
-            </div>
+﻿<div class="AttachmentScreenHeader">
+    <div class="row mt-3 mb-3">
+        <div class="col-8 bg-white">
+            <h3>@this.Applicant.FullName - attachment</h3>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center">
+            <button @onclick="HandleCancel" class="btn btn-light mr-3">Cancel</button>
+            <button @onclick="HandleValidSubmit" class="btn btn-primary">Save attachment</button>
         </div>
     </div>
-    <div style="width:707px;">
+</div>
+<div style="width:707px; ">
 
-        <div class="accordion mt-5" id="AttachmentAcc">
-            <div class="row">
-                <div class="col-11">
-                    <p class="mb-0 float-right">Required field<span class="text-danger">*</span></p>
-                </div>
+    <div class="accordion mt-5" id="AttachmentAcc">
+        <div class="row">
+            <div class="col-11">
+                <p class="mb-0 float-right">Required field<span class="text-danger">*</span></p>
             </div>
-            <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
-                <BodyContent>
-                    <UploadDocumentComponent @bind-FormFile="this.FileToUpload" />
-                </BodyContent>
-            </Collapse>
         </div>
-        @if (this.FileToUpload != null)
-        {
-            <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
-                <BodyContent>
-                    <div class="card ml-4 mt-4">
-                        <div class="card-header bg-white mr-4 ml-4">
-                            <div class="row">
-                                <div class="pr-10 pl-0" style="width:71%">
-                                    <i class="fas fa-paperclip"><span class="csf-span ml-1">@FileName</span></i>
-                                </div>
-                                <div class="ml-5">
-                                    <button class="small-buttons" @onclick="RemoveAttachment">
-                                        <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
-                                    </button>
-                                </div>
-                                <div>
-                                    <button href="# " class="small-buttons p-0">
-                                        <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
-                                    </button>
-                                </div>
+        <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+            <BodyContent>
+                <UploadDocumentComponent @bind-FormFile="FileToUpload" />
+            </BodyContent>
+        </Collapse>
+    </div>
+    @if (this.FileToUpload != null)
+    {
+        <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+            <BodyContent>
+                <div class="card ml-4 mt-4">
+                    <div class="card-header bg-white mr-4 ml-4">
+                        <div class="row">
+                            <div class="pr-10 pl-0" style="width:71%">
+                                <i class="fas fa-paperclip"><span class="csf-span ml-1">@FileName</span></i>
                             </div>
+                            <div class="ml-5">
+                                <button class="small-buttons" @onclick="RemoveAttachment">
+                                    <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                                </button>
+                            </div>
+                            <div>
+                                <button href="# " class="small-buttons p-0">
+                                    <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
+                                </button>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
@@ -69,12 +63,25 @@
                             </div>
                         </div>
                     </div>
-                </BodyContent>
-            </Collapse>}
-        </div>
-</body>
-}
-else
-{
-    <p>An error has occured</p>
-}
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
+                                <FluentValidationValidator />
+                                <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle"></InputMultipleSelect>
+                                <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
+                                    @foreach (var item in this.DocumentForm.Languages)
+                                        {
+                                        <option value="@item.Id">@item.Text</option>
+                                        }
+                                </FormInputSelect>
+                                <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
+                            </EditForm>
+                        </div>
+                    </div>
+
+                </div>
+            </BodyContent>
+        </Collapse>
+    }
+</div>
