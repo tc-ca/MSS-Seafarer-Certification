@@ -120,8 +120,14 @@
   <data name="AddNote" xml:space="preserve">
     <value>Add Note_fr</value>
   </data>
+  <data name="AddRequest" xml:space="preserve">
+    <value>Add Request_fr</value>
+  </data>
   <data name="AssignedTo" xml:space="preserve">
     <value>Assigned to_fr</value>
+  </data>
+  <data name="Assignto" xml:space="preserve">
+    <value>Assign to_fr</value>
   </data>
   <data name="Attachments" xml:space="preserve">
     <value>Attachments_fr</value>
@@ -137,6 +143,9 @@
   </data>
   <data name="CDN" xml:space="preserve">
     <value>CDN_fr</value>
+  </data>
+  <data name="Certificatetype" xml:space="preserve">
+    <value>Certificate type_fr</value>
   </data>
   <data name="CertificationSummary" xml:space="preserve">
     <value>Certification summary_fr</value>
@@ -192,14 +201,23 @@
   <data name="Notes" xml:space="preserve">
     <value>Notes_fr</value>
   </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority_fr</value>
+  </data>
   <data name="ProcessingPhase" xml:space="preserve">
     <value>Processing phase_fr</value>
   </data>
   <data name="RequestBoard" xml:space="preserve">
     <value>Request board_fr</value>
   </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Request Date_fr</value>
+  </data>
   <data name="RequestDetails" xml:space="preserve">
     <value>Request details_fr</value>
+  </data>
+  <data name="RequestID" xml:space="preserve">
+    <value>Request ID_fr</value>
   </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request #_fr</value>
@@ -221,6 +239,9 @@
   </data>
   <data name="ShipSafetyBulletin" xml:space="preserve">
     <value>Ship Safety Bulletin_fr</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status_fr</value>
   </data>
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress_fr</value>

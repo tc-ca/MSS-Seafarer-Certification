@@ -26,7 +26,7 @@
 
         public void RowClicked(WorkloadRequestTableItem tableItem)
         {
-            this.NavigationManager.NavigateTo($"SeafarerProfile/{this.Applicant.Cdn}/view-request-details/{tableItem.RequestId}");
+            this.NavigationManager.NavigateTo($"SeafarerProfile/{tableItem.ApplicantCDN}/view-request-details/{tableItem.RequestId}");
         }
     }
 }
