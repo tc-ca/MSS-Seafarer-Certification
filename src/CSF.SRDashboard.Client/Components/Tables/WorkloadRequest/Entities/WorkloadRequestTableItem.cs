@@ -1,6 +1,7 @@
 ﻿namespace CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities
 {
     using System;
+    using CSF.SRDashboard.Client.Services;
     using CSF.SRDashboard.Client.Services.WorkloadRequest.Enums;
 
     public class WorkloadRequestTableItem
@@ -19,11 +20,11 @@
             {
                 switch (this.Status)
                 {
-                    case "New": return RequestStatus.NEW;
-                    case "Complete": return RequestStatus.COMPLETE;
-                    case "In Progress": return RequestStatus.IN_PROGRESS;
-                    case "Pending": return RequestStatus.PENDING;
-                    case "Unknown": return RequestStatus.UNKNOWN;
+                    case Constants.New: return RequestStatus.NEW;
+                    case Constants.Completed: return RequestStatus.COMPLETE;
+                    case Constants.InProgress: return RequestStatus.IN_PROGRESS;
+                    case Constants.Pending: return RequestStatus.PENDING;
+                    case Constants.Unknown: return RequestStatus.UNKNOWN;
                 }
                 return RequestStatus.UNKNOWN;
             }
