@@ -22,6 +22,9 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
 
+        [Parameter]
+        public int RequestId { get; set; }
+
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
@@ -95,6 +98,22 @@ namespace CSF.SRDashboard.Client.Pages
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
+
+        public RequestModel PopulateRequestmodel()
+        {
+            var WorkItem = this.WorkLoadService.GetByWorkItemById(RequestId);
+
+            RequestModel = new RequestModel
+            {
+                Cdn = Applicant.Cdn,
+                RequestID = WorkItem.Id.ToString(),
+                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItem.ItemDetail.CertificateType)).Single().ID,
+                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItem.ItemDetail.RequestType)).Single().ID,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItem.ItemDetail.SubmissionMethod)).Single().ID
+            };
+
+            return RequestModel;
         }
     }
 }
