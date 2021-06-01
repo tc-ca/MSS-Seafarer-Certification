@@ -32,7 +32,7 @@
         }
         public string ProcessingPhase { get; set; }
         public string Priority { get; set; }
-        public string ApplicantCDN { get; set; }
+       
 
     }
 }
