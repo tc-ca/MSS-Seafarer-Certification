@@ -14,11 +14,13 @@
             switch(RequestStatus)
             {
                 case RequestStatus.IN_PROGRESS:
-                    return "badge-info";
+                    return "badge-inprogress";
                 case RequestStatus.PENDING:
-                    return "badge-primary";
+                    return "badge-pending";
                 case RequestStatus.COMPLETE:
-                    return "badge-success";
+                    return "badge-completed";
+                case RequestStatus.NEW:
+                    return "badge-new";
                 default:
                     return "badge-secondary";
             } 

@@ -102,60 +102,48 @@ namespace CSF.SRDashboard.Client.Services
 
         public List<WorkloadRequestTableItem> GetAllInRequestTableFormat()
         {
-            List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();
             var workItems = this.GetByLineOfBusinessId(Constants.MarineMedical);
-            foreach (var workItem in workItems)
-            {
-                var tableItem = new WorkloadRequestTableItem();
-
-                if (workItem.Detail != null)
-                {
-                    var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
-                    tableItem.Certificate = detail.CertificateType;
-                    tableItem.RequestType = detail.RequestType;
-                    tableItem.ApplicantCDN = detail.Cdn;
-                }
-                tableItem.RequestId = workItem.Id.ToString();
-                tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
-                if (workItem.WorkItemStatus != null)
-                {
-                    tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
-                }
-                tableItems.Add(tableItem);
-            }
-
-            return tableItems;
-
+            return PopulateWorkloadItem(workItems);
         }
 
         public List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn)
         {
-            List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();
-
             var workItems = this.GetByCdnNumber(cdn);
-
-            foreach (var workItem in workItems)
-            {
-                var tableItem = new WorkloadRequestTableItem();
-
-                if (workItem.Detail != null)
-                {
-                    var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
-                    tableItem.Certificate = detail.CertificateType;
-                    tableItem.RequestType = detail.RequestType;
-                    tableItem.ApplicantCDN = detail.Cdn;
-                }
-
-                tableItem.RequestId = workItem.Id.ToString();
-                tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
-                tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
-
-                tableItems.Add(tableItem);
-            }
-
-            return tableItems;
+            return PopulateWorkloadItem(workItems);
         }
 
+        private List<WorkloadRequestTableItem> PopulateWorkloadItem(List<WorkItemDTO> workItems)
+        {
+            List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();
+            if (workItems != null)
+            {
+                foreach (var workItem in workItems)
+                {
+                    var tableItem = new WorkloadRequestTableItem();
+
+                    if (workItem.Detail != null)
+                    {
+                        var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
+                        tableItem.Certificate = detail.CertificateType;
+                        tableItem.RequestType = detail.RequestType;
+                        tableItem.ApplicantCDN = detail.Cdn;
+                        
+                    }
+             
+                    tableItem.RequestId = workItem.Id.ToString();
+                    tableItem.RequestDate = workItem.CreatedDateUTC.Value.DateTime;
+                    if (workItem.WorkItemStatus != null)
+                    {
+                        tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
+                    }
+                    tableItems.Add(tableItem);
+                }
+            }
+                return tableItems;
+            }
+        
+
+        
         public WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
             var Cdn = requestModel.Cdn;
