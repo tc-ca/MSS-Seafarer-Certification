@@ -291,6 +291,11 @@ span.csf-span {
     background-color: #D7BDE5CC;
     border: 1px solid #C4A8D9;
 }
+.workloadtableheader {
+    font-weight: 700;
+    background-color: #DEE2E6;
+
+}
 input[type=checkbox]{
     margin-right: 0.5rem;
 }

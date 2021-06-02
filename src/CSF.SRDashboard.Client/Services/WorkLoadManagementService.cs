@@ -99,19 +99,31 @@ namespace CSF.SRDashboard.Client.Services
 
             return workItems;
         }
-
+        /// <summary>
+        /// Gets all requests 
+        /// </summary>
+        /// <returns>All requests in workload table format</returns>
         public List<WorkloadRequestTableItem> GetAllInRequestTableFormat()
         {
             var workItems = this.GetByLineOfBusinessId(Constants.MarineMedical);
             return PopulateWorkloadItem(workItems);
         }
-
+        /// <summary>
+        /// gets all requests linked to a given CDN
+        /// </summary>
+        /// <param name="cdn"></param>
+        /// <returns>Requests linked to CDN in workload table format</returns>
         public List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn)
         {
             var workItems = this.GetByCdnNumber(cdn);
             return PopulateWorkloadItem(workItems);
         }
 
+        /// <summary>
+        /// Populates the work items into the Workload request item for the frontend table
+        /// </summary>
+        /// <param name="workItems"></param>
+        /// <returns></returns>
         private List<WorkloadRequestTableItem> PopulateWorkloadItem(List<WorkItemDTO> workItems)
         {
             List<WorkloadRequestTableItem> tableItems = new List<WorkloadRequestTableItem>();

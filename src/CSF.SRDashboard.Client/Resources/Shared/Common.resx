@@ -159,6 +159,9 @@
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="DateCreated" xml:space="preserve">
+    <value>Date created</value>
+  </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth</value>
   </data>
