@@ -1,5 +1,6 @@
 ﻿using CSF.Common.Library;
 using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,6 @@ namespace CSF.SRDashboard.Client.Services
     {
         private readonly IRestClient restClient;
         private readonly ILogger<WorkLoadManagementService> logger;
-
 
         public WorkLoadManagementService(IEnumerable<IRestClient> restClientCollection, ILogger<WorkLoadManagementService> logger)
         {
@@ -36,7 +36,7 @@ namespace CSF.SRDashboard.Client.Services
             {
                 workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
 
-                if (workItem.Detail != null)
+                if (!string.IsNullOrWhiteSpace(workItem.InitialDetailJson))
                 {
                     workItem.ItemDetail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.InitialDetailJson);
                 }
@@ -138,20 +138,9 @@ namespace CSF.SRDashboard.Client.Services
         {
             var Cdn = requestModel.Cdn;
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
-
+            
             // -- Contact
-            ContactInformationDTO contact = new ContactInformationDTO();
-            contact.Id = Guid.NewGuid().ToString();
-            contact.Name = applicantInfo.FullName;
-            contact.AddressLine1 = applicantInfo.HomeAddress;
-            contact.City = applicantInfo.HomeAddressCity;
-            contact.Province = applicantInfo.HomeAddressProvince;
-            contact.Country = applicantInfo.HomeAddressCountry;
-            contact.PostalCode = applicantInfo.HomeAddressPostalCode;
-            contact.Phone = applicantInfo.PhoneNumber;
-            contact.Email = applicantInfo.Email;
-            contact.PrimaryContactInd = true;
-            contact.ContactUniqueId = requestModel.Cdn;
+            var contact = this.GetContacInfoDtoFromApplicant(applicantInfo);
 
             //-- Detail
             WorkItemDetail itemDetail = new WorkItemDetail();
@@ -181,6 +170,40 @@ namespace CSF.SRDashboard.Client.Services
 
             return uploadedWorkItem;
         }
+
+        private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant)
+        {
+            ContactInformationDTO contact = new ContactInformationDTO();
+            contact.Id = Guid.NewGuid().ToString();
+            contact.Name = applicant.FullName;
+            contact.AddressLine1 = applicant.HomeAddress;
+            contact.City = applicant.HomeAddressCity;
+            contact.Province = applicant.HomeAddressProvince;
+            contact.Country = applicant.HomeAddressCountry;
+            contact.PostalCode = applicant.HomeAddressPostalCode;
+            contact.Phone = applicant.PhoneNumber;
+            contact.Email = applicant.Email;
+            contact.PrimaryContactInd = true;
+            contact.ContactUniqueId = applicant.Cdn;
+
+            return contact;
+        }
+
+        private string GetItemDetailFromRequestModel(RequestModel requestModel)
+        {
+            WorkItemDetail itemDetail = new WorkItemDetail();
+            itemDetail.RequestType = requestModel.RequestType;
+            itemDetail.CertificateType = requestModel.CertificateType;
+            itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.ApplicantName = requestModel.ApplicantFullName;
+            itemDetail.Cdn = requestModel.Cdn;
+            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.Comments = requestModel.Comments;
+            string itemDetailString = JsonSerializer.Serialize(itemDetail);
+
+            return itemDetailString;
+        }
+
     }
 
 }

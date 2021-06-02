@@ -9,8 +9,6 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
 {
     public class WorkItemDetail
     {
-        //{"Cdn": "0058678M", "Comments": null, "RequestType": "New certificate", "ApplicantName": null, "HasAttachments": false, 
-        //"CertificateType": "Marine Medical Cerficate - 2 year validity", "SubmissionMethod": "MAIL"}
         [JsonPropertyName("Cdn")]
         public string Cdn { get; set; }
         [JsonPropertyName("ApplicantName")]

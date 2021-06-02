@@ -25,10 +25,10 @@
         public string Cdn { get; set; }
 
         [Parameter]
-        public int requestId { get; set; }
+        public int RequestId { get; set; }
 
         [Parameter]
-        public AlertTypes alertType { get; set; }
+        public AlertTypes AlertType { get; set; }
 
         [Parameter]
         public bool IsAlertEnabled { get; set; }
@@ -67,21 +67,11 @@
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
-
-
-        public List<WorkloadRequestTableItem> tableItems;
-
+        public List<WorkloadRequestTableItem> TableItems;
 
         protected async override Task OnInitializedAsync()
         {
-            if (requestId != 0)
-            {
-                IsAlertEnabled = true;
-            }
-            else
-            {
-                IsAlertEnabled = false;
-            }
+            this.IsAlertEnabled = this.RequestId != 0;
 
             await base.OnInitializedAsync();
            
@@ -121,9 +111,9 @@
 
             var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
             
-            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var _requestId))
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
             {
-                RequestID = Convert.ToInt32(_requestId);
+                RequestID = Convert.ToInt32(requestId);
             }
         }
 
@@ -148,8 +138,8 @@
             this.FileUploadDTO.Cdn = this.Applicant.Cdn;
             this.FileUploadDTO.FullName = this.Applicant.FullName;
             this.State.FileUploadDTO = this.FileUploadDTO;
-            tableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
-            alertType = AlertTypes.Success;
+            this.TableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
+            this.AlertType = AlertTypes.Success;
         }
     }
 }
