@@ -1,0 +1,25 @@
+﻿<div class="border rounded">
+    <div class="mt-2">
+        <div class="row">
+            <div class="col mr-3">
+                <div class="float-right" style="cursor: pointer;" @onclick="ViewProfile">
+                    <a style="color: #1B50B1;">
+                        <i class="fas fa-eye mr-2"></i>@Localizer["ViewProfile"]
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <h6 class="font-weight-bold">@Localizer["Name"]</h6>
+            <p>@this.Applicant.FullName</p>
+        </div>
+
+        <div class="col">
+            <h6 class="font-weight-bold">@Localizer["CDN"]</h6>
+            <p>@this.Applicant.Cdn</p>
+        </div>
+
+    </div>
+</div>

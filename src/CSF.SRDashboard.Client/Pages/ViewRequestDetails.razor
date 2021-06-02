@@ -1,0 +1,25 @@
+﻿@page "/SeafarerProfile/{Cdn}/view-request-details/{RequestId:int}"
+
+<h3>@this.Applicant.FullName - @this.Localizer["ViewRequest"] @RequestId</h3>
+
+<EditForm EditContext="@this.EditContext">
+    <div class="col-8">
+
+        <div class="mt-3 mb-3">
+            <Collapse HeaderTitleTextColor="#FFFFFF" Title="@this.Localizer["RequestInformation"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                <BodyContent>
+                    <CSF.SRDashboard.Client.Components.Seafarer.Requests.RequestInformation EditContext="this.EditContext" RequestModel="this.RequestModel" ShowRequestID="true" IsReadOnly="true" />
+                </BodyContent>
+            </Collapse>
+        </div>
+
+        <div class="mt-3 mb-3">
+            <Collapse HeaderTitleTextColor="#FFFFFF" Title="@this.Localizer["ApplicantDetails"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                <BodyContent>
+                    <CSF.SRDashboard.Client.Components.ApplicantDetails Applicant="this.Applicant" />
+                </BodyContent>
+            </Collapse>
+        </div>
+
+    </div>
+</EditForm>
