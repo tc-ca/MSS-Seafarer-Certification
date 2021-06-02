@@ -18,6 +18,7 @@ namespace CSF.APIM.Gateway
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -46,7 +47,6 @@ namespace CSF.APIM.Gateway
                         RequireExpirationTime = true,
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.FromSeconds(1)
-
                     };
                 });
 

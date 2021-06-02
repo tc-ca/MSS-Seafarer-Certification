@@ -15,7 +15,7 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
 
-    //MPDIS applicant personal information without medical data
+    // MPDIS applicant personal information without medical data
     // the actual url is like the following:
     //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/0185855Z
     {
