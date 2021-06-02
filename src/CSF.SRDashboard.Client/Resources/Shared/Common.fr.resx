@@ -120,6 +120,9 @@
   <data name="AddNote" xml:space="preserve">
     <value>Add Note_fr</value>
   </data>
+  <data name="ApplicantDetails" xml:space="preserve">
+    <value>Applicant details_fr</value>
+  </data>
   <data name="AssignedTo" xml:space="preserve">
     <value>Assigned to_fr</value>
   </data>
@@ -215,6 +218,9 @@
   </data>
   <data name="RequestID" xml:space="preserve">
     <value>Request ID_fr</value>
+  </data>
+  <data name="RequestInformation" xml:space="preserve">
+    <value>Request information_fr</value>
   </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request #_fr</value>
