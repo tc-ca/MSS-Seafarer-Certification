@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace CSF.APIM.Gateway
 {
@@ -22,12 +19,21 @@ namespace CSF.APIM.Gateway
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    
+                    webBuilder.UseSerilog((_, config) =>
+                     {
+                         config
+                             .MinimumLevel.Information()
+                             .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                             .Enrich.FromLogContext()
+                             .WriteTo.File(@"\\wwwfiles\csf-apigw\Logs\log.txt", rollingInterval: RollingInterval.Day);
+                     });
+
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
                         var hostingEnvironment = hostingContext.HostingEnvironment;
                         config.AddJsonFile($"Ocelot.{hostingEnvironment.EnvironmentName}.json");
-                    }
-                    );
-                }).ConfigureLogging(logging => logging.AddConsole());
+                    });
+                });
     }
 }

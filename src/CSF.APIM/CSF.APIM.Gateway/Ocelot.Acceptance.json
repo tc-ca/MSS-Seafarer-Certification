@@ -20,11 +20,11 @@
     //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/0185855Z
     {
       "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/{cdn}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//tcappsmssdev",
-          "Port": "80"
+          "Host": "//tcappsmssdev.tc.gc.ca",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/mpdis/Applicant/{cdn}",
@@ -40,11 +40,11 @@
     //http://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search
     {
       "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//tcappsmssdev",
-          "Port": "80"
+          "Host": "//tcappsmssdev.tc.gc.ca",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/mpdis/search",
