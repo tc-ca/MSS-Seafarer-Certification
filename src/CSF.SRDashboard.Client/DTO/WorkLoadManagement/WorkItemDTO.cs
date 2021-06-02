@@ -46,8 +46,6 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
 
         public string InitialDetail { get; set; }
 
-        public WorkItemDetail ItemDetail { get; set; }
-
         public string Detail { get; set; }
 
         public ContactInformationDTO SubmitterContact { get; set; }

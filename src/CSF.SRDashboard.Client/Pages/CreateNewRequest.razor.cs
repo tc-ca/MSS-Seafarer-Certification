@@ -80,7 +80,7 @@ namespace CSF.SRDashboard.Client.Pages
             }
             else
             {
-                RequestModel = PopulateRequestmodel();
+                RequestModel = PopulateRequestmodel(this.Applicant);
             }
 
            
@@ -109,17 +109,18 @@ namespace CSF.SRDashboard.Client.Pages
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
         }
 
-        public RequestModel PopulateRequestmodel()
+        public RequestModel PopulateRequestmodel(MpdisApplicantDto Applicant)
         {
             var WorkItem = this.WorkLoadService.GetByWorkItemById(RequestId);
+            WorkItemDetail ItemDetails = JsonSerializer.Deserialize<WorkItemDetail>(WorkItem.Detail);
 
             RequestModel = new RequestModel
             {
                 Cdn = Applicant.Cdn,
                 RequestID = WorkItem.Id.ToString(),
-                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItem.ItemDetail.CertificateType)).Single().ID,
-                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItem.ItemDetail.RequestType)).Single().ID,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItem.ItemDetail.SubmissionMethod)).Single().ID
+                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(ItemDetails.CertificateType)).Single().ID,
+                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(ItemDetails.RequestType)).Single().ID,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(ItemDetails.SubmissionMethod)).Single().ID
             };
 
             return RequestModel;
