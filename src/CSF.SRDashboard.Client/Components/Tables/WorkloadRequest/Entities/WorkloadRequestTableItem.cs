@@ -25,8 +25,9 @@
                     case Constants.InProgress: return RequestStatus.IN_PROGRESS;
                     case Constants.Pending: return RequestStatus.PENDING;
                     case Constants.Unknown: return RequestStatus.UNKNOWN;
+                    default: return RequestStatus.UNKNOWN;
                 }
-                return RequestStatus.UNKNOWN;
+               
             }
             set { }
         }
