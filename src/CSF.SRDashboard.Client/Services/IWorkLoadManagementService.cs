@@ -54,5 +54,7 @@ namespace CSF.SRDashboard.Client.Services
         /// <param name="cdn"></param>
         /// <returns>List of WorkloadRequestTableItem</returns>
         List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn);
+
+        List<WorkloadRequestTableItem> GetAllInRequestTableFormat();
     }
 }

@@ -1,28 +1,31 @@
 ﻿@using Components.Tables.WorkloadRequest.Entities
 
-<a @onclick="CreateNewRequest" class="btn btn-outline-primary mt-3">Add Request</a>
+@inject IStringLocalizer<Common> Localizer
 
-<div class="table-responsive mt-3">
-    <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
-        <Column TableItem="WorkloadRequestTableItem" Title="Request ID" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Column TableItem="WorkloadRequestTableItem" Title="Certificate" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Column TableItem="WorkloadRequestTableItem" Title="Request Type" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Column TableItem="WorkloadRequestTableItem" Title="Request Date" Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
-            <Template Context="WorkloadRequestTableItem">
-                <span>@WorkloadRequestTableItem.RequestDate.ToString("MMM d, yyyy")</span>
-            </Template>
-        </Column>
-        <Column TableItem="WorkloadRequestTableItem" Title="Status" Field="@(x => x.Status)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
-            <Template Context="WorkloadRequestTableItem">
-                <WorkloadRequestTableItemStatusComponent />
-            </Template>
-        </Column>
-        <Column TableItem="WorkloadRequestTableItem" Title="Priority" Field="@(x => x.Priority)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+<button @onclick="CreateNewRequest" class="btn btn-primary mt-3 mb-2 float-right">@Localizer["AddRequest"]</button>
+
+<div class="table-responsive">
+    <Table TableClass="table table-striped table-hover mt-3" RowClickAction="RowClicked" TableHeadClass="workloadtableheader text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
+        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["RequestID"]" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Assignto"]" Field="@(x => x.AssignedTo)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["RequestType"]" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Certificatetype"]" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Priority"]" Field="@(x => x.Priority)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
                 <WorkloadRequestTableItemPriorityComponent Priority="@WorkloadRequestTableItem.Priority" />
             </Template>
         </Column>
-        <Column TableItem="WorkloadRequestTableItem" Title="Language" Field="@(x => x.Language)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["Status"] Width="10%" Field="@(x => x.RequestStatus)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+            <Template Context="WorkloadRequestTableItem">
+                <WorkloadRequestTableItemStatusComponent />
+            </Template>
+        </Column>
+        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["ProcessingPhase"] Field="@(x => x.ProcessingPhase)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["DateCreated"] Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+            <Template Context="WorkloadRequestTableItem">
+                <span>@WorkloadRequestTableItem.RequestDate.ToString("MMM d, yyyy")</span>
+            </Template>
+        </Column>
         <div class="mt-4 mb-4">
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
         </div>

@@ -261,7 +261,41 @@ span.csf-span {
     height: 140px;
     background-color: #EEEEEE;
 }
+.badge-new {
+    color: black;
+    font-weight: 100;
+    background-color: #C2CEE6CC;
+    border: 1px solid #8DA4D2;
+}
+.badge-pending {
+    color: black;
+    font-weight: 100;
+    background-color: #F9D9C2CC;
+    border: 1px solid #F6BD95;
+}
+.badge-cancelled {
+    color: black;
+    font-weight: 100;
+    background-color: #F9FAFF;
+    border: 1px solid #B6BDC6;
+}
+.badge-completed {
+    color: black;
+    font-weight: 100;
+    background-color: #D0E9C2CC;
+    border: 1px solid #A8D78F;
+}
+.badge-inprogress {
+    color: black;
+    font-weight: 100;
+    background-color: #D7BDE5CC;
+    border: 1px solid #C4A8D9;
+}
+.workloadtableheader {
+    font-weight: 700;
+    background-color: #DEE2E6;
 
+}
 input[type=checkbox]{
     margin-right: 0.5rem;
 }

@@ -104,7 +104,7 @@ namespace CSF.SRDashboard.Client.Components
                         DateStartDte = DateTime.UtcNow,
                         DocumentId = addedDocumentIds[0]
                     };
-                    this.State.FileUploadDTO.FileUploadComplete = true;
+                   
                 }
                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
                 this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");

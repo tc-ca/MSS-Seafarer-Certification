@@ -10,8 +10,7 @@
         </div>
     </div>
 </div>
-<div style="width:707px; ">
-
+<div class="col-8">
     <div class="accordion mt-5" id="AttachmentAcc">
         <div class="row">
             <div class="col-11">
@@ -39,47 +38,26 @@
                                     <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
                                 </button>
                             </div>
-                            <div>
-                                <button href="# " class="small-buttons p-0">
-                                    <i class="far fa-eye"><span class="pl-1 csf-span">View</span></i>
-                                </button>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
-                                    <FluentValidationValidator />
-                                    <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle">
-                                        <SelectedItemTemplate Context="SelectItem">
-                                            <span>@SelectItem, </span>
-                                        </SelectedItemTemplate>
-                                    </InputMultipleSelect>
-                                    <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
-                                        @foreach (var item in this.DocumentForm.Languages)
-                                            {
-                                            <option value="@item.Id">@item.Text</option>}
-                                    </FormInputSelect>
-                                    <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
-                                </EditForm>
-                            </div>
                         </div>
                     </div>
-
                     <div class="card-body">
                         <div class="form-group">
                             <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
                                 <FluentValidationValidator />
-                                <InputMultipleSelect Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle"></InputMultipleSelect>
+                                <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle">
+                                    <SelectedItemTemplate Context="SelectItem">
+                                        <span>@SelectItem, </span>
+                                    </SelectedItemTemplate>
+                                </InputMultipleSelect>
                                 <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
                                     @foreach (var item in this.DocumentForm.Languages)
                                         {
-                                        <option value="@item.Id">@item.Text</option>
-                                        }
+                                        <option value="@item.Id">@item.Text</option>}
                                 </FormInputSelect>
                                 <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
                             </EditForm>
                         </div>
                     </div>
-
                 </div>
             </BodyContent>
         </Collapse>
