@@ -1,6 +1,10 @@
 ﻿@page "/SeafarerProfile/{Cdn}/view-request-details/{RequestId:int}"
 
-<h3>@this.Applicant.FullName - @this.Localizer["ViewRequest"] @RequestId</h3>
+<h3 class="mt-5">@this.Applicant.FullName - @this.Localizer["ViewRequest"] @RequestId</h3>
+
+<a class="btn btn-primary" href="/EditRequest/{@this.Cdn}/{@this.RequestId}">Edit Request</a>
+
+<hr />
 
 <EditForm EditContext="@this.EditContext">
     <div class="col-8">

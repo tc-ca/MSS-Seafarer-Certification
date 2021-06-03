@@ -7,21 +7,21 @@
                 <FormInputText readonly="@this.IsReadOnly" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
             }
 
-            <FormInputSelect readonly="@this.IsReadOnly" Label="@Localizer["RequestType"]" Id="RequestType" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)">
+            <FormInputSelect disabled="@this.IsReadOnly" Label="@Localizer["RequestType"]" Id="RequestType" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.RequestType" ValidationFor="@(()=>RequestModel.RequestType)">
                 @foreach (var item in Constants.RequestTypes)
                 {
                     <option value="@item.ID">@item.Text</option>
                 }
             </FormInputSelect>
 
-            <FormInputSelect readonly="@this.IsReadOnly" Id="CertificateType" Label="@Localizer["CertificateType"]" ShowDefaultOption="ShowDefaultOption" SelectLabel="@RequestModel.CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true">
+            <FormInputSelect disabled="@this.IsReadOnly" Id="CertificateType" Label="@Localizer["CertificateType"]" ShowDefaultOption="ShowDefaultOption" SelectLabel="@RequestModel.CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(()=>RequestModel.CertificateType)" Required="true">
                 @foreach (var item in Constants.CertificateTypes)
                 {
                     <option value="@item.ID">@item.Text</option>
                 }
             </FormInputSelect>
 
-            <FormInputSelect readonly="@this.IsReadOnly" Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true">
+            <FormInputSelect disabled="@this.IsReadOnly" Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(()=>RequestModel.SubmissionMethod)" Required="true">
                 @foreach (var item in Constants.SubmissionMethods)
                 {
                     <option value="@item.ID">@item.Text</option>
