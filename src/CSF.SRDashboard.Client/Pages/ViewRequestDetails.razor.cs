@@ -37,13 +37,8 @@ namespace CSF.SRDashboard.Client.Pages
         public MpdisApplicantDto Applicant { get; set; }
 
         public WorkItemDTO WorkItemDTO { get; set; }
-        public RequestModel RequestModel { get; set; }
 
-        public Dictionary<string, object> InputAtt = new Dictionary<string, object>
-        {
-            {"disabled", "true"},
-            //{"disabled", "disabled"}
-        };
+        public RequestModel RequestModel { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
