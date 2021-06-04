@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSF.SRDashboard.Client.Services.WorkloadRequest.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

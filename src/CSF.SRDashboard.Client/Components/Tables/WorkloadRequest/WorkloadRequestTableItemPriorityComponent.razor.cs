@@ -15,20 +15,10 @@
             }
         }
 
-        public bool HasWarning
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(this.Priority) && this.Priority.Equals("missing info", StringComparison.InvariantCultureIgnoreCase);
-            }
-        }
-
         public string GetTextCssClass()
         {
             if (this.HasError)
                 return "text-danger";
-            if (this.HasWarning)
-                return "text-warning";
             return "";
         }
     }

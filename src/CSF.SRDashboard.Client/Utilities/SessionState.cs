@@ -15,9 +15,6 @@ namespace CSF.SRDashboard.Client.Utilities
 
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
 
-        public ApplicantSearchCriteria SearchCriteria { get; set; }
-
-        public FileUploadDTO FileUploadDTO { get; set; }
-        
+        public ApplicantSearchCriteria SearchCriteria { get; set; }        
     }
 }
