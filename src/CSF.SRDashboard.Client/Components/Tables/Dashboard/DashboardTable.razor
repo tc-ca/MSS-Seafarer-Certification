@@ -10,7 +10,7 @@
         <Column TableItem="Document" Title="Documents" Field="@(x => x.FileName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%">
             <Template Context="Document">
 
-                <a href="@Document.DownloadLink" class="text-decoration-underline">@Document.FileName</a>
+                <a href="@Document.DownloadLink" style="text-decoration: underline;">@Document.FileName</a>
             </Template>
         </Column>
         <Column TableItem="Document" Title="Language" Field="@(x => x.Language)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />

@@ -2,17 +2,13 @@
 using CSF.SRDashboard.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using DSD.MSS.Blazor.Components.Core;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using CSF.SRDashboard.Client.PageValidators;
-
+using CSF.SRDashboard.Client.Components.Icons.Constants;
+using CSF.SRDashboard.Client.Components.Icons.Utilities;
 namespace CSF.SRDashboard.Client.Pages
 {
     public partial class CreateNewRequest
@@ -22,6 +18,8 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
 
+        public string Comment { get; set; }
+
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
@@ -30,8 +28,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
-        public string Comment { get; set; }
 
         public MpdisApplicantDto Applicant { get; set; }
 
@@ -43,23 +39,6 @@ namespace CSF.SRDashboard.Client.Pages
         public WorkItemDTO UploadedRequest { get; set; }
 
         public bool MostRecentCommentsIsCollapsed { get; private set; }
-
-        public List<Dropdown> SubmissionMethods = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "FAX" },
-            new Dropdown { ID = "2", Text = "MAIL"},
-            new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "EMER"}
-        };
-
-        public List<Dropdown> RequestTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "New certificate" },
-            new Dropdown { ID = "2", Text = "Renewal certificate" }
-        };
-
-        public List<Dropdown> CertificateTypes = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
-        };
-
 
         protected async override Task OnInitializedAsync()
         {
@@ -73,7 +52,8 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 Cdn = Applicant.Cdn
             };
-
+            var t = FontAwesomeIconSize.TWO;
+            var t1 = FontAwesomeSpinAnimationType.SPIN;
             this.EditContext = new EditContext(RequestModel);
 
             StateHasChanged();
@@ -82,10 +62,22 @@ namespace CSF.SRDashboard.Client.Pages
         public void SaveChanges()
         {
             var isValid = EditContext.Validate();
+            if (!isValid)
+            {
+                return;
+            }
 
-            UploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
+            var RequestToSend = new RequestModel
+            {
+                Cdn = Applicant.Cdn,
+                CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
+                RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text
+            };
 
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn +"/" +UploadedRequest.Id);
+            UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
+
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }
 
         private void SetMostRecentCommentsCollapseState()

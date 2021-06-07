@@ -9,7 +9,7 @@
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["RequestID"]" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Assignto"]" Field="@(x => x.AssignedTo)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["RequestType"]" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Certificatetype"]" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
+        <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["CertificateType"]" Field="@(x => x.Certificate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Priority"]" Field="@(x => x.Priority)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
                 <WorkloadRequestTableItemPriorityComponent Priority="@WorkloadRequestTableItem.Priority" />

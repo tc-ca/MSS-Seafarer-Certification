@@ -120,6 +120,9 @@
   <data name="AddNote" xml:space="preserve">
     <value>Add Note</value>
   </data>
+  <data name="ApplicantDetails" xml:space="preserve">
+    <value>Applicant details</value>
+</data>
   <data name="AddRequest" xml:space="preserve">
     <value>Add Request</value>
   </data>
@@ -144,7 +147,7 @@
   <data name="CDN" xml:space="preserve">
     <value>CDN</value>
   </data>
-  <data name="Certificatetype" xml:space="preserve">
+  <data name="CertificateType" xml:space="preserve">
     <value>Certificate type</value>
   </data>
   <data name="CertificationSummary" xml:space="preserve">
@@ -183,11 +186,20 @@
   <data name="FirstAndLastName" xml:space="preserve">
     <value>First and last name</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
   <data name="FitnessStatus" xml:space="preserve">
     <value>Fitness status</value>
   </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
   <data name="MedicalSummary" xml:space="preserve">
     <value>Medical summary</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="NewOrRenewal" xml:space="preserve">
     <value>New or renewal</value>
@@ -219,6 +231,9 @@
   <data name="RequestID" xml:space="preserve">
     <value>Request ID</value>
   </data>
+  <data name="RequestInformation" xml:space="preserve">
+    <value>Request information</value>
+  </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request #</value>
   </data>
@@ -249,6 +264,9 @@
   <data name="String1" xml:space="preserve">
     <value />
   </data>
+  <data name="SubmissionMethod" xml:space="preserve">
+    <value>Submission method</value>
+  </data>
   <data name="Summary" xml:space="preserve">
     <value>Summary</value>
   </data>
@@ -266,5 +284,11 @@
   </data>
   <data name="ViewFullProfile" xml:space="preserve">
     <value>View full profile</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>View profile</value>
+  </data>
+  <data name="ViewRequest" xml:space="preserve">
+    <value>View Request</value>
   </data>
 </root>

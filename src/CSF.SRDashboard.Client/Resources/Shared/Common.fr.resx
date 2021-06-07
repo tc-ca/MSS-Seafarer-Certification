@@ -120,6 +120,9 @@
   <data name="AddNote" xml:space="preserve">
     <value>Add Note_fr</value>
   </data>
+  <data name="ApplicantDetails" xml:space="preserve">
+    <value>Applicant details_fr</value>
+    </data>
   <data name="AddRequest" xml:space="preserve">
     <value>Add Request_fr</value>
   </data>
@@ -144,7 +147,7 @@
   <data name="CDN" xml:space="preserve">
     <value>CDN_fr</value>
   </data>
-  <data name="Certificatetype" xml:space="preserve">
+  <data name="CertificateType" xml:space="preserve">
     <value>Certificate type_fr</value>
   </data>
   <data name="CertificationSummary" xml:space="preserve">
@@ -180,14 +183,23 @@
   <data name="FirstAndLastName" xml:space="preserve">
     <value>First and last name_fr</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name_fr</value>
+  </data>
   <data name="FitnessStatus" xml:space="preserve">
     <value>Fitness status_fr</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name_fr</value>
   </data>
   <data name="MedicalSummary" xml:space="preserve">
     <value>Medical summary_fr</value>
   </data>
   <data name="MPR" xml:space="preserve">
     <value>MPR_fr</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name_fr</value>
   </data>
   <data name="NewOrRenewal" xml:space="preserve">
     <value>New or renewal_fr</value>
@@ -219,6 +231,9 @@
   <data name="RequestID" xml:space="preserve">
     <value>Request ID_fr</value>
   </data>
+  <data name="RequestInformation" xml:space="preserve">
+    <value>Request information_fr</value>
+  </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request #_fr</value>
   </data>
@@ -246,6 +261,12 @@
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress_fr</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SubmissionMethod" xml:space="preserve">
+    <value>Submission method_fr</value>
+  </data>
   <data name="Summary" xml:space="preserve">
     <value>Summary_fr</value>
   </data>
@@ -263,5 +284,11 @@
   </data>
   <data name="ViewFullProfile" xml:space="preserve">
     <value>View full profile_fr</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>View profile_fr</value>
+  </data>
+  <data name="ViewRequest" xml:space="preserve">
+    <value>View Request_fr</value>
   </data>
 </root>
