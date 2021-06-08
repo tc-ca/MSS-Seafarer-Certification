@@ -145,7 +145,6 @@ namespace CSF.SRDashboard.Client.Services
                         tableItem.Certificate = detail.CertificateType;
                         tableItem.RequestType = detail.RequestType;
                         tableItem.ApplicantCDN = detail.Cdn;
-                        
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
@@ -193,7 +192,7 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;

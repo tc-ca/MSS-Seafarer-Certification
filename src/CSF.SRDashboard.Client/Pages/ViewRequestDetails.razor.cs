@@ -55,18 +55,9 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestID = WorkItemDTO.Id,
                 CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.CertificateType)).Single().ID,
                 RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType)).Single().ID,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod)).Single().ID
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod)).Single().ID,
+                Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails)).Single().ID
             };
-
-            if(WorkItemDTO.ItemDetail.Status != null)
-            {
-                RequestModel.Status = Constants.RequestStatuses.Where(x => x.ID.Equals(WorkItemDTO.ItemDetail.Status)).Single().ID;
-            }
-            else
-            {
-                RequestModel.Status = "Unknown";
-            }
-           
 
             this.EditContext = new EditContext(RequestModel);
 
