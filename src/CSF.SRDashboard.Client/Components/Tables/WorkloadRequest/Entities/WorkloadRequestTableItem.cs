@@ -7,13 +7,19 @@
     public class WorkloadRequestTableItem
     {
             public string RequestId { get; set; }
+
             public string AssignedTo { get; set; }
+
             public string Certificate { get; set; }
+
             public string ApplicantCDN { get; set; }
+
             public string RequestType { get; set; }
 
-            public DateTime RequestDate { get; set; }
+            public DateTime? RequestDate { get; set; }
+
             public string Status { get; set; }
+
             public RequestStatus RequestStatus
             {
             get
