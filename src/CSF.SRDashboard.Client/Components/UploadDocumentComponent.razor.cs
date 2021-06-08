@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using CSF.SRDashboard.Client.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -22,6 +23,9 @@ namespace CSF.SRDashboard.Client.Components
                 FormFileChanged.InvokeAsync(value);
             }
         }
+
+        [Parameter]
+        public List<UploadedDocument> DocumentForm1 { get; set; }
 
         private IFormFile formFile;
 

@@ -33,7 +33,7 @@ namespace CSF.SRDashboard.Client.Components
         public List<string> DocumentTypes { get; set; }
         
         [Parameter]
-        public AddDocumentModel DocumentForm { get; set; }
+        public UploadedDocument DocumentForm { get; set; }
         
         [Parameter]
         public EditContext EditContext { get; set; }
@@ -82,7 +82,7 @@ namespace CSF.SRDashboard.Client.Components
             this.Applicant = new MpdisApplicantDto();
             this.ValidationMessageStore = new ValidationMessageStore(this.EditContext);
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.DocumentForm = new AddDocumentModel();
+            this.DocumentForm = new UploadedDocument();
             this.MultipleSelectTitle = "Select";
         }
 

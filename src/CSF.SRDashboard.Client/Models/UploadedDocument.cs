@@ -1,5 +1,6 @@
 ﻿using DSD.MSS.Blazor.Components.Core.Models;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,38 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Models
 {
-    public class AddDocumentModel
+    public class UploadedDocument
     {
         public List<SelectListItem> DocumentTypeList { get; set; }
-       
+
         public List<SelectListItem> Languages { get; set; }
-        
+
+        private string fileName;
+
+        public string FileName
+        {
+            get
+            {
+                if (FormFile == null && string.IsNullOrWhiteSpace(fileName))
+                {
+                    return string.Empty;
+                }
+
+                if (FormFile == null)
+                    return fileName;
+                return FormFile.FileName;
+            }
+
+            set { fileName = value; }
+        }
+
         public string Description { get; set; }
-        
+
+        public IFormFile FormFile { get; set; }
+
         public int SelectValue { get; set; }
-        
-        public AddDocumentModel()
+
+        public UploadedDocument()
         {
             DocumentTypeList = new List<SelectListItem>();
 
