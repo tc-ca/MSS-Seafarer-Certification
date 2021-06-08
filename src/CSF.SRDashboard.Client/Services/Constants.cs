@@ -38,5 +38,13 @@ namespace CSF.SRDashboard.Client.Services
             new Dropdown { ID = "4", Text = "EMER"}
         };
 
+        public static List<Dropdown> RequestStatuses = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "New" },
+            new Dropdown { ID = "2", Text = "In progress"},
+            new Dropdown { ID = "3", Text = "Pending"},
+            new Dropdown { ID = "4", Text = "Complete"},
+            new Dropdown { ID = "5", Text = "Cancelled"}
+        };
+
     }
 }

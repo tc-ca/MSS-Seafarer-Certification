@@ -1,0 +1,28 @@
+﻿
+<EditForm EditContext="@EditContext">
+    <div class="row">
+        <div class="col-12 d-grid gap-3">
+
+            @if (!this.IsReadOnly)
+            {
+                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="@ShowDefaultOption" @bind-Value="@RequestModel.RequestStatus" ValidationFor="@(() => RequestModel.RequestStatus)">
+                    @foreach (var item in Constants.RequestStatuses)
+                        {
+                        <option value="@item.ID">@item.Text</option>
+                        }
+                </FormInputSelect>
+            }
+            else
+            {
+                <label class="form-label"><b>@Localizer["Status"]</b></label>
+                foreach (var item in Constants.RequestStatuses)
+                {
+                    if (item.ID == RequestModel.RequestStatus)
+                    {
+                        <p>@item.Text</p>
+                    }
+                }
+            }
+        </div>
+    </div>
+</EditForm>

@@ -21,6 +21,8 @@ namespace CSF.SRDashboard.Client.Models
 
         public string AssignedTo { get; set; }
 
+        public string RequestStatus { get; set; }
+
         public List<Document> Documents { get; set; }
 
         public List<RequestComment> Comments { get; set; }
