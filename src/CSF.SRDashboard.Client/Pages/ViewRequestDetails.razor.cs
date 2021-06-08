@@ -37,7 +37,6 @@ namespace CSF.SRDashboard.Client.Pages
         public MpdisApplicantDto Applicant { get; set; }
 
         public WorkItemDTO WorkItemDTO { get; set; }
-        public RequestModel RequestModel { get; set; }
 
         public RequestModel RequestModel { get; set; }
 

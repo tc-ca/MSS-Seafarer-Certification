@@ -13,14 +13,13 @@ namespace CSF.SRDashboard.Client.Pages
     {
         public List<WorkloadRequestTableItem> WorkloadData { get; set; }
         List<WorkItemDTO> workItems = new List<WorkItemDTO>();
-        [Inject]
 
+        [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            //
             WorkloadData = WorkLoadService.GetAllInRequestTableFormat();
         }
     }

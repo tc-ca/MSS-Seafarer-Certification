@@ -52,7 +52,8 @@
                                 <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
                                     @foreach (var item in this.DocumentForm.Languages)
                                         {
-                                        <option value="@item.Id">@item.Text</option>}
+                                            <option value="@item.Id">@item.Text</option>
+                                        }
                                 </FormInputSelect>
                                 <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
                             </EditForm>

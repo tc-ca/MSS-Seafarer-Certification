@@ -33,11 +33,11 @@
                     case Constants.Unknown: return RequestStatus.UNKNOWN;
                     default: return RequestStatus.UNKNOWN;
                 }
-               
             }
-            set { }
         }
+
         public string ProcessingPhase { get; set; }
+
         public string Priority { get; set; }
        
 

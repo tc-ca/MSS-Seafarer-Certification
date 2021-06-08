@@ -2,7 +2,7 @@
 
 <section class="d-flex justify-content-between align-items-end">
     <h3 class="mt-5">@this.Applicant.FullName - @this.Localizer["ViewRequest"] @RequestId</h3>
-    <a class="btn btn-primary" href="/EditRequest/{@this.Cdn}/{@this.RequestId}">Edit Request</a>
+    <a class="btn btn-primary" href="@string.Format("/EditRequest/{0}/{1}", this.Cdn, this.RequestId)">Edit Request</a>
 </section>
 <hr />
 
