@@ -7,7 +7,7 @@ namespace CSF.SRDashboard.Client.Models
 {
     public class RequestModel
     {
-        public string RequestID { get; set; }
+        public int RequestID { get; set; }
 
         public string RequestType { get; set; }
 

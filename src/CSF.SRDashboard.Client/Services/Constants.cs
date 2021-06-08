@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSF.SRDashboard.Client.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,5 +21,22 @@ namespace CSF.SRDashboard.Client.Services
 
 
         public const string MarineMedical = "002";
+
+        public static List<Dropdown> RequestTypes = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "New certificate" },
+            new Dropdown { ID = "2", Text = "Renewal certificate" }
+        };
+
+        public static List<Dropdown> CertificateTypes = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
+        };
+
+        public static List<Dropdown> SubmissionMethods = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "FAX" },
+            new Dropdown { ID = "2", Text = "MAIL"},
+            new Dropdown { ID = "3", Text = "EMAIL"},
+            new Dropdown { ID = "4", Text = "EMER"}
+        };
+
     }
 }

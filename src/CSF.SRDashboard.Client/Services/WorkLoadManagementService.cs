@@ -35,6 +35,12 @@ namespace CSF.SRDashboard.Client.Services
             try
             {
                 workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+
+                if (!string.IsNullOrWhiteSpace(workItem.InitialDetailJson))
+                {
+                    workItem.ItemDetail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.InitialDetailJson);
+                }
+
             }
             catch (Exception ex)
             {
@@ -51,7 +57,7 @@ namespace CSF.SRDashboard.Client.Services
             string requestPath = $"api/v1/workitems/lineofbusinesses/{lineOfBusinessId}/workitems";
 
             if (string.IsNullOrEmpty(lineOfBusinessId))
-                return workItems ;
+                return workItems;
 
             try
             {
@@ -160,15 +166,29 @@ namespace CSF.SRDashboard.Client.Services
         {
             var Cdn = requestModel.Cdn;
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
+            
+            // -- Contact
             var contact = this.GetContacInfoDtoFromApplicant(applicantInfo);
-            var itemDetailString = GetItemDetailFromRequestModel(requestModel);
+
+            //-- Detail
+            WorkItemDetail itemDetail = new WorkItemDetail();
+            itemDetail.RequestType = requestModel.RequestType;
+            itemDetail.CertificateType = requestModel.CertificateType;
+            itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.ApplicantName = requestModel.ApplicantFullName;
+            itemDetail.Cdn = requestModel.Cdn;
+            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.Comments = requestModel.Comments;
+            string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
             WorkItemDTO workItem = new WorkItemDTO();
-            workItem.InitialDetail = itemDetailString;
+            workItem.InitialDetailJson = itemDetailString;
             workItem.Detail = itemDetailString;
+
             workItem.ApplicantContact = contact;
             workItem.ReceivedDateUTC = DateTime.Now;
             workItem.LastUpdatedDateUTC = DateTime.Now;
+
             workItem.SameApplicantSubmitterInd = true;
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
@@ -211,6 +231,7 @@ namespace CSF.SRDashboard.Client.Services
 
             return itemDetailString;
         }
+
     }
 
 }
