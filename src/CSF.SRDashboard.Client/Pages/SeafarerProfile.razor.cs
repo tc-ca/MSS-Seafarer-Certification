@@ -49,7 +49,7 @@
         [Inject]
         public SessionState State { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
-        public FileUploadDTO FileUploadDTO = new FileUploadDTO();
+       
         public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
@@ -74,15 +74,7 @@
             this.IsAlertEnabled = this.RequestId != 0;
 
             await base.OnInitializedAsync();
-           
-            if (this.State.FileUploadDTO == null)
-            {
-                this.State.FileUploadDTO = new FileUploadDTO();
-            }
-            if (this.State.FileUploadDTO.FileUploadComplete)
-            {
-                this.ShowToast = true;
-            }
+
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
@@ -135,9 +127,6 @@
         private void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.FileUploadDTO.Cdn = this.Applicant.Cdn;
-            this.FileUploadDTO.FullName = this.Applicant.FullName;
-            this.State.FileUploadDTO = this.FileUploadDTO;
             this.TableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
             this.AlertType = AlertTypes.Success;
         }

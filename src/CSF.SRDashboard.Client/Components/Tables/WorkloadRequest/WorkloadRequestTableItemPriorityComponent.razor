@@ -1,6 +1,6 @@
-﻿@if (this.HasError || this.HasWarning)
+﻿@if (this.HasError)
 {
-    <span>@this.Priority <i class="fas fa-exclamation-circle @this.GetTextCssClass()"></i></span>
+    <span>@this.Priority <i class="fas fa-exclamation-triangle @this.GetTextCssClass()"></i></span>
 }
 else
 {

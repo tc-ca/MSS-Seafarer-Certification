@@ -16,6 +16,9 @@ namespace CSF.SRDashboard.Client.Services
         public const string OnHold = "On Hold";
         public const string Completed = "Completed";
         public const string NotSubmitted = "Not Completed";
+        public const string Pending = "Pending";
+        public const string Unknown = "Unknown";
+
 
         public const string MarineMedical = "002";
 
