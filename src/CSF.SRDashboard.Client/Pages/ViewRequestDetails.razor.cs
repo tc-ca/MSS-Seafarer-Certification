@@ -58,6 +58,16 @@ namespace CSF.SRDashboard.Client.Pages
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod)).Single().ID
             };
 
+            if(WorkItemDTO.ItemDetail.Status != null)
+            {
+                RequestModel.Status = Constants.RequestStatuses.Where(x => x.ID.Equals(WorkItemDTO.ItemDetail.Status)).Single().ID;
+            }
+            else
+            {
+                RequestModel.Status = "Unknown";
+            }
+           
+
             this.EditContext = new EditContext(RequestModel);
 
             StateHasChanged();

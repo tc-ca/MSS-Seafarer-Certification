@@ -17,6 +17,7 @@ namespace CSF.SRDashboard.Client.Services
         public const string Completed = "Completed";
         public const string NotSubmitted = "Not Completed";
         public const string Pending = "Pending";
+        public const string Cancelled = "Cancelled";
         public const string Unknown = "Unknown";
 
 

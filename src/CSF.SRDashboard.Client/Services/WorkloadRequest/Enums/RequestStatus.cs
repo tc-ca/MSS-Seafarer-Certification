@@ -18,6 +18,9 @@
         [Description("Pending")]
         PENDING,
 
+        [Description("Cancelled")]
+        CANCELLED,
+
         [Description("Unknown")]
         UNKNOWN
     }
