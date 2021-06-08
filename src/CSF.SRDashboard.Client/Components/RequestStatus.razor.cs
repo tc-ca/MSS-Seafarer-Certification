@@ -32,9 +32,6 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public bool IsReadOnly { get; set; }
 
-        [Parameter]
-        public MpdisApplicantDto Applicant { get; set; }
-
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
