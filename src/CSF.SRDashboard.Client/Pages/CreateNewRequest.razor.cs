@@ -9,6 +9,10 @@ using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.PageValidators;
 using CSF.SRDashboard.Client.Components.Icons.Constants;
 using CSF.SRDashboard.Client.Components.Icons.Utilities;
+using System.Text.Json;
+using Microsoft.JSInterop;
+using Microsoft.Extensions.Localization;
+
 namespace CSF.SRDashboard.Client.Pages
 {
     public partial class CreateNewRequest
@@ -18,7 +22,14 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
 
-        public string Comment { get; set; }
+        [Parameter]
+        public int RequestId { get; set; }
+
+        [Parameter]
+        public string EditRequestCdn { get; set; }
+
+        [Parameter]
+        public int EditRequestId { get; set; }
 
         [Inject]
         public IGatewayService GatewayService { get; set; }
@@ -29,14 +40,24 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        IJSRuntime JS { get; set; }
+
+        [Inject]
+        IStringLocalizer<Shared.Common> Localizer { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
 
-
         public RequestValidator validator = new RequestValidator();
 
         public WorkItemDTO UploadedRequest { get; set; }
+        public bool IsEditMode { get; set; }
+
+        public string Comment { get; set; }
+
+        private string titleInfo { get; set; }
 
         public bool MostRecentCommentsIsCollapsed { get; private set; }
 
@@ -44,18 +65,26 @@ namespace CSF.SRDashboard.Client.Pages
         {
             await base.OnInitializedAsync();
 
-            this.Applicant = new MpdisApplicantDto();
-
-            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-
-            RequestModel = new RequestModel
+            if (this.EditRequestCdn != null)
             {
-                Cdn = Applicant.Cdn
-            };
-            var t = FontAwesomeIconSize.TWO;
-            var t1 = FontAwesomeSpinAnimationType.SPIN;
-            this.EditContext = new EditContext(RequestModel);
+                IsEditMode = true;
+                this.Applicant = this.GatewayService.GetApplicantInfoByCdn(EditRequestCdn);
+                this.RequestModel = PopulateRequestmodel(EditRequestId, EditRequestCdn);
+                RequestModel.Cdn = this.Applicant.Cdn;
+                Cdn = this.Applicant.Cdn;
+                titleInfo = this.Applicant.FullName +"-" + Localizer["EditRequest"] + " "+ RequestModel.RequestID;
+            }
+            else
+            {
+                this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+                titleInfo = this.Applicant.FullName + "-" + Localizer["AddRequest2"];
+                RequestModel = new RequestModel
+                {
+                    Cdn = Applicant.Cdn
+                };
+            }
 
+            this.EditContext = new EditContext(RequestModel);
             StateHasChanged();
         }
 
@@ -67,17 +96,17 @@ namespace CSF.SRDashboard.Client.Pages
                 return;
             }
 
-            var RequestToSend = new RequestModel
+            JS.InvokeAsync<string>("SetBusyCursor", null);
+            if (IsEditMode)
             {
-                Cdn = Applicant.Cdn,
-                CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
-                RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text
-            };
-
-            UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
-
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
+                var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestModel, GatewayService);
+                this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
+            }
+            else
+            {
+                UploadedRequest = WorkLoadService.PostRequestModel(RequestModel, GatewayService);
+                this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
+            }
         }
 
         private void SetMostRecentCommentsCollapseState()
@@ -88,6 +117,24 @@ namespace CSF.SRDashboard.Client.Pages
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
+
+        private RequestModel PopulateRequestmodel(int requestId, string cdn)
+        {
+            var workItem = this.WorkLoadService.GetByWorkItemById(requestId);
+            var requestModel = new RequestModel();
+            requestModel.Cdn = cdn;
+            requestModel.RequestID = requestId;
+
+            if (workItem.Detail != null)
+            {
+                var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
+                requestModel.CertificateType = detail.CertificateType;
+                requestModel.RequestType = detail.RequestType;
+                requestModel.SubmissionMethod = detail.SubmissionMethod;
+            }
+
+            return requestModel;
         }
     }
 }

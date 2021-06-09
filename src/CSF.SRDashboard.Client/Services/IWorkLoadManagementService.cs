@@ -48,6 +48,23 @@ namespace CSF.SRDashboard.Client.Services
         WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService);
 
         /// <summary>
+        /// Updates a work item after retrieving data from the request model.
+        /// RequestModel represents the data on the Create Request/Edit page. We also need to use a Gateway service to get Applicant information from MPDIS
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <param name="gatewayService"></param>
+        /// <returns></returns>
+        WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService);
+
+        /// <summary>
+        /// Updates a work item in Work Load Management Service
+        /// </summary>
+        /// <param name="workItem"></param>
+        /// <returns>returns the updated work item if successful, returns null if the call fails</returns>
+        WorkItemDTO UpdateWorkitem(WorkItemDTO workItem);
+
+
+        /// <summary>
         /// Gets work items from Work Load Management Service and formats them into WorkloadRequestTableItem
         /// This method is used for passing data and populating WorkLoadRequestTable
         /// </summary>

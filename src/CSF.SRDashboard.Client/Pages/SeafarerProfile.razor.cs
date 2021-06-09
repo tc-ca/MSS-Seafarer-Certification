@@ -17,6 +17,7 @@
     using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
     using DSD.MSS.Blazor.Components.Core.Constants;
     using Microsoft.JSInterop;
+    using Microsoft.Extensions.Localization;
 
     public partial class SeafarerProfile
     {
@@ -48,6 +49,9 @@
         public IAzureBlobService AzureBlobService { get; set; }
         [Inject]
         public SessionState State { get; set; }
+
+        [Inject]
+        IStringLocalizer<SeafarerProfile> Localizer { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
        
         public bool ShowToast { get; set; } = false;
@@ -64,6 +68,12 @@
         public string currentRelativePath;
 
         private int RequestID;
+
+        [Parameter]
+        public string Updated { get; set; }
+
+        private string cratedOrUpdated { get; set; }
+        private string message { get; set; }
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
@@ -72,9 +82,16 @@
         protected async override Task OnInitializedAsync()
         {
             this.IsAlertEnabled = this.RequestId != 0;
+            if (Updated != null)
+            {
+                message = Localizer["SuccessfullyUpdated"] + RequestId + Localizer["For"];
+            }
+            else
+            {
+                message = Localizer["SuccessfullyCreated"] + RequestId + Localizer["For"];
+            }
 
             await base.OnInitializedAsync();
-
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
