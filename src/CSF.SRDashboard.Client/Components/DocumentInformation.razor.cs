@@ -50,6 +50,9 @@ namespace CSF.SRDashboard.Client.Components
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
+
         public UploadedDocument DocumentForm { get; set; }
 
 
@@ -60,7 +63,6 @@ namespace CSF.SRDashboard.Client.Components
             
             this.EditContext = new EditContext(this.UploadedDocuments);
 
-            var me = UploadedDocuments;
         }
 
         /// <summary>
@@ -70,6 +72,11 @@ namespace CSF.SRDashboard.Client.Components
         {
             //this.FileToUpload = null;
             //this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
+        }
+
+        public void ViewDocument(UploadedDocument document)
+        {
+            this.NavigationManager.NavigateTo(document.DownloadLink);
         }
 
         /// <summary>

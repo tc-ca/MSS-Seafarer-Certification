@@ -1,4 +1,5 @@
 ﻿using CSF.API.Services.Repositories;
+using CSF.Common.Library.Azure;
 using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
@@ -27,6 +28,12 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
+        [Inject]
+        public IWorkLoadManagementService WorkLoadService { get; set; }
+
+        [Inject]
+        public IAzureBlobService AzureBlobService { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
@@ -43,6 +50,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             var document = documents.Where(x => x.DocumentId == DocumentId).SingleOrDefault();
 
+            var tt = this.WorkLoadService.GetByCdnNumber(Cdn);
             if (document == null)
             {
                 Found = false;
@@ -58,8 +66,10 @@ namespace CSF.SRDashboard.Client.Pages
                 DocumentId = x.DocumentId,
                 Description = x.Description,
                 FileName = x.FileName,
-                Language = x.Language
-            });
+                Language = x.Language,
+                DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", x.DocumentUrl, DateTime.UtcNow.AddHours(8))
+
+        });
         }
     }
 }

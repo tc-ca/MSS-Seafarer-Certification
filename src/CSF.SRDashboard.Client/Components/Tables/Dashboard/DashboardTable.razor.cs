@@ -22,5 +22,11 @@ namespace CSF.SRDashboard.Client.Components.Tables.Dashboard
         {
             NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}/AddAttachment");
         }
+
+        public void RowClicked(Document document)
+        {
+            this.NavigationManager.NavigateTo($"SeafarerProfile/{this.Applicant.Cdn}/view-attachment/{document.DocumentId}");
+        }
+
     }
 }

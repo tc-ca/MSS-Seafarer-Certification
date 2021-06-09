@@ -1,11 +1,33 @@
 ﻿
-@for (int i = 0; this.UploadedDocuments.Any() && i < this.UploadedDocuments.Count; i++)
+@for (int index = 0; this.UploadedDocuments.Any() && index < this.UploadedDocuments.Count; index++)
 {
+    var i = index;
 
     <div class="card ml-4 mt-4">
-        <div class="card-header bg-white mr-4 ml-4">
-            <div class="row">
-                <div class="pr-10 pl-0" style="width:71%">
+        <div class="card-header bg-white">
+            <div class="d-flex">
+                <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
+                <div class="" @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
+                    <div style="cursor: pointer;">
+                        <a style="color: #1B50B1;">
+                            <i class="fas fa-eye mr-2"></i>View
+                        </a>
+                    </div>
+                </div>
+                <div class="">
+                    @if (!this.IsReadOnly)
+                    {
+                        <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
+                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                        </button>
+
+
+                    }
+                </div>
+            </div>
+
+            <!--<div class="row">
+                <div class="pr-10 pl-0">
                     <i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i>
                 </div>
                 <div class="ml-5">
@@ -15,14 +37,24 @@
                             <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
                         </button>
 
+
                     }
-                    <div class="float-right" style="cursor: pointer;">
-                        <a style="color: #1B50B1;">
-                            <i class="fas fa-eye mr-2"></i>View
-                        </a>
-                    </div>
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col mr-3">
+                            <div class="float-right" style="cursor: pointer;">
+                                <a style="color: #1B50B1;">
+                                    <i class="fas fa-eye mr-2"></i>View
+                                </a>
+                            </div>
+                        </div>
+                    </div>-->
+            @*<div class="float-right" style="cursor: pointer;">
+                    <a style="color: #1B50B1;">
+                        <i class="fas fa-eye mr-2"></i>View
+                    </a>
+                </div>*@
+            <!--</div>
+            </div>-->
         </div>
         <div class="card-body">
             <div class="form-group">
@@ -40,7 +72,7 @@
                     {
                         <label class="form-label"><b>@Localizer["DocumentTypes"]</b></label>
 
-                        <p>this</p>
+                        <p>N/A</p>
 
                     }
 
@@ -56,13 +88,16 @@
                     else
                     {
                         <label class="form-label"><b>@Localizer["DocumentLanguage"]</b></label>
-                        foreach (var item in Constants.Languages)
-                        {
-                            if (item.Text == this.UploadedDocuments[i].Language)
+                        @*foreach (var item in Constants.Languages)
                             {
-                                <p>@item.Text</p>
-                            }
-                        }
+                                if (item.Text == this.UploadedDocuments[i].Language)
+                                {
+                                    <p>@item.Text</p>
+                                    break;
+                                }
+                            }*@
+
+                        <p>@this.UploadedDocuments[i].Language</p>
                     }
 
                     @if (!this.IsReadOnly)

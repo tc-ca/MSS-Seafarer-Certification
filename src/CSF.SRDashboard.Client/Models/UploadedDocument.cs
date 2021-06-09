@@ -44,6 +44,8 @@ namespace CSF.SRDashboard.Client.Models
 
         public int SelectValue { get; set; }
 
+        public string DownloadLink { get; set; }
+
         public UploadedDocument()
         {
             DocumentTypeList = new List<SelectListItem>();

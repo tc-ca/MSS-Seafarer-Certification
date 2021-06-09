@@ -1,20 +1,32 @@
 ﻿@page "/SeafarerProfile/{Cdn}/view-attachment/{DocumentId:guid}"
-<div class="row mt-3 mb-3">
-    <div class="col-8 bg-white">
-        <h3>@this.Applicant.FullName - view attachment</h3>
-    </div>
+
+<div class="d-flex">
+    <div class="mr-auto p-2"><h3>@this.Applicant.FullName - view attachment</h3></div>
+    <div class="p-2"><button class="btn btn-light">Back</button></div>
+    <div class="p-2"><button class="btn btn-primary">Edit attachedment</button></div>
 </div>
-@if (!Found)
-{
+<hr />
 
-}
-else
-{
-    <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
-        <BodyContent>
-            <CSF.SRDashboard.Client.Components.DocumentInformation UploadedDocuments="UploadedDocuments" IsReadOnly="true" />
-        </BodyContent>
-    </Collapse>
-}
+<div class="col-8">
+    @if (!Found)
+    {
 
+    }
+    else
+    {
+        <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+            <BodyContent>
+                <CSF.SRDashboard.Client.Components.DocumentInformation UploadedDocuments="UploadedDocuments" IsReadOnly="true" />
+            </BodyContent>
+        </Collapse>
+        <p>This file is link to request 124387M, 873920F</p>
+    }
 
+</div>
+
+<hr />
+<div class="d-flex">
+    <div class="mr-auto p-2"></div>
+    <div class="p-2"><button class="btn btn-light">Cancel</button></div>
+    <div class="p-2"><button class="btn btn-primary">Edit attachedment</button></div>
+</div>
