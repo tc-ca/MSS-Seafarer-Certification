@@ -34,8 +34,6 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public bool ShowRequestID { get; set; }
 
-        //[Parameter]
-
         [Parameter]
         public bool IsReadOnly { get; set; }
 
@@ -59,6 +57,7 @@ namespace CSF.SRDashboard.Client.Components
             this.DocumentForm = new List<UploadedDocument>();
 
             this.EditContext = new EditContext(this.DocumentForm);
+           
         }
 
         /// <summary>
