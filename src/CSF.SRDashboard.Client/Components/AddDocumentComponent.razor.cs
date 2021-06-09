@@ -22,20 +22,18 @@ namespace CSF.SRDashboard.Client.Components
 {
     public partial class AddDocumentComponent
     {
-        [Parameter]
-        public string Cdn { get; set; }
+     
        
         public IFormFile FileToUpload { get; set; }
         
-        [Parameter]
+        public List<UploadedDocument> DocumentForm { get; set; }
+
+        [Parameter] 
         public string ProfileName { get; set; }
         
         public List<string> DocumentTypes { get; set; }
         
-        [Parameter]
-        public UploadedDocument DocumentForm { get; set; }
-        
-        [Parameter]
+       
         public EditContext EditContext { get; set; }
         
         [Inject]
@@ -52,7 +50,7 @@ namespace CSF.SRDashboard.Client.Components
         
         [Inject]
         public IGatewayService GatewayService { get; set; }
-        
+        [Parameter]
         public MpdisApplicantDto Applicant { get; set; }
         
         public DocumentInfo DocumentInfo { get; set; }
@@ -80,22 +78,19 @@ namespace CSF.SRDashboard.Client.Components
             base.OnInitialized();
             
             this.Applicant = new MpdisApplicantDto();
-            this.ValidationMessageStore = new ValidationMessageStore(this.EditContext);
-            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.DocumentForm = new UploadedDocument();
             this.MultipleSelectTitle = "Select";
         }
 
         private async void HandleValidSubmit()
         {
-            this.DocumentTypes = PopulateDocumentTypes(this.DocumentForm.DocumentTypeList);
+          
             var isValid = Validate();
 
-            if (isValid)
-            {
-                var SelectedLanguage = this.DocumentForm.Languages[this.DocumentForm.SelectValue - 1].Text;
-                this.Language = SelectedLanguage; 
-                var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", FileToUpload, string.Empty, this.DocumentForm.Description, "FAX", this.Language, this.DocumentTypes, string.Empty);
+            foreach (var documents in this.DocumentForm) {
+                this.DocumentTypes = PopulateDocumentTypes(documents.DocumentTypeList);
+                var SelectedLanguage = documents.Languages[documents.SelectValue - 1].Text;
+                this.Language = SelectedLanguage;
+                var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", FileToUpload, string.Empty, documents.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
                 if (addedDocumentIds.Count > 0)
                 {
                     this.DocumentInfo = new DocumentInfo
@@ -104,11 +99,13 @@ namespace CSF.SRDashboard.Client.Components
                         DateStartDte = DateTime.UtcNow,
                         DocumentId = addedDocumentIds[0]
                     };
-                   
+
                 }
-                ClientXrefDocumentRepository.Insert(this.DocumentInfo);
-                this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
+                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
             }
+               
+                this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
+            
         } 
 
         /// <summary>
@@ -117,7 +114,7 @@ namespace CSF.SRDashboard.Client.Components
         /// <returns></returns>
         private bool Validate()
         {
-            if (this.DocumentForm.SelectValue <= -1)
+            if (this.DocumentForm.Count <= -1)
             {
                return false;
             }
@@ -139,16 +136,20 @@ namespace CSF.SRDashboard.Client.Components
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        private List<string> PopulateDocumentTypes(List<SelectListItem> list)
+        private List<string> PopulateDocumentTypes(List<SelectListItem> documentType)
         {
             List<string> DocumentTypes = new List<string>();
-            foreach (var i in list)
+           
+
+            foreach (var i in documentType)
             {
+
                 if (i.Value)
                 {
                     DocumentTypes.Add(i.Text);
                 }
             }
+            
             return DocumentTypes;
         }
         
@@ -158,7 +159,7 @@ namespace CSF.SRDashboard.Client.Components
         public void HandleCancel()
         {
             this.FileToUpload = null;
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
         }
 
        /// <summary>

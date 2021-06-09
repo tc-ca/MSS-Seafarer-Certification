@@ -1,4 +1,6 @@
-﻿using CSF.SRDashboard.Client.Models;
+﻿using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.Models;
+using CSF.SRDashboard.Client.Services;
 using DSD.MSS.Blazor.Components.Core.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -14,15 +16,26 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
         
-        protected EditContext EditContext;
+     
         
         public UploadedDocument DocumentForm { get; set; }
-        
-        protected override void OnInitialized()
+        [Inject]
+        public IGatewayService GatewayService { get; set; }
+        public MpdisApplicantDto Applicant { get; set; }
+    protected override void OnInitialized()
         {
             base.OnInitialized();
             this.DocumentForm = new UploadedDocument();
-            this.EditContext = new EditContext(this.DocumentForm);
+            this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+         
+        }
+        public void HandleCancel()
+        {
+
+        }
+        public void HandleValidSubmit()
+        {
+
         }
     }
 }

@@ -47,19 +47,18 @@ namespace CSF.SRDashboard.Client.Components
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
-        public UploadedDocument DocumentForm { get; set; }
-
-        public List<UploadedDocument> DocumentForm1 { get; set; }
+        [Parameter]
+        public List<UploadedDocument> DocumentForm { get; set; }
 
         public List<IFormFile> FilesToUpload { get; set; }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            base.StateHasChanged();
+            this.DocumentForm = new List<UploadedDocument>();
 
-            this.DocumentForm1 = new List<UploadedDocument>();
-
-            this.EditContext = new EditContext(this.DocumentForm1);
+            this.EditContext = new EditContext(this.DocumentForm);
         }
 
         /// <summary>
