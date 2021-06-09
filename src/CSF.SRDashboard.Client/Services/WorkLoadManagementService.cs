@@ -240,7 +240,7 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             var uploadedWorkItem = this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;

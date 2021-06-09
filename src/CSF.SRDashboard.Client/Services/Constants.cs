@@ -14,7 +14,7 @@ namespace CSF.SRDashboard.Client.Services
         public const string New = "New";
         public const string InProgress = "In Progress";
         public const string OnHold = "On Hold";
-        public const string Completed = "Completed";
+        public const string Complete = "Complete";
         public const string NotSubmitted = "Not Completed";
         public const string Pending = "Pending";
         public const string Cancelled = "Cancelled";

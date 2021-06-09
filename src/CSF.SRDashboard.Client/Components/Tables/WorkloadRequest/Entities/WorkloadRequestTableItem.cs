@@ -27,9 +27,9 @@
                 switch (this.Status)
                 {
                     case Constants.New: return RequestStatus.NEW;
-                    case Constants.Completed: return RequestStatus.COMPLETE;
                     case Constants.InProgress: return RequestStatus.IN_PROGRESS;
                     case Constants.Pending: return RequestStatus.PENDING;
+                    case Constants.Complete: return RequestStatus.COMPLETE;
                     case Constants.Cancelled: return RequestStatus.CANCELLED;
                     case Constants.Unknown: return RequestStatus.UNKNOWN;
                     default: return RequestStatus.UNKNOWN;
