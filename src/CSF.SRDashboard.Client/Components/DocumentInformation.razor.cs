@@ -47,6 +47,11 @@ namespace CSF.SRDashboard.Client.Components
 
         [Parameter]
         public List<UploadedDocument> DocumentForm { get; set; }
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
+
+        public UploadedDocument DocumentForm { get; set; }
+
 
         public List<IFormFile> FilesToUpload { get; set; }
 
@@ -67,6 +72,11 @@ namespace CSF.SRDashboard.Client.Components
         {
             //this.FileToUpload = null;
             //this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
+        }
+
+        public void ViewDocument(UploadedDocument document)
+        {
+            this.NavigationManager.NavigateTo(document.DownloadLink);
         }
 
         /// <summary>
