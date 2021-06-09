@@ -17,7 +17,7 @@
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["Status"] Width="10%" Field="@(x => x.RequestStatus)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
-                <WorkloadRequestTableItemStatusComponent />
+                <WorkloadRequestTableItemStatusComponent RequestStatus="@WorkloadRequestTableItem.RequestStatus"/>
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["ProcessingPhase"] Field="@(x => x.ProcessingPhase)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
