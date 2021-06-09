@@ -26,6 +26,9 @@ namespace CSF.SRDashboard.Client.Components
         private EditContext editContext;
 
         [Parameter]
+        public List<UploadedDocument> UploadedDocuments { get; set; }
+
+        [Parameter]
         public bool Editable { get; set; }
 
         [Parameter]
@@ -49,17 +52,15 @@ namespace CSF.SRDashboard.Client.Components
 
         public UploadedDocument DocumentForm { get; set; }
 
-        public List<UploadedDocument> DocumentForm1 { get; set; }
 
         public List<IFormFile> FilesToUpload { get; set; }
 
         protected override void OnInitialized()
         {
-            base.OnInitialized();
+            
+            this.EditContext = new EditContext(this.UploadedDocuments);
 
-            this.DocumentForm1 = new List<UploadedDocument>();
-
-            this.EditContext = new EditContext(this.DocumentForm1);
+            var me = UploadedDocuments;
         }
 
         /// <summary>

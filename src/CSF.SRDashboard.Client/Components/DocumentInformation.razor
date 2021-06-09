@@ -1,17 +1,26 @@
-﻿@for (int i = 0; i < this.DocumentForm1.Count; i++)
+﻿
+@for (int i = 0; this.UploadedDocuments.Any() && i < this.UploadedDocuments.Count; i++)
 {
-
 
     <div class="card ml-4 mt-4">
         <div class="card-header bg-white mr-4 ml-4">
             <div class="row">
                 <div class="pr-10 pl-0" style="width:71%">
-                    <i class="fas fa-paperclip"><span class="csf-span ml-1">@this.DocumentForm1[i].FileName</span></i>
+                    <i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i>
                 </div>
                 <div class="ml-5">
-                    <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
-                        <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
-                    </button>
+                    @if (!this.IsReadOnly)
+                    {
+                        <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
+                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                        </button>
+
+                    }
+                    <div class="float-right" style="cursor: pointer;">
+                        <a style="color: #1B50B1;">
+                            <i class="fas fa-eye mr-2"></i>View
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -19,18 +28,52 @@
             <div class="form-group">
                 <EditForm EditContext="@this.EditContext">
                     <FluentValidationValidator />
-                    <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm1[i].DocumentTypeList" SelectTitle="Select Title Chris">
-                        <SelectedItemTemplate Context="SelectItem">
-                            <span>@SelectItem, </span>
-                        </SelectedItemTemplate>
-                    </InputMultipleSelect>
-                    <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm1[i].SelectValue" ValidationFor="@(() => this.DocumentForm1[i].SelectValue)">
-                        @foreach (var item in this.DocumentForm1[i].Languages)
+                    @if (!this.IsReadOnly)
+                    {
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle="Select Title Chris">
+                            <SelectedItemTemplate Context="SelectItem">
+                                <span>@SelectItem, </span>
+                            </SelectedItemTemplate>
+                        </InputMultipleSelect>
+                    }
+                    else
+                    {
+                        <label class="form-label"><b>@Localizer["DocumentTypes"]</b></label>
+
+                        <p>this</p>
+
+                    }
+
+                    @if (!this.IsReadOnly)
+                    {
+                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
+                            @foreach (var item in this.UploadedDocuments[i].Languages)
+                                    {
+                                <option value="@item.Id">@item.Text</option>
+                                    }
+                        </FormInputSelect>
+                    }
+                    else
+                    {
+                        <label class="form-label"><b>@Localizer["DocumentLanguage"]</b></label>
+                        foreach (var item in Constants.Languages)
+                        {
+                            if (item.Text == this.UploadedDocuments[i].Language)
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <p>@item.Text</p>
                             }
-                    </FormInputSelect>
-                    <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm1[i].Description" ValidationFor="@(() => this.DocumentForm1[i].Description)" />
+                        }
+                    }
+
+                    @if (!this.IsReadOnly)
+                    {
+                        <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" />
+                    }
+                    else
+                    {
+                        <label class="form-label"><b>@Localizer["Description"]</b></label>
+                        <p>@this.UploadedDocuments[i].Description</p>
+                    }
                 </EditForm>
             </div>
         </div>

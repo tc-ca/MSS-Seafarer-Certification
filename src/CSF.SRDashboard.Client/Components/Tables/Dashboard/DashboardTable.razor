@@ -6,15 +6,19 @@
 
 <div class="table-responsive mt-3">
     <Table TableClass="table table-striped table-hover" TableHeadClass="font-weight-bold thead-light text-dark" TableItem="CSF.SRDashboard.Client.Models.Document" DefaultPageSize="25" Items="TableData">
+       
         <Column TableItem="Document" Title="Request ID" Field="@(x => x.RequestID)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
         <Column TableItem="Document" Title="Documents" Field="@(x => x.FileName)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%">
             <Template Context="Document">
 
-                <a href="@Document.DownloadLink" style="text-decoration: underline;">@Document.FileName</a>
+                @*<a href="@Document.DownloadLink" style="text-decoration: underline;">@Document.FileName</a>*@
+                <a href="/SeafarerProfile/@this.Applicant.Cdn/view-attachment/@Document.DocumentId" style="text-decoration: underline;">@Document.FileName</a>
+
             </Template>
         </Column>
         <Column TableItem="Document" Title="Language" Field="@(x => x.Language)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
         <Column TableItem="Document" Title="Update date" Field="@(x => x.DateUploadFormatted)" DefaultShowHeaderFilter="false" Sortable="true" Width="25%" />
+        
         <div class="mt-4 mb-4">
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
         </div>

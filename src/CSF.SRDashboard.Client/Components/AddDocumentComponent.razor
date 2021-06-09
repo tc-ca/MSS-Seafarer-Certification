@@ -19,7 +19,7 @@
         </div>
         <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
-                <UploadDocumentComponent @bind-FormFile="FileToUpload"  />
+                <UploadDocumentComponent @bind-FormFile="FileToUpload" />
             </BodyContent>
         </Collapse>
     </div>
@@ -27,38 +27,42 @@
     {
         <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
-                <div class="card ml-4 mt-4">
-                    <div class="card-header bg-white mr-4 ml-4">
-                        <div class="row">
-                            <div class="pr-10 pl-0" style="width:71%">
-                                <i class="fas fa-paperclip"><span class="csf-span ml-1">@FileName</span></i>
-                            </div>
-                            <div class="ml-5">
-                                <button class="small-buttons" @onclick="RemoveAttachment">
-                                    <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
-                                </button>
+
+                <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
+                    @*<CSF.SRDashboard.Client.Components.DocumentInformation  EditContext="@this.EditContext" IsReadOnly="false"  />*@
+                </EditForm>
+                @*<div class="card ml-4 mt-4">
+                        <div class="card-header bg-white mr-4 ml-4">
+                            <div class="row">
+                                <div class="pr-10 pl-0" style="width:71%">
+                                    <i class="fas fa-paperclip"><span class="csf-span ml-1">@FileName</span></i>
+                                </div>
+                                <div class="ml-5">
+                                    <button class="small-buttons" @onclick="RemoveAttachment">
+                                        <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
-                                <FluentValidationValidator />
-                                <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle">
-                                    <SelectedItemTemplate Context="SelectItem">
-                                        <span>@SelectItem, </span>
-                                    </SelectedItemTemplate>
-                                </InputMultipleSelect>
-                                <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
-                                    @foreach (var item in this.DocumentForm.Languages)
-                                        {
-                                        <option value="@item.Id">@item.Text</option>}
-                                </FormInputSelect>
-                                <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
-                            </EditForm>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <EditForm EditContext="@this.EditContext" OnValidSubmit="HandleValidSubmit">
+                                    <FluentValidationValidator />
+                                    <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.DocumentForm.DocumentTypeList" SelectTitle="@this.MultipleSelectTitle">
+                                        <SelectedItemTemplate Context="SelectItem">
+                                            <span>@SelectItem, </span>
+                                        </SelectedItemTemplate>
+                                    </InputMultipleSelect>
+                                    <FormInputSelect Id="InputSelect" Label="Document language*" SelectLabel="Select one" Required="required" @bind-Value="this.DocumentForm.SelectValue" ValidationFor="@(() => this.DocumentForm.SelectValue)">
+                                        @foreach (var item in this.DocumentForm.Languages)
+                                            {
+                                            <option value="@item.Id">@item.Text</option>}
+                                    </FormInputSelect>
+                                    <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.DocumentForm.Description" ValidationFor="@(() => this.DocumentForm.Description)" />
+                                </EditForm>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div>*@
             </BodyContent>
         </Collapse>
     }

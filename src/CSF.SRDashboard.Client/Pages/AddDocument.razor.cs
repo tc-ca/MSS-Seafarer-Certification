@@ -24,5 +24,6 @@ namespace CSF.SRDashboard.Client.Pages
             this.DocumentForm = new UploadedDocument();
             this.EditContext = new EditContext(this.DocumentForm);
         }
+
     }
 }
