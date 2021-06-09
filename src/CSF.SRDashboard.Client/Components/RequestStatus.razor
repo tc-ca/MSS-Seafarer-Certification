@@ -4,10 +4,10 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)">
+                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
                     @foreach (var item in Constants.RequestStatuses)
                         {
-                        <option value="@item.ID">@item.Text</option>
+                        <option value="@item.Text">@item.Text</option>
                         }
                 </FormInputSelect>
             }

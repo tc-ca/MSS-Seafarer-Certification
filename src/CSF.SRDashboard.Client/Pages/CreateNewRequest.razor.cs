@@ -125,6 +125,7 @@ namespace CSF.SRDashboard.Client.Pages
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
+            requestModel.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
 
             if (workItem.Detail != null)
             {
