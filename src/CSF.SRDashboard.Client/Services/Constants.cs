@@ -23,6 +23,8 @@ namespace CSF.SRDashboard.Client.Services
 
         public const string MarineMedical = "002";
 
+        public const string Updated = "Updated";
+
         public static List<Dropdown> RequestTypes = new List<Dropdown> {
             new Dropdown { ID = "1", Text = "New certificate" },
             new Dropdown { ID = "2", Text = "Renewal certificate" }
