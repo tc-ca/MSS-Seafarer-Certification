@@ -25,6 +25,7 @@ namespace CSF.APIM.Gateway
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.File(Configuration["LoggingLocation"], rollingInterval: RollingInterval.Day)
+                .WriteTo.File(Configuration["LocalLoggingLocation"], rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             try
@@ -44,11 +45,10 @@ namespace CSF.APIM.Gateway
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSerilog();
 
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
