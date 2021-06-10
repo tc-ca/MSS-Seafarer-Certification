@@ -87,6 +87,26 @@ namespace CSF.SRDashboard.Client.Services
             return workItem;
         }
 
+        public WorkItemDTO UpdateWorkitem(WorkItemDTO workItem)
+        {
+            WorkItemDTO updatedWorkItem = null;
+            string requestPath = $"api/v1/workitems";
+            try
+            {
+                var result = this.restClient.UpdateAsync(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
+                if (result > 0)
+                {
+                    updatedWorkItem = this.GetByWorkItemById(workItem.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return updatedWorkItem;
+        }
+
         public List<WorkItemDTO> GetByCdnNumber(string cdn)
         {
             List<WorkItemDTO> workItems = new List<WorkItemDTO>();
@@ -168,7 +188,7 @@ namespace CSF.SRDashboard.Client.Services
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
             
             // -- Contact
-            var contact = this.GetContacInfoDtoFromApplicant(applicantInfo);
+            var contact = this.GetContacInfoDtoFromApplicant(applicantInfo, true, null);
 
             //-- Detail
             WorkItemDetail itemDetail = new WorkItemDetail();
@@ -186,8 +206,9 @@ namespace CSF.SRDashboard.Client.Services
             workItem.Detail = itemDetailString;
 
             workItem.ApplicantContact = contact;
-            workItem.ReceivedDateUTC = DateTime.Now;
-            workItem.LastUpdatedDateUTC = DateTime.Now;
+            workItem.CreatedDateUTC = DateTime.UtcNow;
+            workItem.ReceivedDateUTC = DateTime.UtcNow;
+            workItem.LastUpdatedDateUTC = DateTime.UtcNow;
 
             workItem.SameApplicantSubmitterInd = true;
             workItem.LineOfBusinessId = Constants.MarineMedical;
@@ -211,10 +232,50 @@ namespace CSF.SRDashboard.Client.Services
             }
             return Task.FromResult(new WorkItemAttachmentDTO);
         }
-        private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant)
+        public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
+        {
+            int requestId = Convert.ToInt32(requestModel.RequestID);
+            var existingWorkItem = this.GetByWorkItemById(requestId);
+
+            var cdn = requestModel.Cdn;
+            var applicantInfo = gatewayService.GetApplicantInfoByCdn(cdn);
+
+            var contact = this.GetContacInfoDtoFromApplicant(applicantInfo, false, existingWorkItem);
+            var itemDetailString = this.GetItemDetailFromRequestModel(requestModel);
+
+            WorkItemDTO workItem = new WorkItemDTO();
+            workItem.Id = requestModel.RequestID ;
+            workItem.InitialDetailJson = itemDetailString;
+            workItem.Detail = itemDetailString;
+            workItem.ApplicantContact = contact;
+            workItem.CreatedDateUTC = existingWorkItem.CreatedDateUTC;
+            workItem.ReceivedDateUTC = existingWorkItem.ReceivedDateUTC;
+            workItem.LastUpdatedDateUTC = DateTime.UtcNow;
+            workItem.SameApplicantSubmitterInd = true;
+            workItem.LineOfBusinessId = Constants.MarineMedical;
+            // WorkItemStatuses
+            workItem.WorkItemStatus = new WorkItemStatusDTO();
+            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            var uploadedWorkItem = this.UpdateWorkitem(workItem);
+
+            return uploadedWorkItem;
+        }
+
+        private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
             ContactInformationDTO contact = new ContactInformationDTO();
-            contact.Id = Guid.NewGuid().ToString();
+            if (isNewContact)
+            {
+                contact.Id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                contact.Id = exitingWorkItem.ApplicantContact.Id;
+
+                var t = applicant.Id;
+                var to = applicant.ContactId;
+            }
+
             contact.Name = applicant.FullName;
             contact.AddressLine1 = applicant.HomeAddress;
             contact.City = applicant.HomeAddressCity;

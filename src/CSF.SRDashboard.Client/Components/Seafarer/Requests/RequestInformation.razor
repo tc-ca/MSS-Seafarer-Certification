@@ -1,12 +1,11 @@
-﻿
-<EditForm EditContext="@EditContext">
+﻿<EditForm EditContext="@EditContext">
     <div class="row">
         <div class="col-12 d-grid gap-3">
             @if (ShowRequestID)
             {
                 if (!this.IsReadOnly)
                 {
-                    <FormInputText readonly="@this.IsReadOnly" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
+                    <FormInputText readonly="@Editable" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
                 }
                 else
                 {
@@ -80,5 +79,5 @@
 
             }
         </div>
-            </div>
-        </EditForm>
+    </div>
+</EditForm>
