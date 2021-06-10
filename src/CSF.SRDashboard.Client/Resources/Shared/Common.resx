@@ -122,7 +122,7 @@
   </data>
   <data name="ApplicantDetails" xml:space="preserve">
     <value>Applicant details</value>
-</data>
+  </data>
   <data name="AddRequest" xml:space="preserve">
     <value>Add Request</value>
   </data>
@@ -290,5 +290,11 @@
   </data>
   <data name="ViewRequest" xml:space="preserve">
     <value>View Request</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field</value>
   </data>
 </root>

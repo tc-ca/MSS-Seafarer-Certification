@@ -1,11 +1,13 @@
-﻿<div class="col-8">
+﻿@inject IStringLocalizer<Common> Localizer
+
+<div class="col-8">
     <div class="accordion mt-5" id="AttachmentAcc">
         <div class="row">
             <div class="col-11">
-                <p class="mb-0 float-right">Required field<span class="text-danger">*</span></p>
+                <p class="mb-0 float-right">@Localizer["RequiredField"]<span class="text-danger">*</span></p>
             </div>
         </div>
-        <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+        <Collapse HeaderTitleTextColor="#FFFFFF" Title="@Localizer["Attachment"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
                 <UploadDocumentComponent @bind-DocumentForm="this.DocumentForm" />
             </BodyContent>
@@ -15,7 +17,7 @@
     @if (this.DocumentForm != null && this.DocumentForm.Count != 0)
     {
 <p>@this.DocumentForm.Count</p>
-        <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+        <Collapse HeaderTitleTextColor="#FFFFFF" Title="@Localizer["Attachment"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
                  <DocumentInformation DocumentForm="this.DocumentForm"></DocumentInformation>
             </BodyContent>
