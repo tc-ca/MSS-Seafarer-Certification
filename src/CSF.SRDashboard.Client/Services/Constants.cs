@@ -49,5 +49,6 @@ namespace CSF.SRDashboard.Client.Services
             new Dropdown { ID = "5", Text = "Cancelled"}
         };
 
+        public static string RequestStatusesDefaultValue = RequestStatuses[0].Text;
     }
 }

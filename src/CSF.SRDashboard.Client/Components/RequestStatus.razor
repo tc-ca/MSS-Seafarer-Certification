@@ -1,15 +1,23 @@
 ﻿<EditForm EditContext="@EditContext">
     <div class="row">
-        <div class="col-12 d-grid gap-3">
+        <div class="col-12 d-grid gap-3 mt-2">
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
-                    @foreach (var item in Constants.RequestStatuses)
-                        {
-                        <option value="@item.Text">@item.Text</option>
+            <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
+                @foreach (var item in Constants.RequestStatuses)
+                    {
+                    @if (@item.Text.Equals(Constants.RequestStatusesDefaultValue)&& RequestModel.Status == null)
+                    {
+                        <option value ="@item.Text" selected> @item.Text</option>
+                        RequestModel.Status = @item.Text;
+                    }
+                    else
+                    {
+                            <option value="@item.Text">@item.Text</option>
                         }
-                </FormInputSelect>
+                    }
+            </FormInputSelect>
             }
             else
             {
