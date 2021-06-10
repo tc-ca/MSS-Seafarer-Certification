@@ -230,7 +230,7 @@ namespace CSF.SRDashboard.Client.Services
             {
                 this.logger.LogError(ex.Message + "\n" + ex.InnerException);
             }
-            return Task.FromResult(new WorkItemAttachmentDTO);
+            return new WorkItemAttachmentDTO();
         }
         public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
