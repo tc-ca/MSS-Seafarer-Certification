@@ -53,6 +53,9 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public MpdisApplicantDto Applicant { get; set; }
         
+        [Parameter]
+        public bool AllowMultipleUploads { get; set; }
+
         public DocumentInfo DocumentInfo { get; set; }
         
         public string MultipleSelectTitle { get; set; }
@@ -76,7 +79,7 @@ namespace CSF.SRDashboard.Client.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            
+            this.DocumentForm = new List<UploadedDocument>();
             this.Applicant = new MpdisApplicantDto();
             this.MultipleSelectTitle = "Select";
         }

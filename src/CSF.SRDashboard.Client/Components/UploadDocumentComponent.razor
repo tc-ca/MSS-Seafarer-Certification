@@ -2,7 +2,7 @@
     <div class="card d-flex align-items-center @UploadClass">
         <i class="fas fa-file-upload fa-5x mt-3 mb-1"></i>
         Drag and drop file here or click to select from your desktop
-        <div class="@(this.FormFile == null ? "" : "") file-drop-zone-container">
+        <div class="@(this.DocumentForm.Count <= this.MaxAllowedFiles ? "" : "d-none") file-drop-zone-container">
             <InputFile id="documentUpload" OnChange="OnFileUpload" multiple />
         </div>
     </div>

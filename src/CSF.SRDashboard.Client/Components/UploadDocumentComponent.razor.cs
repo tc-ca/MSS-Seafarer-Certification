@@ -12,18 +12,7 @@ namespace CSF.SRDashboard.Client.Components
 {
     public partial class UploadDocumentComponent
     {
-        [Parameter]
-        public IFormFile FormFile
-        {
-            get => formFile;
-            set
-            {
-                if (formFile == value) return;
-                this.formFile = value;
-                FormFileChanged.InvokeAsync(value);
-                
-            }
-        }
+       
 
         [Parameter]
         public List<UploadedDocument> DocumentForm
@@ -41,26 +30,23 @@ namespace CSF.SRDashboard.Client.Components
 
         private List<UploadedDocument> documentForm;
 
-        private IFormFile formFile;
-
         [Parameter]
-        public EventCallback<IBrowserFile> FileChanged { get; set; }
+        public bool AllowMultipleUploads { get; set; }
+        public int MaxAllowedFiles => this.AllowMultipleUploads ? 5 : 1;
 
-        [Parameter]
-        public EventCallback<IFormFile> FormFileChanged { get; set; }
-
-        public string UploadClass => this.FormFile == null ? "file-drop-zone" : "file-drop-zone-disabled";
+        public string UploadClass => this.DocumentForm.Count < this.MaxAllowedFiles ? "file-drop-zone" : "file-drop-zone-disabled";
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.DocumentForm = new List<UploadedDocument>();
+
         }
 
         public async void OnFileUpload(InputFileChangeEventArgs e)
         {
-
+            
             var files = e.GetMultipleFiles();
-
+            
             foreach (var file in files)
             {
                 if (file != null && !string.Equals(file.ContentType, "application/x-msdownload")){
@@ -79,6 +65,7 @@ namespace CSF.SRDashboard.Client.Components
                 }
               
             }
+            StateHasChanged();
         }
     }
 }

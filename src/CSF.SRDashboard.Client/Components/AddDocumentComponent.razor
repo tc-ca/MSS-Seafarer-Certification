@@ -9,17 +9,20 @@
         </div>
         <Collapse HeaderTitleTextColor="#FFFFFF" Title="@Localizer["Attachment"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
-                <UploadDocumentComponent @bind-DocumentForm="this.DocumentForm" />
+              
+                    <UploadDocumentComponent AllowMultipleUploads="@this.AllowMultipleUploads" @bind-DocumentForm="this.DocumentForm" />
+              
             </BodyContent>
         </Collapse>
     </div>
     <button @onclick="StateHasChanged">click</button>
+    <p>@this.DocumentForm.Count</p>
     @if (this.DocumentForm != null && this.DocumentForm.Count != 0)
     {
 <p>@this.DocumentForm.Count</p>
         <Collapse HeaderTitleTextColor="#FFFFFF" Title="@Localizer["Attachment"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
-                 <DocumentInformation DocumentForm="this.DocumentForm"></DocumentInformation>
+                 <DocumentInformation UploadedDocuments="this.DocumentForm"></DocumentInformation>
             </BodyContent>
         </Collapse>
     }

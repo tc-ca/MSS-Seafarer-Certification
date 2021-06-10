@@ -46,11 +46,16 @@ namespace CSF.SRDashboard.Client.Components
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
         [Parameter]
-        public List<UploadedDocument> DocumentForm { get; set; }
+        public List<UploadedDocument> UploadedDocuments { get; set; }
+        
+        private List<UploadedDocument> uploadedDocuments;
+       
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
-        public UploadedDocument DocumentForm { get; set; }
+       
+
+
 
 
         public List<IFormFile> FilesToUpload { get; set; }
@@ -58,22 +63,14 @@ namespace CSF.SRDashboard.Client.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            base.StateHasChanged();
-            this.DocumentForm = new List<UploadedDocument>();
+           
+           
 
-            this.EditContext = new EditContext(this.DocumentForm);
+            this.EditContext = new EditContext(this.UploadedDocuments);
            
         }
 
-        /// <summary>
-        /// cancels and returns to the profile page
-        /// </summary>
-        public void HandleCancel()
-        {
-            //this.FileToUpload = null;
-            //this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
-        }
-
+        
         public void ViewDocument(UploadedDocument document)
         {
             this.NavigationManager.NavigateTo(document.DownloadLink);
