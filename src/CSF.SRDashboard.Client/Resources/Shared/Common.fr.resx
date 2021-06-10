@@ -300,4 +300,7 @@
   <data name="AddRequest2" xml:space="preserve">
     <value>add-request_fr</value>
   </data>
+  <data name="RequestLower" xml:space="preserve">
+    <value>request_fr</value>
+  </data>
 </root>

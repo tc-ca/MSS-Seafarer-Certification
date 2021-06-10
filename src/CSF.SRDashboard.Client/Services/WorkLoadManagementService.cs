@@ -206,8 +206,9 @@ namespace CSF.SRDashboard.Client.Services
             workItem.Detail = itemDetailString;
 
             workItem.ApplicantContact = contact;
-            workItem.ReceivedDateUTC = DateTime.Now;
-            workItem.LastUpdatedDateUTC = DateTime.Now;
+            workItem.CreatedDateUTC = DateTime.UtcNow;
+            workItem.ReceivedDateUTC = DateTime.UtcNow;
+            workItem.LastUpdatedDateUTC = DateTime.UtcNow;
 
             workItem.SameApplicantSubmitterInd = true;
             workItem.LineOfBusinessId = Constants.MarineMedical;
@@ -235,8 +236,9 @@ namespace CSF.SRDashboard.Client.Services
             workItem.InitialDetailJson = itemDetailString;
             workItem.Detail = itemDetailString;
             workItem.ApplicantContact = contact;
-            workItem.ReceivedDateUTC = DateTime.Now;
-            workItem.LastUpdatedDateUTC = DateTime.Now;
+            workItem.CreatedDateUTC = existingWorkItem.CreatedDateUTC;
+            workItem.ReceivedDateUTC = existingWorkItem.ReceivedDateUTC;
+            workItem.LastUpdatedDateUTC = DateTime.UtcNow;
             workItem.SameApplicantSubmitterInd = true;
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
@@ -257,6 +259,9 @@ namespace CSF.SRDashboard.Client.Services
             else
             {
                 contact.Id = exitingWorkItem.ApplicantContact.Id;
+
+                var t = applicant.Id;
+                var to = applicant.ContactId;
             }
 
             contact.Name = applicant.FullName;

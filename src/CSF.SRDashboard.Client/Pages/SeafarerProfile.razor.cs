@@ -21,7 +21,7 @@
 
     public partial class SeafarerProfile
     {
-       
+
         [Parameter]
         public string Cdn { get; set; }
 
@@ -53,7 +53,7 @@
         [Inject]
         IStringLocalizer<SeafarerProfile> Localizer { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
-       
+
         public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
@@ -84,18 +84,18 @@
             this.IsAlertEnabled = this.RequestId != 0;
             if (Updated != null)
             {
-                message = Localizer["SuccessfullyUpdated"] + RequestId + Localizer["For"];
+                message = Localizer["SuccessfullyUpdated"] + " " + RequestId + Localizer["For"];
             }
             else
             {
-                message = Localizer["SuccessfullyCreated"] + RequestId + Localizer["For"];
+                message = Localizer["SuccessfullyCreated"] + " " + RequestId + Localizer["For"];
             }
 
             await base.OnInitializedAsync();
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
-            
+
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
@@ -119,7 +119,7 @@
             }
 
             var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
-            
+
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
             {
                 RequestID = Convert.ToInt32(requestId);
