@@ -17,10 +17,11 @@
     using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
     using DSD.MSS.Blazor.Components.Core.Constants;
     using Microsoft.JSInterop;
+    using Microsoft.Extensions.Localization;
 
     public partial class SeafarerProfile
     {
-       
+
         [Parameter]
         public string Cdn { get; set; }
 
@@ -48,8 +49,11 @@
         public IAzureBlobService AzureBlobService { get; set; }
         [Inject]
         public SessionState State { get; set; }
+
+        [Inject]
+        IStringLocalizer<SeafarerProfile> Localizer { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
-       
+
         public bool ShowToast { get; set; } = false;
 
         public List<DocumentInfo> Documents { get; set; }
@@ -64,6 +68,12 @@
         public string currentRelativePath;
 
         private int RequestID;
+
+        [Parameter]
+        public string Updated { get; set; }
+
+        private string cratedOrUpdated { get; set; }
+        private string message { get; set; }
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
@@ -72,13 +82,20 @@
         protected async override Task OnInitializedAsync()
         {
             this.IsAlertEnabled = this.RequestId != 0;
+            if (Updated != null)
+            {
+                message = Localizer["SuccessfullyUpdated"] + " " + RequestId + Localizer["For"];
+            }
+            else
+            {
+                message = Localizer["SuccessfullyCreated"] + " " + RequestId + Localizer["For"];
+            }
 
             await base.OnInitializedAsync();
 
-
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
-            
+
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
@@ -102,7 +119,7 @@
             }
 
             var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
-            
+
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
             {
                 RequestID = Convert.ToInt32(requestId);

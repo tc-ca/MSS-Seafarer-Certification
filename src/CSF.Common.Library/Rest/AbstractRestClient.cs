@@ -107,6 +107,30 @@ namespace CSF.Common.Library
             }
         }
 
+
+        // This method is used when the call does not return a DTO rather just a status. When a call returns a DTO, use the PutAsync method above.
+        public virtual async Task<int> UpdateAsync(ServiceLocatorDomain serviceName, string path, object dataObject = null)
+        {
+
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+            var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
+
+            using (StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
+            {
+                this.ResetRestClientHeaders();
+                var response = await this.httpClient.PutAsync(uri, stringContent).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return -1;
+                }
+
+                return 1;
+            }
+        }
+
+
         ///<inheritdoc/>
         public virtual async Task<bool> DeleteAsync(ServiceLocatorDomain serviceName, string path)
         {
