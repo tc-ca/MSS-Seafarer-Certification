@@ -11,15 +11,7 @@
         public bool HasError {  
             get
             {
-                return this.Priority.Equals("request more info", StringComparison.InvariantCultureIgnoreCase);
-            }
-        }
-
-        public bool HasWarning
-        {
-            get
-            {
-                return this.Priority.Equals("missing info", StringComparison.InvariantCultureIgnoreCase);
+                return !string.IsNullOrEmpty(this.Priority) && this.Priority.Equals("request more info", StringComparison.InvariantCultureIgnoreCase);
             }
         }
 
@@ -27,8 +19,6 @@
         {
             if (this.HasError)
                 return "text-danger";
-            if (this.HasWarning)
-                return "text-warning";
             return "";
         }
     }

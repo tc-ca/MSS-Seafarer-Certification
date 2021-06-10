@@ -7,6 +7,11 @@
     public enum ServiceLocatorDomain
     {
         /// <summary>
+        /// TC DocumentService
+        /// </summary>
+        Document,
+
+        /// <summary>
         /// MyTC Account
         /// </summary>
         Mtoa,
@@ -20,5 +25,10 @@
         /// Gateway to MPDIS
         /// </summary>
         GatewayToMpdis,
+
+        /// <summary>
+        /// Work load management service
+        /// </summary>
+        WorkLoadManagement
     }
 }

@@ -90,26 +90,26 @@ a.navbar-brand {
 }
 
 ul.nav[b-ussj044e2c] {
-    margin-top: 30px;
+    margin-top: 8px;
 }
 
 .nav-item[b-ussj044e2c] a.active,
 .nav-item[b-ussj044e2c] a:hover {
-    font-family: 'Nunito Sans' sans-serif;
-    font-weight: bold;
-    color: #1B50B1;
+    font-family: Helvetica;
+    color: #143c85;
 }
 
 .nav-item[b-ussj044e2c] a,
 .nav-item[b-ussj044e2c] a:active,
 .nav-item[b-ussj044e2c] a:focus {
-    color: #4D5D6C;
+    color: #095C9D;
+    font-family: Helvetica;
 }
     /*
     CUSTOM
 */
     .nav-item[b-ussj044e2c] a i {
-        margin-right: 24px;
+        margin-right: 16px;
     }
 
 div.page-layout {
@@ -212,3 +212,110 @@ tbody > tr {
     box-shadow: 0px 0px 5px rgb(0 0 0 / 15%);
 }
 
+.collapse-header {
+    width: 740px;
+    height: 50px;
+    background: #1B50B1;
+    padding-left:20px;
+    padding-top: 10px;
+    color: #fff;
+}
+.small-buttons {
+    color: #1B50B1;
+    border: 0px;
+    background-color: inherit;
+}
+span.csf-span {
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.border-dashed {
+    border-style: dashed;
+    border-color: #BDC1C6;
+    background-color: inherit;
+}
+.multiple-select {
+    background-color: #F7F9FC !important;
+    color: #4D5D6C !important;
+    border: 1px solid #ced4da !important
+}
+.file-drop-zone {
+    border: 4px dashed #DAA159;
+    display: flex;
+    background-color: #EEEEEE;
+    height: 140px;
+    color: #808080;
+}
+    .file-drop-zone input[type=file], .file-drop-zone-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+   
+.file-drop-zone-disabled {
+    border: 4px dashed #BDC1C6;
+    color: #BDC1C6;
+    display: flex;
+    height: 140px;
+    background-color: #EEEEEE;
+}
+.badge-new {
+    color: black;
+    font-weight: 100;
+    background-color: #C2CEE6CC;
+    border: 1px solid #8DA4D2;
+}
+.badge-pending {
+    color: black;
+    font-weight: 100;
+    background-color: #F9D9C2CC;
+    border: 1px solid #F6BD95;
+}
+.badge-cancelled {
+    color: black;
+    font-weight: 100;
+    background-color: #F9FAFF;
+    border: 1px solid #B6BDC6;
+}
+.badge-completed {
+    color: black;
+    font-weight: 100;
+    background-color: #D0E9C2CC;
+    border: 1px solid #A8D78F;
+}
+.badge-inprogress {
+    color: black;
+    font-weight: 100;
+    background-color: #D7BDE5CC;
+    border: 1px solid #C4A8D9;
+}
+.workloadtableheader {
+    font-weight: 700;
+    background-color: #DEE2E6;
+
+}
+input[type=checkbox]{
+    margin-right: 0.5rem;
+}
+.TestToast {
+    animation: fadeout 1.5;
+    
+    
+   
+}
+@keyframes fadeout {
+from{
+    opacity: 1;
+}
+to{
+    opacity: 0;
+}
+}
+.AttachmentScreenHeader {
+    border-bottom: 1px solid #dee2e6 !important;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+}
