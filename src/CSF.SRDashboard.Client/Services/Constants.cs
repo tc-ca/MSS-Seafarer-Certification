@@ -38,5 +38,18 @@ namespace CSF.SRDashboard.Client.Services
             new Dropdown { ID = "4", Text = "EMER"}
         };
 
+        public static List<Dropdown> DocumentTypeList = new List<Dropdown> {
+        new Dropdown{ ID = "1",Text = "MME Exam Report" },
+        new Dropdown{ ID = "2",Text = "Medical Report" },
+        new Dropdown{ ID = "3",Text = "Letter" },
+        new Dropdown{ ID = "4",Text = "Certificate" },
+        new Dropdown{ ID = "5",Text = "Other" }
+        };
+
+        public static List<Dropdown> Languages = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "English" },
+            new Dropdown { ID = "2", Text = "French" }
+        };
+
     }
 }

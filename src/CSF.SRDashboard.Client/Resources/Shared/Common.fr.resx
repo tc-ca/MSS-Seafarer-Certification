@@ -297,4 +297,16 @@
   <data name="RequiredField" xml:space="preserve">
     <value>Required field_fr</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description_fr</value>
+  </data>
+  <data name="DocumentLanguage" xml:space="preserve">
+    <value>Document language_fr</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>Document type_fr</value>
+  </data>
+  <data name="DocumentTypes" xml:space="preserve">
+    <value>Document type(s)_fr</value>
+  </data>
 </root>

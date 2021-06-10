@@ -297,4 +297,16 @@
   <data name="RequiredField" xml:space="preserve">
     <value>Required field</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DocumentLanguage" xml:space="preserve">
+    <value>Document language</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>Document type</value>
+  </data>
+  <data name="DocumentTypes" xml:space="preserve">
+    <value>Document type(s)</value>
+  </data>
 </root>
