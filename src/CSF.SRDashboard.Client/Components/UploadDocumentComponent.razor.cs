@@ -27,14 +27,17 @@ namespace CSF.SRDashboard.Client.Components
         }
         [Parameter]
         public EventCallback<List<UploadedDocument>> DocumentFormChanged { get; set; }
-
+        [Parameter]
+        public EventCallback OnFileUploaded { get; set; }
+       
         private List<UploadedDocument> documentForm;
 
         [Parameter]
         public bool AllowMultipleUploads { get; set; }
-        public int MaxAllowedFiles => this.AllowMultipleUploads ? 5 : 1;
-
+        public int MaxAllowedFiles => this.AllowMultipleUploads ? maxUploadedFiles : 1;
+        private int maxUploadedFiles = 5;
         public string UploadClass => this.DocumentForm.Count < this.MaxAllowedFiles ? "file-drop-zone" : "file-drop-zone-disabled";
+        
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -46,6 +49,11 @@ namespace CSF.SRDashboard.Client.Components
         {
             
             var files = e.GetMultipleFiles();
+            
+            if(this.DocumentForm.Count >= this.MaxAllowedFiles)
+            {
+                return;
+            }
             
             foreach (var file in files)
             {
@@ -65,6 +73,7 @@ namespace CSF.SRDashboard.Client.Components
                 }
               
             }
+           await this.OnFileUploaded.InvokeAsync();
             StateHasChanged();
         }
     }

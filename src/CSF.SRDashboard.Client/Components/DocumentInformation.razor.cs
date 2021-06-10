@@ -60,6 +60,7 @@ namespace CSF.SRDashboard.Client.Components
 
         public List<IFormFile> FilesToUpload { get; set; }
 
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -70,7 +71,10 @@ namespace CSF.SRDashboard.Client.Components
            
         }
 
-        
+        public void ChangeState()
+        {
+           StateHasChanged();
+        }
         public void ViewDocument(UploadedDocument document)
         {
             this.NavigationManager.NavigateTo(document.DownloadLink);

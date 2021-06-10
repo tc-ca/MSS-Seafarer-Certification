@@ -198,7 +198,19 @@ namespace CSF.SRDashboard.Client.Services
 
             return uploadedWorkItem;
         }
-
+        public async Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO)
+        {
+            string requestPath = "/api/v1/workitem-attachments";
+            try
+            {
+                return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return Task.FromResult(new WorkItemAttachmentDTO);
+        }
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant)
         {
             ContactInformationDTO contact = new ContactInformationDTO();
@@ -231,6 +243,7 @@ namespace CSF.SRDashboard.Client.Services
 
             return itemDetailString;
         }
+
 
     }
 

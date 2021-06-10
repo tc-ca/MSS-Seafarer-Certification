@@ -1,6 +1,7 @@
 ﻿using CSF.API.Data.Entities;
 using CSF.API.Services.Repositories;
 using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
@@ -22,117 +23,105 @@ namespace CSF.SRDashboard.Client.Components
 {
     public partial class AddDocumentComponent
     {
-     
-       
-        public IFormFile FileToUpload { get; set; }
-        
-        public List<UploadedDocument> DocumentForm { get; set; }
 
-        [Parameter] 
-        public string ProfileName { get; set; }
-        
-        public List<string> DocumentTypes { get; set; }
-        
-       
-        public EditContext EditContext { get; set; }
-        
+
         [Inject]
         public NavigationManager NavigationManager { get; private set; }
-        
-        [Inject]
-        public SessionState State { get; set; }
-        
+
         [Inject]
         public IClientXrefDocumentRepository ClientXrefDocumentRepository { get; set; }
-        
+        [Inject]
+        public IWorkLoadManagementService WorkLoadManagementService { get; set; }
         [Inject]
         public IDocumentService DocumentServe { get; set; }
-        
-        [Inject]
-        public IGatewayService GatewayService { get; set; }
+
         [Parameter]
-        public MpdisApplicantDto Applicant { get; set; }
-        
+        public string Cdn { get; set; }
+
         [Parameter]
         public bool AllowMultipleUploads { get; set; }
 
+        [Parameter]
+        public int RequestId { get; set; } = -1;
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+
+        public List<string> DocumentTypes { get; set; }
+
+        public EditContext EditContext { get; set; }
+
         public DocumentInfo DocumentInfo { get; set; }
-        
-        public string MultipleSelectTitle { get; set; }
-        
+
         public string Language { get; set; }
-        
+
         public ValidationMessageStore ValidationMessageStore { get; private set; }
-        
-        private bool AccordionExpanded { get; set; } = true;
-        
-        public string FileName
+
+        public void FileUploaded()
         {
-            get
+            this.StateHasChanged();
+        }
+        private async void HandleValidSubmit()
+        {
+            if (!string.IsNullOrEmpty(this.Cdn))
             {
-                if (FileToUpload == null)
-                    return String.Empty;
-                return FileToUpload.FileName;
+                this.uploadToSeafarer();
+            }
+            else if (this.RequestId != -1)
+            {
+                this.uploadToWorkRequest();
+            }
+
+        }
+        private async void uploadToWorkRequest()
+        {
+            var isValid = Validate();
+
+            foreach (var document in this.DocumentForm)
+            {
+
+                var addedDocumentIds = await this.uploadDocument(document);
+                WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO() { DocumentId = addedDocumentIds[0], WorkItemId = this.RequestId };
+                await this.WorkLoadManagementService.AddWorkItemAttachment(workItemAttachmentDTO);
             }
         }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            this.DocumentForm = new List<UploadedDocument>();
-            this.Applicant = new MpdisApplicantDto();
-            this.MultipleSelectTitle = "Select";
-        }
 
-        private async void HandleValidSubmit()
+
+        private async void uploadToSeafarer()
         {
-          
             var isValid = Validate();
 
-            foreach (var documents in this.DocumentForm) {
-                this.DocumentTypes = PopulateDocumentTypes(documents.DocumentTypeList);
-                var SelectedLanguage = documents.Languages[documents.SelectValue - 1].Text;
-                this.Language = SelectedLanguage;
-                var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", FileToUpload, string.Empty, documents.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
+            foreach (var document in this.DocumentForm)
+            {
+
+                var addedDocumentIds = await this.uploadDocument(document);
                 if (addedDocumentIds.Count > 0)
                 {
                     this.DocumentInfo = new DocumentInfo
                     {
-                        Cdn = this.Applicant.Cdn,
+                        Cdn = this.Cdn,
                         DateStartDte = DateTime.UtcNow,
                         DocumentId = addedDocumentIds[0]
                     };
 
                 }
-                 ClientXrefDocumentRepository.Insert(this.DocumentInfo);
+                ClientXrefDocumentRepository.Insert(this.DocumentInfo);
             }
-               
-                this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
-            
-        } 
 
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
+        }
+        private async Task<List<Guid>> uploadDocument(UploadedDocument document)
+        {
+            this.DocumentTypes = PopulateDocumentTypes(document.DocumentTypeList);
+            var SelectedLanguage = document.Languages[document.SelectValue - 1].Text;
+            this.Language = SelectedLanguage;
+            var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", document.FormFile, string.Empty, document.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
+            return addedDocumentIds;
+        }
         /// <summary>
         /// Checks if the form is validated
         /// </summary>
         /// <returns></returns>
-        private bool Validate()
-        {
-            if (this.DocumentForm.Count <= -1)
-            {
-               return false;
-            }
-           
-            if (this.DocumentTypes.Count <= 0)
-            {
-                return false;
-            }
-
-            if(this.FileToUpload == null)
-            {
-                return false;
-            }
-            return true;
-        }
+        private bool Validate() => !(this.DocumentForm.Count <= 0);
 
         /// <summary>
         /// populates the list of document types from the form
@@ -142,7 +131,7 @@ namespace CSF.SRDashboard.Client.Components
         private List<string> PopulateDocumentTypes(List<SelectListItem> documentType)
         {
             List<string> DocumentTypes = new List<string>();
-           
+
 
             foreach (var i in documentType)
             {
@@ -152,26 +141,24 @@ namespace CSF.SRDashboard.Client.Components
                     DocumentTypes.Add(i.Text);
                 }
             }
-            
+
             return DocumentTypes;
         }
-        
+
         /// <summary>
         /// cancels and returns to the profile page
         /// </summary>
         public void HandleCancel()
         {
-            this.FileToUpload = null;
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
         }
 
-       /// <summary>
-       /// Removes the attachment
-       /// </summary>
+        /// <summary>
+        /// Removes the attachment
+        /// </summary>
         public void RemoveAttachment()
         {
             this.ValidationMessageStore.Clear();
-            this.FileToUpload = null;
         }
     }
 }
