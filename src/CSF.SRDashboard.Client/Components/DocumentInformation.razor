@@ -10,7 +10,7 @@
                 <div class="" @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
                     <div style="cursor: pointer;">
                         <a style="color: #1B50B1;">
-                            <i class="fas fa-eye mr-2"></i>View
+                            <i class="fas fa-eye mr-2"></i>@Localizer["View"]
                         </a>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                     @if (!this.IsReadOnly)
                     {
                         <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
-                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">@Localizer["Delete"]</span></i>
                         </button>
 
 
@@ -62,7 +62,7 @@
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle="Select Title Chris">
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title= "@Localizer["DocumentTypes2"]" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle="Select Title Chris">
                             <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
@@ -102,7 +102,7 @@
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" />
+                        <FormInputTextArea Id="InputTextArea" Label=@Localizer["Description"] Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" />
                     }
                     else
                     {
