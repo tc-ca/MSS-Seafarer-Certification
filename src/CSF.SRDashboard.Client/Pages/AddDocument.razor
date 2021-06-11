@@ -7,8 +7,8 @@
 
         <div class="d-flex justify-content-end align-items-center">
             <button @onclick="HandleCancel" class="btn btn-light mr-3">Cancel</button>
-            <button @onclick="HandleValidSubmit" class="btn btn-primary">Save attachment</button>
+            <button @onclick="uploadToSeafarer" class="btn btn-primary">Save attachment</button>
         </div>
     </div>
 </div>
-<CSF.SRDashboard.Client.Components.AddDocumentComponent AllowMultipleUploads="false" Cdn="this.Applicant.Cdn" />
+<CSF.SRDashboard.Client.Components.AddDocumentComponent DocumentForm="this.DocumentForm" AllowMultipleUploads="true" />

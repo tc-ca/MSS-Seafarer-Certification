@@ -70,6 +70,10 @@ namespace CSF.SRDashboard.Client.Components
             this.EditContext = new EditContext(this.UploadedDocuments);
            
         }
+        public void HandleValidSubmit()
+        {
+            Console.WriteLine("hi");
+        }
 
         public void ChangeState()
         {
