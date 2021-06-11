@@ -292,7 +292,7 @@
     <value>view request</value>
   </data>
   <data name="EditRequest" xml:space="preserve">
-    <value>edit request</value>
+    <value>Edit request</value>
   </data>
   <data name="SaveRequest" xml:space="preserve">
     <value>Save request</value>
