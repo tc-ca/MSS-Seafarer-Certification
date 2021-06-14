@@ -246,6 +246,21 @@ namespace CSF.SRDashboard.Client.Services
             return uploadedWorkItem;
         }
 
+        public WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status)
+        {
+            WorkItemStatusDTO updatedStatus = null;
+            string requestPath = $"api/v1/workitems/statuses";
+            try
+            {
+                updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return updatedStatus;
+        }
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
             ContactInformationDTO contact = new ContactInformationDTO();

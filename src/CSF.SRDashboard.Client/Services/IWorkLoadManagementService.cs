@@ -73,5 +73,7 @@ namespace CSF.SRDashboard.Client.Services
         List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn);
 
         List<WorkloadRequestTableItem> GetAllInRequestTableFormat();
+
+        WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status);
     }
 }
