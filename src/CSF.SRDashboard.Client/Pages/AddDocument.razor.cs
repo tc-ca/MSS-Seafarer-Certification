@@ -27,18 +27,22 @@ namespace CSF.SRDashboard.Client.Pages
         public IGatewayService GatewayService { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; private set; }
+        [Inject]
+        public SessionState State { get; set; }
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
-        [Inject]
-        public SessionState State { get; set; }
+       
 
-        public IUploadDocumentService UploadService { get; set; } = new UploadDocumentService();
+        public IUploadDocumentService UploadService { get; set; }
         public DocumentInfo DocumentInfo { get; set; }
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+            this.UploadService = new UploadDocumentService(this.DocumentService);
         }
 
         private async Task uploadToSeafarer()
@@ -57,9 +61,9 @@ namespace CSF.SRDashboard.Client.Pages
                         DateStartDte = DateTime.UtcNow,
                         DocumentId = addedDocumentIds[0]
                     };
-
+                    ClientXrefDocumentRepository.Insert(this.DocumentInfo);
                 }
-                ClientXrefDocumentRepository.Insert(this.DocumentInfo);
+               
             }
 
             this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");

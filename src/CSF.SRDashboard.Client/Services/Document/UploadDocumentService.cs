@@ -12,13 +12,12 @@ namespace CSF.SRDashboard.Client.Services.Document
     {
         public List<string> DocumentTypes { get; set; }
         public string Language { get; private set; }
-        [Inject]
         public IDocumentService DocumentServe { get; set; }
         private List<UploadedDocument> DocumentForm { get; set; }
 
-        public UploadDocumentService()
+        public UploadDocumentService(IDocumentService documentService)
         {
-           
+            this.DocumentServe = documentService;
         }
         public async Task<List<Guid>> UploadDocument(UploadedDocument document)
         {
@@ -26,7 +25,7 @@ namespace CSF.SRDashboard.Client.Services.Document
             this.DocumentTypes = document.DocumentTypeList.Where(i => i.Value == true).Select(i => i.Text).ToList();
             var SelectedLanguage = document.Languages[document.SelectValue - 1].Text;
             this.Language = SelectedLanguage;
-            var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", document.FormFile, string.Empty, document.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
+            var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", document.FormFile, document.FormFile.ContentType, document.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
             return addedDocumentIds;
         }
         /// <summary>

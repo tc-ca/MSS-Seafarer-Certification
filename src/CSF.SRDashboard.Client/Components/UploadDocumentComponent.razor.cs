@@ -38,7 +38,7 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public bool AllowMultipleUploads { get; set; }
         public int MaxAllowedFiles => this.AllowMultipleUploads ? maxUploadedFiles : 1;
-        private int maxUploadedFiles = 5;
+        private int maxUploadedFiles = 1000;
         public string UploadClass => this.DocumentForm.Count < this.MaxAllowedFiles ? "file-drop-zone" : "file-drop-zone-disabled";
 
         protected override void OnInitialized()
