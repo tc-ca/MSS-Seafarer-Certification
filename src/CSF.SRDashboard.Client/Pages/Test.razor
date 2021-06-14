@@ -1,0 +1,37 @@
+﻿@page "/test"
+@inject IWorkLoadManagementService workloadService;
+@using DTO.WorkLoadManagement
+
+<h3>This is a test page</h3>
+
+@code
+{
+
+    protected override void OnInitialized()
+    {
+
+
+        var workItemStatus = CreateStatus(1000120);
+
+        var newStatus = workloadService.AddWorkItemStatus(workItemStatus);
+
+        var item2 = workloadService.GetByWorkItemById(1000120);
+
+    }
+
+
+
+
+    //TODO: confirm what values we want to use for those status code, reason code and StatusAdditionalDetails
+    private WorkItemStatusDTO CreateStatus(int workItemId)
+    {
+        WorkItemStatusDTO status = new WorkItemStatusDTO();
+        status.WorkItemId = workItemId;
+        status.WorkItemStatusCode = "Approved";
+        status.WorkItemReasonCode = "Approved by Darren";
+        status.StatusAdditionalDetails = "testing";
+
+
+        return status;
+    }
+}
