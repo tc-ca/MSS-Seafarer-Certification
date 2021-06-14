@@ -5,7 +5,7 @@
 <button @onclick="CreateNewRequest" class="btn btn-primary mt-3 mb-2 float-right">@Localizer["AddRequest"]</button>
 
 <div class="table-responsive">
-    <Table TableClass="table table-striped table-hover mt-3" RowClickAction="RowClicked" TableHeadClass="workloadtableheader text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false">
+    <Table TableClass="table table-striped table-hover mt-3" id="WorkloadTable" RowClickAction="RowClicked" TableHeadClass="workloadtableheader text-dark" TableItem="WorkloadRequestTableItem" Items="TableData" DefaultPageSize="25" ShowSearchBar="false" data-sort-name="date" data-sort-order="desc">
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["RequestID"]" Field="@(x => x.RequestId)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["Assignto"]" Field="@(x => x.AssignedTo)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title="@Localizer["RequestType"]" Field="@(x => x.RequestType)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
@@ -21,7 +21,7 @@
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["ProcessingPhase"] Field="@(x => x.ProcessingPhase)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["DateCreated"] Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["DateCreated"] Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" DefaultSortColumn="true" DefaultSortDescending="true">
             <Template Context="WorkloadRequestTableItem">
                 @if (WorkloadRequestTableItem.RequestDate.HasValue)
                 {
