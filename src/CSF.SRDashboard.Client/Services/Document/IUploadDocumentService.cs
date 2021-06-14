@@ -11,6 +11,7 @@ namespace CSF.SRDashboard.Client.Services.Document
         List<string> DocumentTypes { get; set; }
         string Language { get; }
 
+
         Task<List<Guid>> UploadDocument(UploadedDocument document);
     }
 }

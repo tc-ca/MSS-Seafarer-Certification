@@ -68,10 +68,8 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IRestClient, GatewayRestClient>();
             services.AddSingleton<IDocumentService, DocumentService>();
             services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
-            services.AddSingleton<IUploadDocumentService, UploadDocumentService>();
 
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
-
             services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();

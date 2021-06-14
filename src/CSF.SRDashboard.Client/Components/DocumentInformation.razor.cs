@@ -48,7 +48,7 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public List<UploadedDocument> UploadedDocuments { get; set; }
         
-        private List<UploadedDocument> uploadedDocuments;
+
        
         [Inject]
         NavigationManager NavigationManager { get; set; }
@@ -73,6 +73,7 @@ namespace CSF.SRDashboard.Client.Components
         public void HandleValidSubmit()
         {
             Console.WriteLine("hi");
+
         }
 
         public void ChangeState()

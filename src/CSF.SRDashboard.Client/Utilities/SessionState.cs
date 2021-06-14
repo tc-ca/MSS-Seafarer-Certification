@@ -1,4 +1,5 @@
 ﻿using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.Models;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace CSF.SRDashboard.Client.Utilities
 
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
 
-        public ApplicantSearchCriteria SearchCriteria { get; set; }        
+        public ApplicantSearchCriteria SearchCriteria { get; set; }
+
+        public List<UploadedDocument> DocumentForm { get; set; }
     }
 }

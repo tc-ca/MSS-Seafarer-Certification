@@ -44,8 +44,6 @@ namespace CSF.SRDashboard.Client.Components
 
         public EditContext EditContext { get; set; }
 
-       
-
         public string Language { get; set; }
 
         public ValidationMessageStore ValidationMessageStore { get; private set; }

@@ -16,14 +16,14 @@ namespace CSF.SRDashboard.Client.Services.Document
         public IDocumentService DocumentServe { get; set; }
         private List<UploadedDocument> DocumentForm { get; set; }
 
-        public UploadDocumentService(List<UploadedDocument> uploadedDocuments)
+        public UploadDocumentService()
         {
-            this.DocumentForm = uploadedDocuments;
+           
         }
-
         public async Task<List<Guid>> UploadDocument(UploadedDocument document)
         {
-            this.DocumentTypes = PopulateDocumentTypes(document.DocumentTypeList);
+           
+            this.DocumentTypes = document.DocumentTypeList.Where(i => i.Value == true).Select(i => i.Text).ToList();
             var SelectedLanguage = document.Languages[document.SelectValue - 1].Text;
             this.Language = SelectedLanguage;
             var addedDocumentIds = await DocumentServe.InsertDocument(1, "User", document.FormFile, string.Empty, document.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
@@ -34,27 +34,5 @@ namespace CSF.SRDashboard.Client.Services.Document
         /// </summary>
         /// <returns></returns>
         private bool Validate() => !(this.DocumentForm.Count <= 0);
-
-        /// <summary>
-        /// populates the list of document types from the form
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        private List<string> PopulateDocumentTypes(List<SelectListItem> documentType)
-        {
-            List<string> DocumentTypes = new List<string>();
-
-
-            foreach (var i in documentType)
-            {
-
-                if (i.Value)
-                {
-                    DocumentTypes.Add(i.Text);
-                }
-            }
-
-            return DocumentTypes;
-        }
     }
 }

@@ -4,6 +4,7 @@ using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Core.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -29,22 +30,22 @@ namespace CSF.SRDashboard.Client.Pages
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+        [Inject]
+        public SessionState State { get; set; }
 
-        public IUploadDocumentService UploadService { get; set; }
+        public IUploadDocumentService UploadService { get; set; } = new UploadDocumentService();
         public DocumentInfo DocumentInfo { get; set; }
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.UploadService = new UploadDocumentService(this.DocumentForm);
-         
         }
 
         private async Task uploadToSeafarer()
         {
          
 
-            foreach (var document in this.DocumentForm)
+            foreach (var document in this.State.DocumentForm)
             {
 
                 var addedDocumentIds = await this.UploadService.UploadDocument(document);
