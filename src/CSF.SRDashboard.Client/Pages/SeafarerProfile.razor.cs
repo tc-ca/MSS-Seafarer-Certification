@@ -99,7 +99,8 @@
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
-            DocumentInfos = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            var documentDTO = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            DocumentInfos = documentDTO.Documents;
 
             foreach (var documentInfo in DocumentInfos)
             {
