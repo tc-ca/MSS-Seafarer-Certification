@@ -1,12 +1,11 @@
-﻿
-<EditForm EditContext="@EditContext">
+﻿<EditForm EditContext="@EditContext">
     <div class="row">
         <div class="col-12 d-grid gap-3">
             @if (ShowRequestID)
             {
                 if (!this.IsReadOnly)
                 {
-                    <FormInputText readonly="@this.IsReadOnly" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
+                    <FormInputText readonly="@Editable" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
                 }
                 else
                 {
@@ -20,7 +19,7 @@
                 <FormInputSelect Label="@Localizer["RequestType"]" Id="RequestType" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.RequestType" ValidationFor="@(() => RequestModel.RequestType)">
                     @foreach (var item in Constants.RequestTypes)
                         {
-                        <option value="@item.Text">@item.Text</option>
+                        <option value="@item.ID">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -42,7 +41,7 @@
                 <FormInputSelect Id="CertificateType" Label="@Localizer["CertificateType"]" ShowDefaultOption="ShowDefaultOption" SelectLabel="@RequestModel.CertificateType" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(() => RequestModel.CertificateType)" Required="true">
                     @foreach (var item in Constants.CertificateTypes)
                         {
-                        <option value="@item.Text">@item.Text</option>
+                        <option value="@item.ID">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -63,7 +62,7 @@
                 <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
                     @foreach (var item in Constants.SubmissionMethods)
                         {
-                        <option value="@item.Text">@item.Text</option>
+                        <option value="@item.ID">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -80,5 +79,5 @@
 
             }
         </div>
-            </div>
-        </EditForm>
+    </div>
+</EditForm>

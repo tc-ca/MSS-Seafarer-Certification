@@ -35,10 +35,12 @@ namespace CSF.SRDashboard.Client.Services
         };
 
         public static List<Dropdown> SubmissionMethods = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "FAX" },
-            new Dropdown { ID = "2", Text = "MAIL"},
-            new Dropdown { ID = "3", Text = "EMAIL"},
-            new Dropdown { ID = "4", Text = "EMER"}
+            new Dropdown { ID = "1", Text = "E-mail" },
+            new Dropdown { ID = "2", Text = "Mail"},
+            new Dropdown { ID = "3", Text = "Fax"},
+            new Dropdown { ID = "4", Text = "Online"},
+            new Dropdown { ID = "5", Text = "Phone"},
+            new Dropdown { ID = "6", Text = "Other"}
         };
 
         public static List<Dropdown> RequestStatuses = new List<Dropdown> {
