@@ -11,10 +11,23 @@ namespace CSF.APIM.Gateway
 {
     public class Program
     {
+        public static string GetAppSettingsEnvironment()
+        {
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Acceptance")
+            {
+                if (Directory.GetCurrentDirectory().Contains("-dev", System.StringComparison.CurrentCultureIgnoreCase))
+                    return "Acceptance-dev";
+                else
+                    return "Acceptance-acc";
+            }
+            else
+                return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+        }
+        
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+            .AddJsonFile($"appsettings.{GetAppSettingsEnvironment()}.json", optional: true)
             .AddEnvironmentVariables()
             .Build();
 
@@ -52,8 +65,7 @@ namespace CSF.APIM.Gateway
 
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
-                        var hostingEnvironment = hostingContext.HostingEnvironment;
-                        config.AddJsonFile($"Ocelot.{hostingEnvironment.EnvironmentName}.json");
+                        config.AddJsonFile($"Ocelot.{GetAppSettingsEnvironment()}.json");
                     });
                 });
     }

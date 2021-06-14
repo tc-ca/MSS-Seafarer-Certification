@@ -69,7 +69,7 @@ namespace CSF.APIM.Gateway
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello Seafarer. Start your journey !\n Application Hosting environment is: "+ env.EnvironmentName );
+                    await context.Response.WriteAsync("Hello Seafarer. Start your journey !\n Application Hosting environment is: "+ Program.GetAppSettingsEnvironment() );
                 });
             });
 

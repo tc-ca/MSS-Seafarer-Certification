@@ -1,0 +1,63 @@
+/*
+ * Kanga server hosts both Development (csf-gmc-apigw-dev) and Acceptance (csf-gmc-apigw-acc) builds of the gateway.
+ * This file refers to settings for deployment of csf-gmc-apigw-dev.
+ */
+{
+  "Routes": [
+
+    // pokemon api for testing
+    {
+      "DownstreamPathTemplate": "/api/v2/pokemon",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//pokeapi.co",
+          "Port": "443"
+        }
+      ],
+      "UpstreamPathTemplate": "/pokemon",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    // MPDIS applicant personal information without medical data
+    // the actual url is like the following:
+    //https://tcappstest.tc.gc.ca/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicant/0185855Z
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicant/{cdn}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappstest.tc.gc.ca",
+          "Port": "443"
+        }
+      ],
+      "UpstreamPathTemplate": "/mpdis/Applicant/{cdn}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    // Search with Criteria
+    // the direct url is like the following:
+    //https://tcappstest.tc.gc.ca/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicants/search
+    {
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicants/search",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "//tcappstest.tc.gc.ca",
+          "Port": "443"
+        }
+      ],
+      "UpstreamPathTemplate": "/mpdis/search",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    }
+
+  ]
+}
