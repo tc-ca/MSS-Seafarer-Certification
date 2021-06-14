@@ -243,6 +243,8 @@ namespace CSF.SRDashboard.Client.Services
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
+            workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
+            AddWorkItemStatus(workItem.WorkItemStatus);
             var uploadedWorkItem = this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;
