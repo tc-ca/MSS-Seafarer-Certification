@@ -38,5 +38,6 @@ namespace CSF.SRDashboard.Client.Services
             new Dropdown { ID = "4", Text = "EMER"}
         };
 
+        public const string NoProfilePicturePath = "/img/No_profile_img.JPG";
     }
 }

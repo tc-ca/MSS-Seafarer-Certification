@@ -17,8 +17,15 @@ namespace CSF.SRDashboard.Client.Services
         {
             this.configuration = configuration;
             this.httpClient = httpClientFactory.CreateClient();
-            var token = tokenAcquisitionService.GetAccessTokenForUserAsync(new string[] { "User.Read" }).GetAwaiter().GetResult();
-            this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            try
+            {
+                var token = tokenAcquisitionService.GetAccessTokenForUserAsync(new string[] { "User.Read" }).GetAwaiter().GetResult();
+                this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message +"\n"+ ex.InnerException);
+            }
         }
 
         public string GetUserDisplayName()
@@ -55,6 +62,10 @@ namespace CSF.SRDashboard.Client.Services
                     var byteArray = photoData.ToArray();
                     string base64String = Convert.ToBase64String(byteArray);
                     photoDataString = "data:image/jpg;base64," + base64String;
+                }
+                else
+                {
+                    photoDataString = Constants.NoProfilePicturePath;
                 }
             }
             catch (Exception ex)

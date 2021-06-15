@@ -41,10 +41,8 @@ namespace CSF.SRDashboard.Client
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var updatedAzureAD = ConfigurationHelperService.UpdateConfigurationForAzureAD(Configuration);
-
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                    .AddMicrosoftIdentityWebApp(updatedAzureAD)
+                    .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
                     .EnableTokenAcquisitionToCallDownstreamApi(new[] { "User.Read" })
                     .AddInMemoryTokenCaches();
 
@@ -77,8 +75,8 @@ namespace CSF.SRDashboard.Client
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
 
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
-            //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
-            services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
+            services.AddTransient<IUserGraphApiService, UserGraphApiService>();
+            //services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
             services.AddTransient<IValidator<AddDocumentModel>, AddAttachmentValidator>();
 
             services.AddScoped<IAzureBlobService, AzureBlobService>();
