@@ -309,4 +309,19 @@
   <data name="DocumentTypes2" xml:space="preserve">
     <value>Document type(s)*</value>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="EditAttachment" xml:space="preserve">
+    <value>edit attachment</value>
+  </data>
+  <data name="SaveAttchedment" xml:space="preserve">
+    <value>Save attchedment</value>
+  </data>
+  <data name="ViewAttachment" xml:space="preserve">
+    <value>view attachment</value>
+  </data>
 </root>

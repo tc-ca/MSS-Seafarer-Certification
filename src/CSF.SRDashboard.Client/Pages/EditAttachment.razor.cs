@@ -6,6 +6,7 @@ using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,9 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        IStringLocalizer<Shared.Common> Localizer { get; set; }
 
         public MpdisApplicantDto Applicant { get; set; }
 

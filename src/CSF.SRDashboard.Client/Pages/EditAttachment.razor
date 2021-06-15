@@ -4,15 +4,15 @@
 {
     <EditForm EditContext="@this.EditContext" OnValidSubmit="SaveChanges">
         <div class="d-flex">
-            <div class="mr-auto p-2"><h3>@this.Applicant.FullName - edit attachment</h3></div>
-            <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">Back</button></div>
-            <div class="p-2"><button class="btn btn-primary" type="submit">Save attachedment</button></div>
+            <div class="mr-auto p-2"><h3>@this.Applicant.FullName - @Localizer["EditAttachment"]</h3></div>
+            <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">@Localizer["Back"]</button></div>
+            <div class="p-2"><button class="btn btn-primary" type="submit">@Localizer["SaveAttchedment"]</button></div>
         </div>
         <hr />
 
         <div class="col-8">
 
-            <Collapse HeaderTitleTextColor="#FFFFFF" Title="Attachment" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+            <Collapse HeaderTitleTextColor="#FFFFFF" Title=@Localizer["Attachment"] HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
                 <BodyContent>
                     <CSF.SRDashboard.Client.Components.DocumentInformation EditContext="this.EditContext" UploadedDocuments="UploadedDocuments" Applicant="this.Applicant" IsReadOnly="false" />
                 </BodyContent>
@@ -25,8 +25,8 @@
         <hr />
         <div class="d-flex">
             <div class="mr-auto p-2"></div>
-            <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">Cancel</button></div>
-            <div class="p-2"><button class="btn btn-primary" type="submit">Save attachedment</button></div>
+            <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">@Localizer["Cancel"]</button></div>
+            <div class="p-2"><button class="btn btn-primary" type="submit">@Localizer["SaveAttachedment"]</button></div>
         </div>
     </EditForm>
 }
