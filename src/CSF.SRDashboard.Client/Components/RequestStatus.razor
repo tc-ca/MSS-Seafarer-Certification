@@ -7,7 +7,7 @@
             <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
                 @foreach (var item in Constants.RequestStatuses)
                 {
-                    @if (@item.Text.Equals(Constants.RequestStatusesDefaultValue)&& RequestModel.Status == null)
+                    @if (@item.Text.Equals(Constants.RequestStatusesDefaultValue)&& (RequestModel.Status == null || RequestModel.Status == @item.ID))
                     {
                         <option value ="@item.ID" selected> @item.Text</option>
                         RequestModel.Status = @item.ID;
