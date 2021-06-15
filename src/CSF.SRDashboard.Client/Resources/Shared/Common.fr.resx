@@ -303,4 +303,10 @@
   <data name="DocumentTypes" xml:space="preserve">
     <value>Document type(s)_fr</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete-fr</value>
+  </data>
+  <data name="DocumentTypes2" xml:space="preserve">
+    <value>Document type(s)_fr*</value>
+  </data>
 </root>

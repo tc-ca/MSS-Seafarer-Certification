@@ -7,52 +7,23 @@
         <div class="card-header bg-white">
             <div class="d-flex">
                 <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
-                <div class="">
+                <div class="mr-3">
                     @if (!this.IsReadOnly)
                     {
                         <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
-                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">@Localizer["Delete"]</span></i>
                         </button>
                     }
                 </div>
-                <div class="" @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
+                <div @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
                     <div style="cursor: pointer;">
                         <a style="color: #1B50B1;">
-                            <i class="fas fa-eye mr-2"></i>View
+                            <i class="fas fa-eye mr-2"></i>@Localizer["View"]
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!--<div class="row">
-                <div class="pr-10 pl-0">
-                    <i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i>
-                </div>
-                <div class="ml-5">
-                    @if (!this.IsReadOnly)
-                    {
-                        <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
-                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
-                        </button>
-
-
-                    }
-                    <div class="row">
-                        <div class="col mr-3">
-                            <div class="float-right" style="cursor: pointer;">
-                                <a style="color: #1B50B1;">
-                                    <i class="fas fa-eye mr-2"></i>View
-                                </a>
-                            </div>
-                        </div>
-                    </div>-->
-            @*<div class="float-right" style="cursor: pointer;">
-                    <a style="color: #1B50B1;">
-                        <i class="fas fa-eye mr-2"></i>View
-                    </a>
-                </div>*@
-            <!--</div>
-            </div>-->
         </div>
         <div class="card-body">
             <div class="form-group">
@@ -60,7 +31,7 @@
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" SelectTitle="" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
                             <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
@@ -101,7 +72,7 @@
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputTextArea Id="InputTextArea" Label="Description" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" />
+                        <FormInputTextArea Id="InputTextArea" Label="@Localizer["Description"]" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" />
                     }
                     else
                     {
