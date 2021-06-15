@@ -1,4 +1,5 @@
 ﻿using CSF.API.Data.Entities;
+using CSF.SRDashboard.Client.Services;
 using DSD.MSS.Blazor.Components.Core.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +39,7 @@ namespace CSF.SRDashboard.Client.Models
 
         public string Language { get; set; }
 
-        public string DocumentType { get; set; }
+        public List<DocumentTypes> DocumentType { get; set; }
 
         public IFormFile FormFile { get; set; }
 
@@ -48,35 +49,11 @@ namespace CSF.SRDashboard.Client.Models
 
         public UploadedDocument()
         {
-            DocumentTypeList = new List<SelectListItem>();
+            DocumentTypeList = Constants.DocumentTypeList;
 
             Languages = new List<SelectListItem>();
 
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "MME Exam Report",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Medical Report",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Letter",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Certificate",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Other",
-                Value = false
-            });
+            
 
             Languages.Add(new SelectListItem { Id = "1", Text = "EN", Value = false });
             Languages.Add(new SelectListItem { Id = "2", Text = "FR", Value = false });

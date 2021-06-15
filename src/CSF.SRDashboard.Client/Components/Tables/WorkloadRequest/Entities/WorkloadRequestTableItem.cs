@@ -12,7 +12,8 @@
             public string ApplicantCDN { get; set; }
             public string RequestType { get; set; }
 
-            public DateTime RequestDate { get; set; }
+            public DateTime? RequestDate { get; set; }
+
             public string Status { get; set; }
             public RequestStatus RequestStatus
             {

@@ -9,6 +9,8 @@ using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.PageValidators;
 using CSF.SRDashboard.Client.Components.Icons.Constants;
 using CSF.SRDashboard.Client.Components.Icons.Utilities;
+using System;
+
 namespace CSF.SRDashboard.Client.Pages
 {
     public partial class CreateNewRequest
@@ -52,8 +54,7 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 Cdn = Applicant.Cdn
             };
-            var t = FontAwesomeIconSize.TWO;
-            var t1 = FontAwesomeSpinAnimationType.SPIN;
+
             this.EditContext = new EditContext(RequestModel);
 
             StateHasChanged();
@@ -62,6 +63,7 @@ namespace CSF.SRDashboard.Client.Pages
         public void SaveChanges()
         {
             var isValid = EditContext.Validate();
+            
             if (!isValid)
             {
                 return;
@@ -70,19 +72,14 @@ namespace CSF.SRDashboard.Client.Pages
             var RequestToSend = new RequestModel
             {
                 Cdn = Applicant.Cdn,
-                CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
-                RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text
+                CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
 
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
-        }
-
-        private void SetMostRecentCommentsCollapseState()
-        {
-            MostRecentCommentsIsCollapsed = !MostRecentCommentsIsCollapsed;
         }
 
         public void ViewProfile()

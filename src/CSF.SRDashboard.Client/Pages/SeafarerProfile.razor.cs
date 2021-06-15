@@ -17,6 +17,7 @@
     using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
     using DSD.MSS.Blazor.Components.Core.Constants;
     using Microsoft.JSInterop;
+    using CSF.SRDashboard.Client.Services.Document.Entities;
 
     public partial class SeafarerProfile
     {
@@ -52,14 +53,12 @@
        
         public bool ShowToast { get; set; } = false;
 
-        public List<DocumentInfo> Documents { get; set; }
-
         public DateTime DOB;
         public bool ShowFilterHeader { get; set; } = true;
 
         protected List<Document> TableData = new List<Document>();
 
-        public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
+        public DocumentDTO DocumentResult { get; set; }
 
         public string currentRelativePath;
 
@@ -82,9 +81,9 @@
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
-            DocumentInfos = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            DocumentResult = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
 
-            foreach (var documentInfo in DocumentInfos)
+            foreach (var documentInfo in DocumentResult.Documents)
             {
 
                 var link = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentInfo.DocumentUrl, DateTime.UtcNow.AddHours(8));

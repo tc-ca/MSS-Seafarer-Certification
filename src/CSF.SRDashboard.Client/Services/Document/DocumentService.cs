@@ -29,11 +29,11 @@
             this.logger = logger;
         }
 
-        public async Task<List<DocumentInfo>> GetDocumentsWithDocumentIds(List<Guid> documentIds)
+        public async Task<DocumentDTO> GetDocumentsWithDocumentIds(List<Guid> documentIds)
         {
             if (documentIds == null || documentIds.Count == 0)
             {
-                return new List<DocumentInfo>();
+                return new DocumentDTO();
             }
 
             string queryString = string.Empty;
@@ -45,14 +45,14 @@
 
             try
             {
-                return await restClient.GetAsync<List<DocumentInfo>>(ServiceLocatorDomain.Document, path);
+                return await restClient.GetAsync<DocumentDTO>(ServiceLocatorDomain.Document, path);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return new List<DocumentInfo>();
+            return new DocumentDTO();
         }
 
         public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata)
@@ -89,6 +89,64 @@
             }
 
             return new List<Guid>();
+        }
+
+        public async Task<List<DocumentUpdatedResult>> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, string documentTypes)
+        {
+            
+            string queryString = string.Empty;
+
+            queryString += $"documentId={documentId}&";
+
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                queryString += $"userName={userName}&";
+            }
+
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                queryString += $"fileName={fileName}&";
+            }
+
+            if (!string.IsNullOrWhiteSpace(fileContentType))
+            {
+                queryString += $"fileContentType={fileContentType}&";
+            }
+
+            if (!string.IsNullOrWhiteSpace(shortDescription))
+            {
+                queryString += $"shortDescription={shortDescription}&";
+            }
+
+            if (!string.IsNullOrWhiteSpace(submissionMethod))
+            {
+                queryString += $"submissionMethod={submissionMethod}&";
+            }
+
+            if (!string.IsNullOrWhiteSpace(fileLanguage))
+            {
+                queryString += $"fileLanguage={fileLanguage}&";
+            }
+
+            if (!string.IsNullOrWhiteSpace(documentTypes))
+            {
+                queryString += $"documentTypes={documentTypes}&";
+            }
+
+            string path = string.Format("documents?{0}", queryString.TrimEnd('&'));
+
+            try
+            {
+
+                return await restClient.PutAsync<List<DocumentUpdatedResult>>(ServiceLocatorDomain.Document, path);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return new List<DocumentUpdatedResult>();
         }
     }
 }

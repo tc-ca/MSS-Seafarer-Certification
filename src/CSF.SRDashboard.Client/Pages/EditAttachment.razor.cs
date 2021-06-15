@@ -6,6 +6,7 @@ using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Pages
 {
-    public partial class ViewAttachment
+    public partial class EditAttachment
     {
         protected EditContext EditContext;
 
@@ -39,11 +40,10 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
-
-        public bool Found { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -53,14 +53,35 @@ namespace CSF.SRDashboard.Client.Pages
 
             await GetDocumentAsync();
 
-            this.EditContext = new EditContext(UploadedDocuments);
+            this.EditContext = new EditContext(this.UploadedDocuments);
 
             StateHasChanged();
         }
 
-        public void Edit()
+        public async void SaveChanges()
         {
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/edit-attachment/" + UploadedDocuments[0].DocumentId);
+            var isValid = EditContext.Validate();
+
+            if (!isValid)
+            {
+                return;
+            }
+
+            var document = this.UploadedDocuments[0];
+
+            document.DocumentType = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypes { DocumentTypesId = Convert.ToInt32(d.Id), DocumentType = d.Text }).ToList();
+
+            document.Language = Constants.Languages.Where(x => x.ID.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
+
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, JsonConvert.SerializeObject(document.DocumentType));
+
+            if (!result.Any() && !result[0].IsUpdated)
+            {
+                return;
+            }
+
+            // Go to Seafarer profile and show message
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
         }
 
         /// <summary>
@@ -75,7 +96,6 @@ namespace CSF.SRDashboard.Client.Pages
 
             if (document == null)
             {
-                Found = false;
                 return;
             }
 
@@ -88,15 +108,23 @@ namespace CSF.SRDashboard.Client.Pages
 
             var documentModel = documentResult.Documents[0];
 
+            if (documentModel.Language.Equals("EN"))
+            {
+                documentModel.Language = "English";
+            }
+            else if (documentModel.Language.Equals("FR"))
+            {
+                documentModel.Language = "French";
+            }
+
             UploadedDocuments.Add(new UploadedDocument
             {
                 Cdn = this.Cdn,
                 DocumentId = documentModel.DocumentId,
                 Description = documentModel.Description,
                 FileName = documentModel.FileName,
-                Language = documentModel.Language,
+                Language = Constants.Languages.Where(x => x.Text.Equals(documentModel.Language, StringComparison.OrdinalIgnoreCase)).Single().ID,
                 DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentModel.DocumentUrl, DateTime.UtcNow.AddHours(8))
-
             });
         }
     }

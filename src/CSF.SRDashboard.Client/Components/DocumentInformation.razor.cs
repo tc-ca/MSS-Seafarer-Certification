@@ -29,15 +29,7 @@ namespace CSF.SRDashboard.Client.Components
         public List<UploadedDocument> UploadedDocuments { get; set; }
 
         [Parameter]
-        public bool Editable { get; set; }
-
-        [Parameter]
         public bool ShowDefaultOption { get; set; }
-
-        [Parameter]
-        public bool ShowRequestID { get; set; }
-
-        //[Parameter]
 
         [Parameter]
         public bool IsReadOnly { get; set; }
@@ -55,14 +47,9 @@ namespace CSF.SRDashboard.Client.Components
 
         public UploadedDocument DocumentForm { get; set; }
 
-
-        public List<IFormFile> FilesToUpload { get; set; }
-
         protected override void OnInitialized()
         {
-            
-            this.EditContext = new EditContext(this.UploadedDocuments);
-
+            base.OnInitialized();
         }
 
         /// <summary>
@@ -70,8 +57,7 @@ namespace CSF.SRDashboard.Client.Components
         /// </summary>
         public void HandleCancel()
         {
-            //this.FileToUpload = null;
-            //this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
         }
 
         public void ViewDocument(UploadedDocument document)
@@ -94,9 +80,7 @@ namespace CSF.SRDashboard.Client.Components
                 this.ValidationMessageStore.Clear();
             }
 
-            this.FilesToUpload.RemoveAt(index);
-
-            //this.FileToUpload = null;
+            UploadedDocuments.RemoveAt(index);
         }
     }
 }

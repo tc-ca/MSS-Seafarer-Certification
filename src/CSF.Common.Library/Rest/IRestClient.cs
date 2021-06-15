@@ -47,6 +47,14 @@
         /// <returns>Return bject as specified by the API.</returns>
         Task<TReturnMessage> PutAsync<TReturnMessage>(ServiceLocatorDomain serviceName, string path, object dataObject = null)
             where TReturnMessage : class, new();
+        /// <summary>
+        /// Makes a PUT call to the specified API.
+        /// </summary>
+        /// <typeparam name="TReturnMessage">Object type returned by the API.</typeparam>
+        /// <param name="restClientRequestOptions">the rest client request options.</param>
+        /// <returns>Return object as specified by the API.</returns>
+        Task<TReturnMessage> PutAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions)
+            where TReturnMessage : class, new();
 
         /// <summary>
         /// Makes a DELETE call to the specified API.

@@ -23,7 +23,7 @@
         <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["ProcessingPhase"] Field="@(x => x.ProcessingPhase)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
         <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["DateCreated"] Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
             <Template Context="WorkloadRequestTableItem">
-                <span>@WorkloadRequestTableItem.RequestDate.ToString("MMM d, yyyy")</span>
+                <span>@WorkloadRequestTableItem.RequestDate?.ToString("MMM d, yyyy")</span>
             </Template>
         </Column>
         <div class="mt-4 mb-4">

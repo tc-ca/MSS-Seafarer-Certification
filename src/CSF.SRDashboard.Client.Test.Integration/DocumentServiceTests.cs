@@ -60,7 +60,7 @@
             var result = documentService.GetDocumentsWithDocumentIds(documentIds).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Assert
-            Assert.NotEmpty(result);
+            Assert.NotEmpty(result.Documents);
         } 
 
         private IRestClient BuildRestClient()
