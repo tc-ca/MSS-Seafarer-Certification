@@ -56,6 +56,17 @@
         Task<TReturnMessage> PutAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions)
             where TReturnMessage : class, new();
 
+
+        /// <summary>
+        /// This method is used when the call does not return a DTO rather just a status. When a call returns a DTO, use the PutAsync method.
+        /// </summary>
+        /// <param name="serviceName"></param>
+        /// <param name="path"></param>
+        /// <param name="dataObject"></param>
+        /// <returns>returns a positive number when successful, returns a negative number when failed</returns>
+        Task<int> UpdateAsync(ServiceLocatorDomain serviceName, string path, object dataObject = null);
+
+
         /// <summary>
         /// Makes a DELETE call to the specified API.
         /// </summary>

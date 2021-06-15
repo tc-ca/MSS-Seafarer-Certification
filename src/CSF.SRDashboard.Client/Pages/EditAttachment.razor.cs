@@ -81,7 +81,7 @@ namespace CSF.SRDashboard.Client.Pages
             }
 
             // Go to Seafarer profile and show message
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?fileName=" + document.FileName);
         }
 
         /// <summary>

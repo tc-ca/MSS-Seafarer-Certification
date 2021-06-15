@@ -1,5 +1,6 @@
 ﻿namespace CSF.SRDashboard.Client.Services.Document
 {
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
@@ -30,7 +31,7 @@
         public string FileLanguage { get; set; }
 
         [JsonPropertyName("documentTypes")]
-        public List<string> DocumentTypes { get; set; }
+        public List<DocumentTypeDTO> DocumentTypes { get; set; }
 
         [JsonPropertyName("customMetadata")]
         public string CustomMetadata { get; set; }

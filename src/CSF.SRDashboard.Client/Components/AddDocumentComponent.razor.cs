@@ -1,6 +1,7 @@
 ﻿using CSF.API.Data.Entities;
 using CSF.API.Services.Repositories;
 using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
@@ -11,12 +12,6 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Components
 {
@@ -30,7 +25,7 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public string ProfileName { get; set; }
         
-        public List<string> DocumentTypes { get; set; }
+        public List<DocumentTypeDTO> DocumentTypes { get; set; }
         
         [Parameter]
         public UploadedDocument DocumentForm { get; set; }
@@ -141,14 +136,18 @@ namespace CSF.SRDashboard.Client.Components
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        private List<string> PopulateDocumentTypes(List<SelectListItem> list)
+        private List<DocumentTypeDTO> PopulateDocumentTypes(List<SelectListItem> list)
         {
-            List<string> DocumentTypes = new List<string>();
+            List<DocumentTypeDTO> DocumentTypes = new List<DocumentTypeDTO>();
             foreach (var i in list)
             {
                 if (i.Value)
                 {
-                    DocumentTypes.Add(i.Text);
+                    DocumentTypes.Add(
+                        new DocumentTypeDTO() { 
+                            Id = i.Id,
+                            Description = i.Text
+                        });
                 }
             }
             return DocumentTypes;

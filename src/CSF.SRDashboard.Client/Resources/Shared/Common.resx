@@ -289,7 +289,22 @@
     <value>View profile</value>
   </data>
   <data name="ViewRequest" xml:space="preserve">
-    <value>View Request</value>
+    <value>view request</value>
+  </data>
+  <data name="EditRequest" xml:space="preserve">
+    <value>edit request</value>
+  </data>
+  <data name="SaveRequest" xml:space="preserve">
+    <value>Save request</value>
+  </data>
+  <data name="AddRequest2" xml:space="preserve">
+    <value>add request</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Request</value>
+  </data>
+  <data name="RequestLower" xml:space="preserve">
+    <value>request</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>

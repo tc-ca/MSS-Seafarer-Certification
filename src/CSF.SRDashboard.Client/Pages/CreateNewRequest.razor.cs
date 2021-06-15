@@ -9,6 +9,10 @@ using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.PageValidators;
 using CSF.SRDashboard.Client.Components.Icons.Constants;
 using CSF.SRDashboard.Client.Components.Icons.Utilities;
+using System.Text.Json;
+using Microsoft.JSInterop;
+using Microsoft.Extensions.Localization;
+
 using System;
 
 namespace CSF.SRDashboard.Client.Pages
@@ -20,7 +24,8 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public string Cdn { get; set; }
 
-        public string Comment { get; set; }
+        [Parameter]
+        public int RequestId { get; set; }
 
         [Inject]
         public IGatewayService GatewayService { get; set; }
@@ -31,16 +36,18 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        IStringLocalizer<Shared.Common> Localizer { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
-
 
         public RequestValidator validator = new RequestValidator();
 
         public WorkItemDTO UploadedRequest { get; set; }
 
-        public bool MostRecentCommentsIsCollapsed { get; private set; }
+        public string Comment { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -86,5 +93,6 @@ namespace CSF.SRDashboard.Client.Pages
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
         }
+
     }
 }

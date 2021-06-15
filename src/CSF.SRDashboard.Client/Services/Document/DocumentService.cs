@@ -9,6 +9,7 @@
     using CSF.Common.Library.Extensions.IFormFile;
     using System.Threading.Tasks;
     using CSF.SRDashboard.Client.Services.Document.Entities;
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
     public class DocumentService : IDocumentService
     {
@@ -55,7 +56,7 @@
             return new DocumentDTO();
         }
 
-        public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata)
+        public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
         {
             var insertDocumentParameter = new InsertDocumentParameter()
             {

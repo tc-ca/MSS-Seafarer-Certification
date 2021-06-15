@@ -309,4 +309,16 @@
   <data name="DocumentTypes2" xml:space="preserve">
     <value>Document type(s)_fr*</value>
   </data>
+  <data name="EditRequest" xml:space="preserve">
+    <value>edit-request_fr</value>
+  </data>
+  <data name="SaveRequest" xml:space="preserve">
+    <value>Save-request_fr</value>
+  </data>
+  <data name="AddRequest2" xml:space="preserve">
+    <value>add-request_fr</value>
+  </data>
+  <data name="RequestLower" xml:space="preserve">
+    <value>request_fr</value>
+  </data>
 </root>

@@ -17,11 +17,13 @@
     using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
     using DSD.MSS.Blazor.Components.Core.Constants;
     using Microsoft.JSInterop;
+    using Microsoft.Extensions.Localization;
     using CSF.SRDashboard.Client.Services.Document.Entities;
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
     public partial class SeafarerProfile
     {
-       
+
         [Parameter]
         public string Cdn { get; set; }
 
@@ -44,13 +46,16 @@
         [Inject]
         public IDocumentService DocumentService { get; set; }
         [Inject]
-        private NavigationManager navigationManager { get; set; }
+        private NavigationManager NavigationManager { get; set; }
         [Inject]
         public IAzureBlobService AzureBlobService { get; set; }
         [Inject]
         public SessionState State { get; set; }
+
+        [Inject]
+        IStringLocalizer<SeafarerProfile> Localizer { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
-       
+
         public bool ShowToast { get; set; } = false;
 
         public DateTime DOB;
@@ -63,6 +68,14 @@
         public string currentRelativePath;
 
         private int RequestID;
+
+        [Parameter]
+        public string Updated { get; set; }
+
+        [Parameter]
+        public string FileName { get; set; }
+
+        private string message { get; set; }
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
@@ -70,14 +83,29 @@
 
         protected async override Task OnInitializedAsync()
         {
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
             this.IsAlertEnabled = this.RequestId != 0;
+
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("fileName", out var filename))
+            {
+                FileName = filename;
+            }
+
+            if (Updated != null)
+            {
+                message = Localizer["SuccessfullyUpdated"] + " " + RequestId + Localizer["For"];
+            }
+            else
+            {
+                message = Localizer["SuccessfullyCreated"] + " " + RequestId + Localizer["For"];
+            }
 
             await base.OnInitializedAsync();
 
-
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
-            
+
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
@@ -100,8 +128,6 @@
                 });
             }
 
-            var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
-            
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
             {
                 RequestID = Convert.ToInt32(requestId);
