@@ -92,7 +92,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             var documentModel = documentResult.Documents[0];
 
-            UploadedDocuments.Add(new UploadedDocument
+            var doc = new UploadedDocument
             {
                 Cdn = this.Cdn,
                 DocumentId = documentModel.DocumentId,
@@ -101,7 +101,25 @@ namespace CSF.SRDashboard.Client.Pages
                 Language = documentModel.Language,
                 DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentModel.DocumentUrl, DateTime.UtcNow.AddHours(8))
 
-            });
+            };
+
+            if (documentModel.DocumentTypes != null && documentModel.DocumentTypes.Any())
+            {
+                // To ensure we only show the types if we have them
+                doc.DocumentTypes = documentModel.DocumentTypes;
+
+                foreach (var item in doc.DocumentTypeList)
+                {
+
+                    if (documentModel.DocumentTypes.Where(x => x.Id.Equals(item.Id)).SingleOrDefault() != null)
+                    {
+                        item.Value = true;
+                    }
+                }
+
+            }
+
+            UploadedDocuments.Add(doc);
         }
     }
 }

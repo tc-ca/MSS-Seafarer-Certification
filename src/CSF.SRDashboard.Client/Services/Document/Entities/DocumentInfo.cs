@@ -1,5 +1,6 @@
 ﻿namespace CSF.SRDashboard.Client.Services.Document.Entities
 {
+    using CSF.SRDashboard.Client.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -97,5 +98,10 @@
         /// </summary>
         [JsonPropertyName("documentId")]
         public Guid DocumentId { get; set; }
+        /// <summary>
+        /// gets or sets the document type
+        /// </summary>
+        [JsonPropertyName("documentTypes")]
+        public List<DocumentTypes> DocumentTypes { get; set; }
     }
 }

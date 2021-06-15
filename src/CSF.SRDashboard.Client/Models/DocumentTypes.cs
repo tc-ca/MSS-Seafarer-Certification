@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace CSF.SRDashboard.Client.Models
 {
     public class DocumentTypes
     {
-        public int DocumentTypesId { get; set; }
-        public string DocumentType { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 }

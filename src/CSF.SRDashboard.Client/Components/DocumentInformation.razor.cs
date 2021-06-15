@@ -50,6 +50,7 @@ namespace CSF.SRDashboard.Client.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
+
         }
 
         /// <summary>

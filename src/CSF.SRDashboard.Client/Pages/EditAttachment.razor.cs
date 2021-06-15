@@ -73,11 +73,11 @@ namespace CSF.SRDashboard.Client.Pages
 
             var document = this.UploadedDocuments[0];
 
-            document.DocumentType = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypes { DocumentTypesId = Convert.ToInt32(d.Id), DocumentType = d.Text }).ToList();
+            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypes { Id = d.Id, Description = d.Text }).ToList();
 
             document.Language = Constants.Languages.Where(x => x.ID.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
 
-            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, JsonConvert.SerializeObject(document.DocumentType));
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, JsonConvert.SerializeObject(document.DocumentTypes));
 
             if (!result.Any() && !result[0].IsUpdated)
             {
@@ -121,7 +121,7 @@ namespace CSF.SRDashboard.Client.Pages
                 documentModel.Language = "French";
             }
 
-            UploadedDocuments.Add(new UploadedDocument
+            var doc = new UploadedDocument
             {
                 Cdn = this.Cdn,
                 DocumentId = documentModel.DocumentId,
@@ -129,7 +129,22 @@ namespace CSF.SRDashboard.Client.Pages
                 FileName = documentModel.FileName,
                 Language = Constants.Languages.Where(x => x.Text.Equals(documentModel.Language, StringComparison.OrdinalIgnoreCase)).Single().ID,
                 DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentModel.DocumentUrl, DateTime.UtcNow.AddHours(8))
-            });
+            };
+
+            if (documentModel.DocumentTypes != null && documentModel.DocumentTypes.Any())
+            {
+                foreach (var item in doc.DocumentTypeList)
+                {
+
+                    if (documentModel.DocumentTypes.Where(x => x.Id.Equals(item.Id)).SingleOrDefault() != null)
+                    {
+                        item.Value = true;
+                    }
+                }
+
+            }
+
+            UploadedDocuments.Add(doc);
         }
     }
 }
