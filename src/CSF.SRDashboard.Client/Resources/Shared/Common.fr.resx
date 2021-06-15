@@ -321,4 +321,19 @@
   <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment_fr</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back_fr</value>
+  </data>
+  <data name="EditAttachment" xml:space="preserve">
+    <value>edit attachment_fr</value>
+  </data>
+  <data name="SaveAttchedment" xml:space="preserve">
+    <value>Save attchedment_fr</value>
+  </data>
+  <data name="ViewAttachment" xml:space="preserve">
+    <value>view attachment_fr</value>
+  </data>
 </root>
