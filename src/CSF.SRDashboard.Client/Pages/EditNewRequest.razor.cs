@@ -10,6 +10,9 @@ using CSF.SRDashboard.Client.PageValidators;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -31,6 +34,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
 
         [Inject]
         IJSRuntime JS { get; set; }
@@ -48,11 +53,15 @@ namespace CSF.SRDashboard.Client.Pages
         public bool IsEditMode { get; set; }
 
         public string Comment { get; set; }
+        [Inject]
+        public IWorkLoadManagementService WorkLoadManagementService { get; set; }
 
         private string titleInfo { get; set; }
-
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
-
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+        public IUploadDocumentService UploadService { get; set; }
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -62,11 +71,11 @@ namespace CSF.SRDashboard.Client.Pages
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
-
+            this.UploadService = new UploadDocumentService(this.DocumentService);
             StateHasChanged();
         }
 
-        public void SaveChanges()
+        public async void SaveChanges()
         {
             var isValid = EditContext.Validate();
             if (!isValid)
@@ -74,22 +83,48 @@ namespace CSF.SRDashboard.Client.Pages
                 return;
             }
 
-            JS.InvokeAsync<string>("SetBusyCursor", null);
-
+            await JS.InvokeAsync<string>("SetBusyCursor", null);
+            var added = await this.InsertDocumentOnRequest();
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
                 Cdn = Applicant.Cdn,
                 CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text, 
+                Documents = added
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
 
         }
+        private async Task<List<Document>> InsertDocumentOnRequest()
+        {
+            List<Document> addedDocuments = new List<Document>();
+            if(this.State.DocumentForm.Count <= 0)
+            {
+                return addedDocuments;
+            }
+            foreach (var document in this.State.DocumentForm)
+            {
 
+                var addedDocumentIds = await this.UploadService.UploadDocument(document);
+                WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO() 
+                { DocumentId = addedDocumentIds[0], WorkItemId = this.EditRequestId };
+                await this.WorkLoadManagementService.AddWorkItemAttachment(workItemAttachmentDTO);
+                addedDocuments.Add(new Document()
+                {
+                    DocumentId = addedDocumentIds[0],
+                    FileName = document.FileName,
+                    Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
+                    RequestID = this.EditRequestId.ToString()
+                });
+
+            }
+            return addedDocuments;
+        }
+    
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);

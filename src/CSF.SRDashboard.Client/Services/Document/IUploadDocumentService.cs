@@ -10,7 +10,6 @@ namespace CSF.SRDashboard.Client.Services.Document
     {
         [Inject]
         IDocumentService DocumentServe { get; set; }
-        List<string> DocumentTypes { get; set; }
         string Language { get; }
 
 

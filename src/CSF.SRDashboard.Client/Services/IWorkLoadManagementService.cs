@@ -75,6 +75,7 @@ namespace CSF.SRDashboard.Client.Services
         List<WorkloadRequestTableItem> GetAllInRequestTableFormat();
 
         Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO);
+        List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId);
 
     }
 }

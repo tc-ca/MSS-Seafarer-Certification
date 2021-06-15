@@ -232,6 +232,19 @@ namespace CSF.SRDashboard.Client.Services
             }
             return new WorkItemAttachmentDTO();
         }
+        public List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId)
+        {
+            string requestPath = $"/api/v1/workitem-attachments/{workitemId}/attachments";
+            try
+            {   
+                 return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+            }
+            catch(Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return new List<WorkItemAttachmentDTO>();
+        }
         public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
             int requestId = Convert.ToInt32(requestModel.RequestID);
