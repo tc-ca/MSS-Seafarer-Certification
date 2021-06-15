@@ -321,4 +321,7 @@
   <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
   </data>
+  <data name="AddAttachment" xml:space="preserve">
+    <value>Add Attachment_fr</value>
+  </data>
 </root>

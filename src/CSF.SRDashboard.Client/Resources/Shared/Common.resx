@@ -324,4 +324,7 @@
   <data name="DocumentTypes" xml:space="preserve">
     <value>Document type(s)</value>
   </data>
+  <data name="AddAttachment" xml:space="preserve">
+    <value>Add Attachment</value>
+  </data>
 </root>
