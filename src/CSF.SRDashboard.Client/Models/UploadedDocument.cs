@@ -1,4 +1,5 @@
 ﻿using CSF.API.Data.Entities;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 using DSD.MSS.Blazor.Components.Core.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +39,7 @@ namespace CSF.SRDashboard.Client.Models
 
         public string Language { get; set; }
 
-        public string DocumentType { get; set; }
+        public List<DocumentTypeDTO> DocumentType { get; set; }
 
         public IFormFile FormFile { get; set; }
 
