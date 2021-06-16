@@ -11,13 +11,15 @@
 
     <div class="col-8">
         <div class="mt-3 mb-3">
-           
+
             <Collapse HeaderTitleTextColor="#FFFFFF" Title="@this.Localizer["RequestInformation"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
                 <BodyContent>
                     <CSF.SRDashboard.Client.Components.Seafarer.Requests.RequestInformation EditContext="EditContext" RequestModel="RequestModel" Editable="true" ShowRequestID="true" />
                 </BodyContent>
             </Collapse>
         </div>
+
+        <CSF.SRDashboard.Client.Components.AddDocumentComponent DocumentForm="this.DocumentForm" AllowMultipleUploads="true"></CSF.SRDashboard.Client.Components.AddDocumentComponent>
 
         <div class="mt-3 mb-3">
             <Collapse HeaderTitleTextColor="#FFFFFF" Title="@this.Localizer["ApplicantDetails"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
@@ -26,9 +28,7 @@
                 </BodyContent>
             </Collapse>
         </div>
-        <div class="mt-3 mb-3">
-            <CSF.SRDashboard.Client.Components.AddDocumentComponent DocumentForm="this.DocumentForm" AllowMultipleUploads="true"></CSF.SRDashboard.Client.Components.AddDocumentComponent>
-        </div>
+
 
     </div>
 </EditForm>
