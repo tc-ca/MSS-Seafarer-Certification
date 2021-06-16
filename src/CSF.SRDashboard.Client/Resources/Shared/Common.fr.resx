@@ -303,4 +303,7 @@
   <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
   </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select_fr</value>
+  </data>
 </root>
