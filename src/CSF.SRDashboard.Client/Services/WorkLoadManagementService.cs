@@ -165,7 +165,6 @@ namespace CSF.SRDashboard.Client.Services
                         tableItem.Certificate = detail.CertificateType;
                         tableItem.RequestType = detail.RequestType;
                         tableItem.ApplicantCDN = detail.Cdn;
-                        
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
@@ -214,7 +213,7 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;
@@ -268,13 +267,29 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
-            
+            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
+            workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
+            AddWorkItemStatus(workItem.WorkItemStatus);
             var uploadedWorkItem = this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;
         }
 
+        public WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status)
+        {
+            WorkItemStatusDTO updatedStatus = null;
+            string requestPath = $"api/v1/workitems/statuses";
+            try
+            {
+                updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return updatedStatus;
+        }
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
             ContactInformationDTO contact = new ContactInformationDTO();

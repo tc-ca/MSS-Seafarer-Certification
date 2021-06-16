@@ -19,6 +19,8 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string CertificateType { get; set; }
         [JsonPropertyName("SubmissionMethod")]
         public string SubmissionMethod { get; set; }
+        [JsonPropertyName("Status")]
+        public string Status { get; set; }
         [JsonPropertyName("HasAttachments")]
         public bool HasAttachments { get; set; }
         [JsonPropertyName("Comments")]

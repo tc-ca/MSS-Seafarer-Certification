@@ -13,6 +13,7 @@ using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
+using System;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -91,8 +92,8 @@ namespace CSF.SRDashboard.Client.Pages
                 Cdn = Applicant.Cdn,
                 CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text, 
-                Documents = added
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text,
+                Status = Constants.RequestStatuses.Where(x => x.ID.Equals(RequestModel.Status)).Single().Text
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
@@ -136,14 +137,18 @@ namespace CSF.SRDashboard.Client.Pages
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
-         
+            if(workItem.WorkItemStatus.StatusAdditionalDetails != null)
+            {
+                requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(workItem.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().ID;
+            }
+
             if (workItem.Detail != null)
             {
                 var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
 
-                requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType)).Single().ID;
-                requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType)).Single().ID;
-                requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod)).Single().ID;
+                requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().ID;
+                requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().ID;
+                requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().ID;
             }
 
             return requestModel;
