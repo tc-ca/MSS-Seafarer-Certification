@@ -10,6 +10,7 @@ using CSF.SRDashboard.Client.PageValidators;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -106,9 +107,9 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
 
-                requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType)).Single().ID;
-                requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType)).Single().ID;
-                requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod)).Single().ID;
+                requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().ID;
+                requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().ID;
+                requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().ID;
             }
 
             return requestModel;

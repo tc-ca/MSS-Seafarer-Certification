@@ -21,7 +21,7 @@
             </Template>
         </Column>
         <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["ProcessingPhase"] Field="@(x => x.ProcessingPhase)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" />
-        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["DateCreated"] Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true">
+        <Column TableItem="WorkloadRequestTableItem" Title=@Localizer["DateCreated"] Field="@(x => x.RequestDate)" DefaultShowColumn="true" DefaultShowHeaderFilter="false" Sortable="true" DefaultSortColumn="true" DefaultSortDescending="true">
             <Template Context="WorkloadRequestTableItem">
                 @if (WorkloadRequestTableItem.RequestDate.HasValue)
                 {
