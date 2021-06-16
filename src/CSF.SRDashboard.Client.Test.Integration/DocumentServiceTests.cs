@@ -2,6 +2,7 @@
 {
     using CSF.Common.Library;
     using CSF.Common.Library.Azure;
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
     using CSF.SRDashboard.Client.Services.Document;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
@@ -39,10 +40,10 @@
             };
             
             // Act
-            var result = documentService.InsertDocument(1, "John Wick", file, string.Empty, "My Test file", "FAX", "EN", new List<string>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
+            var result = documentService.InsertDocument(1, "John Wick", file, string.Empty, "My Test file", "FAX", "EN", new List<DocumentTypeDTO>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Assert
-            Assert.NotEmpty(result);
+            Assert.NotNull(result);
         }
          
         [Fact]
