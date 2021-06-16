@@ -79,7 +79,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, JsonConvert.SerializeObject(document.DocumentTypes));
 
-            if (!result.Any() && !result[0].IsUpdated)
+            if (result == null)
             {
                 return;
             }
@@ -105,12 +105,12 @@ namespace CSF.SRDashboard.Client.Pages
 
             var documentResult = await DocumentService.GetDocumentsWithDocumentIds(new List<Guid> { document.DocumentId });
 
-            if (!documentResult.Documents.Any())
+            if (!documentResult.Any())
             {
                 return;
             }
 
-            var documentModel = documentResult.Documents[0];
+            var documentModel = documentResult.FirstOrDefault();
 
             if (documentModel.Language.Equals("EN"))
             {

@@ -9,11 +9,10 @@
     using System.Threading.Tasks;
     public interface IDocumentService
     {
-        public Task<DocumentDTO> GetDocumentsWithDocumentIds(List<Guid> documentIds);
+        public Task<List<DocumentInfo>> GetDocumentsWithDocumentIds(List<Guid> documentIds);
 
-        public Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata);
-        //public Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata);
+        public Task<DocumentInfo> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata);
 
-        public Task<List<DocumentUpdatedResult>> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, string documentTypes);
+        public Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, string documentTypes);
     }
 }

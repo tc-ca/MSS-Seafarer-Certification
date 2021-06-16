@@ -85,12 +85,12 @@ namespace CSF.SRDashboard.Client.Pages
 
             var documentResult = await DocumentService.GetDocumentsWithDocumentIds(new List<Guid> { document.DocumentId });
 
-            if (!documentResult.Documents.Any())
+            if (!documentResult.Any())
             {
                 return;
             }
 
-            var documentModel = documentResult.Documents[0];
+            var documentModel = documentResult.FirstOrDefault();
 
             var doc = new UploadedDocument
             {
