@@ -53,19 +53,10 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
-            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
+
+           
 
 
-           var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
-
-            this.UploadedDocuments = documentInfos.Select(x => new UploadedDocument()
-            {
-                Language = x.Language,
-                FileName = x.FileName,
-                DocumentType = x.DocumentTypes,
-                Description = x.Description
-            }).ToList();
-            
             RequestModel = new RequestModel
             {
                 RequestID = WorkItemDTO.Id,
@@ -76,7 +67,17 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             this.EditContext = new EditContext(RequestModel);
-
+           
+            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
+            var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            this.UploadedDocuments = documentInfos.Select(x => new UploadedDocument()
+            {
+                DocumentId = x.DocumentId,
+                Language = x.Language,
+                FileName = x.FileName,
+                DocumentType = x.DocumentTypes,
+                Description = x.Description
+            }).ToList();
             StateHasChanged();
         }
 

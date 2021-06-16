@@ -24,7 +24,12 @@
                     </BodyContent>
                 </Collapse>
             </div>
-
+            <div>
+                @if (this.UploadedDocuments != null)
+                {
+                <CSF.SRDashboard.Client.Components.DocumentInformation UploadedDocuments="this.UploadedDocuments" IsReadOnly="true"></CSF.SRDashboard.Client.Components.DocumentInformation>
+                }
+            </div>
         </div>
 
         <div style="flex-basis:25%;" class="pl-4 pr-4">
