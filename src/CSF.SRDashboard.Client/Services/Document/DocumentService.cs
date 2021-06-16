@@ -30,11 +30,11 @@
             this.logger = logger;
         }
 
-        public async Task<DocumentDTO> GetDocumentsWithDocumentIds(List<Guid> documentIds)
+        public async Task<List<DocumentInfo>> GetDocumentsWithDocumentIds(List<Guid> documentIds)
         {
             if (documentIds == null || documentIds.Count == 0)
             {
-                return new DocumentDTO();
+                return new List<DocumentInfo>();
             }
 
             string queryString = string.Empty;
@@ -46,17 +46,17 @@
 
             try
             {
-                return await restClient.GetAsync<DocumentDTO>(ServiceLocatorDomain.Document, path);
+                return await restClient.GetAsync<List<DocumentInfo>>(ServiceLocatorDomain.Document, path);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return new DocumentDTO();
+            return new List<DocumentInfo>();
         }
 
-        public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
+        public async Task<DocumentInfo> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
         {
             var insertDocumentParameter = new InsertDocumentParameter()
             {
@@ -82,14 +82,14 @@
 
             try
             {
-                return await restClient.PostAsync<List<Guid>>(restClientRequestOptions);
+                return await restClient.PostAsync<DocumentInfo>(restClientRequestOptions);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return new List<Guid>();
+            return new DocumentInfo();
         }
     }
 }

@@ -43,7 +43,7 @@
             var result = documentService.InsertDocument(1, "John Wick", file, string.Empty, "My Test file", "FAX", "EN", new List<DocumentTypeDTO>(), string.Empty).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Assert
-            Assert.NotEmpty(result);
+            Assert.NotNull(result);
         }
          
         [Fact]
@@ -61,7 +61,7 @@
             var result = documentService.GetDocumentsWithDocumentIds(documentIds).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Assert
-            Assert.NotEmpty(result.Documents);
+            Assert.NotEmpty(result);
         } 
 
         private IRestClient BuildRestClient()
