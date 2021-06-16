@@ -72,7 +72,7 @@ namespace CSF.SRDashboard.Client.Components
         }
         public void HandleValidSubmit()
         {
-            Console.WriteLine("hi");
+          
 
         }
 

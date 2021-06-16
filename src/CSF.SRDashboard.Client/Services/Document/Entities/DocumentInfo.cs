@@ -97,5 +97,8 @@
         /// </summary>
         [JsonPropertyName("documentId")]
         public Guid DocumentId { get; set; }
+
+        [JsonPropertyName("documentTypes")]
+        public string DocumentTypes { get; set; }
     }
 }

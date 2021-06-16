@@ -102,7 +102,7 @@ namespace CSF.SRDashboard.Client.Pages
         private async Task<List<Document>> InsertDocumentOnRequest()
         {
             List<Document> addedDocuments = new List<Document>();
-            if(this.State.DocumentForm.Count <= 0)
+            if(this.State.DocumentForm == null)
             {
                 return addedDocuments;
             }
@@ -136,7 +136,7 @@ namespace CSF.SRDashboard.Client.Pages
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
-
+         
             if (workItem.Detail != null)
             {
                 var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
