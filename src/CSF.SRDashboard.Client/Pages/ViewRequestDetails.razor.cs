@@ -2,6 +2,7 @@
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.Services.Document;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
@@ -39,6 +40,9 @@ namespace CSF.SRDashboard.Client.Pages
         public WorkItemDTO WorkItemDTO { get; set; }
 
         public RequestModel RequestModel { get; set; }
+
+        public IDocumentService DocumentService { get; set; }
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
 
         protected async override Task OnInitializedAsync()
         {
