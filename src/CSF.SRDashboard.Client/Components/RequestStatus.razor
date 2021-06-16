@@ -22,13 +22,7 @@
             else
             {
                 <label class="form-label"><b>@Localizer["Status"]</b></label>
-                foreach (var item in Constants.RequestStatuses)
-                {
-                    if (item.ID == RequestModel.Status)
-                    {
-                        <p>@item.Text</p>
-                    }
-                }
+                <p>@Constants.RequestStatuses.Where(x => x.ID == RequestModel.Status).Select(x => x.Text).FirstOrDefault()</p>
             }
         </div>
     </div>
