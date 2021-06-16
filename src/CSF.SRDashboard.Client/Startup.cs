@@ -69,9 +69,7 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IDocumentService, DocumentService>();
             services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
 
-
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
-
             services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
@@ -80,6 +78,7 @@ namespace CSF.SRDashboard.Client
             //services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
             services.AddTransient<IValidator<UploadedDocument>, UploadDocumentAttachmentValidator>();
+          
 
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddScoped<SessionState>();

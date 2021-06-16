@@ -291,6 +291,12 @@
   <data name="ViewRequest" xml:space="preserve">
     <value>View Request_fr</value>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment_fr</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field_fr</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description_fr</value>
   </data>
@@ -302,12 +308,6 @@
   </data>
   <data name="DocumentTypes" xml:space="preserve">
     <value>Document type(s)_fr</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete-fr</value>
-  </data>
-  <data name="DocumentTypes2" xml:space="preserve">
-    <value>Document type(s)_fr*</value>
   </data>
   <data name="EditRequest" xml:space="preserve">
     <value>edit-request_fr</value>
@@ -321,19 +321,7 @@
   <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
   </data>
-  <data name="Attachment" xml:space="preserve">
-    <value>Attachment_fr</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back_fr</value>
-  </data>
-  <data name="EditAttachment" xml:space="preserve">
-    <value>edit attachment_fr</value>
-  </data>
-  <data name="SaveAttchedment" xml:space="preserve">
-    <value>Save attchedment_fr</value>
-  </data>
-  <data name="ViewAttachment" xml:space="preserve">
-    <value>view attachment_fr</value>
+  <data name="AddAttachment" xml:space="preserve">
+    <value>Add Attachment_fr</value>
   </data>
 </root>

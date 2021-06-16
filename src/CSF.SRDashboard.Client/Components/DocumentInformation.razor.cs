@@ -26,10 +26,13 @@ namespace CSF.SRDashboard.Client.Components
         private EditContext editContext;
 
         [Parameter]
-        public List<UploadedDocument> UploadedDocuments { get; set; }
+        public bool Editable { get; set; }
 
         [Parameter]
         public bool ShowDefaultOption { get; set; }
+
+        [Parameter]
+        public bool ShowRequestID { get; set; }
 
         [Parameter]
         public bool IsReadOnly { get; set; }
@@ -42,25 +45,41 @@ namespace CSF.SRDashboard.Client.Components
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        [Parameter]
+        public List<UploadedDocument> UploadedDocuments { get; set; }
+        
+
+       
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
-        public UploadedDocument DocumentForm { get; set; }
+       
+
+
+
+
+        public List<IFormFile> FilesToUpload { get; set; }
+
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
+           
+           
 
+            this.EditContext = new EditContext(this.UploadedDocuments);
+           
         }
-
-        /// <summary>
-        /// cancels and returns to the profile page
-        /// </summary>
-        public void HandleCancel()
+        public void HandleValidSubmit()
         {
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
+            Console.WriteLine("hi");
+
         }
 
+        public void ChangeState()
+        {
+           StateHasChanged();
+        }
         public void ViewDocument(UploadedDocument document)
         {
             this.NavigationManager.NavigateTo(document.DownloadLink);
@@ -81,7 +100,9 @@ namespace CSF.SRDashboard.Client.Components
                 this.ValidationMessageStore.Clear();
             }
 
-            UploadedDocuments.RemoveAt(index);
+            this.FilesToUpload.RemoveAt(index);
+
+            //this.FileToUpload = null;
         }
     }
 }
