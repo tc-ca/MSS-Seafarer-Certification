@@ -99,10 +99,9 @@
             var documentIds = Documents.Select(x => x.DocumentId).ToList();
 
             // Call document servie to get info for each document
-            var documentDTO = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
-            DocumentInfos = documentDTO.Documents;
+            var documentInfos = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
 
-            foreach (var documentInfo in DocumentInfos)
+            foreach (var documentInfo in documentInfos)
             {
 
                 var link = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentInfo.DocumentUrl, DateTime.UtcNow.AddHours(8));
