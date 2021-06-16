@@ -330,8 +330,8 @@
   <data name="EditAttachment" xml:space="preserve">
     <value>edit attachment_fr</value>
   </data>
-  <data name="SaveAttchedment" xml:space="preserve">
-    <value>Save attchedment_fr</value>
+  <data name="SaveAttachment" xml:space="preserve">
+    <value>Save attachment_fr</value>
   </data>
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment_fr</value>

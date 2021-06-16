@@ -13,6 +13,6 @@
 
         public Task<DocumentInfo> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata);
 
-        public Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, string documentTypes);
+        public Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes);
     }
 }

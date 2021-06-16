@@ -1,6 +1,7 @@
 ﻿using CSF.API.Services.Repositories;
 using CSF.Common.Library.Azure;
 using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
@@ -73,11 +74,11 @@ namespace CSF.SRDashboard.Client.Pages
 
             var document = this.UploadedDocuments[0];
 
-            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypes { Id = d.Id, Description = d.Text }).ToList();
+            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
             document.Language = Constants.Languages.Where(x => x.ID.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
 
-            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, JsonConvert.SerializeObject(document.DocumentTypes));
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, document.Description, null, document.Language, document.DocumentTypes);
 
             if (result == null)
             {
