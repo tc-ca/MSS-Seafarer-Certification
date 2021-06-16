@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using CSF.SRDashboard.Client.Services.Document.Entities;
 
 namespace CSF.SRDashboard.Client.Services.Document
 {
@@ -13,6 +14,6 @@ namespace CSF.SRDashboard.Client.Services.Document
         string Language { get; }
 
 
-        Task<List<Guid>> UploadDocument(UploadedDocument document);
+        Task<DocumentInfo> UploadDocument(UploadedDocument document);
     }
 }

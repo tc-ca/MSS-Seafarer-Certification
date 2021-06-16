@@ -109,13 +109,13 @@ namespace CSF.SRDashboard.Client.Pages
             foreach (var document in this.State.DocumentForm)
             {
 
-                var addedDocumentIds = await this.UploadService.UploadDocument(document);
+                var addedDocument = await this.UploadService.UploadDocument(document);
                 WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO() 
-                { DocumentId = addedDocumentIds[0], WorkItemId = this.EditRequestId };
+                { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
                 await this.WorkLoadManagementService.AddWorkItemAttachment(workItemAttachmentDTO);
                 addedDocuments.Add(new Document()
                 {
-                    DocumentId = addedDocumentIds[0],
+                    DocumentId = addedDocument.DocumentId,
                     FileName = document.FileName,
                     Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
                     RequestID = this.EditRequestId.ToString()

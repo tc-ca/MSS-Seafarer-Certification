@@ -59,7 +59,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             var documentResult = await DocumentService.GetDocumentsWithDocumentIds(new List<Guid> { document.DocumentId });
 
-            var x = documentResult.Documents[0];
+            var x = documentResult[0];
             UploadedDocuments.Add(new UploadedDocument
             {
                 Cdn = this.Cdn,

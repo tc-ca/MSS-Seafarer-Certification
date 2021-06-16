@@ -52,14 +52,14 @@ namespace CSF.SRDashboard.Client.Pages
             foreach (var document in this.State.DocumentForm)
             {
 
-                var addedDocumentIds = await this.UploadService.UploadDocument(document);
-                if (addedDocumentIds.Count > 0)
+                var addedDocument = await this.UploadService.UploadDocument(document);
+                if (addedDocument != null)
                 {
                     this.DocumentInfo = new DocumentInfo
                     {
                         Cdn = this.Cdn,
                         DateStartDte = DateTime.UtcNow,
-                        DocumentId = addedDocumentIds[0]
+                        DocumentId = addedDocument.DocumentId
                     };
                     ClientXrefDocumentRepository.Insert(this.DocumentInfo);
                 }
