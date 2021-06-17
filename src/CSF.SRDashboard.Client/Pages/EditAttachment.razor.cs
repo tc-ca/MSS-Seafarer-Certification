@@ -78,9 +78,8 @@ namespace CSF.SRDashboard.Client.Pages
 
             document.Language = Constants.Languages.Where(x => x.ID.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
 
-            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, 
-                null, document.Language, document.DocumentTypes, null);
-            //this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, );
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+
             if (result == null)
             {
                 return;
