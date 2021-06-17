@@ -292,7 +292,7 @@
     <value>view request</value>
   </data>
   <data name="EditRequest" xml:space="preserve">
-    <value>edit request</value>
+    <value>Edit request</value>
   </data>
   <data name="SaveRequest" xml:space="preserve">
     <value>Save request</value>
@@ -331,10 +331,10 @@
     <value>Back</value>
   </data>
   <data name="EditAttachment" xml:space="preserve">
-    <value>edit attachment</value>
+    <value>Edit attachment</value>
   </data>
-  <data name="SaveAttchedment" xml:space="preserve">
-    <value>Save attchedment</value>
+  <data name="SaveAttachment" xml:space="preserve">
+    <value>Save attachment</value>
   </data>
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment</value>

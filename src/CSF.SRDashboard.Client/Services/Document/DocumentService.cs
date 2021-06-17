@@ -92,62 +92,42 @@
             return new DocumentInfo();
         }
 
-        public async Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, string documentTypes)
+        public async Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
         {
-            
-            string queryString = string.Empty;
 
-            queryString += $"documentId={documentId}&";
-
-            if (!string.IsNullOrWhiteSpace(userName))
+            var updateMetadataForDocumentParameter = new UpdateMetadataForDocumentParameter()
             {
-                queryString += $"userName={userName}&";
-            }
+                DocumentId = documentId,
+                UserName = userName,
+                FileName = fileName,
+                FileContentType = fileContentType,
+                ShortDescription = shortDescription,
+                SubmissionMethod = submissionMethod,
+                FileLanguage = fileLanguage,
+                DocumentTypes = documentTypes,
+                CustomMetadata = customMetadata
+            };
 
-            if (!string.IsNullOrWhiteSpace(fileName))
+            string path = string.Format("documents");
+
+            var restClientRequestOptions = new RestClientRequestOptions()
             {
-                queryString += $"fileName={fileName}&";
-            }
-
-            if (!string.IsNullOrWhiteSpace(fileContentType))
-            {
-                queryString += $"fileContentType={fileContentType}&";
-            }
-
-            if (!string.IsNullOrWhiteSpace(shortDescription))
-            {
-                queryString += $"shortDescription={shortDescription}&";
-            }
-
-            if (!string.IsNullOrWhiteSpace(submissionMethod))
-            {
-                queryString += $"submissionMethod={submissionMethod}&";
-            }
-
-            if (!string.IsNullOrWhiteSpace(fileLanguage))
-            {
-                queryString += $"fileLanguage={fileLanguage}&";
-            }
-
-            if (!string.IsNullOrWhiteSpace(documentTypes))
-            {
-                queryString += $"documentTypes={documentTypes}&";
-            }
-
-            string path = string.Format("documents?{0}", queryString.TrimEnd('&'));
+                Path = path,
+                ParameterContentType = "application/json",
+                DataObject = updateMetadataForDocumentParameter,
+                ServiceName = ServiceLocatorDomain.Document
+            };
 
             try
             {
-
-                return await restClient.PutAsync<DocumentInfo>(ServiceLocatorDomain.Document, path);
-
+                return await restClient.PutAsync<DocumentInfo>(restClientRequestOptions);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return new DocumentInfo();
+            return null;
         }
     }
 }

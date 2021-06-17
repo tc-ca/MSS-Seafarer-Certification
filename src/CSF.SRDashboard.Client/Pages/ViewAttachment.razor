@@ -2,7 +2,7 @@
 
 <div class="d-flex">
     <div class="mr-auto p-2"><h3>@this.Applicant.FullName - @Localizer["ViewAttachment"]</h3></div>
-    <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">@Localizer["Back"]</button></div>
+    <div class="p-2"><button class="btn btn-light" @onclick="Cancel">@Localizer["Cancel"]</button></div>
     <div class="p-2"><button class="btn btn-primary" @onclick="Edit">@Localizer["EditAttachment"]</button></div>
 </div>
 <hr />
@@ -19,7 +19,7 @@
                 <CSF.SRDashboard.Client.Components.DocumentInformation EditContext="EditContext" UploadedDocuments="UploadedDocuments" IsReadOnly="true" />
             </BodyContent>
         </Collapse>
-        <p>This file is link to request 124387M, 873920F</p>
+        @*<p>This file is link to request 124387M, 873920F</p>*@
     }
 
 </div>
@@ -27,6 +27,8 @@
 <hr />
 <div class="d-flex">
     <div class="mr-auto p-2"></div>
-    <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">Cancel</button></div>
+    <div class="p-2">
+        <button class="btn btn-light" @onclick="Cancel">@Localizer["Cancel"]</button>
+    </div>
     <div class="p-2"><button class="btn btn-primary" @onclick="Edit">@Localizer["EditAttachment"]</button></div>
 </div>

@@ -1,5 +1,6 @@
 ﻿namespace CSF.SRDashboard.Client.Services.Document.Entities
 {
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
     using CSF.SRDashboard.Client.Models;
     using System;
     using System.Collections.Generic;
@@ -102,6 +103,6 @@
         /// gets or sets the document type
         /// </summary>
         [JsonPropertyName("documentTypes")]
-        public List<DocumentTypes> DocumentTypes { get; set; }
+        public List<DocumentTypeDTO> DocumentTypes { get; set; }
     }
 }

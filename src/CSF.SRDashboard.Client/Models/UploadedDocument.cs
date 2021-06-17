@@ -1,4 +1,5 @@
 ﻿
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document.Entities;
 using DSD.MSS.Blazor.Components.Core.Models;
@@ -23,7 +24,7 @@ namespace CSF.SRDashboard.Client.Models
         /// <summary>
         /// The types the user selected
         /// </summary>
-        public List<DocumentTypes> DocumentTypes { get; set; }
+        public List<DocumentTypeDTO> DocumentTypes { get; set; }
 
         public List<SelectListItem> Languages { get; set; }
 

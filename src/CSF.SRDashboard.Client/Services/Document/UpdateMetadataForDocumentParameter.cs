@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CSF.SRDashboard.Client.DTO.DocumentStorage;
+using CSF.SRDashboard.Client.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -6,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services.Document
 {
-    public class UpdateMetadataForDocumentParameters
+    public class UpdateMetadataForDocumentParameter
     {
         [JsonPropertyName("documentId")]
-        public Guid documentId { get; set; }
+        public Guid DocumentId { get; set; }
 
         [JsonPropertyName("userName")]
         public string UserName { get; set; }
@@ -30,7 +32,9 @@ namespace CSF.SRDashboard.Client.Services.Document
         public string FileLanguage { get; set; }
 
         [JsonPropertyName("documentTypes")]
-        public string DocumentTypes { get; set; }
+        public List<DocumentTypeDTO> DocumentTypes { get; set; }
 
+        [JsonPropertyName("customMetadata")]
+        public string CustomMetadata { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CSF.API.Services.Repositories;
 using CSF.Common.Library.Azure;
 using CSF.SRDashboard.Client.DTO;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
@@ -73,11 +74,11 @@ namespace CSF.SRDashboard.Client.Pages
 
             var document = this.UploadedDocuments[0];
 
-            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypes { Id = d.Id, Description = d.Text }).ToList();
+            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
             document.Language = Constants.Languages.Where(x => x.ID.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
 
-            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, JsonConvert.SerializeObject(document.DocumentTypes));
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
 
             if (result == null)
             {
@@ -88,6 +89,11 @@ namespace CSF.SRDashboard.Client.Pages
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?fileName=" + document.FileName);
         }
 
+        public void Cancel()
+        {
+            // Go to Seafarer profile and show message
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=documents");
+        }
         /// <summary>
         /// Gets the document and adds it to the list
         /// </summary>
@@ -131,6 +137,9 @@ namespace CSF.SRDashboard.Client.Pages
                 DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentModel.DocumentUrl, DateTime.UtcNow.AddHours(8))
             };
 
+            // Remove null id from the document types
+            documentModel.DocumentTypes = CleanDocumentTypes(documentModel.DocumentTypes);
+
             if (documentModel.DocumentTypes != null && documentModel.DocumentTypes.Any())
             {
                 foreach (var item in doc.DocumentTypeList)
@@ -145,6 +154,18 @@ namespace CSF.SRDashboard.Client.Pages
             }
 
             UploadedDocuments.Add(doc);
+        }
+
+        private List<DocumentTypeDTO> CleanDocumentTypes(List<DocumentTypeDTO> DocumentTypes)
+        {
+            // Has null id's
+            if (DocumentTypes != null && DocumentTypes.Any())
+            {
+                var clean = DocumentTypes.Where(x => !string.IsNullOrWhiteSpace(x.Id)).ToList();
+                return clean;
+            }
+
+            return new List<DocumentTypeDTO>();
         }
     }
 }
