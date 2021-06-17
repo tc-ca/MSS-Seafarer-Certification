@@ -41,6 +41,8 @@ namespace CSF.SRDashboard.Client.Models
 
         public List<DocumentTypeDTO> DocumentType { get; set; }
 
+        public List<DocumentTypes> DocumentTypes { get; set; }
+
         public IFormFile FormFile { get; set; }
 
         public int SelectValue { get; set; }
