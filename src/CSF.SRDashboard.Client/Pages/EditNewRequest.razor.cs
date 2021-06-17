@@ -75,6 +75,11 @@ namespace CSF.SRDashboard.Client.Pages
             StateHasChanged();
         }
 
+        public void Cancel()
+        {
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
+
         public async void SaveChanges()
         {
             var isValid = EditContext.Validate();

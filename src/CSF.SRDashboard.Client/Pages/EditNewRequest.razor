@@ -5,7 +5,7 @@
 
     <div class="d-flex">
         <div class="mr-auto p-2"><h3>@this.Applicant.FullName - @Localizer["EditRequest"] @RequestModel.RequestID</h3></div>
-        <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">@Localizer["Cancel"]</button></div>
+        <div class="p-2"><button class="btn btn-light" type="button" @onclick="Cancel">@Localizer["Cancel"]</button></div>
         <div class="p-2"><button class="btn btn-primary" type="submit">@Localizer["SaveRequest"]</button></div>
     </div>
     <hr />
@@ -36,7 +36,7 @@
     <hr />
     <div class="d-flex">
         <div class="mr-auto p-2"></div>
-        <div class="p-2"><button class="btn btn-light" onclick="window.history.back();">@Localizer["Back"]</button></div>
+        <div class="p-2"><button class="btn btn-light" type="button" @onclick="Cancel">@Localizer["Cancel"]</button></div>
         <div class="p-2"><button class="btn btn-primary" type="submit">@Localizer["SaveRequest"]</button></div>
     </div>
 
