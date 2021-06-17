@@ -101,7 +101,7 @@
                 UserName = userName,
                 FileName = fileName,
                 FileContentType = fileContentType,
-                ShortDescription = shortDescription,
+                Description = shortDescription,
                 SubmissionMethod = submissionMethod,
                 FileLanguage = fileLanguage,
                 DocumentTypes = documentTypes,

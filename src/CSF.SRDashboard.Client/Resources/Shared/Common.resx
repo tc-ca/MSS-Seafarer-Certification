@@ -261,9 +261,6 @@
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="SubmissionMethod" xml:space="preserve">
     <value>Submission method</value>
   </data>
