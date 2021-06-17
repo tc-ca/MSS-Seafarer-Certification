@@ -63,7 +63,7 @@
                 <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSelectOption"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
                     @foreach (var item in Constants.SubmissionMethods)
                         {
-                        <option value="@item.Id">@item.Text</option>
+                        <option value="@item.ID">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -72,7 +72,7 @@
                 <label class="form-label"><b>@Localizer["SubmissionMethod"]</b></label>
                 @foreach (var item in Constants.SubmissionMethods)
                 {
-                    if (@RequestModel.SubmissionMethod == item.Id)
+                    if (@RequestModel.SubmissionMethod == item.ID)
                     {
                         <p>@item.Text</p>
                     }

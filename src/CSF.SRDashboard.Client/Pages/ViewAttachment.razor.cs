@@ -1,7 +1,6 @@
 ﻿using CSF.API.Services.Repositories;
 using CSF.Common.Library.Azure;
 using CSF.SRDashboard.Client.DTO;
-using CSF.SRDashboard.Client.DTO.DocumentStorage;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
 using CSF.SRDashboard.Client.Services.Document;
@@ -70,8 +69,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Cancel()
         {
-            // Go to Seafarer profile and show message
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=documents");
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
         }
 
         /// <summary>
@@ -110,8 +108,6 @@ namespace CSF.SRDashboard.Client.Pages
 
             };
 
-            documentModel.DocumentTypes = CleanDocumentTypes(documentModel.DocumentTypes);
-
             if (documentModel.DocumentTypes != null && documentModel.DocumentTypes.Any())
             {
                 // To ensure we only show the types if we have them
@@ -129,18 +125,6 @@ namespace CSF.SRDashboard.Client.Pages
             }
 
             UploadedDocuments.Add(doc);
-        }
-
-        private List<DocumentTypeDTO> CleanDocumentTypes(List<DocumentTypeDTO> DocumentTypes)
-        {
-            // Has null id's
-            if (DocumentTypes != null && DocumentTypes.Any())
-            {
-                var clean = DocumentTypes.Where(x => !string.IsNullOrWhiteSpace(x.Id)).ToList();
-                return clean;
-            }
-
-            return new List<DocumentTypeDTO>();
         }
     }
 }

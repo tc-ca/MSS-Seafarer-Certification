@@ -75,7 +75,7 @@ namespace CSF.SRDashboard.Client.Pages
                 DocumentId = x.DocumentId,
                 Language = x.Language,
                 FileName = x.FileName,
-                DocumentType = x.DocumentTypes,
+                DocumentTypes = x.DocumentTypes,
                 Description = x.Description
             }).ToList();
             StateHasChanged();
