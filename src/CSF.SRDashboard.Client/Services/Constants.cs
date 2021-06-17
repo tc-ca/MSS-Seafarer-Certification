@@ -1,5 +1,4 @@
 ﻿using CSF.SRDashboard.Client.Models;
-using DSD.MSS.Blazor.Components.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +14,10 @@ namespace CSF.SRDashboard.Client.Services
         public const string New = "New";
         public const string InProgress = "In Progress";
         public const string OnHold = "On Hold";
-        public const string Completed = "Completed";
+        public const string Complete = "Complete";
         public const string NotSubmitted = "Not Completed";
         public const string Pending = "Pending";
+        public const string Cancelled = "Cancelled";
         public const string Unknown = "Unknown";
 
 
@@ -34,27 +34,23 @@ namespace CSF.SRDashboard.Client.Services
             new Dropdown { ID = "1", Text = "Marine Medical Cerficate - 2 year validity" }
         };
 
-        public static List<SelectListItem> SubmissionMethods = new List<SelectListItem> {
-            new SelectListItem { Id = "1", Text = "Fax" },
-            new SelectListItem { Id = "2", Text = "Mail"},
-            new SelectListItem { Id = "3", Text = "Email"},
-            new SelectListItem { Id = "4", Text = "Emer"}
-        };
-        //public List<SelectListItem> DocumentTypeList { get; set; }
-
-        //public List<SelectListItem> Languages { get; set; }
-        public static List<SelectListItem> DocumentTypeList = new List<SelectListItem> {
-        new SelectListItem{ Id = "1",Text = "MME Exam Report" },
-        new SelectListItem{ Id = "2",Text = "Medical Report" },
-        new SelectListItem{ Id = "3",Text = "Letter" },
-        new SelectListItem{ Id = "4",Text = "Certificate" },
-        new SelectListItem{ Id = "5",Text = "Other" }
+        public static List<Dropdown> SubmissionMethods = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "E-mail" },
+            new Dropdown { ID = "2", Text = "Mail"},
+            new Dropdown { ID = "3", Text = "Fax"},
+            new Dropdown { ID = "4", Text = "Online"},
+            new Dropdown { ID = "5", Text = "Phone"},
+            new Dropdown { ID = "6", Text = "Other"}
         };
 
-        public static List<Dropdown> Languages = new List<Dropdown> {
-            new Dropdown { ID = "1", Text = "English" },
-            new Dropdown { ID = "2", Text = "French" }
+        public static List<Dropdown> RequestStatuses = new List<Dropdown> {
+            new Dropdown { ID = "1", Text = "New"},
+            new Dropdown { ID = "2", Text = "In Progress"},
+            new Dropdown { ID = "3", Text = "Pending"},
+            new Dropdown { ID = "4", Text = "Complete"},
+            new Dropdown { ID = "5", Text = "Cancelled"}
         };
 
+        public static string RequestStatusesDefaultValue = RequestStatuses[0].Text;
     }
 }

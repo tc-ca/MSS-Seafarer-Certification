@@ -27,6 +27,8 @@ namespace CSF.SRDashboard.Client.Pages
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
         [Inject]
+        public IDocumentService DocumentService { get; set; }
+        [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
         [Inject]
@@ -40,9 +42,7 @@ namespace CSF.SRDashboard.Client.Pages
         public WorkItemDTO WorkItemDTO { get; set; }
 
         public RequestModel RequestModel { get; set; }
-
-        public IDocumentService DocumentService { get; set; }
-        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+        public List<UploadedDocument> UploadedDocuments { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -53,18 +53,31 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
-            var hat = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId);
+
+           
+
+
             RequestModel = new RequestModel
             {
                 RequestID = WorkItemDTO.Id,
-                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.CertificateType)).Single().ID,
-                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType)).Single().ID,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod)).Single().Id,
-                
+                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().ID,
+                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().ID,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().ID,
+                Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().ID
             };
 
             this.EditContext = new EditContext(RequestModel);
-
+           
+            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
+            var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            this.UploadedDocuments = documentInfos.Select(x => new UploadedDocument()
+            {
+                DocumentId = x.DocumentId,
+                Language = x.Language,
+                FileName = x.FileName,
+                DocumentType = x.DocumentTypes,
+                Description = x.Description
+            }).ToList();
             StateHasChanged();
         }
 

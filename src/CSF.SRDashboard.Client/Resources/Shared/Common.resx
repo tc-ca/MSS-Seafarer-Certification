@@ -261,9 +261,6 @@
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="SubmissionMethod" xml:space="preserve">
     <value>Submission method</value>
   </data>
@@ -292,7 +289,7 @@
     <value>view request</value>
   </data>
   <data name="EditRequest" xml:space="preserve">
-    <value>edit request</value>
+    <value>Edit request</value>
   </data>
   <data name="SaveRequest" xml:space="preserve">
     <value>Save request</value>
@@ -326,5 +323,8 @@
   </data>
   <data name="AddAttachment" xml:space="preserve">
     <value>Add Attachment</value>
+  </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select</value>
   </data>
 </root>
