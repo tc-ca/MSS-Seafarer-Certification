@@ -29,6 +29,11 @@
 
         [Parameter]
         public int RequestId { get; set; }
+        /// <summary>
+        /// Tab to open if passed ?tab=summary
+        /// </summary>
+        [Parameter]
+        public string Tab { get; set; }
 
         [Parameter]
         public AlertTypes AlertType { get; set; }
@@ -122,7 +127,7 @@
                     FileName = documentInfo.FileName,
                     Language = documentInfo.Language,
                     Type = documentInfo.FileType,
-                    DateUploaded = documentInfo.DateCreated.Value,
+                    DateUploaded = documentInfo.DateLastUpdated.Value,
                     DocumentUrl = documentInfo.DocumentUrl,
                     DownloadLink = link
                 });
@@ -143,9 +148,25 @@
         protected override async void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
+
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
             if (IsAlertEnabled)
             {
-                await JS.InvokeVoidAsync("SetTab");
+                await JS.InvokeVoidAsync("SetTab", "requestLink");
+            }
+            else if (!string.IsNullOrWhiteSpace(FileName))
+            {
+                await JS.InvokeVoidAsync("SetTab", "documents");
+            }
+            else if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("tab", out var tab))
+            {
+                Tab = tab;
+
+                if (!string.IsNullOrWhiteSpace(Tab))
+                {
+                    await JS.InvokeVoidAsync("SetTab", Tab);
+                }
             }
         }
 

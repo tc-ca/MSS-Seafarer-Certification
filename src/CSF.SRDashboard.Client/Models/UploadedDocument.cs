@@ -1,5 +1,7 @@
-﻿using CSF.API.Data.Entities;
+﻿
 using CSF.SRDashboard.Client.DTO.DocumentStorage;
+using CSF.SRDashboard.Client.Services;
+using CSF.SRDashboard.Client.Services.Document.Entities;
 using DSD.MSS.Blazor.Components.Core.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -10,9 +12,19 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Models
 {
-    public class UploadedDocument : DocumentInfo
+    public class UploadedDocument
     {
+        public Guid DocumentId { get; set; }
+
+        public string Cdn { get; set; }
+        /// <summary>
+        /// Document list that is shown in the dropdown
+        /// </summary>
         public List<SelectListItem> DocumentTypeList { get; set; }
+        /// <summary>
+        /// The types the user selected
+        /// </summary>
+        public List<DocumentTypeDTO> DocumentTypes { get; set; }
 
         public List<SelectListItem> Languages { get; set; }
 
@@ -39,10 +51,6 @@ namespace CSF.SRDashboard.Client.Models
 
         public string Language { get; set; }
 
-        public List<DocumentTypeDTO> DocumentType { get; set; }
-
-        public List<DocumentTypes> DocumentTypes { get; set; }
-
         public IFormFile FormFile { get; set; }
 
         public int SelectValue { get; set; }
@@ -51,40 +59,21 @@ namespace CSF.SRDashboard.Client.Models
 
         public UploadedDocument()
         {
-            DocumentTypeList = new List<SelectListItem>();
+            DocumentTypeList = new List<SelectListItem> {
+        new SelectListItem{ Id = "1",Text = "MME Exam Report" },
+        new SelectListItem{ Id = "2",Text = "Medical Report" },
+        new SelectListItem{ Id = "3",Text = "Letter" },
+        new SelectListItem{ Id = "4",Text = "Certificate" },
+        new SelectListItem{ Id = "5",Text = "Other" }
+        };
 
             Languages = new List<SelectListItem>();
 
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "MME Exam Report",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Medical Report",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Letter",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Certificate",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Text = "Other",
-                Value = false
-            });
+
 
             Languages.Add(new SelectListItem { Id = "1", Text = "EN", Value = false });
             Languages.Add(new SelectListItem { Id = "2", Text = "FR", Value = false });
 
-            this.SelectValue = -1;
         }
     }
 }
