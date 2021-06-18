@@ -1,4 +1,6 @@
 ﻿
+using System.Threading.Tasks;
+
 namespace CSF.SRDashboard.Client.Services
 {
     public interface IUserGraphApiService
