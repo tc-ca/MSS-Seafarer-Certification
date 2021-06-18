@@ -133,6 +133,8 @@
                 });
             }
 
+            this.TableData = this.TableData.OrderByDescending(x => x.DateUploaded).ToList();
+
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
             {
                 RequestID = Convert.ToInt32(requestId);
