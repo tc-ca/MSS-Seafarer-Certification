@@ -52,9 +52,9 @@
                     {
                         <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
                             @foreach (var item in this.UploadedDocuments[i].Languages)
-                                    {
-                                <option value="@item.Id">@item.Text</option>
-                                    }
+                                {
+                                    <option value="@item.Id">@item.Text</option>
+                                }
                         </FormInputSelect>
                     }
                     else

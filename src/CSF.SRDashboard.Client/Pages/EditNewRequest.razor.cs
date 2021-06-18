@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
 using System;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -63,6 +64,7 @@ namespace CSF.SRDashboard.Client.Pages
         public bool MostRecentCommentsIsCollapsed { get; private set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
         public IUploadDocumentService UploadService { get; set; }
+        public int InitialDocumentCount { get; set; }
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -73,6 +75,26 @@ namespace CSF.SRDashboard.Client.Pages
 
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentService(this.DocumentService);
+
+            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
+            var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
+            {
+                DocumentId = x.DocumentId,
+                Language = x.Language,
+                FileName = x.FileName,
+                DocumentTypes = x.DocumentTypes,
+                Description = x.Description
+            }).ToList();
+            foreach( var Document in DocumentForm)
+            {
+                Document.SelectValue = Int32.Parse(Document.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id);
+                //Document.SelectValue = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().ID;
+            }
+
+            InitialDocumentCount = documentIds.Count; 
+
+
             StateHasChanged();
         }
 
@@ -103,6 +125,20 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
+
+
+            for (int i = 0; i < InitialDocumentCount; i++)
+            {
+                var document = this.DocumentForm[i];
+
+                document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+
+                document.Language = document.Languages.Where(x => x.Id.Equals(document.SelectValue.ToString())).Single().Text;
+
+                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+            }
+
+
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
 
         }
@@ -134,7 +170,7 @@ namespace CSF.SRDashboard.Client.Pages
     
         public void ViewProfile()
         {
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=documents");
         }
 
         private RequestModel PopulateRequestmodel(int requestId, string cdn)
