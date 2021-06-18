@@ -21,6 +21,8 @@
                     return "badge-completed";
                 case RequestStatus.NEW:
                     return "badge-new";
+                case RequestStatus.CANCELLED:
+                    return "badge-cancelled";
                 default:
                     return "badge-secondary";
             } 

@@ -75,7 +75,7 @@
                         <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" ShowDefaultOption="ShowDefaultOption">
                             @foreach (var item in Constants.Languages)
                                     {
-                                <option value="@item.ID">@item.Text</option>}
+                                <option value="@item.Id">@item.Text</option>}
                         </FormInputSelect>
                     }
                     else

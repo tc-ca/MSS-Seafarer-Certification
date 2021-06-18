@@ -76,7 +76,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
-            document.Language = Constants.Languages.Where(x => x.ID.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
+            document.Language = Constants.Languages.Where(x => x.Id.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
 
             var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
 
@@ -133,7 +133,7 @@ namespace CSF.SRDashboard.Client.Pages
                 DocumentId = documentModel.DocumentId,
                 Description = documentModel.Description,
                 FileName = documentModel.FileName,
-                Language = Constants.Languages.Where(x => x.Text.Equals(documentModel.Language, StringComparison.OrdinalIgnoreCase)).Single().ID,
+                Language = Constants.Languages.Where(x => x.Text.Equals(documentModel.Language, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentModel.DocumentUrl, DateTime.UtcNow.AddHours(8))
             };
 
