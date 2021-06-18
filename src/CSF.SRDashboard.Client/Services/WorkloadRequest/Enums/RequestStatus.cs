@@ -9,14 +9,17 @@
         [Description("New")]
         NEW,
 
-        [Description("Complete")]
-        COMPLETE,
-
         [Description("In Progress")]
         IN_PROGRESS,
 
         [Description("Pending")]
         PENDING,
+
+        [Description("Complete")]
+        COMPLETE,
+
+        [Description("Cancelled")]
+        CANCELLED,
 
         [Description("Unknown")]
         UNKNOWN

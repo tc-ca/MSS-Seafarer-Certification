@@ -292,7 +292,7 @@
     <value>View Request_fr</value>
   </data>
   <data name="EditRequest" xml:space="preserve">
-    <value>edit-request_fr</value>
+    <value>Edit request_fr</value>
   </data>
   <data name="SaveRequest" xml:space="preserve">
     <value>Save-request_fr</value>
@@ -302,5 +302,8 @@
   </data>
   <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
+  </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select_fr</value>
   </data>
 </root>

@@ -60,7 +60,7 @@ namespace CSF.SRDashboard.Client.Services
         {
             this.acquireToken();
 
-            string photoDataString = string.Empty;
+            string photoDataString = null;
             try
             {
                 string url = this.configuration.GetSection("AzureGraphAPI")["UserPhotoURL"];

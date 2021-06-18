@@ -26,7 +26,7 @@ namespace CSF.SRDashboard.Client.Utilities
 
             requestGridsModel.RequestsOnHold = allRequests.Where(x => x.ProcessingPhase == Constants.OnHold).ToList();
 
-            requestGridsModel.RequestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
+            requestGridsModel.RequestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Complete).ToList();
 
             requestGridsModel.RequestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
 
@@ -319,7 +319,7 @@ namespace CSF.SRDashboard.Client.Utilities
 
             requestGridsModel.RequestsOnHold = allRequests.Where(x => x.ProcessingPhase == Constants.OnHold).ToList();
 
-            requestGridsModel.RequestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Completed).ToList();
+            requestGridsModel.RequestsCompleted = allRequests.Where(x => x.ProcessingPhase == Constants.Complete).ToList();
 
             requestGridsModel.RequestsNotSubmitted = allRequests.Where(x => x.ProcessingPhase == Constants.NotSubmitted).ToList();
 

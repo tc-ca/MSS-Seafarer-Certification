@@ -78,7 +78,8 @@ namespace CSF.SRDashboard.Client.Pages
                 Cdn = Applicant.Cdn,
                 CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text,
+                Status = Constants.RequestStatuses.Where(x => x.ID.Equals(RequestModel.Status)).Single().Text
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
