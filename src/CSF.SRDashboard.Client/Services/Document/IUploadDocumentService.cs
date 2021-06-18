@@ -15,5 +15,6 @@ namespace CSF.SRDashboard.Client.Services.Document
 
 
         Task<DocumentInfo> UploadDocument(UploadedDocument document);
+        bool ValidateTypes(UploadedDocument upload);
     }
 }

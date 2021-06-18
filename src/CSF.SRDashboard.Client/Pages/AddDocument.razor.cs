@@ -63,6 +63,10 @@ namespace CSF.SRDashboard.Client.Pages
                     };
                     ClientXrefDocumentRepository.Insert(this.DocumentInfo);
                 }
+                else
+                {
+                    return;
+                }
                
             }
 
@@ -70,7 +74,7 @@ namespace CSF.SRDashboard.Client.Pages
         }
         public void HandleCancel()
         {
-
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
         }
         public void HandleValidSubmit()
         {

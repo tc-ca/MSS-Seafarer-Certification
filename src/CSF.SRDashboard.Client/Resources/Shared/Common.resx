@@ -327,4 +327,19 @@
   <data name="DefaultSelectOption" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
+  <data name="SelectDocType" xml:space="preserve">
+    <value>Select document type</value>
+  </data>
+  <data name="DefaulRequestType" xml:space="preserve">
+    <value>Select request type</value>
+  </data>
+  <data name="DefaultCertificateSelect" xml:space="preserve">
+    <value>Select certificate type</value>
+  </data>
+  <data name="DefaultSubmissionSelect" xml:space="preserve">
+    <value>Select submission type</value>
+  </data>
 </root>

@@ -3,11 +3,11 @@
 {
     var i = index;
 
-    <div class="card ml-4 mt-4">
+    <div class="card mt-4">
         <div class="card-header bg-white">
             <div class="d-flex">
                 <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
-                <div class="" @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
+                <div class="" @onclick="@(e => ViewDocument(this.State.DocumentForm[i]))">
                     <div style="cursor: pointer;">
                         <a style="color: #1B50B1;">
                             <i class="fas fa-eye mr-2"></i>View
@@ -34,7 +34,7 @@
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle="Select Title Chris">
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle=@Localizer["SelectDocType"]>
                             <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
@@ -50,7 +50,7 @@
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
+                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" SelectLabel=@Localizer["SelectLanguage"] Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
                             @foreach (var item in this.UploadedDocuments[i].Languages)
                                     {
                                 <option value="@item.Id">@item.Text</option>

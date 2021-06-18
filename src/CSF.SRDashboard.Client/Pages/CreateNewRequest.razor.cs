@@ -12,6 +12,10 @@ using CSF.SRDashboard.Client.Components.Icons.Utilities;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
+using DSD.MSS.Blazor.Components.Core.Models;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -37,11 +41,21 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
+
+        [Inject]
+        public SessionState State { get; set; }
+
+        public IUploadDocumentService UploadService { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
 
         public RequestValidator validator = new RequestValidator();
+
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
 
         public WorkItemDTO UploadedRequest { get; set; }
 
@@ -61,14 +75,21 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             this.EditContext = new EditContext(RequestModel);
+            this.UploadService = new UploadDocumentService(this.DocumentService);
 
             StateHasChanged();
         }
 
-        public void SaveChanges()
+        public async void SaveChanges()
         {
             var isValid = EditContext.Validate();
+
             if (!isValid)
+            {
+                return;
+            }
+
+            if (!this.ValidateUpload(this.State.DocumentForm))
             {
                 return;
             }
@@ -83,10 +104,74 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
-
+            var addedDocuments = await this.InsertDocumentOnRequest(UploadedRequest.Id);
+            this.State.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }
 
+        private async Task<List<Document>> InsertDocumentOnRequest(int id)
+        {
+            List<Document> addedDocuments = new List<Document>();
+           
+            if (this.State.DocumentForm == null)
+            {
+                return addedDocuments;
+            }
+          
+            foreach (var document in this.State.DocumentForm)
+            {
+                var addedDocument = await this.UploadService.UploadDocument(document);
+
+                if (addedDocument != null)
+                {
+                    WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                    { DocumentId = addedDocument.DocumentId, WorkItemId = id };
+                    await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    addedDocuments.Add(new Document()
+                    {
+                        DocumentId = addedDocument.DocumentId,
+                        FileName = document.FileName,
+                        Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
+                        RequestID = id.ToString() 
+                    });
+
+                }
+            }
+            return addedDocuments;
+        }
+
+        private bool ValidateUpload(List<UploadedDocument> upload)
+        {
+
+            if (upload == null)
+            {
+                return true;
+            }
+
+            var valid = false;
+            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
+
+            foreach (var i in upload)
+            {
+                if (!this.UploadService.ValidateTypes(i))
+                {
+                    return false;
+                }
+
+            }
+            if (language.Any())
+            {
+                valid = false;
+            }
+            else
+            {
+                valid = true;
+            }
+
+            return valid;
+
+
+        }
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);

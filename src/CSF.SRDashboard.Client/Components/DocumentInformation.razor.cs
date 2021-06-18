@@ -1,5 +1,6 @@
 ﻿using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
+using CSF.SRDashboard.Client.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +46,8 @@ namespace CSF.SRDashboard.Client.Components
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        [Inject]
+        public SessionState State { get; set; }
         [Parameter]
         public List<UploadedDocument> UploadedDocuments { get; set; }
         

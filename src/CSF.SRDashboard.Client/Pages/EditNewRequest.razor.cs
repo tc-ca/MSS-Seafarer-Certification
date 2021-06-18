@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
 using System;
+using DSD.MSS.Blazor.Components.Core.Models;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -54,8 +55,6 @@ namespace CSF.SRDashboard.Client.Pages
         public bool IsEditMode { get; set; }
 
         public string Comment { get; set; }
-        [Inject]
-        public IWorkLoadManagementService WorkLoadManagementService { get; set; }
 
         private string titleInfo { get; set; }
         [Inject]
@@ -85,6 +84,11 @@ namespace CSF.SRDashboard.Client.Pages
             }
 
             await JS.InvokeAsync<string>("SetBusyCursor", null);
+            if (!this.ValidateUpload(this.State.DocumentForm))
+            {
+                return;
+            }
+
             var added = await this.InsertDocumentOnRequest();
             var RequestToSend = new RequestModel
             {
@@ -98,6 +102,7 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
+            this.State.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
 
         }
@@ -112,17 +117,24 @@ namespace CSF.SRDashboard.Client.Pages
             {
 
                 var addedDocument = await this.UploadService.UploadDocument(document);
-                WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO() 
-                { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
-                await this.WorkLoadManagementService.AddWorkItemAttachment(workItemAttachmentDTO);
-                addedDocuments.Add(new Document()
+                if (addedDocument != null)
                 {
-                    DocumentId = addedDocument.DocumentId,
-                    FileName = document.FileName,
-                    Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
-                    RequestID = this.EditRequestId.ToString()
-                });
+                    WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                    { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
+                    await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    addedDocuments.Add(new Document()
+                    {
+                        DocumentId = addedDocument.DocumentId,
+                        FileName = document.FileName,
+                        Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
+                        RequestID = this.EditRequestId.ToString()
 
+                    });
+                }
+                else
+                {
+                    return null;
+                }
             }
             return addedDocuments;
         }
@@ -130,6 +142,36 @@ namespace CSF.SRDashboard.Client.Pages
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
+        private bool ValidateUpload(List<UploadedDocument> upload)
+        {
+
+            if (upload == null)
+            {
+                return true;
+            }
+
+            var valid = false;
+            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
+
+            foreach (var i in upload)
+            {
+                if (!this.UploadService.ValidateTypes(i))
+                {
+                    return false;
+                }
+
+            }
+            if (language.Any())
+            {
+                valid = false;
+            }
+            else
+            {
+                valid = true;
+            }
+
+            return valid;
         }
 
         private RequestModel PopulateRequestmodel(int requestId, string cdn)
