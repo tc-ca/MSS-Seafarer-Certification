@@ -36,10 +36,15 @@ namespace CSF.SRDashboard.Client.Services.Document
             {
                 return null;
             }
-            var documentInfo = await DocumentServe.InsertDocument(1, "User", document.FormFile, document.FormFile.ContentType, document.Description, string.Empty, language, this.DocumentTypes, string.Empty);
+            var documentInfo = await DocumentServe.InsertDocument(1, string.Empty, document.FormFile, document.FormFile.ContentType, document.Description, string.Empty, language, this.DocumentTypes, string.Empty);
             return documentInfo;
         }
 
+        /// <summary>
+        /// Validates 
+        /// </summary>
+        /// <param name="upload"></param>
+        /// <returns></returns>
         private bool ValidateTypes(UploadedDocument upload)
         {
             var typeList = upload.DocumentTypeList.Where(i => i.Value).ToList();

@@ -42,7 +42,8 @@ namespace CSF.SRDashboard.Client.Pages
         public WorkItemDTO WorkItemDTO { get; set; }
 
         public RequestModel RequestModel { get; set; }
-        public List<UploadedDocument> UploadedDocuments { get; set; }
+        public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
+
 
         protected async override Task OnInitializedAsync()
         {
@@ -54,7 +55,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
 
-           
+
 
 
             RequestModel = new RequestModel
@@ -68,17 +69,34 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             this.EditContext = new EditContext(RequestModel);
-           
+
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
             var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
-            this.UploadedDocuments = documentInfos.Select(x => new UploadedDocument()
+            foreach (var docFromDB in documentInfos)
             {
-                DocumentId = x.DocumentId,
-                Language = x.Language,
-                FileName = x.FileName,
-                DocumentType = x.DocumentTypes,
-                Description = x.Description
-            }).ToList();
+                var uploadLoaded = new UploadedDocument
+                {
+                    DocumentId = docFromDB.DocumentId,
+                    Language = docFromDB.Language,
+                    FileName = docFromDB.FileName,
+                    DocumentTypes = docFromDB.DocumentTypes,
+                    Description = docFromDB.Description
+                };
+                if (docFromDB.DocumentTypes != null && docFromDB.DocumentTypes.Any())
+                {
+                    // To ensure we only show the types if we have them
+                    uploadLoaded.DocumentTypes = docFromDB.DocumentTypes;
+                    foreach (var item in uploadLoaded.DocumentTypeList)
+                    {
+                        if (docFromDB.DocumentTypes.Where(x => x.Id.Equals(item.Id)).SingleOrDefault() != null)
+                        {
+                            item.Value = true;
+                        }
+                    }
+                }
+                this.UploadedDocuments.Add(uploadLoaded);
+            }
+
             StateHasChanged();
         }
 
