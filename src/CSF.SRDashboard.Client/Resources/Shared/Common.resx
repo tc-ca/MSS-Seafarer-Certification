@@ -336,4 +336,7 @@
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment</value>
   </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

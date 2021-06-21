@@ -9,12 +9,12 @@
                 {
                     @if (this.IsCurrentSelectedStatus(item))
                     {
-                        <option value ="@item.ID" selected> @item.Text</option>
-                        RequestModel.Status = @item.ID;
+                        <option value ="@item.Id" selected> @item.Text</option>
+                        RequestModel.Status = @item.Id;
                     }
                     else
                     {
-                        <option value="@item.ID">@item.Text</option>
+                        <option value="@item.Id">@item.Text</option>
                     }
                 }
             </FormInputSelect>
@@ -22,7 +22,7 @@
             else
             {
                 <label class="form-label"><b>@Localizer["Status"]</b></label>
-                <p>@Constants.RequestStatuses.Where(x => x.ID == RequestModel.Status).Select(x => x.Text).FirstOrDefault()</p>
+                <p>@Constants.RequestStatuses.Where(x => x.Id == RequestModel.Status).Select(x => x.Text).FirstOrDefault()</p>
             }
         </div>
     </div>

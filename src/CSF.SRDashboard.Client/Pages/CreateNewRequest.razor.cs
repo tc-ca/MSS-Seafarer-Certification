@@ -13,6 +13,8 @@ using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
 
+using System;
+
 namespace CSF.SRDashboard.Client.Pages
 {
     public partial class CreateNewRequest
@@ -68,6 +70,7 @@ namespace CSF.SRDashboard.Client.Pages
         public void SaveChanges()
         {
             var isValid = EditContext.Validate();
+            
             if (!isValid)
             {
                 return;
@@ -76,10 +79,10 @@ namespace CSF.SRDashboard.Client.Pages
             var RequestToSend = new RequestModel
             {
                 Cdn = Applicant.Cdn,
-                CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
-                RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text,
-                Status = Constants.RequestStatuses.Where(x => x.ID.Equals(RequestModel.Status)).Single().Text
+                CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
@@ -90,6 +93,11 @@ namespace CSF.SRDashboard.Client.Pages
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
+        public void Cancel()
+        {
+            // Go to Seafarer profile and show message
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
 
     }
