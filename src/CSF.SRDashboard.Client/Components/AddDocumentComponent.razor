@@ -1,15 +1,15 @@
 ﻿@inject IStringLocalizer<Common> Localizer
 
-<div class="col-12 p-0">
+<div>
     <div class="accordion mt-5" id="AttachmentAcc">
         <div class="row">
-            <div class="col-12">
+            <div class="col-11">
                 <p class="mb-0 float-right">@Localizer["RequiredField"]<span class="text-danger">*</span></p>
             </div>
         </div>
         <Collapse HeaderTitleTextColor="#FFFFFF" Title="@Localizer["AddAttachment"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
             <BodyContent>
-              
+               
                     <UploadDocumentComponent OnFileUploaded="this.FileUploaded" AllowMultipleUploads="@this.AllowMultipleUploads" @bind-DocumentForm="this.DocumentForm" />
                
             </BodyContent>

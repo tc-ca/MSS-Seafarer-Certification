@@ -25,12 +25,16 @@
                     </BodyContent>
                 </Collapse>
             </div>
-            <div>
+            <div class="mt-3 mb-3">
                 @if (this.UploadedDocuments != null)
                 {
-                <CSF.SRDashboard.Client.Components.DocumentInformation UploadedDocuments="this.UploadedDocuments" IsReadOnly="true"></CSF.SRDashboard.Client.Components.DocumentInformation>
-                }
-            </div>
+                    <Collapse HeaderTitleTextColor="#FFFFFF" Title="@this.Localizer["Attachments"]" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                        <BodyContent>
+                            <CSF.SRDashboard.Client.Components.DocumentInformation UploadedDocuments="this.UploadedDocuments" IsReadOnly="true"></CSF.SRDashboard.Client.Components.DocumentInformation>
+                        </BodyContent>
+                        </Collapse>
+                            }
+                </div>
         </div>
 
         <div style="flex-basis:25%;" class="pl-4 pr-4">

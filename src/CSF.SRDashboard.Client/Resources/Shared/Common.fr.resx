@@ -261,9 +261,6 @@
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress_fr</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="SubmissionMethod" xml:space="preserve">
     <value>Submission method_fr</value>
   </data>
@@ -335,5 +332,17 @@
   </data>
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment_fr</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select Language_fr</value>
+  </data>
+  <data name="SelectDocType" xml:space="preserve">
+    <value>Select doc type_fr</value>
+  </data>
+  <data name="DefaultCertificateSelect" xml:space="preserve">
+    <value>Select Certificate Type_fr</value>
+  </data>
+  <data name="DefaultSubmissionSelect" xml:space="preserve">
+    <value>Select Submission type_fr</value>
   </data>
 </root>

@@ -47,7 +47,14 @@ namespace CSF.SRDashboard.Client.Pages
 
         private async Task uploadToSeafarer()
         {
-         
+            if (this.State.DocumentForm.Count > 0 && this.State.DocumentForm != null)
+            {
+                this.DocumentForm = this.State.DocumentForm;
+            }
+            if (!this.UploadService.ValidateUpload(this.DocumentForm))
+            {
+                return;
+            }
 
             foreach (var document in this.State.DocumentForm)
             {
@@ -63,14 +70,18 @@ namespace CSF.SRDashboard.Client.Pages
                     };
                     ClientXrefDocumentRepository.Insert(this.DocumentInfo);
                 }
+                else
+                {
+                    return;
+                }
                
             }
-
+            this.State.DocumentForm = null;
             this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
         }
         public void HandleCancel()
         {
-
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
         }
         public void HandleValidSubmit()
         {

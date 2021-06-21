@@ -35,7 +35,7 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public List<UploadedDocument> DocumentForm { get; set; }
 
-
+        [Parameter]
         public EditContext EditContext { get; set; }
 
         public string Language { get; set; }

@@ -25,11 +25,56 @@ namespace CSF.SRDashboard.Client.Services.Document
         public async Task<DocumentInfo> UploadDocument(UploadedDocument document)
         {
             this.DocumentTypes = this.PopulateDocumentTypes(document.DocumentTypeList);
+            
+            if(this.DocumentTypes.Count <= 0)
+            {
+                return null;
+            }
+
             this.Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault();
+            if(this.Language == null)
+            {
+                return null;
+            }
             var documentInfo = await DocumentServe.InsertDocument(1, "User", document.FormFile, document.FormFile.ContentType, document.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
             return documentInfo;
         }
-        
+
+        private bool ValidateTypes(UploadedDocument upload)
+        {
+            var typeList = upload.DocumentTypeList.Where(i => i.Value).ToList();
+            return typeList.Any();
+        }
+        public bool ValidateUpload(List<UploadedDocument> upload)
+        {
+
+            if (upload == null)
+            {
+                return true;
+            }
+
+            var valid = false;
+            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
+
+            foreach (var i in upload)
+            {
+                if (!this.ValidateTypes(i))
+                {
+                    return false;
+                }
+
+            }
+            if (language.Any())
+            {
+                valid = false;
+            }
+            else
+            {
+                valid = true;
+            }
+
+            return valid;
+        }
         /// <summary>
         /// Checks if the form is validated
         /// </summary>

@@ -3,96 +3,70 @@
 {
     var i = index;
 
-    <div class="card ml-4 mt-4">
+    <div class="card mt-4">
         <div class="card-header bg-white">
             <div class="d-flex">
                 <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
-                <div class="mr-3">
-                    @if (!this.IsReadOnly)
-                    {
-                        <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
-                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">@Localizer["Delete"]</span></i>
-                        </button>
-                    }
-                </div>
-                <div @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
+                <div class="" @onclick="@(e => ViewDocument(this.State.DocumentForm[i]))">
                     <div style="cursor: pointer;">
                         <a style="color: #1B50B1;">
-                            <i class="fas fa-eye mr-2"></i>@Localizer["View"]
+                            <i class="fas fa-eye mr-2"></i>View
                         </a>
                     </div>
                 </div>
+                <div class="">
+                    @if (!this.IsReadOnly)
+                    {
+                        <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
+                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">Delete</span></i>
+                        </button>
+
+
+                    }
+                </div>
             </div>
 
+       
         </div>
         <div class="card-body">
             <div class="form-group">
-                <EditForm EditContext="@this.EditContext">
+                <EditForm EditContext="@this.EditContext" OnSubmit="HandleValidSubmit">
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle=@Localizer["SelectDocType"]>
                             <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
-                        </InputMultipleSelect> }
+                        </InputMultipleSelect>
+                    }
                     else
                     {
                         <label class="form-label"><b>@Localizer["DocumentTypes"]</b></label>
-                        string text = string.Empty;
 
+                        <p>N/A</p>
 
-                        @if (this.UploadedDocuments[i].DocumentTypes != null)
-                        {
-                            foreach (var item in this.UploadedDocuments[i].DocumentTypes)
-                            {
-
-                                text += item.Description + ", ";
-                            }
-
-                            if (this.UploadedDocuments[i].DocumentTypes.Any())
-                            {
-                                text = text.Remove(text.Length - 2);
-                                text = text.TrimEnd();
-                                <p>@text</p>
-                            }
-                            else
-                            {
-                                <p>N/A</p>
-                            }
-                        }
-                        else
-                        {
-                            <p>N/A</p>
-                        }
                     }
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" ShowDefaultOption="ShowDefaultOption">
-                            @foreach (var item in Constants.Languages)
+                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" SelectLabel=@Localizer["SelectLanguage"] Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
+                            @foreach (var item in this.UploadedDocuments[i].Languages)
                                     {
-                                <option value="@item.Id">@item.Text</option>}
+                                <option value="@item.Id">@item.Text</option>
+                                    }
                         </FormInputSelect>
                     }
                     else
                     {
-                        <label class="form-label"><b>@Localizer["DocumentLanguage"]</b></label> // Uncomment after database refresh
-                        //
-                        @*// @*foreach (var item in Constants.Languages)
-                            {
-                                if (item.Text.Equals(this.UploadedDocuments[i].Language, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    <p>@item.Text</p>
-                                    break;
-                                }
-                            }*@
-
-                        <p>@this.UploadedDocuments[i].Language</p>}
+                        <label class="form-label"><b>@Localizer["DocumentLanguage"]</b></label>
+                        <p>@this.UploadedDocuments[i].Language</p>
+                    }
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputTextArea Id="InputTextArea" Label="@Localizer["Description"]" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" /> }
+                        <FormInputTextArea Id="InputTextArea" Label="Description" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" />
+                    }
                     else
                     {
                         <label class="form-label"><b>@Localizer["Description"]</b></label>

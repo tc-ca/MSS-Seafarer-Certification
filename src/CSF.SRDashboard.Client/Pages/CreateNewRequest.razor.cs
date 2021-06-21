@@ -12,6 +12,10 @@ using CSF.SRDashboard.Client.Components.Icons.Utilities;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
+using DSD.MSS.Blazor.Components.Core.Models;
 
 using System;
 
@@ -39,11 +43,22 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
+
+        [Inject]
+        public SessionState State { get; set; }
+
+        public IUploadDocumentService UploadService { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public RequestModel RequestModel { get; set; }
 
         public RequestValidator validator = new RequestValidator();
+
+
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
 
         public WorkItemDTO UploadedRequest { get; set; }
 
@@ -59,19 +74,33 @@ namespace CSF.SRDashboard.Client.Pages
 
             RequestModel = new RequestModel
             {
-                Cdn = Applicant.Cdn
+                Cdn = Applicant.Cdn,
+               
+                
             };
 
             this.EditContext = new EditContext(RequestModel);
+          
+            this.UploadService = new UploadDocumentService(this.DocumentService);
 
             StateHasChanged();
         }
 
-        public void SaveChanges()
+        public async void SaveChanges()
         {
+            if (this.State.DocumentForm.Count > 0 && this.State.DocumentForm != null)
+            {
+                this.DocumentForm = this.State.DocumentForm;
+            }
+
             var isValid = EditContext.Validate();
             
             if (!isValid)
+            {
+                return;
+            }
+
+            if (!this.UploadService.ValidateUpload(this.DocumentForm))
             {
                 return;
             }
@@ -86,10 +115,43 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
-
+            var addedDocuments = await this.InsertDocumentOnRequest(UploadedRequest.Id);
+            this.State.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }
 
+        private async Task<List<Document>> InsertDocumentOnRequest(int id)
+        {
+            List<Document> addedDocuments = new List<Document>();
+           
+            if (this.State.DocumentForm == null)
+            {
+                return addedDocuments;
+            }
+          
+            foreach (var document in this.State.DocumentForm)
+            {
+                var addedDocument = await this.UploadService.UploadDocument(document);
+
+                if (addedDocument != null)
+                {
+                    WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                    { DocumentId = addedDocument.DocumentId, WorkItemId = id };
+                    await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    addedDocuments.Add(new Document()
+                    {
+                        DocumentId = addedDocument.DocumentId,
+                        FileName = document.FileName,
+                        Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
+                        RequestID = id.ToString() 
+                    });
+
+                }
+            }
+            return addedDocuments;
+        }
+
+       
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
