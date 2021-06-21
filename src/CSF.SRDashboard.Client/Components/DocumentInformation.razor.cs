@@ -102,7 +102,7 @@ namespace CSF.SRDashboard.Client.Components
 
             this.FilesToUpload.RemoveAt(index);
 
-            //this.FileToUpload = null;
+           
         }
     }
 }

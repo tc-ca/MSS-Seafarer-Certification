@@ -55,6 +55,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public RequestValidator validator = new RequestValidator();
 
+
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
 
         public WorkItemDTO UploadedRequest { get; set; }
@@ -71,10 +72,13 @@ namespace CSF.SRDashboard.Client.Pages
 
             RequestModel = new RequestModel
             {
-                Cdn = Applicant.Cdn
+                Cdn = Applicant.Cdn,
+               
+                
             };
 
             this.EditContext = new EditContext(RequestModel);
+          
             this.UploadService = new UploadDocumentService(this.DocumentService);
 
             StateHasChanged();
@@ -82,14 +86,18 @@ namespace CSF.SRDashboard.Client.Pages
 
         public async void SaveChanges()
         {
-            var isValid = EditContext.Validate();
+            if (this.State.DocumentForm.Count > 0 && this.State.DocumentForm != null)
+            {
+                this.DocumentForm = this.State.DocumentForm;
+            }
 
+            var isValid = EditContext.Validate();
             if (!isValid)
             {
                 return;
             }
 
-            if (!this.ValidateUpload(this.State.DocumentForm))
+            if (!this.UploadService.ValidateUpload(this.DocumentForm))
             {
                 return;
             }
@@ -140,38 +148,7 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-        private bool ValidateUpload(List<UploadedDocument> upload)
-        {
-
-            if (upload == null)
-            {
-                return true;
-            }
-
-            var valid = false;
-            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
-
-            foreach (var i in upload)
-            {
-                if (!this.UploadService.ValidateTypes(i))
-                {
-                    return false;
-                }
-
-            }
-            if (language.Any())
-            {
-                valid = false;
-            }
-            else
-            {
-                valid = true;
-            }
-
-            return valid;
-
-
-        }
+       
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);

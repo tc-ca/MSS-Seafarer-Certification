@@ -77,14 +77,19 @@ namespace CSF.SRDashboard.Client.Pages
 
         public async void SaveChanges()
         {
+            if (this.State.DocumentForm.Count > 0 && this.State.DocumentForm != null)
+            {
+                this.DocumentForm = this.State.DocumentForm;
+            }
             var isValid = EditContext.Validate();
+
             if (!isValid)
             {
                 return;
             }
 
             await JS.InvokeAsync<string>("SetBusyCursor", null);
-            if (!this.ValidateUpload(this.State.DocumentForm))
+            if (!this.UploadService.ValidateUpload(this.DocumentForm))
             {
                 return;
             }
@@ -143,37 +148,7 @@ namespace CSF.SRDashboard.Client.Pages
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
         }
-        private bool ValidateUpload(List<UploadedDocument> upload)
-        {
-
-            if (upload == null)
-            {
-                return true;
-            }
-
-            var valid = false;
-            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
-
-            foreach (var i in upload)
-            {
-                if (!this.UploadService.ValidateTypes(i))
-                {
-                    return false;
-                }
-
-            }
-            if (language.Any())
-            {
-                valid = false;
-            }
-            else
-            {
-                valid = true;
-            }
-
-            return valid;
-        }
-
+     
         private RequestModel PopulateRequestmodel(int requestId, string cdn)
         {
             var workItem = this.WorkLoadService.GetByWorkItemById(requestId);

@@ -40,12 +40,41 @@ namespace CSF.SRDashboard.Client.Services.Document
             return documentInfo;
         }
 
-        public bool ValidateTypes(UploadedDocument upload)
+        private bool ValidateTypes(UploadedDocument upload)
         {
             var typeList = upload.DocumentTypeList.Where(i => i.Value).ToList();
             return typeList.Any();
         }
-        
+        public bool ValidateUpload(List<UploadedDocument> upload)
+        {
+
+            if (upload == null)
+            {
+                return true;
+            }
+
+            var valid = false;
+            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
+
+            foreach (var i in upload)
+            {
+                if (!this.ValidateTypes(i))
+                {
+                    return false;
+                }
+
+            }
+            if (language.Any())
+            {
+                valid = false;
+            }
+            else
+            {
+                valid = true;
+            }
+
+            return valid;
+        }
         /// <summary>
         /// Checks if the form is validated
         /// </summary>
