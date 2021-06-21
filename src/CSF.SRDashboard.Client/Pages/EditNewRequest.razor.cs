@@ -10,7 +10,11 @@ using CSF.SRDashboard.Client.PageValidators;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
 using System;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -32,6 +36,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
 
         [Inject]
         IJSRuntime JS { get; set; }
@@ -49,11 +55,16 @@ namespace CSF.SRDashboard.Client.Pages
         public bool IsEditMode { get; set; }
 
         public string Comment { get; set; }
+        [Inject]
+        public IWorkLoadManagementService WorkLoadManagementService { get; set; }
 
         private string titleInfo { get; set; }
-
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
-
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+        public IUploadDocumentService UploadService { get; set; }
+        public int InitialDocumentCount { get; set; }
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -63,11 +74,46 @@ namespace CSF.SRDashboard.Client.Pages
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
+            this.UploadService = new UploadDocumentService(this.DocumentService);
+
+            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
+            var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
+            {
+                DocumentId = x.DocumentId,
+                Language = x.Language,
+                FileName = x.FileName,
+                DocumentTypes = x.DocumentTypes,
+                Description = x.Description
+            }).ToList();
+            foreach( var Document in DocumentForm)
+            {
+
+                Document.SelectValue = int.Parse(Document.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id);
+
+                if (Document.Language.Equals("EN"))
+                {
+                    Document.Language = "English";
+                }
+                else if (Document.Language.Equals("FR"))
+                {
+                    Document.Language = "French";
+                }
+
+            }
+
+            InitialDocumentCount = documentIds.Count; 
+
 
             StateHasChanged();
         }
 
-        public void SaveChanges()
+        public void Cancel()
+        {
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requests");
+        }
+
+        public async void SaveChanges()
         {
             var isValid = EditContext.Validate();
             if (!isValid)
@@ -75,8 +121,8 @@ namespace CSF.SRDashboard.Client.Pages
                 return;
             }
 
-            JS.InvokeAsync<string>("SetBusyCursor", null);
-
+            await JS.InvokeAsync<string>("SetBusyCursor", null);
+            var added = await this.InsertDocumentOnRequest();
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
@@ -84,23 +130,56 @@ namespace CSF.SRDashboard.Client.Pages
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
-                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text
+                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
+               
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
+
+
+            for (int i = 0; i < InitialDocumentCount; i++)
+            {
+                var document = this.DocumentForm[i];
+
+                document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+
+                document.Language = document.Languages.Where(x => x.Id.Equals(document.SelectValue.ToString())).Single().Text;
+
+                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+            }
+
+
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
 
         }
+        private async Task<List<Document>> InsertDocumentOnRequest()
+        {
+            List<Document> addedDocuments = new List<Document>();
+            if(this.State.DocumentForm == null)
+            {
+                return addedDocuments;
+            }
+            foreach (var document in this.State.DocumentForm)
+            {
 
+                var addedDocument = await this.UploadService.UploadDocument(document);
+                WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO() 
+                { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
+                await this.WorkLoadManagementService.AddWorkItemAttachment(workItemAttachmentDTO);
+                addedDocuments.Add(new Document()
+                {
+                    DocumentId = addedDocument.DocumentId,
+                    FileName = document.FileName,
+                    Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
+                    RequestID = this.EditRequestId.ToString()
+                });
+            }
+            return addedDocuments;
+        }
+    
         public void ViewProfile()
         {
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
-        }
-
-        public void Cancel()
-        {
-            // Go to Seafarer profile and show message
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=documents");
         }
 
         private RequestModel PopulateRequestmodel(int requestId, string cdn)

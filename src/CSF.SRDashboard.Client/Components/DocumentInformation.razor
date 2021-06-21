@@ -44,13 +44,10 @@
 
                         @if (this.UploadedDocuments[i].DocumentTypes != null)
                         {
-                            foreach (var item in this.UploadedDocuments[i].DocumentTypeList)
+                            foreach (var item in this.UploadedDocuments[i].DocumentTypes)
                             {
-                                if (item.Value)
-                                {
-                                    text += item.Text + ", ";
-                                }
 
+                                text += item.Description + ", ";
                             }
 
                             if (this.UploadedDocuments[i].DocumentTypes.Any())
