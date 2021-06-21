@@ -7,7 +7,7 @@ using CSF.SRDashboard.Client.Services.Document.Entities;
 
 namespace CSF.SRDashboard.Client.Services.Document
 {
-    public interface IUploadDocumentService
+    public interface IUploadDocumentHelper
     {
         [Inject]
         IDocumentService DocumentServe { get; set; }

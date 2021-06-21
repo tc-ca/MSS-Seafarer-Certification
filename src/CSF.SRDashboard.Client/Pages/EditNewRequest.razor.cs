@@ -61,7 +61,7 @@ namespace CSF.SRDashboard.Client.Pages
         public IDocumentService DocumentService { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
-        public IUploadDocumentService UploadService { get; set; }
+        public IUploadDocumentHelper UploadService { get; set; }
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -71,15 +71,15 @@ namespace CSF.SRDashboard.Client.Pages
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
-            this.UploadService = new UploadDocumentService(this.DocumentService);
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
             StateHasChanged();
         }
 
         public async void SaveChanges()
         {
-            if (this.State.DocumentForm.Count > 0 && this.State.DocumentForm != null)
+            if (this.RequestModel.UploadedDocuments != null)
             {
-                this.DocumentForm = this.State.DocumentForm;
+                this.DocumentForm = this.RequestModel.UploadedDocuments;
             }
             var isValid = EditContext.Validate();
 
@@ -114,11 +114,11 @@ namespace CSF.SRDashboard.Client.Pages
         private async Task<List<Document>> InsertDocumentOnRequest()
         {
             List<Document> addedDocuments = new List<Document>();
-            if(this.State.DocumentForm == null)
+            if(this.DocumentForm == null)
             {
                 return addedDocuments;
             }
-            foreach (var document in this.State.DocumentForm)
+            foreach (var document in this.DocumentForm)
             {
 
                 var addedDocument = await this.UploadService.UploadDocument(document);
@@ -127,14 +127,6 @@ namespace CSF.SRDashboard.Client.Pages
                     WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
                     { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
                     await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
-                    addedDocuments.Add(new Document()
-                    {
-                        DocumentId = addedDocument.DocumentId,
-                        FileName = document.FileName,
-                        Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault(),
-                        RequestID = this.EditRequestId.ToString()
-
-                    });
                 }
                 else
                 {

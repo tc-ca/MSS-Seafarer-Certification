@@ -28,7 +28,7 @@
                 </Collapse>
             </div>
             <div class="mt-3 mb-3">
-                <CSF.SRDashboard.Client.Components.AddDocumentComponent DocumentForm="this.DocumentForm" AllowMultipleUploads="true"></CSF.SRDashboard.Client.Components.AddDocumentComponent>
+                <CSF.SRDashboard.Client.Components.AddDocumentComponent EditContext="this.EditContext" @bind-DocumentForm="this.RequestModel.UploadedDocuments" AllowMultipleUploads="true"></CSF.SRDashboard.Client.Components.AddDocumentComponent>
             </div>
         </div>
         <div style="flex-basis:25%;" class="pl-4 pr-4">

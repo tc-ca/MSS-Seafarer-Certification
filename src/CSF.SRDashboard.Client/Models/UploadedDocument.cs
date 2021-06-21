@@ -14,8 +14,6 @@ namespace CSF.SRDashboard.Client.Models
     {
         public List<SelectListItem> DocumentTypeList { get; set; }
 
-        public List<SelectListItem> Languages { get; set; }
-
         private string fileName;
 
         public string FileName
@@ -49,45 +47,14 @@ namespace CSF.SRDashboard.Client.Models
 
         public UploadedDocument()
         {
-            DocumentTypeList = new List<SelectListItem>();
-
-            Languages = new List<SelectListItem>();
-
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Id = "1",
-                Text = "MME Exam Report",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Id = "2",
-                Text = "Medical Report",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Id = "3",
-                Text = "Letter",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Id = "4",
-                Text = "Certificate",
-                Value = false
-            });
-            DocumentTypeList.Add(new SelectListItem()
-            {
-                Id = "5",
-                Text = "Other",
-                Value = false
-            });
-
-            Languages.Add(new SelectListItem { Id = "1", Text = "English", Value = false });
-            Languages.Add(new SelectListItem { Id = "2", Text = "French", Value = false });
-
-            this.SelectValue = -1;
+            this.DocumentTypeList = new List<SelectListItem>
+        {
+            new SelectListItem { Id = "1", Text = "MME Exam Report", Value = false},
+            new SelectListItem { Id = "2", Text = "Medical Report", Value = false},
+            new SelectListItem { Id = "3", Text = "Letter", Value = false},
+            new SelectListItem { Id = "4", Text = "Certificate", Value = false },
+            new SelectListItem { Id = "5",Text = "Other", Value = false}
+        };
         }
     }
 }

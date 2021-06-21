@@ -33,11 +33,24 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public int RequestId { get; set; } = -1;
         [Parameter]
-        public List<UploadedDocument> DocumentForm { get; set; }
-
+        public List<UploadedDocument> DocumentForm
+        {
+            get => documentForm;
+            set
+            {
+                if (documentForm == value) return;
+                this.documentForm = value;
+                DocumentFormChanged.InvokeAsync(value);
+            }
+        }
+      
         [Parameter]
         public EditContext EditContext { get; set; }
+        [Parameter]
+        public EventCallback<List<UploadedDocument>> DocumentFormChanged { get; set; }
 
+        private List<UploadedDocument> documentForm;
+       
         public string Language { get; set; }
 
         public ValidationMessageStore ValidationMessageStore { get; private set; }
