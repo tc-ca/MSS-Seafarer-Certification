@@ -30,12 +30,13 @@
         </div>
         <div class="card-body">
             <div class="form-group">
-                <EditForm EditContext="@this.editContext" OnSubmit="HandleValidSubmit">
+                <EditForm EditContext="@this.EditContext" OnSubmit="HandleValidSubmit">
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect"  CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle=@Localizer["SelectDocType"]>
-                            <SelectedItemTemplate Context="SelectItem">
+                        InitializeDocumentTypes(i);
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle=@Localizer["SelectDocType"]>
+                            <SelectedItemTemplate  Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
                         </InputMultipleSelect>
@@ -43,17 +44,38 @@
                     else
                     {
                         <label class="form-label"><b>@Localizer["DocumentTypes"]</b></label>
+                        string text = string.Empty;
 
-                        <p>N/A</p>
 
+                        @if (this.UploadedDocuments[i].DocumentType != null)
+                        {
+                              foreach (var item in this.UploadedDocuments[i].DocumentType)
+                              {
+                                    text += item.Description + ", ";
+                              }
+
+                              if (this.UploadedDocuments[i].DocumentType.Any())
+                              {
+                                    text = text.Remove(text.Length - 2);
+                                    text = text.TrimEnd();
+                                    <p>@text</p> 
+                              }
+                              else
+                              {
+                                    <p>N/A</p> 
+                              }
+                        }
+                         else
+                        {
+                            <p>N/A</p>                        
+                        }                    
                     }
-
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" SelectLabel=@Localizer["SelectLanguage"] Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)">
+                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" SelectLabel=@Localizer["SelectLanguage"] Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
                             @foreach (var item in Constants.Languages)
                                     {
-                                <option value="@item.Id">@item.Text</option>
+                                        <option value="@item.Id">@item.Text</option>
                                     }
                         </FormInputSelect>
                     }

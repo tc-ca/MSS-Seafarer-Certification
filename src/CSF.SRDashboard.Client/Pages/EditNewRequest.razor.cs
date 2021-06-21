@@ -123,8 +123,11 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return;
             }
-
-            var added = await this.InsertDocumentOnRequest();
+            if (DocumentForm.Count > InitialDocumentCount)
+            {
+                var added = await this.InsertDocumentOnRequest();
+            }
+            
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,

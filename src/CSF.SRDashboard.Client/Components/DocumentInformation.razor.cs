@@ -65,8 +65,22 @@ namespace CSF.SRDashboard.Client.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-          
-           
+            this.EditContext = new EditContext(this.UploadedDocuments);
+
+        }
+
+        public void InitializeDocumentTypes(int i)
+        {
+            foreach(var PossibleDocumentTyps in this.UploadedDocuments[i].DocumentTypeList)
+            {
+                foreach (var DocumentTypeLoaded in this.UploadedDocuments[i].DocumentType)
+                {
+                    if (DocumentTypeLoaded.Id == PossibleDocumentTyps.Id)
+                    {
+                        PossibleDocumentTyps.Value = true;
+                    }
+                }
+            }
         }
         public void HandleValidSubmit()
         {
