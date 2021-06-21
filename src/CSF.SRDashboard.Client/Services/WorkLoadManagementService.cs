@@ -168,7 +168,8 @@ namespace CSF.SRDashboard.Client.Services
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
-                    tableItem.RequestDate = workItem.CreatedDateUTC != null ? workItem.CreatedDateUTC.Value.DateTime : null;
+
+                    tableItem.RequestDate = workItem.CreatedDateUTC?.DateTime;
                     if (workItem.WorkItemStatus != null)
                     {
                         tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;

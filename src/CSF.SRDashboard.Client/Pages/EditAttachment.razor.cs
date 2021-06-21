@@ -8,6 +8,7 @@ using CSF.SRDashboard.Client.Services.Document;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Pages
 {
-    public partial class ViewAttachment
+    public partial class EditAttachment
     {
         protected EditContext EditContext;
 
@@ -44,11 +45,10 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
+
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
-
-        public bool Found { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -58,14 +58,35 @@ namespace CSF.SRDashboard.Client.Pages
 
             await GetDocumentAsync();
 
-            this.EditContext = new EditContext(UploadedDocuments);
+            this.EditContext = new EditContext(this.UploadedDocuments);
 
             StateHasChanged();
         }
 
-        public void Edit()
+        public async void SaveChanges()
         {
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/edit-attachment/" + UploadedDocuments[0].DocumentId);
+            var isValid = EditContext.Validate();
+
+            if (!isValid)
+            {
+                return;
+            }
+
+            var document = this.UploadedDocuments[0];
+
+            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+
+            document.Language = Constants.Languages.Where(x => x.Id.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
+
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+
+            if (result == null)
+            {
+                return;
+            }
+
+            // Go to Seafarer profile and show message
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?fileName=" + document.FileName);
         }
 
         public void Cancel()
@@ -73,7 +94,6 @@ namespace CSF.SRDashboard.Client.Pages
             // Go to Seafarer profile and show message
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=documents");
         }
-
         /// <summary>
         /// Gets the document and adds it to the list
         /// </summary>
@@ -86,7 +106,6 @@ namespace CSF.SRDashboard.Client.Pages
 
             if (document == null)
             {
-                Found = false;
                 return;
             }
 
@@ -99,24 +118,30 @@ namespace CSF.SRDashboard.Client.Pages
 
             var documentModel = documentResult.FirstOrDefault();
 
+            if (documentModel.Language.Equals("EN"))
+            {
+                documentModel.Language = "English";
+            }
+            else if (documentModel.Language.Equals("FR"))
+            {
+                documentModel.Language = "French";
+            }
+
             var doc = new UploadedDocument
             {
                 Cdn = this.Cdn,
                 DocumentId = documentModel.DocumentId,
                 Description = documentModel.Description,
                 FileName = documentModel.FileName,
-                Language = documentModel.Language,
+                Language = Constants.Languages.Where(x => x.Text.Equals(documentModel.Language, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentModel.DocumentUrl, DateTime.UtcNow.AddHours(8))
-
             };
 
+            // Remove null id from the document types
             documentModel.DocumentTypes = CleanDocumentTypes(documentModel.DocumentTypes);
 
             if (documentModel.DocumentTypes != null && documentModel.DocumentTypes.Any())
             {
-                // To ensure we only show the types if we have them
-                doc.DocumentTypes = documentModel.DocumentTypes;
-
                 foreach (var item in doc.DocumentTypeList)
                 {
 

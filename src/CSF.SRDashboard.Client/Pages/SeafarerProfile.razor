@@ -2,14 +2,23 @@
 @page "/SeafarerProfile/{Cdn}/{requestId:int}"
 @page "/SeafarerProfile/{Cdn}/{requestId:int}/{Updated}"
 @inject IJSRuntime JS
-<a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left mr-2"></i>Back to search results</a>
+
+<a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left mr-2"></i>@Localizer["BackToSearchResults"]</a>
 
 <h3>@this.Applicant.FullName</h3>
+
 <AlertComponent ShowIcon="false" AlertType="@AlertType" EnableShow="@IsAlertEnabled" Dismisable="true">
     <ChildContent>
         <p>@message<strong> @Applicant.FullName </strong></p>
     </ChildContent>
 </AlertComponent>
+
+<AlertComponent ShowIcon="false" AlertType="@AlertType" EnableShow="@(!string.IsNullOrWhiteSpace(FileName))" Dismisable="true">
+    <ChildContent>
+        <p>@Localizer["YouSuccessfullyUpdatedDocument"]<strong> @FileName </strong></p>
+    </ChildContent>
+</AlertComponent>
+
 <div class="border rounded col-12 mb-3">
     <div class="bs-component mt-3">
         <ul class="nav nav-tabs">
@@ -20,7 +29,7 @@
                 <a class="nav-link" id="requestLink" data-toggle="tab" href="#Requests">Requests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#Documents">Documents</a>
+                <a class="nav-link" id="documents" data-toggle="tab" href="#Documents">Documents</a>
             </li>
         </ul>
         <div id="profileTabs " class="tab-content">

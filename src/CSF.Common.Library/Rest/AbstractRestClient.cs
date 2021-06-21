@@ -184,5 +184,37 @@ namespace CSF.Common.Library
             this.httpClient.DefaultRequestHeaders.Accept.Clear();
             this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
+
+        public virtual async Task<TReturnMessage> PutAsync<TReturnMessage>(RestClientRequestOptions restClientRequestOptions)
+            where TReturnMessage : class, new()
+        {
+            if (restClientRequestOptions == null)
+            {
+                throw new ArgumentNullException(nameof(restClientRequestOptions));
+            }
+
+            var serviceName = restClientRequestOptions.ServiceName;
+            var path = restClientRequestOptions.Path;
+            var dataObject = restClientRequestOptions.DataObject;
+
+            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+
+            var content = dataObject != null ? JsonConvert.SerializeObject(dataObject) : "{}";
+
+            using (StringContent stringContent = new StringContent(content, Encoding.UTF8, restClientRequestOptions.ParameterContentType))
+            {
+                this.ResetRestClientHeaders();
+                var response = await this.httpClient.PutAsync(uri, stringContent).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(new TReturnMessage()).ConfigureAwait(false);
+                }
+
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return JsonConvert.DeserializeObject<TReturnMessage>(result);
+            }
+        }
     }
 }

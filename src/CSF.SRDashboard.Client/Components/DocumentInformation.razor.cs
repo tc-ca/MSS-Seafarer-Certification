@@ -1,6 +1,5 @@
 ﻿using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
-using CSF.SRDashboard.Client.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -27,13 +26,10 @@ namespace CSF.SRDashboard.Client.Components
         private EditContext editContext;
 
         [Parameter]
-        public bool Editable { get; set; }
+        public List<UploadedDocument> UploadedDocuments { get; set; }
 
         [Parameter]
         public bool ShowDefaultOption { get; set; }
-
-        [Parameter]
-        public bool ShowRequestID { get; set; }
 
         [Parameter]
         public bool IsReadOnly { get; set; }
@@ -47,37 +43,24 @@ namespace CSF.SRDashboard.Client.Components
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
         [Inject]
-        public SessionState State { get; set; }
-        [Parameter]
-        public List<UploadedDocument> UploadedDocuments { get; set; }
-       
-        [Inject]
         NavigationManager NavigationManager { get; set; }
 
-       
-
-
-
-
-        public List<IFormFile> FilesToUpload { get; set; }
-
+        public UploadedDocument DocumentForm { get; set; }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-          
-           
-        }
-        public void HandleValidSubmit()
-        {
-          
 
         }
 
-        public void ChangeState()
+        /// <summary>
+        /// cancels and returns to the profile page
+        /// </summary>
+        public void HandleCancel()
         {
-           StateHasChanged();
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}");
         }
+
         public void ViewDocument(UploadedDocument document)
         {
             this.NavigationManager.NavigateTo(document.DownloadLink);
@@ -98,9 +81,7 @@ namespace CSF.SRDashboard.Client.Components
                 this.ValidationMessageStore.Clear();
             }
 
-            this.FilesToUpload.RemoveAt(index);
-
-           
+            UploadedDocuments.RemoveAt(index);
         }
     }
 }

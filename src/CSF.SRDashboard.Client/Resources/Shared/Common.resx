@@ -342,4 +342,28 @@
   <data name="DefaultSubmissionSelect" xml:space="preserve">
     <value>Select submission type</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DocumentTypes2" xml:space="preserve">
+    <value>Document type(s)*</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="EditAttachment" xml:space="preserve">
+    <value>Edit attachment</value>
+  </data>
+  <data name="SaveAttachment" xml:space="preserve">
+    <value>Save attachment</value>
+  </data>
+  <data name="ViewAttachment" xml:space="preserve">
+    <value>view attachment</value>
+  </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

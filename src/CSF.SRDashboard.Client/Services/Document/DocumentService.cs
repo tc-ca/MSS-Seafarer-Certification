@@ -91,5 +91,43 @@
 
             return new DocumentInfo();
         }
+
+        public async Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
+        {
+
+            var updateMetadataForDocumentParameter = new UpdateMetadataForDocumentParameter()
+            {
+                DocumentId = documentId,
+                UserName = userName,
+                FileName = fileName,
+                FileContentType = fileContentType,
+                Description = shortDescription,
+                SubmissionMethod = submissionMethod,
+                FileLanguage = fileLanguage,
+                DocumentTypes = documentTypes,
+                CustomMetadata = customMetadata
+            };
+
+            string path = string.Format("documents");
+
+            var restClientRequestOptions = new RestClientRequestOptions()
+            {
+                Path = path,
+                ParameterContentType = "application/json",
+                DataObject = updateMetadataForDocumentParameter,
+                ServiceName = ServiceLocatorDomain.Document
+            };
+
+            try
+            {
+                return await restClient.PutAsync<DocumentInfo>(restClientRequestOptions);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
     }
 }
