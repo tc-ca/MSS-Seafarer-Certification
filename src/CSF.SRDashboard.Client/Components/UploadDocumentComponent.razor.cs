@@ -63,11 +63,11 @@ namespace CSF.SRDashboard.Client.Components
                 if (file != null && !string.Equals(file.ContentType, "application/x-msdownload"))
                 {
                     MemoryStream ms = new MemoryStream();
-                    await file.OpenReadStream(e.File.Size).CopyToAsync(ms);
-                    IFormFile NewFormFile = new FormFile(ms, 0, e.File.Size, e.File.Name, e.File.Name)
+                    await file.OpenReadStream(file.Size).CopyToAsync(ms);
+                    IFormFile NewFormFile = new FormFile(ms, 0, file.Size, file.Name, file.Name)
                     {
                         Headers = new HeaderDictionary(),
-                        ContentType = e.File.ContentType
+                        ContentType = file.ContentType
                     };
                     this.DocumentForm.Add(new UploadedDocument()
                     {
@@ -76,7 +76,6 @@ namespace CSF.SRDashboard.Client.Components
                 }
 
             }
-            this.State.DocumentForm = this.DocumentForm;
             await this.OnFileUploaded.InvokeAsync();
             StateHasChanged();
         }

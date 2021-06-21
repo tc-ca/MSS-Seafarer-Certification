@@ -36,18 +36,18 @@ namespace CSF.SRDashboard.Client.Pages
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
        
 
-        public IUploadDocumentService UploadService { get; set; }
+        public IUploadDocumentHelper UploadService { get; set; }
         public DocumentInfo DocumentInfo { get; set; }
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.UploadService = new UploadDocumentService(this.DocumentService);
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
         }
 
         private async Task uploadToSeafarer()
         {
-            if (this.State.DocumentForm.Count > 0 && this.State.DocumentForm != null)
+            if (this.State.DocumentForm != null)
             {
                 this.DocumentForm = this.State.DocumentForm;
             }

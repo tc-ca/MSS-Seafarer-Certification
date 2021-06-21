@@ -30,11 +30,11 @@
         </div>
         <div class="card-body">
             <div class="form-group">
-                <EditForm EditContext="@this.EditContext" OnSubmit="HandleValidSubmit">
+                <EditForm EditContext="@this.editContext" OnSubmit="HandleValidSubmit">
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle=@Localizer["SelectDocType"]>
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="Document type(s)*" Id="DocumentTypesSelect"  CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList" SelectTitle=@Localizer["SelectDocType"]>
                             <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
@@ -50,8 +50,8 @@
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" SelectLabel=@Localizer["SelectLanguage"] Required="required" @bind-Value="this.UploadedDocuments[i].SelectValue" ValidationFor="@(() => this.UploadedDocuments[i].SelectValue)">
-                            @foreach (var item in this.UploadedDocuments[i].Languages)
+                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" SelectLabel=@Localizer["SelectLanguage"] Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)">
+                            @foreach (var item in Constants.Languages)
                                     {
                                 <option value="@item.Id">@item.Text</option>
                                     }

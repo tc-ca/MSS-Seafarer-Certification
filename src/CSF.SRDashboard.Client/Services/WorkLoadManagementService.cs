@@ -197,7 +197,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
-            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
@@ -328,7 +328,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
-            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 

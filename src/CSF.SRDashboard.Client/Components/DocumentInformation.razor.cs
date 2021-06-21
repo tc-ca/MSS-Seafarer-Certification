@@ -50,8 +50,6 @@ namespace CSF.SRDashboard.Client.Components
         public SessionState State { get; set; }
         [Parameter]
         public List<UploadedDocument> UploadedDocuments { get; set; }
-        
-
        
         [Inject]
         NavigationManager NavigationManager { get; set; }
@@ -67,7 +65,7 @@ namespace CSF.SRDashboard.Client.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            this.EditContext = new EditContext(this.UploadedDocuments);
+          
            
         }
         public void HandleValidSubmit()

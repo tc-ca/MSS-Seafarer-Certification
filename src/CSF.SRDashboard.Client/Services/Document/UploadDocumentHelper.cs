@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services.Document
 {
-    public class UploadDocumentService : IUploadDocumentService
+    public class UploadDocumentHelper : IUploadDocumentHelper
     {
         public string Language { get; private set; }
         public IDocumentService DocumentServe { get; set; }
         private List<UploadedDocument> DocumentForm { get; set; }
         private List<DocumentTypeDTO> DocumentTypes { get; set; } = new List<DocumentTypeDTO>();
         
-        public UploadDocumentService(IDocumentService documentService)
+        public UploadDocumentHelper(IDocumentService documentService)
         {
             this.DocumentServe = documentService;
         }
@@ -30,13 +30,13 @@ namespace CSF.SRDashboard.Client.Services.Document
             {
                 return null;
             }
-
-            this.Language = document.Languages.Where(i => i.Id == document.SelectValue.ToString()).Select(i => i.Text).FirstOrDefault();
-            if(this.Language == null)
+            var language = Constants.Languages.Where(x => x.Id.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
+          
+            if(language == null)
             {
                 return null;
             }
-            var documentInfo = await DocumentServe.InsertDocument(1, "User", document.FormFile, document.FormFile.ContentType, document.Description, string.Empty, this.Language, this.DocumentTypes, string.Empty);
+            var documentInfo = await DocumentServe.InsertDocument(1, "User", document.FormFile, document.FormFile.ContentType, document.Description, string.Empty, language, this.DocumentTypes, string.Empty);
             return documentInfo;
         }
 
@@ -47,14 +47,11 @@ namespace CSF.SRDashboard.Client.Services.Document
         }
         public bool ValidateUpload(List<UploadedDocument> upload)
         {
-
+            var language = upload.Where(i => string.IsNullOrEmpty(i.Language) || string.Equals(i.Language, "-1")).Select(i => i.Language).ToList();
             if (upload == null)
             {
                 return true;
             }
-
-            var valid = false;
-            var language = upload.Where(i => i.SelectValue < 0).Select(i => i.SelectValue).ToList();
 
             foreach (var i in upload)
             {
@@ -66,14 +63,10 @@ namespace CSF.SRDashboard.Client.Services.Document
             }
             if (language.Any())
             {
-                valid = false;
-            }
-            else
-            {
-                valid = true;
+                return false;
             }
 
-            return valid;
+            return true;
         }
         /// <summary>
         /// Checks if the form is validated
