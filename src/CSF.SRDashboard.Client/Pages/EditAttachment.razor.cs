@@ -74,11 +74,11 @@ namespace CSF.SRDashboard.Client.Pages
 
             var document = this.UploadedDocuments[0];
 
-            document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+            document.DocumentType = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
             document.Language = Constants.Languages.Where(x => x.Id.Equals(document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
 
-            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+            var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentType, null);
 
             if (result == null)
             {

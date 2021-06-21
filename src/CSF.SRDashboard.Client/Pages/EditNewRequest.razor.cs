@@ -74,7 +74,7 @@ namespace CSF.SRDashboard.Client.Pages
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
-            this.UploadService = new UploadDocumentService(this.DocumentService);
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
 
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
             var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
@@ -83,13 +83,11 @@ namespace CSF.SRDashboard.Client.Pages
                 DocumentId = x.DocumentId,
                 Language = x.Language,
                 FileName = x.FileName,
-                DocumentTypes = x.DocumentTypes,
+                DocumentType = x.DocumentTypes,
                 Description = x.Description
             }).ToList();
             foreach (var Document in DocumentForm)
             {
-                Document.SelectValue = int.Parse(Document.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id);
-
                 if (Document.Language.Equals("EN"))
                 {
                     Document.Language = "English";
@@ -98,6 +96,8 @@ namespace CSF.SRDashboard.Client.Pages
                 {
                     Document.Language = "French";
                 }
+
+                Document.SelectValue = int.Parse(Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id);
             }
 
             InitialDocumentCount = documentIds.Count;
@@ -142,11 +142,11 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 var document = this.DocumentForm[i];
 
-                document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+                document.DocumentType = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
-                document.Language = document.Languages.Where(x => x.Id.Equals(document.SelectValue.ToString())).Single().Text;
+                document.Language = Constants.Languages.Where(x => x.Id.Equals(document.SelectValue.ToString())).Single().Text;
 
-                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentType, null);
             }
 
             this.State.DocumentForm = null;
