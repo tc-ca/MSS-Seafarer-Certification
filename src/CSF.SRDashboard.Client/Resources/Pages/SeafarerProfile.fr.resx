@@ -129,6 +129,9 @@
   <data name="Requests" xml:space="preserve">
     <value>Requests_fr</value>
   </data>
+  <data name="SuccessfullyAddedDocument" xml:space="preserve">
+    <value>You successfully uploaded document_fr</value>
+  </data>
   <data name="SuccessfullyCreated" xml:space="preserve">
     <value>You-successfully-created-request-fr </value>
   </data>

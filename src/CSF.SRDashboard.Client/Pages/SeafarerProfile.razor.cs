@@ -34,6 +34,8 @@
         /// </summary>
         [Parameter]
         public string Tab { get; set; }
+        [Parameter]
+        public string Created { get; set; }
 
         [Parameter]
         public AlertTypes AlertType { get; set; }

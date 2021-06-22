@@ -20,6 +20,7 @@ namespace CSF.SRDashboard.Client.Services
         public const string MarineMedical = "002";
 
         public const string Updated = "Updated";
+        public const string Created = "Created";
 
         public static List<SelectListItem> RequestTypes = new List<SelectListItem> {
             new SelectListItem { Id = "1", Text = "New certificate" },

@@ -21,7 +21,11 @@ namespace CSF.SRDashboard.Client.Services.Document
         {
             this.DocumentServe = documentService;
         }
-
+        /// <summary>
+        /// Universal function to insert a document on the database
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
         public async Task<DocumentInfo> UploadDocument(UploadedDocument document)
         {
             this.DocumentTypes = this.PopulateDocumentTypes(document.DocumentTypeList);
@@ -74,10 +78,10 @@ namespace CSF.SRDashboard.Client.Services.Document
             return true;
         }
         /// <summary>
-        /// Checks if the form is validated
+        /// Formats document types from the form
         /// </summary>
+        /// <param name="selectListItems"></param>
         /// <returns></returns>
-        private bool Validate() => !(this.DocumentForm.Count <= 0);
         private List<DocumentTypeDTO> PopulateDocumentTypes(List<SelectListItem> selectListItems)
         {
             List<DocumentTypeDTO> documentTypes = new List<DocumentTypeDTO>();

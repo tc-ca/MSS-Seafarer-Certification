@@ -75,8 +75,8 @@ namespace CSF.SRDashboard.Client.Pages
                 }
                
             }
-            this.State.DocumentForm = null;
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}/?tab=documents");
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + Constants.Created +"/" +"?fileName=" + this.DocumentForm.Select(x => x.FileName).FirstOrDefault());
+          
         }
         public void HandleCancel()
         {
