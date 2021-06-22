@@ -261,9 +261,6 @@
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress_fr</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="SubmissionMethod" xml:space="preserve">
     <value>Submission method_fr</value>
   </data>
@@ -290,6 +287,12 @@
   </data>
   <data name="ViewRequest" xml:space="preserve">
     <value>View Request_fr</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment_fr</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field_fr</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description_fr</value>
@@ -321,6 +324,24 @@
   <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
   </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select_fr</value>
+  </data>
+  <data name="AddAttachment" xml:space="preserve">
+    <value>Add Attachment_fr</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select Language_fr</value>
+  </data>
+  <data name="SelectDocType" xml:space="preserve">
+    <value>Select doc type_fr</value>
+  </data>
+  <data name="DefaultCertificateSelect" xml:space="preserve">
+    <value>Select Certificate Type_fr</value>
+  </data>
+  <data name="DefaultSubmissionSelect" xml:space="preserve">
+    <value>Select Submission type_fr</value>
+    </data>
   <data name="Attachment" xml:space="preserve">
     <value>Attachment_fr</value>
   </data>

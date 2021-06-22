@@ -10,7 +10,11 @@ using CSF.SRDashboard.Client.PageValidators;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
 using System;
+using DSD.MSS.Blazor.Components.Core.Models;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -32,6 +36,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
 
         [Inject]
         IJSRuntime JS { get; set; }
@@ -51,9 +57,11 @@ namespace CSF.SRDashboard.Client.Pages
         public string Comment { get; set; }
 
         private string titleInfo { get; set; }
-
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
-
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+        public IUploadDocumentHelper UploadService { get; set; }
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -63,20 +71,30 @@ namespace CSF.SRDashboard.Client.Pages
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
-
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
             StateHasChanged();
         }
 
-        public void SaveChanges()
+        public async void SaveChanges()
         {
+            if (this.RequestModel.UploadedDocuments != null)
+            {
+                this.DocumentForm = this.RequestModel.UploadedDocuments;
+            }
             var isValid = EditContext.Validate();
+
             if (!isValid)
             {
                 return;
             }
 
-            JS.InvokeAsync<string>("SetBusyCursor", null);
+            await JS.InvokeAsync<string>("SetBusyCursor", null);
+            if (!this.UploadService.ValidateUpload(this.DocumentForm))
+            {
+                return;
+            }
 
+            var added = await this.InsertDocumentOnRequest();
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
@@ -91,7 +109,31 @@ namespace CSF.SRDashboard.Client.Pages
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
 
         }
+        private async Task<List<Document>> InsertDocumentOnRequest()
+        {
+            List<Document> addedDocuments = new List<Document>();
+            if(this.DocumentForm == null)
+            {
+                return addedDocuments;
+            }
+            foreach (var document in this.DocumentForm)
+            {
 
+                var addedDocument = await this.UploadService.UploadDocument(document);
+                if (addedDocument != null)
+                {
+                    WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                    { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
+                    await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return addedDocuments;
+        }
+    
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
