@@ -1,11 +1,12 @@
-﻿<EditForm EditContext="@EditContext">
+﻿
+<EditForm EditContext="@EditContext">
     <div class="row">
         <div class="col-12 d-grid gap-3">
             @if (ShowRequestID)
             {
                 if (!this.IsReadOnly)
                 {
-                    <FormInputText readonly="@Editable" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
+                    <FormInputText readonly="true" Id="RequestID" Label="@Localizer["RequestID"]" @bind-Value="@RequestModel.RequestID" ValidationFor="@(() => RequestModel.RequestID)" />
                 }
                 else
                 {
@@ -16,10 +17,10 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Label="@Localizer["RequestType"]" Id="RequestType" SelectLabel="@Localizer["DefaultSelectOption"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.RequestType" ValidationFor="@(() => RequestModel.RequestType)">
+                <FormInputSelect Label="@Localizer["RequestType"]" Id="RequestType" SelectLabel="@Localizer["DefaulRequestType"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.RequestType" ValidationFor="@(() => RequestModel.RequestType)">
                     @foreach (var item in Constants.RequestTypes)
                         {
-                        <option value="@item.ID">@item.Text</option>
+                        <option value="@item.Id">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -28,7 +29,7 @@
                 <label class="form-label"><b>@Localizer["RequestType"]</b></label>
                 foreach (var item in Constants.RequestTypes)
                 {
-                    if (item.ID == RequestModel.RequestType)
+                    if (item.Id == RequestModel.RequestType)
                     {
                         <p>@item.Text</p>
                     }
@@ -38,10 +39,10 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Id="CertificateType" Label="@Localizer["CertificateType"]" ShowDefaultOption="ShowDefaultOption" SelectLabel="@Localizer["DefaultSelectOption"]" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(() => RequestModel.CertificateType)" Required="true">
+                <FormInputSelect Id="CertificateType" Label="@Localizer["CertificateType"]" ShowDefaultOption="ShowDefaultOption" SelectLabel="@Localizer["DefaultCertificateSelect"]" @bind-Value="@RequestModel.CertificateType" ValidationFor="@(() => RequestModel.CertificateType)" Required="true">
                     @foreach (var item in Constants.CertificateTypes)
                         {
-                        <option value="@item.ID">@item.Text</option>
+                        <option value="@item.Id">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -50,7 +51,7 @@
                 <label class="form-label"><b>@Localizer["CertificateType"]</b></label>
                 foreach (var item in Constants.CertificateTypes)
                 {
-                    if (item.ID == RequestModel.CertificateType)
+                    if (item.Id == RequestModel.CertificateType)
                     {
                         <p>@item.Text</p>
                     }
@@ -59,10 +60,10 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSelectOption"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
+                <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSubmissionSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
                     @foreach (var item in Constants.SubmissionMethods)
                         {
-                        <option value="@item.ID">@item.Text</option>
+                        <option value="@item.Id">@item.Text</option>
                         }
                 </FormInputSelect>
             }
@@ -71,7 +72,7 @@
                 <label class="form-label"><b>@Localizer["SubmissionMethod"]</b></label>
                 @foreach (var item in Constants.SubmissionMethods)
                 {
-                    if (@RequestModel.SubmissionMethod == item.ID)
+                    if (@RequestModel.SubmissionMethod == item.Id)
                     {
                         <p>@item.Text</p>
                     }

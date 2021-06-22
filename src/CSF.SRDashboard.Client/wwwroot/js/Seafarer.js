@@ -1,7 +1,6 @@
-﻿function SetTab()
-{
-    document.getElementById("requestLink").click();
-    document.body.style.cursor = 'default';
+﻿function SetTab(id) {
+    document.getElementById(id).click();
+    document.body.style.cursor = 'auto';
 }
 
 function SetBusyCursor()
