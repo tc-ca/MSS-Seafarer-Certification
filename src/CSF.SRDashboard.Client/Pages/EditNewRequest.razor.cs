@@ -83,7 +83,7 @@ namespace CSF.SRDashboard.Client.Pages
                 DocumentId = x.DocumentId,
                 Language = x.Language,
                 FileName = x.FileName,
-                DocumentType = x.DocumentTypes,
+                DocumentTypes = x.DocumentTypes,
                 Description = x.Description
             }).ToList();
             foreach (var Document in DocumentForm)
@@ -97,9 +97,10 @@ namespace CSF.SRDashboard.Client.Pages
                     Document.Language = "French";
                 }
 
-                Document.SelectValue = int.Parse(Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id);
+                Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
 
+            this.RequestModel.UploadedDocuments = DocumentForm;
             InitialDocumentCount = documentIds.Count;
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
             StateHasChanged();
@@ -123,10 +124,8 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return;
             }
-            if (DocumentForm.Count > InitialDocumentCount)
-            {
+
                 var added = await this.InsertDocumentOnRequest();
-            }
             
             var RequestToSend = new RequestModel
             {
@@ -145,14 +144,14 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 var document = this.DocumentForm[i];
 
-                document.DocumentType = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+                document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
-                document.Language = Constants.Languages.Where(x => x.Id.Equals(document.SelectValue.ToString())).Single().Text;
+                document.Language = Constants.Languages.Where(x => x.Id.Equals(document.Language)).Single().Text;
 
-                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentType, null);
+                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
             }
 
-            this.State.DocumentForm = null;
+            this.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
 
         }

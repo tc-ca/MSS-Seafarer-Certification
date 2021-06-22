@@ -111,7 +111,7 @@ namespace CSF.SRDashboard.Client.Pages
             if (documentModel.DocumentTypes != null && documentModel.DocumentTypes.Any())
             {
                 // To ensure we only show the types if we have them
-                doc.DocumentType = documentModel.DocumentTypes;
+                doc.DocumentTypes = documentModel.DocumentTypes;
 
                 foreach (var item in doc.DocumentTypeList)
                 {

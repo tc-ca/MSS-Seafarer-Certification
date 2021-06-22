@@ -50,7 +50,7 @@ namespace CSF.SRDashboard.Client.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-
+            InitializeDocumentTypes();
         }
 
         /// <summary>
@@ -64,6 +64,30 @@ namespace CSF.SRDashboard.Client.Components
         public void ViewDocument(UploadedDocument document)
         {
             this.NavigationManager.NavigateTo(document.DownloadLink);
+        }
+
+        /// <summary>
+        ///sets initial selected DocumentTypes
+        /// </summary>
+        private void InitializeDocumentTypes()
+        {
+
+            foreach (var Document in UploadedDocuments)
+            {
+                foreach (var PossibleDocumentTypes in Document.DocumentTypeList)
+                {
+                    if (Document.DocumentTypes != null)
+                    {
+                        foreach (var DocumentTypeLoaded in Document.DocumentTypes)
+                        {
+                            if (DocumentTypeLoaded.Id == PossibleDocumentTypes.Id)
+                            {
+                                PossibleDocumentTypes.Value = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
