@@ -141,9 +141,22 @@ namespace CSF.SRDashboard.Client
 
         private void SetApplicationSecretsFromKeyVault(IKeyVaultService kvService, IConfiguration appConfiguration)
         {
+            // Ocelot Gateway Token
             var secretName = appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"];
             var token = kvService.GetSecretByName(secretName);
             appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"] = token;
+
+            // AzureAD-ClientId
+            secretName = appConfiguration.GetSection("AzureAd")["ClientId"];
+            token = kvService.GetSecretByName(secretName);
+            appConfiguration.GetSection("AzureAd")["ClientId"] = token;
+
+            // AzureAD-ClientSecret
+            secretName = appConfiguration.GetSection("AzureAd")["ClientSecret"];
+            token = kvService.GetSecretByName(secretName);
+            appConfiguration.GetSection("AzureAd")["ClientSecret"] = token;
         }
+
+
     }
 }
