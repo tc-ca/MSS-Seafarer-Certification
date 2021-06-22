@@ -124,8 +124,6 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return;
             }
-
-                var added = await this.InsertDocumentOnRequest();
             
             var RequestToSend = new RequestModel
             {
@@ -139,16 +137,23 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
+            int i = 0;
 
-            for (int i = 0; i < InitialDocumentCount; i++)
+            foreach (var Document in DocumentForm)
             {
-                var document = this.DocumentForm[i];
+                Document.DocumentTypes = Document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
-                document.DocumentTypes = document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+                if (i < InitialDocumentCount)
+                {
+                    var result = await this.DocumentService.UpdateMetadataForDocument(Document.DocumentId, null, null, null, Document.Description, null, Document.Language, Document.DocumentTypes, null);
+                    Document.Language = Constants.Languages.Where(x => x.Id.Equals(Document.Language)).Single().Text;
+                }
+                else
+                {
+                    var added = await this.InsertDocumentOnRequest();
+                }
 
-                document.Language = Constants.Languages.Where(x => x.Id.Equals(document.Language)).Single().Text;
-
-                var result = await this.DocumentService.UpdateMetadataForDocument(document.DocumentId, null, null, null, document.Description, null, document.Language, document.DocumentTypes, null);
+                i++;
             }
 
             this.DocumentForm = null;
@@ -162,20 +167,25 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return addedDocuments;
             }
+            var i = 0;
             foreach (var document in this.DocumentForm)
             {
-
-                var addedDocument = await this.UploadService.UploadDocument(document);
-                if (addedDocument != null)
+               
+                if (i >= InitialDocumentCount)
                 {
-                    WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
-                    { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
-                    await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    var addedDocument = await this.UploadService.UploadDocument(document);
+                    if (addedDocument != null)
+                    {
+                        WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                        { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
+                        await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
-                {
-                    return null;
-                }
+                i++;
             }
             return addedDocuments;
         }
