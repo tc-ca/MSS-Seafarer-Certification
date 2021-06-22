@@ -53,6 +53,6 @@ namespace CSF.SRDashboard.Client.Services
 
         public static string RequestStatusesDefaultValue = RequestStatuses[0].Text;
 
-        public const string NoProfilePicturePath = "/img/No_profile_img.JPG";
+        public const string NoProfilePicturePath = "/img/no-profile-photo.png";
     }
 }
