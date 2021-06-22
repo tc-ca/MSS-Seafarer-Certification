@@ -66,22 +66,31 @@ namespace CSF.SRDashboard.Client.Components
         {
             base.OnInitialized();
             this.EditContext = new EditContext(this.UploadedDocuments);
-
+            InitializeDocumentTypes();
         }
 
-        public void InitializeDocumentTypes(int i)
+        //sets initial selected DocumentTypes
+        private void InitializeDocumentTypes()
         {
-            foreach(var PossibleDocumentTyps in this.UploadedDocuments[i].DocumentTypeList)
+
+            foreach(var Document in UploadedDocuments)
             {
-                foreach (var DocumentTypeLoaded in this.UploadedDocuments[i].DocumentType)
+                foreach (var PossibleDocumentTypes in Document.DocumentTypeList)
                 {
-                    if (DocumentTypeLoaded.Id == PossibleDocumentTyps.Id)
+                    if(Document.DocumentType != null)
                     {
-                        PossibleDocumentTyps.Value = true;
-                    }
+                        foreach (var DocumentTypeLoaded in Document.DocumentType)
+                        {
+                            if (DocumentTypeLoaded.Id == PossibleDocumentTypes.Id)
+                            {
+                                PossibleDocumentTypes.Value = true;
+                            }
+                        }
+                    } 
                 }
             }
         }
+
         public void HandleValidSubmit()
         {
           

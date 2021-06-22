@@ -190,7 +190,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Cancel()
         {
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=documents");
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
 
         private RequestModel PopulateRequestmodel(int requestId, string cdn)

@@ -88,7 +88,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Cancel()
         {
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
     }
 }
