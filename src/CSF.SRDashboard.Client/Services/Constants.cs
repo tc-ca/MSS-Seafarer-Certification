@@ -1,6 +1,4 @@
 ﻿using DSD.MSS.Blazor.Components.Core.Models;
-using CSF.SRDashboard.Client.Models;
-using System;
 using System.Collections.Generic;
 
 namespace CSF.SRDashboard.Client.Services
@@ -22,6 +20,7 @@ namespace CSF.SRDashboard.Client.Services
         public const string MarineMedical = "002";
 
         public const string Updated = "Updated";
+        public const string Created = "Created";
 
         public static List<SelectListItem> RequestTypes = new List<SelectListItem> {
             new SelectListItem { Id = "1", Text = "New certificate" },
@@ -30,6 +29,14 @@ namespace CSF.SRDashboard.Client.Services
 
         public static List<SelectListItem> CertificateTypes = new List<SelectListItem> {
             new SelectListItem { Id = "1", Text = "Marine Medical Cerficate - 2 year validity" }
+        };
+
+        public static List<SelectListItem> DocumentTypeList = new List<SelectListItem> {
+        new SelectListItem{ Id = "1",Text = "MME Exam Report" },
+        new SelectListItem{ Id = "2",Text = "Medical Report" },
+        new SelectListItem{ Id = "3",Text = "Letter" },
+        new SelectListItem{ Id = "4",Text = "Certificate" },
+        new SelectListItem{ Id = "5",Text = "Other" }
         };
 
         public static List<SelectListItem> SubmissionMethods = new List<SelectListItem> {
@@ -52,14 +59,6 @@ namespace CSF.SRDashboard.Client.Services
         public static List<SelectListItem> Languages = new List<SelectListItem> {
             new SelectListItem { Id = "1", Text = "English" },
             new SelectListItem { Id = "2", Text = "French" }
-        };
-        public static List<SelectListItem> DocumentTypes = new List<SelectListItem>
-        {
-            new SelectListItem { Id = "1", Text = "MME Exam Report", Value = false},
-            new SelectListItem { Id = "2", Text = "Medical Report", Value = false},
-            new SelectListItem { Id = "3", Text = "Letter", Value = false},
-            new SelectListItem { Id = "4", Text = "Certificate", Value = false },
-            new SelectListItem { Id = "5",Text = "Other", Value = false}
         };
 
         public static string RequestStatusesDefaultValue = RequestStatuses[0].Text;

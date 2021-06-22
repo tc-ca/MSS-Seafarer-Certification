@@ -31,6 +31,8 @@ namespace CSF.SRDashboard.Client.Pages
         public SessionState State { get; set; }
         [Inject]
         public IDocumentService DocumentService { get; set; }
+
+        public EditContext EditContext { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
 
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
@@ -42,21 +44,18 @@ namespace CSF.SRDashboard.Client.Pages
         {
             base.OnInitialized();
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
+            this.EditContext = new EditContext(this.DocumentForm);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
         }
 
         private async Task uploadToSeafarer()
         {
-            if (this.State.DocumentForm != null)
-            {
-                this.DocumentForm = this.State.DocumentForm;
-            }
             if (!this.UploadService.ValidateUpload(this.DocumentForm))
             {
                 return;
             }
 
-            foreach (var document in this.State.DocumentForm)
+            foreach (var document in this.DocumentForm)
             {
 
                 var addedDocument = await this.UploadService.UploadDocument(document);
@@ -76,16 +75,12 @@ namespace CSF.SRDashboard.Client.Pages
                 }
                
             }
-            this.State.DocumentForm = null;
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + Constants.Created +"/" +"?fileName=" + this.DocumentForm.Select(x => x.FileName).FirstOrDefault());
+          
         }
         public void HandleCancel()
         {
-            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}");
-        }
-        public void HandleValidSubmit()
-        {
-
+            this.NavigationManager.NavigateTo($"/SeafarerProfile/{this.Cdn}/?tab=documents");
         }
 
     }
