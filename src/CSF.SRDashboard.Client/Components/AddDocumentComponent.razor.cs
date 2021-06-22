@@ -23,6 +23,9 @@ namespace CSF.SRDashboard.Client.Components
 
         [Inject]
         public IWorkLoadManagementService WorkLoadManagementService { get; set; }
+       
+        [Parameter]
+        public bool ShowDefaultOption { get; set; }
 
         [Parameter]
         public string Cdn { get; set; }

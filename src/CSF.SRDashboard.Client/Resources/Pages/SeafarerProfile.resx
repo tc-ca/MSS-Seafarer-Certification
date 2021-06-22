@@ -130,7 +130,7 @@
     <value>Requests</value>
   </data>
   <data name="SuccessfullyAddedDocument" xml:space="preserve">
-    <value>You successfully uploaded document</value>
+    <value>You successfully uploaded document </value>
   </data>
   <data name="SuccessfullyCreated" xml:space="preserve">
     <value>You successfully create request</value>
