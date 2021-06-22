@@ -17,7 +17,5 @@ namespace CSF.SRDashboard.Client.Utilities
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
 
         public ApplicantSearchCriteria SearchCriteria { get; set; }
-
-        public List<UploadedDocument> DocumentForm { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@page "/SeafarerProfile/{Cdn}"
 @page "/SeafarerProfile/{Cdn}/{requestId:int}"
 @page "/SeafarerProfile/{Cdn}/{requestId:int}/{Updated}"
+@page "/SeafarerProfile/{Cdn}/{Created}" 
 @inject IJSRuntime JS
 
 <a class="btn btn-link" href="javascript:history.back()"><i class="fas fa-angle-left mr-2"></i>@Localizer["BackToSearchResults"]</a>
@@ -15,7 +16,14 @@
 
 <AlertComponent ShowIcon="false" AlertType="@AlertType" EnableShow="@(!string.IsNullOrWhiteSpace(FileName))" Dismisable="true">
     <ChildContent>
+        @if (!string.IsNullOrWhiteSpace(this.Created))
+        {
+            <p>@Localizer["SuccessfullyAddedDocument"]<strong> @FileName </strong></p>              
+        }
+        else
+        {
         <p>@Localizer["YouSuccessfullyUpdatedDocument"]<strong> @FileName </strong></p>
+        }
     </ChildContent>
 </AlertComponent>
 

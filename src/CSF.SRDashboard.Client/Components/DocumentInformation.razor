@@ -3,7 +3,7 @@
 {
     var i = index;
 
-    <div class="card ml-4 mt-4">
+    <div class="card mt-3">
         <div class="card-header bg-white">
             <div class="d-flex">
                 <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
@@ -72,7 +72,7 @@
 
                     @if (!this.IsReadOnly)
                     {
-                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" ShowDefaultOption="ShowDefaultOption">
+                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" SelectLabel=@Localizer["SelectLanguage"] ShowDefaultOption="ShowDefaultOption">
                             @foreach (var item in Constants.Languages)
                                     {
                                 <option value="@item.Id">@item.Text</option>}

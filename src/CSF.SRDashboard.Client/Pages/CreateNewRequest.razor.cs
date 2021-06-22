@@ -86,7 +86,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public async void SaveChanges()
         {
-            if (this.State.DocumentForm != null)
+            if (this.RequestModel.UploadedDocuments != null)
             {
                 this.DocumentForm = this.RequestModel.UploadedDocuments;
             }
@@ -114,7 +114,6 @@ namespace CSF.SRDashboard.Client.Pages
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
             var addedDocuments = await this.InsertDocumentOnRequest(UploadedRequest.Id);
-            this.State.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }
 
