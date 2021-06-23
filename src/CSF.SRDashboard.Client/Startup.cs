@@ -71,7 +71,10 @@ namespace CSF.SRDashboard.Client
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
-            services.AddTransient<IValidator<AddDocumentModel>, AddAttachmentValidator>();
+
+            services.AddTransient<IUserGraphApiService, UserGraphApiService>();
+            //services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
+            services.AddTransient<IValidator<UploadedDocument>, UploadDocumentAttachmentValidator>();
 
             services.AddScoped<IAzureBlobService, AzureBlobService>();
             services.AddScoped<SessionState>();

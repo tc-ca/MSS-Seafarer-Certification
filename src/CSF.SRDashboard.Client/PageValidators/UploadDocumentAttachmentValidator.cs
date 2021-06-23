@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.PageValidators
 {
-    public class AddAttachmentValidator : AbstractValidator<AddDocumentModel>
+    public class UploadDocumentAttachmentValidator : AbstractValidator<UploadedDocument>
     {
-        public AddAttachmentValidator()
+        public UploadDocumentAttachmentValidator()
         {
-            this.RuleFor(x => x.SelectValue).GreaterThan(-1).WithMessage("Please select one value");
+            this.RuleFor(x => x.Language).NotEmpty().WithMessage("Please select a value");
             this.RuleFor(x => x.DocumentTypeList).Must(x => x.Any(y => y.Value == true)).WithMessage("Please select at least one value");
         }
      }
