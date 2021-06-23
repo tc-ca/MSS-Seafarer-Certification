@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.DTO;
+﻿using CSF.Common.Library.Azure;
+using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
@@ -35,6 +36,9 @@ namespace CSF.SRDashboard.Client.Pages
         public IGatewayService GatewayService { get; set; }
 
         [Inject]
+        public IAzureBlobService AzureBlobService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         public MpdisApplicantDto Applicant { get; set; }
@@ -42,6 +46,7 @@ namespace CSF.SRDashboard.Client.Pages
         public WorkItemDTO WorkItemDTO { get; set; }
 
         public RequestModel RequestModel { get; set; }
+
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
 
 
@@ -54,9 +59,6 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
-
-
-
 
             RequestModel = new RequestModel
             {
@@ -79,8 +81,10 @@ namespace CSF.SRDashboard.Client.Pages
                     Language = docFromDB.Language,
                     FileName = docFromDB.FileName,
                     DocumentTypes = docFromDB.DocumentTypes,
-                    Description = docFromDB.Description
+                    Description = docFromDB.Description, 
+                    DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", docFromDB.DocumentUrl, DateTime.UtcNow.AddHours(8))
                 };
+
                 if (docFromDB.DocumentTypes != null && docFromDB.DocumentTypes.Any())
                 {
                     // To ensure we only show the types if we have them
@@ -93,6 +97,7 @@ namespace CSF.SRDashboard.Client.Pages
                         }
                     }
                 }
+
                 this.UploadedDocuments.Add(uploadLoaded);
             }
 

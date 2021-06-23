@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.DTO;
+﻿using CSF.Common.Library.Azure;
+using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -45,7 +46,8 @@ namespace CSF.SRDashboard.Client.Components
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
-        public UploadedDocument DocumentForm { get; set; }
+        [Inject]
+        public IAzureBlobService AzureBlobService { get; set; }
 
         protected override void OnInitialized()
         {
