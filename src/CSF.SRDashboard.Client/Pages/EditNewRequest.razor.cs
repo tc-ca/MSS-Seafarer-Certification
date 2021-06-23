@@ -59,6 +59,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public int InitialDocumentCount { get; set; }
 
+        public int CurrentDocumentNum { get; set; }
+
         private string titleInfo { get; set; }
         [Inject]
         public IDocumentService DocumentService { get; set; }
@@ -137,23 +139,24 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
-            int i = 0;
+
+            CurrentDocumentNum = 0;
 
             foreach (var Document in DocumentForm)
             {
                 Document.DocumentTypes = Document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
 
-                if (i < InitialDocumentCount)
+                if (CurrentDocumentNum < InitialDocumentCount)
                 {
+                    Document.Language = Constants.Languages.Where(x => x.Id.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
                     var result = await this.DocumentService.UpdateMetadataForDocument(Document.DocumentId, null, null, null, Document.Description, null, Document.Language, Document.DocumentTypes, null);
-                    Document.Language = Constants.Languages.Where(x => x.Id.Equals(Document.Language)).Single().Text;
                 }
                 else
                 {
                     var added = await this.InsertDocumentOnRequest();
                 }
 
-                i++;
+                CurrentDocumentNum++;
             }
 
             this.DocumentForm = null;
@@ -167,11 +170,12 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return addedDocuments;
             }
-            var i = 0;
+
+            CurrentDocumentNum = 0;
             foreach (var document in this.DocumentForm)
             {
                
-                if (i >= InitialDocumentCount)
+                if (CurrentDocumentNum >= InitialDocumentCount)
                 {
                     var addedDocument = await this.UploadService.UploadDocument(document);
                     if (addedDocument != null)
@@ -185,7 +189,7 @@ namespace CSF.SRDashboard.Client.Pages
                         return null;
                     }
                 }
-                i++;
+                CurrentDocumentNum++;
             }
             return addedDocuments;
         }

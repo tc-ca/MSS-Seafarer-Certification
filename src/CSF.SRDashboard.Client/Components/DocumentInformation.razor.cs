@@ -67,22 +67,21 @@ namespace CSF.SRDashboard.Client.Components
         }
 
         /// <summary>
-        ///sets initial selected DocumentTypes
+        /// sets initial selected DocumentTypes
         /// </summary>
         private void InitializeDocumentTypes()
         {
-
             foreach (var Document in UploadedDocuments)
             {
-                foreach (var PossibleDocumentTypes in Document.DocumentTypeList)
+                foreach (var DocumentTypeList in Document.DocumentTypeList)
                 {
                     if (Document.DocumentTypes != null)
                     {
                         foreach (var DocumentTypeLoaded in Document.DocumentTypes)
                         {
-                            if (DocumentTypeLoaded.Id == PossibleDocumentTypes.Id)
+                            if (DocumentTypeLoaded.Id == DocumentTypeList.Id)
                             {
-                                PossibleDocumentTypes.Value = true;
+                                DocumentTypeList.Value = true;
                             }
                         }
                     }
