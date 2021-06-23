@@ -111,7 +111,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Cancel()
         {
-            // Go to Seafarer profile and show message
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
     }
