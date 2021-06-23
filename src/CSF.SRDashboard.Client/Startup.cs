@@ -73,7 +73,6 @@ namespace CSF.SRDashboard.Client
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
 
             services.AddTransient<IUserGraphApiService, UserGraphApiService>();
-            //services.AddTransient<IUserGraphApiService, MockUserGraphApi>();
             services.AddTransient<IValidator<UploadedDocument>, UploadDocumentAttachmentValidator>();
 
             services.AddScoped<IAzureBlobService, AzureBlobService>();
