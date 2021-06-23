@@ -3,7 +3,6 @@ using Microsoft.Identity.Web;
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services
 {
