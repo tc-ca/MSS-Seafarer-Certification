@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationInsightsResourceId>/subscriptions/fde9cf97-7bf0-4373-9fbd-eba18c6e0dfc/resourceGroups/TC-DevTest-Marine-Development/providers/microsoft.insights/components/cdnprototype-servicerequestdashboard-dev</ApplicationInsightsResourceId>
+    <UserSecretsId>11e7003e-fd16-4de9-8613-756416f24cb7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +11,12 @@
     <Content Remove="DTO\Test\**" />
     <EmbeddedResource Remove="DTO\Test\**" />
     <None Remove="DTO\Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Graph\GraphClaimsPrincipalExtensions.cs" />
+    <Compile Remove="Graph\GraphServiceClientFactory.cs" />
+    <Compile Remove="Services\MockUserGraphApi.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +28,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="5.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
+    <PackageReference Include="Microsoft.Graph" Version="3.21.0" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.6.0" />
+    <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.4.1" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.6.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
     <PackageReference Include="Radzen.Blazor" Version="3.1.0" />

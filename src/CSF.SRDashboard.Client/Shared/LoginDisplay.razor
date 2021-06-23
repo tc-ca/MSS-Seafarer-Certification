@@ -1,15 +1,9 @@
 ﻿<AuthorizeView>
     <Authorized>
-            <a href="AzureAD/Account/SignOut" style="color:white; font-size: 16px;font-weight: bold;">Log out</a>
+        <a href="AzureAD/Account/SignOut" style="color:white; font-size: 16px;font-weight: bold;">Log out</a>
         @if (photoDataString != null)
         {
-            <img src="@photoDataString" alt="User profile image" with="35" height="35" style="border-radius: 50%; margin-right: 10px; margin-left:10px;" />
-        }
-        else
-        {
-            <span style="color:#fff;margin-right:10px;">
-                <CSFFontAwesomeIcon CSFFontAwesomeIconType="CSFFontAwesomeIconType.USER" Size="2" />
-            </span>
+            <img src="@photoDataString" class="ml-3 mr-3" alt="User profile image" width="35" height="35" style="border-radius: 50%;" />
         }
         <div style="color: white">
             @userDisplayName
