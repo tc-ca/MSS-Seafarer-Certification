@@ -1,4 +1,6 @@
 ﻿
+using CSF.SRDashboard.Client.DTO.Azure;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services
@@ -7,5 +9,7 @@ namespace CSF.SRDashboard.Client.Services
     {
         public string GetUserDisplayName();
         public string GetUserPhotoData();
+        List<AzureMemberInfo> GetMmeGroupMembers();
+        AzureMemberInfo GetUserByUserId(string Id);
     }
 }

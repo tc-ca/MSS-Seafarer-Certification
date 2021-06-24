@@ -25,5 +25,7 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public bool HasAttachments { get; set; }
         [JsonPropertyName("Comments")]
         public List<RequestComment> Comments { get; set; }
+
+        public WorkItemAssignmentDTO Assignment { get; set; }
     }
 }

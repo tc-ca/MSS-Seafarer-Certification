@@ -36,9 +36,9 @@ namespace CSF.SRDashboard.Client.Services
             {
                 workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
 
-                if (!string.IsNullOrWhiteSpace(workItem.InitialDetailJson))
+                if (!string.IsNullOrWhiteSpace(workItem.Detail))
                 {
-                    workItem.ItemDetail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.InitialDetailJson);
+                    workItem.ItemDetail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
                 }
 
             }
@@ -190,6 +190,9 @@ namespace CSF.SRDashboard.Client.Services
             // -- Contact
             var contact = this.GetContacInfoDtoFromApplicant(applicantInfo, true, null);
 
+            //--Assignment
+            var assignment = this.GetAssignmentFromRequestModel(requestModel);
+
             //-- Detail
             WorkItemDetail itemDetail = new WorkItemDetail();
             itemDetail.RequestType = requestModel.RequestType;
@@ -199,6 +202,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.Cdn = requestModel.Cdn;
             itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
+            itemDetail.Assignment = assignment;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
             WorkItemDTO workItem = new WorkItemDTO();
@@ -215,6 +219,8 @@ namespace CSF.SRDashboard.Client.Services
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
+
+            workItem.WorkItemAssignment = assignment;
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;
@@ -258,7 +264,6 @@ namespace CSF.SRDashboard.Client.Services
 
             WorkItemDTO workItem = new WorkItemDTO();
             workItem.Id = requestModel.RequestID ;
-            workItem.InitialDetailJson = itemDetailString;
             workItem.Detail = itemDetailString;
             workItem.ApplicantContact = contact;
             workItem.CreatedDateUTC = existingWorkItem.CreatedDateUTC;
@@ -266,11 +271,17 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LastUpdatedDateUTC = DateTime.UtcNow;
             workItem.SameApplicantSubmitterInd = true;
             workItem.LineOfBusinessId = Constants.MarineMedical;
+
+            //Assignment 
+            //NOTE: Current implementation of Work load management service does not support updating 
+            // this needs to be brought up to them. Instead use the this.UpdateAssignment(WorkItemAssignmentDTO assignment, bool isToDelete)
+            workItem.WorkItemAssignment = this.GetAssignmentFromRequestModel(requestModel);
+
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
-            AddWorkItemStatus(workItem.WorkItemStatus);
+            this.AddWorkItemStatus(workItem.WorkItemStatus);
             var uploadedWorkItem = this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;
@@ -330,11 +341,113 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.Cdn = requestModel.Cdn;
             itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
+            itemDetail.Assignment = this.GetAssignmentFromRequestModel(requestModel);
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
             return itemDetailString;
         }
 
+        public WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request)
+        {
+            WorkItemAssignmentDTO assignee = null;
+
+            assignee = new WorkItemAssignmentDTO();
+            if (request.RequestID > 0)
+            {
+                assignee.WorkItemId = request.RequestID;
+            }
+            assignee.AssignedEmployeeId = request.AssigneeId;
+            assignee.DateAssignedUTC = DateTimeOffset.UtcNow;
+
+            return assignee;
+        }
+  
+        public WorkItemAssignmentDTO PostAssignmentForWorkItem(WorkItemAssignmentDTO assignment)
+        {
+            WorkItemAssignmentDTO uploadedAssignment=null;
+            //
+            string requestPath = "api/v1/workitems/assignments";
+
+            try
+            {
+                uploadedAssignment = this.restClient.PostAsync<WorkItemAssignmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, assignment).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return uploadedAssignment;
+        }
+
+        /// <summary>
+        /// Deletes an assignment from work load service management by assignment id
+        /// </summary>
+        /// <param name="assignmentId"></param>
+        /// <returns> Returns zero if the deletion is successful. 
+        /// if Work load management service returns a failure, this method returns -1. If an exception thrown within this method, this method returns 0</returns>
+        public int DeleteAssignment(int assignmentId)
+        {
+            int deletedInd = 0;
+            string requestPath = $"api/v1/workitems/assignments/{assignmentId}";
+
+            try
+            {
+                var isDeleted =this.restClient.DeleteAsync(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+                deletedInd = (isDeleted ? 1 : -1);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return deletedInd;
+        }
+
+        public int UpdateAssignment(WorkItemAssignmentDTO assignment, bool isToDelete)
+        {
+            int updateResult = 0;
+
+            if(isToDelete)
+            {
+
+                var deletedIndicator = this.DeleteAssignment(assignment.Id);
+                updateResult = (deletedIndicator > 0 ? 1 : -1 );
+
+            }
+            else
+            {
+                var uploadedAssignment = this.PostAssignmentForWorkItem(assignment);
+                updateResult = (uploadedAssignment == null ? -1 : 1); 
+
+            }
+            return updateResult;
+        }
+
+        /// <summary>
+        /// This method gets the only valid Assignment for the work item. There is only one valid assignee at any given time.
+        /// When the assignee changes, the old assignee is set to be deleted and a new assignee is inserted on the Work_Item_Assignment table
+        /// </summary>
+        /// <param name="workItemId"></param>
+        /// <returns>the currently associated Assignment to the workItemId</returns>
+        public WorkItemAssignmentDTO GetAssingmentByWorkItemId(int workItemId)
+        {
+            List<WorkItemAssignmentDTO> assignments = new List<WorkItemAssignmentDTO>();
+
+            WorkItemAssignmentDTO assignment = null;
+            string requestPath = $"api/v1/workitems/{workItemId}/assignments";
+            try
+            {
+                assignments = this.restClient.GetAsync<List<WorkItemAssignmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+                assignment = assignments.OrderBy(x => x.Id).Last();// most recent assignment for the workItem
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return assignment;
+        }
 
     }
 

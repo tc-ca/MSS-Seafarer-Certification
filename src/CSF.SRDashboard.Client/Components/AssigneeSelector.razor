@@ -1,0 +1,76 @@
+﻿
+@using DTO.Azure
+@using Client.Models
+
+<div class="col-12 d-grid gap-3 mt-2">
+    <span>Assigned to</span>
+    @if (this.IsReadOnly)
+    {
+        <p>@previouslySelectedMME.Names</p>
+    }
+    else
+    {
+        <select class=" col-lg-auto" @onchange="OnValueChanged">
+            @foreach (var member in mme_members)
+            {
+                if (@member.id == RequestModel.AssigneeId)
+                {
+                    <option value="@member.id" selected> @member.Names</option>
+                }
+                else
+                {
+                    <option value="@member.id"> @member.Names</option>
+                }
+            }
+        </select>
+    }
+</div>
+
+
+@code
+{
+    private List<AzureMemberInfo> mme_members;
+
+
+    [Parameter]
+    public RequestModel RequestModel { get; set; }
+
+    [Parameter]
+    public bool IsReadOnly { get; set; }
+
+
+    [Inject]
+    protected IUserGraphApiService graphService { get; set; }
+
+    private AzureMemberInfo previouslySelectedMME;
+
+
+    protected override void OnInitialized()
+    {
+        AzureMemberInfo emptySelection = new AzureMemberInfo();
+
+        mme_members = graphService.GetMmeGroupMembers();
+        mme_members.Insert(0, emptySelection);
+
+        previouslySelectedMME = mme_members.Where(x => x.id == RequestModel.AssigneeId).FirstOrDefault();
+
+        if(RequestModel.AssigneeId != null)
+        {
+            previouslySelectedMME = graphService.GetUserByUserId(RequestModel.AssigneeId);
+        }
+    }
+
+    private void OnValueChanged(ChangeEventArgs e)
+    {
+        if(e.Value.ToString() != string.Empty)
+        {
+            RequestModel.AssigneeId = e.Value.ToString();
+        }
+        else
+        {
+            RequestModel.AssigneeId = null;
+        }
+
+    }
+
+}

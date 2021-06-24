@@ -56,6 +56,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public string Comment { get; set; }
 
+        private string previousAssigneeId;
+
         private string titleInfo { get; set; }
         [Inject]
         public IDocumentService DocumentService { get; set; }
@@ -69,6 +71,7 @@ namespace CSF.SRDashboard.Client.Pages
             IsEditMode = true;
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            previousAssigneeId = this.RequestModel.AssigneeId;
 
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -102,10 +105,30 @@ namespace CSF.SRDashboard.Client.Pages
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
-                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text
+                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
+                AssigneeId = RequestModel.AssigneeId
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
+
+            //Work load management service does not support updating an assignment within a work item.
+            // we have to update the work item seperately.
+            if(previousAssigneeId != this.RequestModel.AssigneeId)
+            {
+                var assignment = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
+
+                // if the empty option is selected, we need to delete the assignee from the work request
+                if(RequestModel.AssigneeId == null)
+                {
+                    var workItemId = RequestModel.RequestID;
+                    var assignmentToBeDeleted = WorkLoadService.GetAssingmentByWorkItemId(workItemId);
+                    WorkLoadService.UpdateAssignment(assignmentToBeDeleted, true);
+                }
+                else
+                {
+                    WorkLoadService.UpdateAssignment(assignment, false);
+                }
+            }
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
 
         }
@@ -151,6 +174,12 @@ namespace CSF.SRDashboard.Client.Pages
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
+
+            if(workItem.WorkItemAssignment != null)
+            {
+                requestModel.AssigneeId = workItem.WorkItemAssignment.AssignedEmployeeId;
+            }
+
             if(workItem.WorkItemStatus.StatusAdditionalDetails != null)
             {
                 requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(workItem.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;

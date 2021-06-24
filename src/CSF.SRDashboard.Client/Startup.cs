@@ -149,15 +149,15 @@ namespace CSF.SRDashboard.Client
             var token = kvService.GetSecretByName(secretName);
             appConfiguration.GetSection("AzureKeyVaultSettings")["SecretNames:GatewayToken"] = token;
 
-            // AzureAD-ClientId
-            secretName = appConfiguration.GetSection("AzureAd")["ClientId"];
-            token = kvService.GetSecretByName(secretName);
-            appConfiguration.GetSection("AzureAd")["ClientId"] = token;
+            //// AzureAD-ClientId
+            //secretName = appConfiguration.GetSection("AzureAd")["ClientId"];
+            //token = kvService.GetSecretByName(secretName);
+            //appConfiguration.GetSection("AzureAd")["ClientId"] = token;
 
-            // AzureAD-ClientSecret
-            secretName = appConfiguration.GetSection("AzureAd")["ClientSecret"];
-            token = kvService.GetSecretByName(secretName);
-            appConfiguration.GetSection("AzureAd")["ClientSecret"] = token;
+            //// AzureAD-ClientSecret
+            //secretName = appConfiguration.GetSection("AzureAd")["ClientSecret"];
+            //token = kvService.GetSecretByName(secretName);
+            //appConfiguration.GetSection("AzureAd")["ClientSecret"] = token;
         }
 
 

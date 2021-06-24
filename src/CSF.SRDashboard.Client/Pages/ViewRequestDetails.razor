@@ -6,7 +6,19 @@
     <div class="p-2"><a class="btn btn-primary" href="/SeafarerProfile/edit-request/@this.Cdn/@this.RequestId">@Localizer["EditRequest"]</a></div>
 </div>
 <hr />
+@*<div class="container-fluid">
+    <div class="row row-no-gutters">
+        <div class="col-sm-10"></div>
+        <div class="col-sm-4"><CSF.SRDashboard.Client.Components.AssigneeSelector RequestModel="this.RequestModel" IsReadOnly="true" /></div>
+    </div>
+</div>*@
+<div class="de-flex flex-row-reverse">
 
+        <div class="p-2"><CSF.SRDashboard.Client.Components.AssigneeSelector RequestModel="this.RequestModel" IsReadOnly="true" /></div>
+</div>
+@*<div>
+    <CSF.SRDashboard.Client.Components.AssigneeSelector RequestModel="this.RequestModel" IsReadOnly="true" />
+</div>*@
 <EditForm EditContext="@this.EditContext">
     <div class="d-flex">
         <div class="flex-grow-1">
@@ -32,9 +44,9 @@
                         <BodyContent>
                             <CSF.SRDashboard.Client.Components.DocumentInformation EditContext="this.EditContext" UploadedDocuments="this.UploadedDocuments" IsReadOnly="true"></CSF.SRDashboard.Client.Components.DocumentInformation>
                         </BodyContent>
-                        </Collapse>
-                            }
-                </div>
+                    </Collapse>
+                }
+            </div>
         </div>
 
         <div style="flex-basis:25%;" class="pl-4 pr-4">

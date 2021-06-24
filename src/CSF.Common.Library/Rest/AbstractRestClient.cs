@@ -134,10 +134,12 @@ namespace CSF.Common.Library
         ///<inheritdoc/>
         public virtual async Task<bool> DeleteAsync(ServiceLocatorDomain serviceName, string path)
         {
-            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+            string baseURi = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
+
+            var uri = new Uri($"{baseURi}/{path}");
 
             this.ResetRestClientHeaders();
-            var response = await this.httpClient.DeleteAsync(uri).ConfigureAwait(true);
+            var response = await this.httpClient.DeleteAsync(uri).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             return response.IsSuccessStatusCode;

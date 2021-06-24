@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CSF.SRDashboard.Client.DTO.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Web;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -102,6 +105,103 @@ namespace CSF.SRDashboard.Client.Services
                 Console.WriteLine(ex.Message + "\n" + ex.InnerException);
                 consentHandler.HandleException(ex);
             }
+        }
+
+
+        //TODO: clean up
+        public List<AzureMemberInfo> GetMmeGroupMembers()
+        {
+            List<AzureMemberInfo> groupMembers = new List<AzureMemberInfo>();
+
+            try
+            {
+                // following gets all the users . Under current Active directory               
+                string url = "https://graph.microsoft.com/v1.0/users";
+
+                //string groupId = "744b2679-64c3-4bd3-be2d-4b684cbf411a";  // this is from the test group on my personal Azure AD
+
+                //CSF Marine Medical Users (MME): 0b8dac87-f006-414a-8f9a-a1d689756c2e
+                string groupId = "0b8dac87-f006-414a-8f9a-a1d689756c2e";
+
+                string url2 = $"https://graph.microsoft.com/v1.0/groups/{groupId}/members/microsoft.graph.user";
+
+                var basicInfoRequest = this.httpClient.GetAsync(url2).GetAwaiter().GetResult();
+
+                if (basicInfoRequest.IsSuccessStatusCode)
+                {
+                    var userData = System.Text.Json.JsonDocument.Parse(basicInfoRequest.Content.ReadAsStreamAsync().GetAwaiter().GetResult());
+                    var rootElement = userData.RootElement.ToString();
+                    var memberList = JsonConvert.DeserializeObject<AzureMemberListInfo>(rootElement);
+                    var members = memberList.value;
+                    groupMembers = members.OrderBy(x => x.surname).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return groupMembers;
+        }
+
+
+        //TODO: clean up
+        public List<AzureMemberInfo> GetGroupMembersByGroupId(string groupId)
+        {
+            List<AzureMemberInfo> groupMembers = new List<AzureMemberInfo>();
+
+            try
+            {
+                // following gets all the users . Under current Active directory               
+                string url = "https://graph.microsoft.com/v1.0/users";
+
+                //test group id
+                //string groupId = "744b2679-64c3-4bd3-be2d-4b684cbf411a";
+
+                groupId = "744b2679-64c3-4bd3-be2d-4b684cbf411a";
+                string url2 = $"https://graph.microsoft.com/v1.0/groups/{groupId}/members/microsoft.graph.user";
+
+                var basicInfoRequest = this.httpClient.GetAsync(url2).GetAwaiter().GetResult();
+
+                if (basicInfoRequest.IsSuccessStatusCode)
+                {
+                    var userData = System.Text.Json.JsonDocument.Parse(basicInfoRequest.Content.ReadAsStreamAsync().GetAwaiter().GetResult());
+                    var rootElement = userData.RootElement.ToString();
+                    var memberList = JsonConvert.DeserializeObject<AzureMemberListInfo>(rootElement);
+                    groupMembers = memberList.value;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return groupMembers;
+        }
+
+        public AzureMemberInfo GetUserByUserId(string Id)
+        {
+
+            string url = $"https://graph.microsoft.com/v1.0/users/{Id}";
+
+            AzureMemberInfo memberInfo = null;
+            try
+            {
+                var userRequest = this.httpClient.GetAsync(url).GetAwaiter().GetResult();
+                if (userRequest.IsSuccessStatusCode)
+                {
+                    var userData = System.Text.Json.JsonDocument.Parse(userRequest.Content.ReadAsStreamAsync().GetAwaiter().GetResult());
+                    var rootElement = userData.RootElement.ToString();
+                    memberInfo = JsonConvert.DeserializeObject<AzureMemberInfo>(rootElement);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return memberInfo;
         }
     }
 }

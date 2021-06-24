@@ -79,5 +79,10 @@ namespace CSF.SRDashboard.Client.Services
 
 
         WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status);
+
+        int UpdateAssignment(WorkItemAssignmentDTO assignment, bool isToDelete);
+        WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request);
+        WorkItemAssignmentDTO GetAssingmentByWorkItemId(int workItemId);
+
     }
 }
