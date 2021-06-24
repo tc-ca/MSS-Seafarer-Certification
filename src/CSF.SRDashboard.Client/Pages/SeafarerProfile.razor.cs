@@ -112,11 +112,16 @@
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
+            List<Services.Document.Entities.DocumentInfo> documentInfos = new List<Services.Document.Entities.DocumentInfo>();
 
-            var documentIds = Documents.Select(x => x.DocumentId).ToList();
+            for (var i = 0; i < Math.Round(Math.Ceiling(Documents.Count / 30.0),0); i++)
+            {
+                var documentIds = Documents.Select(x => x.DocumentId).Skip(i * 30).Take(30).ToList();
 
-            // Call document servie to get info for each document
-            var documentInfos = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+                // Call document servie to get info for each document
+                var docsToConcat = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+                documentInfos.AddRange(docsToConcat);
+            }
 
             foreach (var documentInfo in documentInfos)
             {
