@@ -26,7 +26,7 @@ namespace MPDIS.API.Wrapper
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{GetAppSettingsEnvironment()}.json", optional: true)
+            .AddJsonFile($"appsettings.{GetAppSettingsEnvironment()}.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
 
@@ -43,6 +43,7 @@ namespace MPDIS.API.Wrapper
             try
             {
                 Log.Information("Starting up");
+                Log.Information($"Environment is: {GetAppSettingsEnvironment()}");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
