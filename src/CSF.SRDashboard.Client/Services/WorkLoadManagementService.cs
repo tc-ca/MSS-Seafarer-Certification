@@ -404,22 +404,25 @@ namespace CSF.SRDashboard.Client.Services
             return deletedInd;
         }
 
-        public int UpdateAssignment(WorkItemAssignmentDTO assignment, bool isToDelete)
+        /// <summary>
+        /// This method either posts or deletes an assignment depending on the parameter isToDelete
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <param name="isToDelete"></param>
+        /// <returns></returns>
+        public int DeleteOrPost(WorkItemAssignmentDTO assignment, bool isToDelete)
         {
             int updateResult = 0;
 
             if(isToDelete)
             {
-
                 var deletedIndicator = this.DeleteAssignment(assignment.Id);
                 updateResult = (deletedIndicator > 0 ? 1 : -1 );
-
             }
             else
             {
                 var uploadedAssignment = this.PostAssignmentForWorkItem(assignment);
                 updateResult = (uploadedAssignment == null ? -1 : 1); 
-
             }
             return updateResult;
         }
@@ -430,10 +433,9 @@ namespace CSF.SRDashboard.Client.Services
         /// </summary>
         /// <param name="workItemId"></param>
         /// <returns>the currently associated Assignment to the workItemId</returns>
-        public WorkItemAssignmentDTO GetAssingmentByWorkItemId(int workItemId)
+        public WorkItemAssignmentDTO GetMostRecentAssingmentForWorkItem(int workItemId)
         {
             List<WorkItemAssignmentDTO> assignments = new List<WorkItemAssignmentDTO>();
-
             WorkItemAssignmentDTO assignment = null;
             string requestPath = $"api/v1/workitems/{workItemId}/assignments";
             try
@@ -448,7 +450,5 @@ namespace CSF.SRDashboard.Client.Services
 
             return assignment;
         }
-
     }
-
 }

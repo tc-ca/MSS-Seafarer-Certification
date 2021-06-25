@@ -111,22 +111,29 @@ namespace CSF.SRDashboard.Client.Pages
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
 
-            //Work load management service does not support updating an assignment within a work item.
-            // we have to update the work item seperately.
+            //Work load management service does not support updating an assignment within a work item through work item itself.
+            // we have to update the Assignment seperately.
             if(previousAssigneeId != this.RequestModel.AssigneeId)
             {
-                var assignment = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
+                var new_assignment_toPost = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
 
-                // if the empty option is selected, we need to delete the assignee from the work request
-                if(RequestModel.AssigneeId == null)
+                // when blank option is selected, we need to delete the old assignee from the work request
+                if(RequestModel.AssigneeId == Constants.NotSelected)
                 {
                     var workItemId = RequestModel.RequestID;
-                    var assignmentToBeDeleted = WorkLoadService.GetAssingmentByWorkItemId(workItemId);
-                    WorkLoadService.UpdateAssignment(assignmentToBeDeleted, true);
+                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
                 }
                 else
                 {
-                    WorkLoadService.UpdateAssignment(assignment, false);
+                    // old assignee is deleted and the new assignee is posted.
+                    var workItemId = RequestModel.RequestID;
+                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    if (oldAssignment_toDelete != null) // this is the scenario where there is no old assignee and we are assigning a person
+                    {
+                        WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                    }
+                    WorkLoadService.DeleteOrPost(new_assignment_toPost, false);
                 }
             }
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
