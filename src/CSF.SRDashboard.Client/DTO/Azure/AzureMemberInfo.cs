@@ -19,9 +19,25 @@ namespace CSF.SRDashboard.Client.DTO.Azure
         public string userPrincipalName { get; set; }
         public string id { get; set; }
 
+        string _names;
         public string Names
         {
-            get { return ((surname != null) ?  surname + "," + givenName : null); }
+            get 
+            { 
+                if(_names != null)
+                {
+                    return _names;
+                }
+                else
+                {
+                    return ((surname != null) ? surname + "," + givenName : null);
+                }
+            }
+
+            set 
+            {
+                _names = value;
+            }
         }
 
     }

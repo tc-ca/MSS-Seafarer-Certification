@@ -66,5 +66,7 @@ namespace CSF.SRDashboard.Client.Services
         public const string NoProfilePicturePath = "/img/no-profile-photo.png";
 
         public const string NotSelected = "-1";
+
+        public const string Unassigned = "9999-9999-9999";
     }
 }

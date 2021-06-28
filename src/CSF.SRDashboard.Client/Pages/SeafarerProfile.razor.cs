@@ -61,6 +61,9 @@
 
         [Inject]
         IStringLocalizer<SeafarerProfile> Localizer { get; set; }
+
+        [Inject] 
+        IUserGraphApiService graphApiService { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
 
         public bool ShowToast { get; set; } = false;
@@ -178,7 +181,28 @@
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             this.TableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
+            this.SetAssigneeNames(this.TableItems);
             this.AlertType = AlertTypes.Success;
+        }
+
+        //TODO:If an MME leaves his job and on Azure MME list does not have this person, when loading a work request
+        //where this MME was assigned, following method can not show this person.
+        //Discus this issue. Possible fix could be to store MME name on Work load management Assignee table togethe with
+        //Or instead of the AssigneeId. Or we should not delete the person fromo the MME list when this person leaves his duty.
+        private void SetAssigneeNames(List<WorkloadRequestTableItem> tableItems)
+        {
+            var mmeMembers = graphApiService.GetMmeGroupMembers();
+            foreach(var item in this.TableItems)
+            {
+                if(item.AssigneeId != null)
+                {
+                    var mmeFound = mmeMembers.Where(x => x.id == item.AssigneeId).FirstOrDefault();
+                    if(mmeFound != null)
+                    {
+                        item.AssignedTo = mmeFound.Names;
+                    }
+                }
+            }
         }
     }
 }

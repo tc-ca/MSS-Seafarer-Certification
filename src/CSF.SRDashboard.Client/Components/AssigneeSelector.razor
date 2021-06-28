@@ -5,23 +5,26 @@
 
 <EditForm EditContext="@EditContext">
     <div class="row">
-        <div class="col-12 d-grid gap-3 mt-2">
-
+        <div style="padding-left:15px">
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Label="Assinee Select" @bind-Value="RequestModel.AssigneeId" ValidationFor="@(() => RequestModel.AssigneeId)">
+                <FormInputSelect Label="@Localizer["AssignedTo"]" @bind-Value="RequestModel.AssigneeId" ValidationFor="@(() => RequestModel.AssigneeId)" ShowDefaultOption="false">
                     @foreach (var member in mme_members)
-                    {
-                    <option value="@member.id"> @member.Names</option>
-                    }
+                        {
+                        <option value="@member.id"> @member.Names</option>
+                        }
                 </FormInputSelect>
             }
             else
             {
-                <label class="form-label"><b>Assined To :</b></label>
+                <label class="form-label mr-1"><b>@Localizer["AssignedTo"]:</b></label>
                 @if (previouslySelectedMME != null)
                 {
-                    <p>@previouslySelectedMME.Names</p>
+                    <label>@previouslySelectedMME.Names</label>
+                }
+                else
+                {
+                    <label>@Localizer["Unassigned"]</label>
                 }
             }
         </div>
@@ -54,6 +57,9 @@
     [Inject]
     protected IUserGraphApiService graphService { get; set; }
 
+    [Inject]
+    IStringLocalizer<Shared.Common> Localizer { get; set; }
+
     private AzureMemberInfo previouslySelectedMME;
 
     protected override void OnInitialized()
@@ -67,18 +73,4 @@
             previouslySelectedMME = graphService.GetUserByUserId(RequestModel.AssigneeId);
         }
     }
-
-
-    //private void OnValueChanged(ChangeEventArgs e)
-    //{
-    //    if (e.Value.ToString() != string.Empty)
-    //    {
-    //        RequestModel.AssigneeId = e.Value.ToString();
-    //    }
-    //    else
-    //    {
-    //        RequestModel.AssigneeId = null;
-    //    }
-    //}
-
 }

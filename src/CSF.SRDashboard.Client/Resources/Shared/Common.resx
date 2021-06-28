@@ -348,9 +348,6 @@
   <data name="DocumentTypes2" xml:space="preserve">
     <value>Document type(s)*</value>
   </data>
-  <data name="Attachment" xml:space="preserve">
-    <value>Attachment</value>
-  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -363,7 +360,7 @@
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment</value>
   </data>
-  <data name="DefaultSelectOption" xml:space="preserve">
-    <value>Select</value>
+  <data name="Unassigned" xml:space="preserve">
+    <value>Unassigned</value>
   </data>
 </root>

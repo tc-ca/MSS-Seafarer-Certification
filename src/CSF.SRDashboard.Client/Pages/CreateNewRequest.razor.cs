@@ -75,6 +75,7 @@ namespace CSF.SRDashboard.Client.Pages
             RequestModel = new RequestModel
             {
                 Cdn = Applicant.Cdn,
+                AssigneeId = Constants.Unassigned
             };
 
             this.EditContext = new EditContext(RequestModel);

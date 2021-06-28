@@ -1,5 +1,6 @@
 ﻿using CSF.SRDashboard.Client.DTO.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 using Microsoft.Identity.Web;
 using Newtonsoft.Json;
 using System;
@@ -19,13 +20,15 @@ namespace CSF.SRDashboard.Client.Services
         private HttpClient httpClient;
         private ITokenAcquisition tockenAcquisition;
         private MicrosoftIdentityConsentAndConditionalAccessHandler consentHandler;
+        private IStringLocalizer<Shared.Common> localizer;
 
-        public UserGraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService, MicrosoftIdentityConsentAndConditionalAccessHandler consentHandler)
+        public UserGraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService, MicrosoftIdentityConsentAndConditionalAccessHandler consentHandler, IStringLocalizer<Shared.Common> localizer)
         {
             this.configuration = configuration;
             this.httpClient = httpClientFactory.CreateClient();
             this.tockenAcquisition = tokenAcquisitionService;
             this.consentHandler = consentHandler;
+            this.localizer = localizer;
         }
 
         /// <summary>
@@ -127,6 +130,12 @@ namespace CSF.SRDashboard.Client.Services
                     var memberList = JsonConvert.DeserializeObject<AzureMemberListInfo>(rootElement);
                     var members = memberList.value;
                     groupMembers = members.OrderBy(x => x.surname).ToList();
+
+                    //We need to add a name called Unassigned
+                    AzureMemberInfo unAssigned = new AzureMemberInfo();
+                    unAssigned.Names = this.localizer["Unassigned"];
+                    unAssigned.id = Constants.Unassigned;
+                    groupMembers.Insert(0, unAssigned);
                 }
             }
             catch (Exception ex)

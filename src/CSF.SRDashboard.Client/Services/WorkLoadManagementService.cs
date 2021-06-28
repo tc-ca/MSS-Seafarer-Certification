@@ -174,6 +174,11 @@ namespace CSF.SRDashboard.Client.Services
                     {
                         tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
                     }
+
+                    if(workItem.WorkItemAssignment != null)
+                    {
+                        tableItem.AssigneeId = workItem.WorkItemAssignment.AssignedEmployeeId;
+                    }
                     tableItems.Add(tableItem);
                 }
             }
