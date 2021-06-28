@@ -1,109 +1,107 @@
-﻿
-@for (int index = 0; this.UploadedDocuments.Any() && index < this.UploadedDocuments.Count; index++)
+﻿@if (!this.IsReadOnly)
 {
-    var i = index;
+    <div class="row">
+        <div class="col-12">
+            <p class="mb-0 mr-3 float-right">@Localizer["RequiredField"]<span class="text-danger">*</span></p>
+        </div>
+    </div>
+}
+    @for (int index = 0; this.UploadedDocuments.Any() && index < this.UploadedDocuments.Count; index++)
+    {
+        var i = index;
 
-    <div class="card mt-5">
-        <div class="card-header bg-white">
-            <div class="d-flex">
-                <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
-                <div class="mr-3">
-                    @if (!this.IsReadOnly)
-                    {
-                        <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
-                            <i class="far fa-trash-alt"><span class="pl-1 csf-span">@Localizer["Delete"]</span></i>
-                        </button>
-                    }
-                </div>
-                <div @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
-                    <div style="cursor: pointer;">
-                        <a style="color: #1B50B1;">
-                            <i class="fas fa-eye mr-2"></i>@Localizer["View"]
-                        </a>
+        <div class="card mt-3">
+            <div class="card-header bg-white">
+                <div class="d-flex">
+                    <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
+                    <div class="mr-3">
+                        @if (!this.IsReadOnly)
+                        {
+                            <button class="small-buttons" @onclick="@(e => RemoveAttachment(i))">
+                                <i class="far fa-trash-alt"><span class="pl-1 csf-span">@Localizer["Delete"]</span></i>
+                            </button>
+                        }
+                    </div>
+                    <div @onclick="@(e => ViewDocument(this.UploadedDocuments[i]))">
+                        <div style="cursor: pointer;">
+                            <a style="color: #1B50B1;">
+                                <i class="fas fa-eye mr-2"></i>@Localizer["View"]
+                            </a>
+                        </div>
                     </div>
                 </div>
+
             </div>
-
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <EditForm EditContext="@this.EditContext">
-                    <FluentValidationValidator />
-                    @if (!this.IsReadOnly)
-                    {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id=@string.Format("MultipleSelect{0}", i)  CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
-                            <SelectedItemTemplate Context="SelectItem">
-                                <span>@SelectItem, </span>
-                            </SelectedItemTemplate>
-                        </InputMultipleSelect> }
-                    else
-                    {
-                        <label class="form-label"><b>@Localizer["DocumentTypes"]</b></label>
-                        string text = string.Empty;
-
-
-                        @if (this.UploadedDocuments[i].DocumentTypes != null)
+            <div class="card-body">
+                <div class="form-group">
+                    <EditForm EditContext="@this.EditContext">
+                        <FluentValidationValidator />
+                        @if (!this.IsReadOnly)
                         {
-                            foreach (var item in this.UploadedDocuments[i].DocumentTypeList)
+                            <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id=@string.Format("MultipleSelect{0}", i) CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">        
+                        <SelectedItemTemplate Context="SelectItem">
+                                    <span>@SelectItem, </span>
+                                </SelectedItemTemplate>
+                            </InputMultipleSelect> }
+                        else
+                        {
+                            <label class="form-label"><b>@Localizer["DocumentTypes"]</b></label>
+                            string text = string.Empty;
+
+
+                            @if (this.UploadedDocuments[i].DocumentTypes != null)
                             {
-                                if (item.Value)
+                                foreach (var item in this.UploadedDocuments[i].DocumentTypeList)
                                 {
-                                    text += item.Text + ", ";
+                                    if (item.Value)
+                                    {
+                                        text += item.Text + ", ";
+                                    }
+
                                 }
 
-                            }
-
-                            if (this.UploadedDocuments[i].DocumentTypes.Any())
-                            {
-                                text = text.Remove(text.Length - 2);
-                                text = text.TrimEnd();
-                                <p>@text</p>
+                                if (this.UploadedDocuments[i].DocumentTypes.Any())
+                                {
+                                    text = text.Remove(text.Length - 2);
+                                    text = text.TrimEnd();
+                                    <p>@text</p>
+                                }
+                                else
+                                {
+                                    <p>N/A</p>
+                                }
                             }
                             else
                             {
                                 <p>N/A</p>
                             }
                         }
+
+                        @if (!this.IsReadOnly)
+                        {
+                            <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" SelectLabel=@Localizer["SelectLanguage"] ShowDefaultOption="ShowDefaultOption">
+                                @foreach (var item in Constants.Languages)
+                                            {
+                                    <option value="@item.Id">@item.Text</option>
+                                            }
+                            </FormInputSelect>
+                        }
                         else
                         {
-                            <p>N/A</p>
+                            <label class="form-label"><b>@Localizer["DocumentLanguage"]</b></label> // Uncomment after database refresh
+
+                            <p>@this.UploadedDocuments[i].Language</p>}
+
+                        @if (!this.IsReadOnly)
+                        {
+                            <FormInputTextArea Id="InputTextArea" Label="@Localizer["Description"]" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" /> }
+                        else
+                        {
+                            <label class="form-label"><b>@Localizer["Description"]</b></label>
+                            <p>@this.UploadedDocuments[i].Description</p>
                         }
-                    }
-
-                    @if (!this.IsReadOnly)
-                    {
-                        <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" SelectLabel=@Localizer["SelectLanguage"] ShowDefaultOption="ShowDefaultOption">
-                            @foreach (var item in Constants.Languages)
-                                {
-                                    <option value="@item.Id">@item.Text</option>
-                                }
-                        </FormInputSelect>
-                    }
-                    else
-                    {
-                        <label class="form-label"><b>@Localizer["DocumentLanguage"]</b></label> // Uncomment after database refresh
-                        //
-                        @*// @*foreach (var item in Constants.Languages)
-                            {
-                                if (item.Text.Equals(this.UploadedDocuments[i].Language, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    <p>@item.Text</p>
-                                    break;
-                                }
-                            }*@
-
-                        <p>@this.UploadedDocuments[i].Language</p>}
-
-                    @if (!this.IsReadOnly)
-                    {
-                        <FormInputTextArea Id="InputTextArea" Label="@Localizer["Description"]" Required="required" Rows="2" Cols="50" @bind-Value="@this.UploadedDocuments[i].Description" ValidationFor="@(() => this.UploadedDocuments[i].Description)" /> }
-                    else
-                    {
-                        <label class="form-label"><b>@Localizer["Description"]</b></label>
-                        <p>@this.UploadedDocuments[i].Description</p>
-                    }
-                </EditForm>
+                    </EditForm>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
