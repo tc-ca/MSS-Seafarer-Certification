@@ -1,15 +1,15 @@
 {
   "Routes": [
 
-    //MPDIS applicant personal information without medical data
+    // MPDIS applicant personal information without medical data
     // the actual url is like the following:
-    //https://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicant/0185855Z
+    //https://tcapps.tc.gc.ca/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/0185855Z
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicant/{cdn}",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicant/{cdn}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//tcappsmssdev.tc.gc.ca",
+          "Host": "//tcapps.tc.gc.ca",
           "Port": "443"
         }
       ],
@@ -23,13 +23,13 @@
 
     // Search with Criteria
     // the direct url is like the following:
-    //https://tcappsmssdev/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicants/search
+    //https://tcapps.tc.gc.ca/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search
     {
-      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper-dev/mpdis/applicants/search",
+      "DownstreamPathTemplate": "/saf-sec-sur/4/csf-mpdis-api-wrapper/mpdis/applicants/search",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "//tcappsmssdev.tc.gc.ca",
+          "Host": "//tcapps.tc.gc.ca",
           "Port": "443"
         }
       ],
