@@ -18,6 +18,8 @@
     using DSD.MSS.Blazor.Components.Core.Constants;
     using Microsoft.JSInterop;
     using Microsoft.Extensions.Localization;
+    using CSF.SRDashboard.Client.Services.Document.Entities;
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
     public partial class SeafarerProfile
     {
@@ -27,6 +29,13 @@
 
         [Parameter]
         public int RequestId { get; set; }
+        /// <summary>
+        /// Tab to open if passed ?tab=summary
+        /// </summary>
+        [Parameter]
+        public string Tab { get; set; }
+        [Parameter]
+        public string Created { get; set; }
 
         [Parameter]
         public AlertTypes AlertType { get; set; }
@@ -44,7 +53,7 @@
         [Inject]
         public IDocumentService DocumentService { get; set; }
         [Inject]
-        private NavigationManager navigationManager { get; set; }
+        private NavigationManager NavigationManager { get; set; }
         [Inject]
         public IAzureBlobService AzureBlobService { get; set; }
         [Inject]
@@ -56,14 +65,12 @@
 
         public bool ShowToast { get; set; } = false;
 
-        public List<DocumentInfo> Documents { get; set; }
-
         public DateTime DOB;
         public bool ShowFilterHeader { get; set; } = true;
 
         protected List<Document> TableData = new List<Document>();
 
-        public List<Services.Document.Entities.DocumentInfo> DocumentInfos { get; set; }
+        public DocumentDTO DocumentResult { get; set; }
 
         public string currentRelativePath;
 
@@ -72,7 +79,9 @@
         [Parameter]
         public string Updated { get; set; }
 
-        private string cratedOrUpdated { get; set; }
+        [Parameter]
+        public string FileName { get; set; }
+
         private string message { get; set; }
         [Inject]
         public IWorkLoadManagementService WorkLoadService { get; set; }
@@ -81,7 +90,15 @@
 
         protected async override Task OnInitializedAsync()
         {
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
             this.IsAlertEnabled = this.RequestId != 0;
+
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("fileName", out var filename))
+            {
+                FileName = filename;
+            }
+
             if (Updated != null)
             {
                 message = Localizer["SuccessfullyUpdated"] + " " + RequestId + Localizer["For"];
@@ -95,13 +112,18 @@
 
             this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
+            List<Services.Document.Entities.DocumentInfo> documentInfos = new List<Services.Document.Entities.DocumentInfo>();
 
-            var documentIds = Documents.Select(x => x.DocumentId).ToList();
+            for (var i = 0; i < Math.Round(Math.Ceiling(Documents.Count / 30.0),0); i++)
+            {
+                var documentIds = Documents.Select(x => x.DocumentId).Skip(i * 30).Take(30).ToList();
 
-            // Call document servie to get info for each document
-            DocumentInfos = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+                // Call document servie to get info for each document
+                var docsToConcat = await DocumentService.GetDocumentsWithDocumentIds(documentIds);
+                documentInfos.AddRange(docsToConcat);
+            }
 
-            foreach (var documentInfo in DocumentInfos)
+            foreach (var documentInfo in documentInfos)
             {
 
                 var link = await this.AzureBlobService.GetDownloadLinkAsync("documents", documentInfo.DocumentUrl, DateTime.UtcNow.AddHours(8));
@@ -112,13 +134,13 @@
                     FileName = documentInfo.FileName,
                     Language = documentInfo.Language,
                     Type = documentInfo.FileType,
-                    DateUploaded = documentInfo.DateCreated.Value,
+                    DateUploaded = documentInfo.DateLastUpdated.Value,
                     DocumentUrl = documentInfo.DocumentUrl,
                     DownloadLink = link
                 });
             }
 
-            var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+            this.TableData = this.TableData.OrderByDescending(x => x.DateUploaded).ToList();
 
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("requestId", out var requestId))
             {
@@ -135,9 +157,25 @@
         protected override async void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
+
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
             if (IsAlertEnabled)
             {
-                await JS.InvokeVoidAsync("SetTab");
+                await JS.InvokeVoidAsync("SetTab", "requestLink");
+            }
+            else if (!string.IsNullOrWhiteSpace(FileName))
+            {
+                await JS.InvokeVoidAsync("SetTab", "documents");
+            }
+            else if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("tab", out var tab))
+            {
+                Tab = tab;
+
+                if (!string.IsNullOrWhiteSpace(Tab))
+                {
+                    await JS.InvokeVoidAsync("SetTab", Tab);
+                }
             }
         }
 

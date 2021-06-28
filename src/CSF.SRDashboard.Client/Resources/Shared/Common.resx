@@ -261,9 +261,6 @@
   <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="SubmissionMethod" xml:space="preserve">
     <value>Submission method</value>
   </data>
@@ -292,7 +289,7 @@
     <value>view request</value>
   </data>
   <data name="EditRequest" xml:space="preserve">
-    <value>edit request</value>
+    <value>Edit request</value>
   </data>
   <data name="SaveRequest" xml:space="preserve">
     <value>Save request</value>
@@ -305,5 +302,68 @@
   </data>
   <data name="RequestLower" xml:space="preserve">
     <value>request</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DocumentLanguage" xml:space="preserve">
+    <value>Document language</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>Document type</value>
+  </data>
+  <data name="DocumentTypes" xml:space="preserve">
+    <value>Document type(s)</value>
+  </data>
+  <data name="AddAttachment" xml:space="preserve">
+    <value>Add Attachment</value>
+  </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
+  <data name="SelectDocType" xml:space="preserve">
+    <value>Select document type</value>
+  </data>
+  <data name="DefaulRequestType" xml:space="preserve">
+    <value>Select request type</value>
+  </data>
+  <data name="DefaultCertificateSelect" xml:space="preserve">
+    <value>Select certificate type</value>
+  </data>
+  <data name="DefaultSubmissionSelect" xml:space="preserve">
+    <value>Select submission type</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DocumentTypes2" xml:space="preserve">
+    <value>Document type(s)*</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="EditAttachment" xml:space="preserve">
+    <value>Edit attachment</value>
+  </data>
+  <data name="SaveAttachment" xml:space="preserve">
+    <value>Save attachment</value>
+  </data>
+  <data name="ViewAttachment" xml:space="preserve">
+    <value>view attachment</value>
+  </data>
+  <data name="DefaultSelectOption" xml:space="preserve">
+    <value>Select</value>
   </data>
 </root>

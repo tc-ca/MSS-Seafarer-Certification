@@ -165,11 +165,11 @@ namespace CSF.SRDashboard.Client.Services
                         tableItem.Certificate = detail.CertificateType;
                         tableItem.RequestType = detail.RequestType;
                         tableItem.ApplicantCDN = detail.Cdn;
-                        
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
-                    tableItem.RequestDate = workItem.CreatedDateUTC != null ? workItem.CreatedDateUTC.Value.DateTime : null;
+
+                    tableItem.RequestDate = workItem.CreatedDateUTC?.DateTime;
                     if (workItem.WorkItemStatus != null)
                     {
                         tableItem.Status = workItem.WorkItemStatus.StatusAdditionalDetails;
@@ -197,7 +197,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
-            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
@@ -214,12 +214,37 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;
         }
-
+        public async Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO)
+        {
+            string requestPath = "/api/v1/workitem-attachments";
+            try
+            {
+                return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return new WorkItemAttachmentDTO();
+        }
+        public List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId)
+        {
+            string requestPath = $"/api/v1/workitem-attachments/{workitemId}/attachments";
+            try
+            {   
+                 return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+            }
+            catch(Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return new List<WorkItemAttachmentDTO>();
+        }
         public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
             int requestId = Convert.ToInt32(requestModel.RequestID);
@@ -243,12 +268,29 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = Constants.New;
+            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
+            workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
+            AddWorkItemStatus(workItem.WorkItemStatus);
             var uploadedWorkItem = this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;
         }
 
+        public WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status)
+        {
+            WorkItemStatusDTO updatedStatus = null;
+            string requestPath = $"api/v1/workitems/statuses";
+            try
+            {
+                updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return updatedStatus;
+        }
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
             ContactInformationDTO contact = new ContactInformationDTO();
@@ -286,12 +328,13 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
-            itemDetail.HasAttachments = (requestModel.Documents != null) ? true : false;
+            itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
             return itemDetailString;
         }
+
 
     }
 

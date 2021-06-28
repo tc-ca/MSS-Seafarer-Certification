@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackToSearchResults" xml:space="preserve">
+    <value>Back to search results_fr</value>
+  </data>
   <data name="Documents" xml:space="preserve">
     <value>Documents_fr</value>
   </data>
@@ -126,6 +129,9 @@
   <data name="Requests" xml:space="preserve">
     <value>Requests_fr</value>
   </data>
+  <data name="SuccessfullyAddedDocument" xml:space="preserve">
+    <value>You successfully uploaded document_fr</value>
+  </data>
   <data name="SuccessfullyCreated" xml:space="preserve">
     <value>You-successfully-created-request-fr </value>
   </data>
@@ -134,5 +140,8 @@
   </data>
   <data name="Summary" xml:space="preserve">
     <value>Summary-fr</value>
+  </data>
+  <data name="YouSuccessfullyUpdatedDocument" xml:space="preserve">
+    <value>You successfully updated document_fr </value>
   </data>
 </root>

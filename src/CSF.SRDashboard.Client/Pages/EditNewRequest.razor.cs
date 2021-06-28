@@ -10,6 +10,12 @@ using CSF.SRDashboard.Client.PageValidators;
 using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using CSF.SRDashboard.Client.Services.Document;
+using CSF.SRDashboard.Client.Utilities;
+using System;
+using DSD.MSS.Blazor.Components.Core.Models;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -31,6 +37,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public SessionState State { get; set; }
 
         [Inject]
         IJSRuntime JS { get; set; }
@@ -49,10 +57,16 @@ namespace CSF.SRDashboard.Client.Pages
 
         public string Comment { get; set; }
 
+        public int InitialDocumentCount { get; set; }
+
+        public int CurrentDocumentNum { get; set; }
+
         private string titleInfo { get; set; }
-
+        [Inject]
+        public IDocumentService DocumentService { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
-
+        public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
+        public IUploadDocumentHelper UploadService { get; set; }
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -62,37 +76,134 @@ namespace CSF.SRDashboard.Client.Pages
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
 
+            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
+            var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
+            {
+                DocumentId = x.DocumentId,
+                Language = x.Language,
+                FileName = x.FileName,
+                DocumentTypes = x.DocumentTypes,
+                Description = x.Description
+            }).ToList();
+            foreach (var Document in DocumentForm)
+            {
+                if (Document.Language.Equals("EN"))
+                {
+                    Document.Language = "English";
+                }
+                else if (Document.Language.Equals("FR"))
+                {
+                    Document.Language = "French";
+                }
+
+                Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
+            }
+
+            this.RequestModel.UploadedDocuments = DocumentForm;
+            InitialDocumentCount = documentIds.Count;
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
             StateHasChanged();
         }
 
-        public void SaveChanges()
+        public async void SaveChanges()
         {
+            if (this.RequestModel.UploadedDocuments != null)
+            {
+                this.DocumentForm = this.RequestModel.UploadedDocuments;
+            }
             var isValid = EditContext.Validate();
+
             if (!isValid)
             {
                 return;
             }
 
-            JS.InvokeAsync<string>("SetBusyCursor", null);
-
+            await JS.InvokeAsync<string>("SetBusyCursor", null);
+            if (!this.UploadService.ValidateUpload(this.DocumentForm))
+            {
+                return;
+            }
+            
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
                 Cdn = Applicant.Cdn,
-                CertificateType = Constants.CertificateTypes.Where(x => x.ID.Equals(RequestModel.CertificateType)).Single().Text,
-                RequestType = Constants.RequestTypes.Where(x => x.ID.Equals(RequestModel.RequestType)).Single().Text,
-                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.ID.Equals(RequestModel.SubmissionMethod)).Single().Text
+                CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType)).Single().Text,
+                RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
+                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
+               
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
+
+            CurrentDocumentNum = 0;
+
+            foreach (var Document in DocumentForm)
+            {
+                Document.DocumentTypes = Document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+
+                if (CurrentDocumentNum < InitialDocumentCount)
+                {
+                    Document.Language = Constants.Languages.Where(x => x.Id.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
+                    var result = await this.DocumentService.UpdateMetadataForDocument(Document.DocumentId, null, null, null, Document.Description, null, Document.Language, Document.DocumentTypes, null);
+                }
+                else
+                {
+                    var added = await this.InsertDocumentOnRequest();
+                }
+
+                CurrentDocumentNum++;
+            }
+
+            this.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
 
         }
+        private async Task<List<Document>> InsertDocumentOnRequest()
+        {
+            List<Document> addedDocuments = new List<Document>();
+            if(this.DocumentForm == null)
+            {
+                return addedDocuments;
+            }
 
+            CurrentDocumentNum = 0;
+            foreach (var document in this.DocumentForm)
+            {
+               
+                if (CurrentDocumentNum >= InitialDocumentCount)
+                {
+                    var addedDocument = await this.UploadService.UploadDocument(document);
+                    if (addedDocument != null)
+                    {
+                        WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                        { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
+                        await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                CurrentDocumentNum++;
+            }
+            return addedDocuments;
+        }
+
+
+    
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
+        }
+
+        public void Cancel()
+        {
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
 
         private RequestModel PopulateRequestmodel(int requestId, string cdn)
@@ -101,14 +212,18 @@ namespace CSF.SRDashboard.Client.Pages
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
+            if(workItem.WorkItemStatus.StatusAdditionalDetails != null)
+            {
+                requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(workItem.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
+            }
 
             if (workItem.Detail != null)
             {
                 var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
 
-                requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType)).Single().ID;
-                requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType)).Single().ID;
-                requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod)).Single().ID;
+                requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
 
             return requestModel;

@@ -9,7 +9,8 @@
     using CSF.Common.Library.Extensions.IFormFile;
     using System.Threading.Tasks;
     using CSF.SRDashboard.Client.Services.Document.Entities;
-
+    using CSF.SRDashboard.Client.DTO.DocumentStorage;
+    using CSF.SRDashboard.Client.Models;
     public class DocumentService : IDocumentService
     {
         private readonly IConfiguration configuration;
@@ -55,7 +56,7 @@
             return new List<DocumentInfo>();
         }
 
-        public async Task<List<Guid>> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<string> documentTypes, string customMetadata)
+        public async Task<DocumentInfo> InsertDocument(int correlationId, string userName, IFormFile file, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
         {
             var insertDocumentParameter = new InsertDocumentParameter()
             {
@@ -81,14 +82,52 @@
 
             try
             {
-                return await restClient.PostAsync<List<Guid>>(restClientRequestOptions);
+                return await restClient.PostAsync<DocumentInfo>(restClientRequestOptions);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return new List<Guid>();
+            return new DocumentInfo();
+        }
+
+        public async Task<DocumentInfo> UpdateMetadataForDocument(Guid documentId, string userName, string fileName, string fileContentType, string shortDescription, string submissionMethod, string fileLanguage, List<DocumentTypeDTO> documentTypes, string customMetadata)
+        {
+
+            var updateMetadataForDocumentParameter = new UpdateMetadataForDocumentParameter()
+            {
+                DocumentId = documentId,
+                UserName = userName,
+                FileName = fileName,
+                FileContentType = fileContentType,
+                Description = shortDescription,
+                SubmissionMethod = submissionMethod,
+                FileLanguage = fileLanguage,
+                DocumentTypes = documentTypes,
+                CustomMetadata = customMetadata
+            };
+
+            string path = string.Format("documents");
+
+            var restClientRequestOptions = new RestClientRequestOptions()
+            {
+                Path = path,
+                ParameterContentType = "application/json",
+                DataObject = updateMetadataForDocumentParameter,
+                ServiceName = ServiceLocatorDomain.Document
+            };
+
+            try
+            {
+                return await restClient.PutAsync<DocumentInfo>(restClientRequestOptions);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
         }
     }
 }

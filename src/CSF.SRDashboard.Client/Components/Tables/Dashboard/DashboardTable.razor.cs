@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
 using Microsoft.AspNetCore.Components;
@@ -22,5 +23,11 @@ namespace CSF.SRDashboard.Client.Components.Tables.Dashboard
         {
             NavigationManager.NavigateTo($"/SeafarerProfile/{this.Applicant.Cdn}/AddAttachment");
         }
+
+        public void RowClicked(Document document)
+        {
+            this.NavigationManager.NavigateTo($"SeafarerProfile/{this.Applicant.Cdn}/view-attachment/{document.DocumentId}");
+        }
+
     }
 }

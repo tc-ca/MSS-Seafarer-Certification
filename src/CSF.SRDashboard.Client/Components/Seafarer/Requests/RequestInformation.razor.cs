@@ -39,7 +39,7 @@ namespace CSF.SRDashboard.Client.Components.Seafarer.Requests
         public MpdisApplicantDto Applicant { get; set; }
 
         [Inject]
-        IStringLocalizer<Shared.Common> Localizer { get; set; }
+        public IStringLocalizer<Shared.Common> Localizer { get; set; }
 
         protected override void OnInitialized()
         {
