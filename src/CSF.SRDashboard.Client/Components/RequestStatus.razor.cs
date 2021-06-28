@@ -43,5 +43,10 @@ namespace CSF.SRDashboard.Client.Components
         {
             base.OnInitialized();
         }
+
+        public void ResetProcessingPhase()
+        {
+            RequestModel.ProcessingPhase = null;
+        }
     }
 }

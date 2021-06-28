@@ -165,6 +165,7 @@ namespace CSF.SRDashboard.Client.Services
                         tableItem.Certificate = detail.CertificateType;
                         tableItem.RequestType = detail.RequestType;
                         tableItem.ApplicantCDN = detail.Cdn;
+                        tableItem.ProcessingPhase = detail.ProcessingPhase;
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
@@ -197,6 +198,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
+            itemDetail.ProcessingPhase = requestModel.ProcessingPhase;
             itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
@@ -328,6 +330,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
+            itemDetail.ProcessingPhase = requestModel.ProcessingPhase;
             itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);

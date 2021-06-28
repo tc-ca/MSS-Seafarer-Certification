@@ -135,7 +135,7 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
-               
+                ProcessingPhase = FindProcessingPhase()
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
@@ -194,8 +194,34 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
+        public string FindProcessingPhase()
+        {
+            if (RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
+            {
+                return Constants.ProcessingPhaseNew.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
+            {
+                return Constants.ProcessingPhaseInProgress.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
+            {
+                return Constants.ProcessingPhasePending.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
+            {
+                return Constants.ProcessingPhaseComplete.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
+            {
+                return Constants.ProcessingPhaseCancelled.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-    
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);

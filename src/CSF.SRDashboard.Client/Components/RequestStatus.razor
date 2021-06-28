@@ -4,19 +4,19 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
+                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @onchange="ResetProcessingPhase" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
                     @foreach (var item in Constants.RequestStatuses)
-                        {
+                    {
                         @if (this.IsCurrentSelectedStatus(item))
                             {
-                            <option value="@item.Id" selected> @item.Text</option>
+                                <option value="@item.Id" selected> @item.Text</option>
                                 RequestModel.Status = @item.Id;
                             }
                             else
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <option value="@item.Id">@item.Text</option>
                             }
-                        }
+                    }
                 </FormInputSelect>
             }
             else
@@ -65,14 +65,14 @@
                     }
                     else
                     {
-                        <option value="-1">"N/A"t</option>
+                        <option value="-1">"N/A"</option>
                     }
                 </FormInputSelect>
             }
             else
             {
                 <label class="form-label"><b>@Localizer["ProcessingPhase"]</b></label>
-                <p>@Constants.RequestStatuses.Where(x => x.Id == RequestModel.Status).Select(x => x.Text).FirstOrDefault()</p>
+                <p>@RequestModel.ProcessingPhase</p>
             }
         </div>
     </div>
