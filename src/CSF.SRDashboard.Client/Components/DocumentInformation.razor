@@ -3,7 +3,7 @@
 {
     var i = index;
 
-    <div class="card mt-3">
+    <div class="card mt-5">
         <div class="card-header bg-white">
             <div class="d-flex">
                 <div class="mr-auto "><i class="fas fa-paperclip"><span class="csf-span ml-1">@this.UploadedDocuments[i].FileName</span></i></div>
@@ -31,7 +31,7 @@
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id="DocumentTypesSelect" CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id=@string.Format("MultipleSelect{0}", i)  CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
                             <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
@@ -74,8 +74,9 @@
                     {
                         <FormInputSelect Id="InputSelect" Label="@Localizer["DocumentLanguage"]" Required="required" @bind-Value="this.UploadedDocuments[i].Language" ValidationFor="@(() => this.UploadedDocuments[i].Language)" SelectLabel=@Localizer["SelectLanguage"] ShowDefaultOption="ShowDefaultOption">
                             @foreach (var item in Constants.Languages)
-                                    {
-                                <option value="@item.Id">@item.Text</option>}
+                                {
+                                    <option value="@item.Id">@item.Text</option>
+                                }
                         </FormInputSelect>
                     }
                     else

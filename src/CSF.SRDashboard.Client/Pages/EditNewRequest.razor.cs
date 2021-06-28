@@ -15,6 +15,7 @@ using CSF.SRDashboard.Client.Services.Document;
 using CSF.SRDashboard.Client.Utilities;
 using System;
 using DSD.MSS.Blazor.Components.Core.Models;
+using CSF.SRDashboard.Client.DTO.DocumentStorage;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -56,6 +57,10 @@ namespace CSF.SRDashboard.Client.Pages
 
         public string Comment { get; set; }
 
+        public int InitialDocumentCount { get; set; }
+
+        public int CurrentDocumentNum { get; set; }
+
         private string previousAssigneeId;
 
         private string titleInfo { get; set; }
@@ -74,6 +79,34 @@ namespace CSF.SRDashboard.Client.Pages
             previousAssigneeId = this.RequestModel.AssigneeId;
 
             this.EditContext = new EditContext(RequestModel);
+            this.UploadService = new UploadDocumentHelper(this.DocumentService);
+
+            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
+            var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
+            this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
+            {
+                DocumentId = x.DocumentId,
+                Language = x.Language,
+                FileName = x.FileName,
+                DocumentTypes = x.DocumentTypes,
+                Description = x.Description
+            }).ToList();
+            foreach (var Document in DocumentForm)
+            {
+                if (Document.Language.Equals("EN"))
+                {
+                    Document.Language = "English";
+                }
+                else if (Document.Language.Equals("FR"))
+                {
+                    Document.Language = "French";
+                }
+
+                Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
+            }
+
+            this.RequestModel.UploadedDocuments = DocumentForm;
+            InitialDocumentCount = documentIds.Count;
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
             StateHasChanged();
         }
@@ -96,8 +129,7 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return;
             }
-
-            var added = await this.InsertDocumentOnRequest();
+            
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
@@ -111,14 +143,31 @@ namespace CSF.SRDashboard.Client.Pages
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
 
-            //Work load management service does not support updating an assignment within a work item through work item itself.
-            // we have to update the Assignment seperately.
-            if(previousAssigneeId != this.RequestModel.AssigneeId)
+            CurrentDocumentNum = 0;
+
+            foreach (var Document in DocumentForm)
+            {
+                Document.DocumentTypes = Document.DocumentTypeList.Where(x => x.Value).Select(d => new DocumentTypeDTO { Id = d.Id, Description = d.Text }).ToList();
+
+                if (CurrentDocumentNum < InitialDocumentCount)
+                {
+                    Document.Language = Constants.Languages.Where(x => x.Id.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Text;
+                    var result = await this.DocumentService.UpdateMetadataForDocument(Document.DocumentId, null, null, null, Document.Description, null, Document.Language, Document.DocumentTypes, null);
+                }
+                else
+                {
+                    var added = await this.InsertDocumentOnRequest();
+                }
+
+                CurrentDocumentNum++;
+            }
+
+            if (previousAssigneeId != this.RequestModel.AssigneeId)
             {
                 var new_assignment_toPost = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
 
                 // when blank option is selected, we need to delete the old assignee from the work request
-                if(RequestModel.AssigneeId == Constants.NotSelected)
+                if (RequestModel.AssigneeId == Constants.NotSelected)
                 {
                     var workItemId = RequestModel.RequestID;
                     var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
@@ -136,6 +185,8 @@ namespace CSF.SRDashboard.Client.Pages
                     WorkLoadService.DeleteOrPost(new_assignment_toPost, false);
                 }
             }
+
+            this.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
 
         }
@@ -146,23 +197,31 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return addedDocuments;
             }
+
+            CurrentDocumentNum = 0;
             foreach (var document in this.DocumentForm)
             {
-
-                var addedDocument = await this.UploadService.UploadDocument(document);
-                if (addedDocument != null)
+               
+                if (CurrentDocumentNum >= InitialDocumentCount)
                 {
-                    WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
-                    { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
-                    await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    var addedDocument = await this.UploadService.UploadDocument(document);
+                    if (addedDocument != null)
+                    {
+                        WorkItemAttachmentDTO workItemAttachmentDTO = new WorkItemAttachmentDTO()
+                        { DocumentId = addedDocument.DocumentId, WorkItemId = this.EditRequestId };
+                        await this.WorkLoadService.AddWorkItemAttachment(workItemAttachmentDTO);
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
-                {
-                    return null;
-                }
+                CurrentDocumentNum++;
             }
             return addedDocuments;
         }
+
+
     
         public void ViewProfile()
         {
@@ -171,7 +230,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Cancel()
         {
-            // Go to Seafarer profile and show message
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
 

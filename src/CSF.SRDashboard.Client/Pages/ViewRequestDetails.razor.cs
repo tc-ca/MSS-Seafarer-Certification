@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.DTO;
+﻿using CSF.Common.Library.Azure;
+using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.Services;
@@ -36,6 +37,9 @@ namespace CSF.SRDashboard.Client.Pages
         public IGatewayService GatewayService { get; set; }
 
         [Inject]
+        public IAzureBlobService AzureBlobService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         public MpdisApplicantDto Applicant { get; set; }
@@ -43,6 +47,7 @@ namespace CSF.SRDashboard.Client.Pages
         public WorkItemDTO WorkItemDTO { get; set; }
 
         public RequestModel RequestModel { get; set; }
+
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
 
 
@@ -56,18 +61,20 @@ namespace CSF.SRDashboard.Client.Pages
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
 
-            RequestModel = new RequestModel();
-            RequestModel.RequestID = WorkItemDTO.Id;
-            if (WorkItemDTO.Detail != null)
-            {
-                var detail = JsonSerializer.Deserialize<WorkItemDetail>(WorkItemDTO.Detail);
-                RequestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
-                RequestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
-                RequestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
-            }           
-            RequestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
-            RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
 
+
+
+            RequestModel = new RequestModel
+            {
+                RequestID = WorkItemDTO.Id,
+                CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id,
+                RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id,
+                SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id,
+                Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id
+
+            };
+
+            RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
             this.EditContext = new EditContext(RequestModel);
 
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
@@ -80,8 +87,10 @@ namespace CSF.SRDashboard.Client.Pages
                     Language = docFromDB.Language,
                     FileName = docFromDB.FileName,
                     DocumentTypes = docFromDB.DocumentTypes,
-                    Description = docFromDB.Description
+                    Description = docFromDB.Description, 
+                    DownloadLink = await this.AzureBlobService.GetDownloadLinkAsync("documents", docFromDB.DocumentUrl, DateTime.UtcNow.AddHours(8))
                 };
+
                 if (docFromDB.DocumentTypes != null && docFromDB.DocumentTypes.Any())
                 {
                     // To ensure we only show the types if we have them
@@ -94,6 +103,7 @@ namespace CSF.SRDashboard.Client.Pages
                         }
                     }
                 }
+
                 this.UploadedDocuments.Add(uploadLoaded);
             }
 
@@ -107,7 +117,6 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void Cancel()
         {
-            // Go to Seafarer profile and show message
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
     }

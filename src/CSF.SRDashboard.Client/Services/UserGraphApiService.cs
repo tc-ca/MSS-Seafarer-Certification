@@ -1,4 +1,5 @@
-﻿using CSF.SRDashboard.Client.DTO.Azure;
+﻿using CSF.SRDashboard.Client.Graph;
+using CSF.SRDashboard.Client.DTO.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Identity.Web;
@@ -7,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services
 {
@@ -92,7 +92,7 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         /// <summary>
-        /// Acquires a valid token for calling Graph API. If token is invalid, instruct <see cref="consentHandler"/></cref> to refresh it.
+        /// Acquires a valid token for calling Graph API. If token is invalid, instruct <see cref="consentHandler"/> to refresh it.
         /// See https://github.com/AzureAD/microsoft-identity-web/wiki/Managing-incremental-consent-and-conditional-access.
         /// </summary>
         /// <returns></returns>
@@ -100,7 +100,7 @@ namespace CSF.SRDashboard.Client.Services
         {
             try
             {
-                var token = this.tockenAcquisition.GetAccessTokenForUserAsync(new string[] { "User.Read" }).GetAwaiter().GetResult();
+                var token = this.tockenAcquisition.GetAccessTokenForUserAsync(GraphConstants.Scopes).GetAwaiter().GetResult();
                 this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             }
             catch (Exception ex)

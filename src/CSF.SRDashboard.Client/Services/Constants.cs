@@ -32,11 +32,11 @@ namespace CSF.SRDashboard.Client.Services
         };
 
         public static List<SelectListItem> DocumentTypeList = new List<SelectListItem> {
-        new SelectListItem{ Id = "1",Text = "MME Exam Report" },
-        new SelectListItem{ Id = "2",Text = "Medical Report" },
-        new SelectListItem{ Id = "3",Text = "Letter" },
-        new SelectListItem{ Id = "4",Text = "Certificate" },
-        new SelectListItem{ Id = "5",Text = "Other" }
+            new SelectListItem{ Id = "1",Text = "MME Exam Report" },
+            new SelectListItem{ Id = "2",Text = "Medical Report" },
+            new SelectListItem{ Id = "3",Text = "Letter" },
+            new SelectListItem{ Id = "4",Text = "Certificate" },
+            new SelectListItem{ Id = "5",Text = "Other" }
         };
 
         public static List<SelectListItem> SubmissionMethods = new List<SelectListItem> {
