@@ -1,76 +1,19 @@
-﻿
-@using DTO.Azure
-@using Client.Models
-
-
-<EditForm EditContext="@EditContext">
-    <div class="row">
-        <div style="padding-left:15px">
-            @if (!this.IsReadOnly)
-            {
-                <FormInputSelect Label="@Localizer["AssignedTo"]" @bind-Value="RequestModel.AssigneeId" ValidationFor="@(() => RequestModel.AssigneeId)" ShowDefaultOption="false">
-                    @foreach (var member in mme_members)
-                        {
-                        <option value="@member.id"> @member.Names</option>
-                        }
-                </FormInputSelect>
-            }
-            else
-            {
-                <label class="form-label mr-1"><b>@Localizer["AssignedTo"]:</b></label>
-                @if (previouslySelectedMME != null)
-                {
-                    <label>@previouslySelectedMME.Names</label>
-                }
-                else
-                {
-                    <label>@Localizer["Unassigned"]</label>
-                }
-            }
-        </div>
-    </div>
-</EditForm>
-
-
-
-@code
+﻿@if (!this.IsReadOnly)
 {
-    [Parameter]
-    public EditContext EditContext
-    {
-        get => editContext; set
-        {
-            if (editContext == value) return;
-            this.editContext = value;
-        }
-    }
-
-    private EditContext editContext;
-    private List<AzureMemberInfo> mme_members;
-
-    [Parameter]
-    public RequestModel RequestModel { get; set; }
-
-    [Parameter]
-    public bool IsReadOnly { get; set; }
-
-    [Inject]
-    protected IUserGraphApiService graphService { get; set; }
-
-    [Inject]
-    IStringLocalizer<Shared.Common> Localizer { get; set; }
-
-    private AzureMemberInfo previouslySelectedMME;
-
-    protected override void OnInitialized()
-    {
-        mme_members = graphService.GetMmeGroupMembers();
-
-        previouslySelectedMME = mme_members.Where(x => x.id == RequestModel.AssigneeId).FirstOrDefault();
-
-        if (RequestModel.AssigneeId != null)
-        {
-            previouslySelectedMME = graphService.GetUserByUserId(RequestModel.AssigneeId);
-        }
-    }
+    <EditForm EditContext="@EditContext">
+        <div class="d-flex">
+            <label class="mr-2 pt-2"><b>@Localizer["AssignedTo"]</b></label>
+            <FormInputSelect @bind-Value="RequestModel.AssigneeId" ValidationFor="@(() => RequestModel.AssigneeId)" ShowDefaultOption="false">
+                @foreach (var member in mme_members)
+                {
+                    <option value="@member.id"> @member.Names</option>
+                }
+            </FormInputSelect>
+        </div>
+    </EditForm>
+}
+else
+{
+    <label class="form-label mr-1"><b>@Localizer["AssignedTo"]:</b></label>
+    <label>@this.GetCurrentlySelectedMME</label>
 }
