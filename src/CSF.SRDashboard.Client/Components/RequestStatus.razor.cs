@@ -39,6 +39,9 @@ namespace CSF.SRDashboard.Client.Components
         [Inject]
         IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        [Inject]
+        IStringLocalizer<RequestStatus> Localizer2 { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();

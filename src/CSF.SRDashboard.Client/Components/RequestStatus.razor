@@ -27,40 +27,40 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Label="@Localizer["ProcessingPhase"]" Id="RequestStatus" ShowDefaultOption="true" SelectLabel="@Localizer["DefaultProcessingPhaseSelect"]" @bind-Value="@RequestModel.ProcessingPhase" ValidationFor="@(() => RequestModel.ProcessingPhase)" Required="true">
+                <FormInputSelect Label="@Localizer["ProcessingPhase"]" Id="ProcessingPhase" ShowDefaultOption="true" SelectLabel="@Localizer["DefaultProcessingPhaseSelect"]" @bind-Value="@RequestModel.ProcessingPhase" ValidationFor="@(() => RequestModel.ProcessingPhase)" Required="true">
                     @if (RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseNew)
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <option value="@item.Id">@Localizer2[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseInProgress)
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <option value="@item.Id">@Localizer2[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhasePending)
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <option value="@item.Id">@Localizer2[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseComplete)
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <option value="@item.Id">@Localizer2[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseCancelled)
                             {
-                            <option value="@item.Id">@item.Text</option>
+                                <option value="@item.Id">@Localizer2[item.Text]</option>
                             }
                     }
                     else

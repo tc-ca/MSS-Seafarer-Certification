@@ -194,34 +194,6 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-        public string FindProcessingPhase()
-        {
-            if (RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
-            {
-                return Constants.ProcessingPhaseNew.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
-            {
-                return Constants.ProcessingPhaseInProgress.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
-            {
-                return Constants.ProcessingPhasePending.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
-            {
-                return Constants.ProcessingPhaseComplete.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
-            {
-                return Constants.ProcessingPhaseCancelled.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
@@ -250,9 +222,69 @@ namespace CSF.SRDashboard.Client.Pages
                 requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                if (detail.ProcessingPhase != null)
+                {
+                    requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
+                }
             }
 
             return requestModel;
+        }
+
+        public string FindProcessingPhase()
+        {
+            if (RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
+            {
+                return Constants.ProcessingPhaseNew.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
+            {
+                return Constants.ProcessingPhaseInProgress.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
+            {
+                return Constants.ProcessingPhasePending.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
+            {
+                return Constants.ProcessingPhaseComplete.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
+            {
+                return Constants.ProcessingPhaseCancelled.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string GetProcessingPhase(RequestModel requestModel, String ProcessingPhase)
+        {
+            if (requestModel.Status.Equals(Constants.RequestStatuses[0].Id))
+            {
+                return Constants.ProcessingPhaseNew.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[1].Id))
+            {
+                return Constants.ProcessingPhaseInProgress.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[2].Id))
+            {
+                return Constants.ProcessingPhasePending.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[3].Id))
+            {
+                return Constants.ProcessingPhaseComplete.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[4].Id))
+            {
+                return Constants.ProcessingPhaseCancelled.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
