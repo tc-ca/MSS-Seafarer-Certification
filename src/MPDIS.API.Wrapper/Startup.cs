@@ -1,18 +1,12 @@
+using CSF.APIM.Gateway.Middleware;
 using CSF.Common.Library;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MPDIS.API.Wrapper.Services.MPDIS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MPDIS.API.Wrapper
 {
@@ -54,6 +48,9 @@ namespace MPDIS.API.Wrapper
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // custom middleware
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
