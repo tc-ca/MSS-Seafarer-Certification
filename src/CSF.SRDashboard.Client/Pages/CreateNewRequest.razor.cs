@@ -141,6 +141,9 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
+        /// <summary>
+        /// Gets Processing Phase text from table Processing Phase id
+        /// </summary>
         public string FindProcessingPhase()
         {
             if(RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))

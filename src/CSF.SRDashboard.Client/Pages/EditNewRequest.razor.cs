@@ -231,6 +231,9 @@ namespace CSF.SRDashboard.Client.Pages
             return requestModel;
         }
 
+        /// <summary>
+        /// Gets Processing Phase text from table Processing Phase id
+        /// </summary>
         public string FindProcessingPhase()
         {
             if (RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
@@ -259,6 +262,9 @@ namespace CSF.SRDashboard.Client.Pages
             }
         }
 
+        /// <summary>
+        /// Gets Processing Phase id from table Processing Phase text
+        /// </summary>
         public string GetProcessingPhase(RequestModel requestModel, String ProcessingPhase)
         {
             if (requestModel.Status.Equals(Constants.RequestStatuses[0].Id))
