@@ -18,6 +18,8 @@ using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Core.Models;
 
 using System;
+using CSF.SRDashboard.Client.Components;
+using CSF.SRDashboard.Client.Services.WorkloadRequest;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -103,13 +105,16 @@ namespace CSF.SRDashboard.Client.Pages
                 return;
             }
 
+            ProcessingPhaseUtility processingPhaseUtility = new ProcessingPhaseUtility();
+
             var RequestToSend = new RequestModel
             {
                 Cdn = Applicant.Cdn,
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,
-                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text
+                Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
+                ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel)
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
@@ -140,7 +145,6 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-       
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
