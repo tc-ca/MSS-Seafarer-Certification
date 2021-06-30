@@ -18,6 +18,8 @@ using CSF.SRDashboard.Client.Utilities;
 using DSD.MSS.Blazor.Components.Core.Models;
 
 using System;
+using CSF.SRDashboard.Client.Components;
+using CSF.SRDashboard.Client.Services.WorkloadRequest;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -103,6 +105,8 @@ namespace CSF.SRDashboard.Client.Pages
                 return;
             }
 
+            ConvertIdToText convertIdToText = new ConvertIdToText();
+
             var RequestToSend = new RequestModel
             {
                 Cdn = Applicant.Cdn,
@@ -110,7 +114,7 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
-                ProcessingPhase = FindProcessingPhase()
+                ProcessingPhase = convertIdToText.FindProcessingPhase(RequestModel)
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
@@ -139,37 +143,6 @@ namespace CSF.SRDashboard.Client.Pages
                 }
             }
             return addedDocuments;
-        }
-
-        /// <summary>
-        /// Gets Processing Phase text from table Processing Phase id
-        /// </summary>
-        public string FindProcessingPhase()
-        {
-            if(RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
-            {
-                return Constants.ProcessingPhaseNew.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
-            {
-                return Constants.ProcessingPhaseInProgress.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
-            {
-                return Constants.ProcessingPhasePending.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
-            {
-                return Constants.ProcessingPhaseComplete.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
-            {
-                return Constants.ProcessingPhaseCancelled.Where(x => x.Id.Equals(RequestModel.ProcessingPhase)).Single().Text;
-            }
-            else
-            {
-               return null;
-            }
         }
 
         public void ViewProfile()

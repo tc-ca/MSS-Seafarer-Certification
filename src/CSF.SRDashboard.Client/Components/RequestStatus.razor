@@ -32,35 +32,35 @@
                     {
                         @foreach (var item in Constants.ProcessingPhaseNew)
                             {
-                                <option value="@item.Id">@Localizer2[item.Text]</option>
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseInProgress)
                             {
-                                <option value="@item.Id">@Localizer2[item.Text]</option>
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhasePending)
                             {
-                                <option value="@item.Id">@Localizer2[item.Text]</option>
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseComplete)
                             {
-                                <option value="@item.Id">@Localizer2[item.Text]</option>
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
                             }
                     }
                     else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
                     {
                         @foreach (var item in Constants.ProcessingPhaseCancelled)
                             {
-                                <option value="@item.Id">@Localizer2[item.Text]</option>
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
                             }
                     }
                 </FormInputSelect>
@@ -68,7 +68,7 @@
             else
             {
                 <label class="form-label"><b>@Localizer["ProcessingPhase"]</b></label>
-                <p>@Localizer2[RequestModel.ProcessingPhase]</p>
+                <p>@RequestStatusLocalizer[RequestModel.ProcessingPhase]</p>
             }
         </div>
     </div>
