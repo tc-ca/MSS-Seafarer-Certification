@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services.WorkloadRequest
 {
-    public class ConvertIdToText
+    public class ProcessingPhaseUtility
     {
         /// <summary>
         /// Gets Processing Phase text from table Processing Phase id
         /// </summary>
-        public string FindProcessingPhase(RequestModel requestModel)
+        public string FindProcessingPhaseById(RequestModel requestModel)
         {
             if (requestModel.Status.Equals(Constants.RequestStatuses[0].Id))
             {

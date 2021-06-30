@@ -128,7 +128,7 @@ namespace CSF.SRDashboard.Client.Pages
                 return;
             }
 
-            ConvertIdToText convertIdToText = new ConvertIdToText();
+            ProcessingPhaseUtility processingPhaseUtility = new ProcessingPhaseUtility();
 
             var RequestToSend = new RequestModel
             {
@@ -138,7 +138,7 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
-                ProcessingPhase = convertIdToText.FindProcessingPhase(RequestModel)
+                ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel)
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
