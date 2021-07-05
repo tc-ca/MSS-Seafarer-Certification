@@ -193,15 +193,15 @@
 
         private void SetAssigneeNames(List<WorkloadRequestTableItem> tableItems)
         {
-            var mmeMembers = graphApiService.GetMarineMedicalStaffMembers();
+            var staffMembers = graphApiService.GetMarineMedicalStaffMembers();
             foreach(var item in this.TableItems)
             {
                 if(item.AssigneeId != null)
                 {
-                    var mmeFound = mmeMembers.Where(x => x.id == item.AssigneeId).FirstOrDefault();
-                    if(mmeFound != null)
+                    var staffMemberFound = staffMembers.Where(x => x.id == item.AssigneeId).FirstOrDefault();
+                    if(staffMemberFound != null)
                     {
-                        item.AssignedTo = mmeFound.Names;
+                        item.AssignedTo = staffMemberFound.Names;
                     }
                 }
             }

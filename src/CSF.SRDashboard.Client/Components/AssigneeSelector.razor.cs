@@ -36,7 +36,7 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public bool IsReadOnly { get; set; }
 
-        public string GetCurrentlySelectedMME => previouslySelectedStaff != null ? this.previouslySelectedStaff.Names : Localizer["Unassigned"];
+        public string GetCurrentlySelectedStaff => previouslySelectedStaff != null ? this.previouslySelectedStaff.Names : Localizer["Unassigned"];
 
         private AzureMemberInfo previouslySelectedStaff;
 
