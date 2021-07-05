@@ -360,6 +360,9 @@
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment</value>
   </data>
+  <data name="DefaultProcessingPhaseSelect" xml:space="preserve">
+    <value>Select Processing Phase</value>
+  </data>
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned</value>
   </data>

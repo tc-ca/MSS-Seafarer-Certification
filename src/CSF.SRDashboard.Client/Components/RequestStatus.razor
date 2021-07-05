@@ -3,28 +3,74 @@
         <div class="col-12 d-grid gap-3 mt-2">
         @*<div class="col-12 d-grid mt-2">*@
 
-                @if (!this.IsReadOnly)
-                {
-                    <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
-                        @foreach (var item in Constants.RequestStatuses)
+            @if (!this.IsReadOnly)
+            {
+                <FormInputSelect Label="@Localizer["Status"]" Id="RequestStatus" ShowDefaultOption="ShowDefaultOption" @onchange="ResetProcessingPhase" @bind-Value="@RequestModel.Status" ValidationFor="@(() => RequestModel.Status)" Required="true">
+                    @foreach (var item in Constants.RequestStatuses)
+                    {
+                        @if (this.IsCurrentSelectedStatus(item))
                             {
-                            @if (this.IsCurrentSelectedStatus(item))
-                                {
                                 <option value="@item.Id" selected> @item.Text</option>
-                                    RequestModel.Status = @item.Id;
-                                }
-                                else
-                                {
-                                <option value="@item.Id">@item.Text</option>
-                                }
+                                RequestModel.Status = @item.Id;
                             }
-                    </FormInputSelect>
-                }
-                else
-                {
-                    <label class="form-label"><b>@Localizer["Status"]</b></label>
-                    <p>@Constants.RequestStatuses.Where(x => x.Id == RequestModel.Status).Select(x => x.Text).FirstOrDefault()</p>
-                }
-            </div>
+                            else
+                            {
+                                <option value="@item.Id">@item.Text</option>
+                            }
+                    }
+                </FormInputSelect>
+            }
+            else
+            {
+                <label class="form-label"><b>@Localizer["Status"]</b></label>
+                <p>@Constants.RequestStatuses.Where(x => x.Id == RequestModel.Status).Select(x => x.Text).FirstOrDefault()</p>
+            }
+
+            @if (!this.IsReadOnly)
+            {
+                <FormInputSelect Label="@Localizer["ProcessingPhase"]" Id="ProcessingPhase" ShowDefaultOption="true" SelectLabel="@Localizer["DefaultProcessingPhaseSelect"]" @bind-Value="@RequestModel.ProcessingPhase" ValidationFor="@(() => RequestModel.ProcessingPhase)" Required="true">
+                    @if (RequestModel.Status.Equals(Constants.RequestStatuses[0].Id))
+                    {
+                        @foreach (var item in Constants.ProcessingPhaseNew)
+                            {
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
+                            }
+                    }
+                    else if (RequestModel.Status.Equals(Constants.RequestStatuses[1].Id))
+                    {
+                        @foreach (var item in Constants.ProcessingPhaseInProgress)
+                            {
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
+                            }
+                    }
+                    else if (RequestModel.Status.Equals(Constants.RequestStatuses[2].Id))
+                    {
+                        @foreach (var item in Constants.ProcessingPhasePending)
+                            {
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
+                            }
+                    }
+                    else if (RequestModel.Status.Equals(Constants.RequestStatuses[3].Id))
+                    {
+                        @foreach (var item in Constants.ProcessingPhaseComplete)
+                            {
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
+                            }
+                    }
+                    else if (RequestModel.Status.Equals(Constants.RequestStatuses[4].Id))
+                    {
+                        @foreach (var item in Constants.ProcessingPhaseCancelled)
+                            {
+                                <option value="@item.Id">@RequestStatusLocalizer[item.Text]</option>
+                            }
+                    }
+                </FormInputSelect>
+            }
+            else
+            {
+                <label class="form-label"><b>@Localizer["ProcessingPhase"]</b></label>
+                <p>@RequestStatusLocalizer[RequestModel.ProcessingPhase]</p>
+            }
         </div>
+    </div>
 </EditForm>

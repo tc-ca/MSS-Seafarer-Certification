@@ -354,6 +354,9 @@
   <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment_fr</value>
   </data>
+  <data name="DefaultProcessingPhaseSelect" xml:space="preserve">
+    <value>Select Processing Phase_fr</value>
+  </data>
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned_fr</value>
   </data>
