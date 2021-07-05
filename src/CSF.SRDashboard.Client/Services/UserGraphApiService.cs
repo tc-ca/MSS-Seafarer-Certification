@@ -111,8 +111,12 @@ namespace CSF.SRDashboard.Client.Services
         }
 
 
-        //TODO: clean up
-        public List<AzureMemberInfo> GetMmeGroupMembers()
+        /// <summary>
+        /// Following method gets a list of Marine Medical Staff members from
+        /// the Azure group CSF Marine Medical Users
+        /// </summary>
+        /// <returns>a list of AzureMemberInfo</returns>
+        public List<AzureMemberInfo> GetMarineMedicalStaffMembers()
         {
             List<AzureMemberInfo> groupMembers = new List<AzureMemberInfo>();
 

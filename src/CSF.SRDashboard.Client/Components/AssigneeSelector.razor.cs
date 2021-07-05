@@ -28,7 +28,7 @@ namespace CSF.SRDashboard.Client.Components
         }
 
         private EditContext editContext;
-        private List<AzureMemberInfo> mme_members;
+        private List<AzureMemberInfo> staff_members;
 
         [Parameter]
         public RequestModel RequestModel { get; set; }
@@ -36,19 +36,19 @@ namespace CSF.SRDashboard.Client.Components
         [Parameter]
         public bool IsReadOnly { get; set; }
 
-        public string GetCurrentlySelectedMME => previouslySelectedMME != null ? this.previouslySelectedMME.Names : Localizer["Unassigned"];
+        public string GetCurrentlySelectedMME => previouslySelectedStaff != null ? this.previouslySelectedStaff.Names : Localizer["Unassigned"];
 
-        private AzureMemberInfo previouslySelectedMME;
+        private AzureMemberInfo previouslySelectedStaff;
 
         protected override void OnInitialized()
         {
-            mme_members = graphService.GetMmeGroupMembers();
+            staff_members = graphService.GetMarineMedicalStaffMembers();
 
-            previouslySelectedMME = mme_members.Where(x => x.id == RequestModel.AssigneeId).FirstOrDefault();
+            previouslySelectedStaff = staff_members.Where(x => x.id == RequestModel.AssigneeId).FirstOrDefault();
 
             if (RequestModel.AssigneeId != null)
             {
-                previouslySelectedMME = graphService.GetUserByUserId(RequestModel.AssigneeId);
+                previouslySelectedStaff = graphService.GetUserByUserId(RequestModel.AssigneeId);
             }
         }
     }

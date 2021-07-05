@@ -4,7 +4,7 @@
         <div class="d-flex">
             <label class="mr-2 pt-2"><b>@Localizer["AssignedTo"]</b></label>
             <FormInputSelect @bind-Value="RequestModel.AssigneeId" ValidationFor="@(() => RequestModel.AssigneeId)" ShowDefaultOption="false">
-                @foreach (var member in mme_members)
+                @foreach (var member in staff_members)
                 {
                     <option value="@member.id"> @member.Names</option>
                 }

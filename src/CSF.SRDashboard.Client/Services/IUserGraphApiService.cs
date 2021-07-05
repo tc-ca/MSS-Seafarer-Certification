@@ -9,7 +9,7 @@ namespace CSF.SRDashboard.Client.Services
     {
         public string GetUserDisplayName();
         public string GetUserPhotoData();
-        List<AzureMemberInfo> GetMmeGroupMembers();
+        List<AzureMemberInfo> GetMarineMedicalStaffMembers();
         AzureMemberInfo GetUserByUserId(string Id);
     }
 }

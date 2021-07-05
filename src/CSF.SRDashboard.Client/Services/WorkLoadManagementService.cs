@@ -278,8 +278,6 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
 
             //Assignment 
-            //NOTE: Current implementation of Work load management service does not support updating 
-            // this needs to be brought up to them. Instead use the this.UpdateAssignment(WorkItemAssignmentDTO assignment, bool isToDelete)
             workItem.WorkItemAssignment = this.GetAssignmentFromRequestModel(requestModel);
 
             // WorkItemStatuses
