@@ -16,6 +16,7 @@ using CSF.SRDashboard.Client.Utilities;
 using System;
 using DSD.MSS.Blazor.Components.Core.Models;
 using CSF.SRDashboard.Client.DTO.DocumentStorage;
+using CSF.SRDashboard.Client.Services.WorkloadRequest;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -126,7 +127,9 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return;
             }
-            
+
+            ProcessingPhaseUtility processingPhaseUtility = new ProcessingPhaseUtility();
+
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
@@ -135,7 +138,7 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
-               
+                ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel)
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
@@ -194,8 +197,6 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-
-    
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
@@ -224,9 +225,46 @@ namespace CSF.SRDashboard.Client.Pages
                 requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                if (detail.ProcessingPhase != null)
+                {
+                    requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
+                }
             }
 
             return requestModel;
+        }
+
+       
+
+        /// <summary>
+        /// Gets Processing Phase id from table Processing Phase text
+        /// </summary>
+        public string GetProcessingPhase(RequestModel requestModel, String ProcessingPhase)
+        {
+            if (requestModel.Status.Equals(Constants.RequestStatuses[0].Id))
+            {
+                return Constants.ProcessingPhaseNew.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[1].Id))
+            {
+                return Constants.ProcessingPhaseInProgress.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[2].Id))
+            {
+                return Constants.ProcessingPhasePending.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[3].Id))
+            {
+                return Constants.ProcessingPhaseComplete.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[4].Id))
+            {
+                return Constants.ProcessingPhaseCancelled.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

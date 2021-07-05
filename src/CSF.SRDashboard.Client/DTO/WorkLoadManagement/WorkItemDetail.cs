@@ -21,6 +21,8 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string SubmissionMethod { get; set; }
         [JsonPropertyName("Status")]
         public List<StatusHistory> Status { get; set; }
+        [JsonPropertyName("ProcessingPhase")]
+        public string ProcessingPhase { get; set; }
         [JsonPropertyName("HasAttachments")]
         public bool HasAttachments { get; set; }
         [JsonPropertyName("Comments")]
