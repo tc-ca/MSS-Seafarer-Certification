@@ -10,6 +10,7 @@ using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Pages
@@ -60,6 +61,9 @@ namespace CSF.SRDashboard.Client.Pages
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
 
+
+
+
             RequestModel = new RequestModel
             {
                 RequestID = WorkItemDTO.Id,
@@ -70,6 +74,7 @@ namespace CSF.SRDashboard.Client.Pages
                 ProcessingPhase = WorkItemDTO.ItemDetail.ProcessingPhase
             };
 
+            RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
             this.EditContext = new EditContext(RequestModel);
 
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
