@@ -167,7 +167,7 @@ namespace CSF.SRDashboard.Client.Services
                         tableItem.ApplicantCDN = detail.Cdn;
                         tableItem.ProcessingPhase = detail.ProcessingPhase;
                     }
-             
+
                     tableItem.RequestId = workItem.Id.ToString();
 
                     tableItem.RequestDate = workItem.CreatedDateUTC?.DateTime;
@@ -178,21 +178,22 @@ namespace CSF.SRDashboard.Client.Services
                     tableItems.Add(tableItem);
                 }
             }
-                return tableItems;
-            }
-        
+            return tableItems;
+        }
 
-        
+
+
         public WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
             var Cdn = requestModel.Cdn;
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
-            
+
             // -- Contact
             var contact = this.GetContacInfoDtoFromApplicant(applicantInfo, true, null);
 
             //-- Detail
             WorkItemDetail itemDetail = new WorkItemDetail();
+
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
@@ -201,10 +202,24 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.ProcessingPhase = requestModel.ProcessingPhase;
             itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
+            // Status history
+            List<StatusHistoryItem> statusHistory = new List<StatusHistoryItem>()
+            {
+                new StatusHistoryItem()
+                {
+                    RequestStatusTime = DateTime.UtcNow,
+                    StatusText = requestModel.Status,
+                    AssignedTo =  string.IsNullOrEmpty(requestModel.AssignedTo)? "Not assigned": requestModel.AssignedTo,
+                    Id = "1",
+                    ProcessingPhase = requestModel.ProcessingPhase
+                }
+            };
+
+            itemDetail.Status = statusHistory;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
-            WorkItemDTO workItem = new WorkItemDTO();
-            workItem.InitialDetailJson = itemDetailString;
+        WorkItemDTO workItem = new WorkItemDTO();
+        workItem.InitialDetailJson = itemDetailString;
             workItem.Detail = itemDetailString;
 
             workItem.ApplicantContact = contact;
@@ -216,129 +231,148 @@ namespace CSF.SRDashboard.Client.Services
             workItem.LineOfBusinessId = Constants.MarineMedical;
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
+        workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;
         }
-        public async Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO)
+    public async Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO)
+    {
+        string requestPath = "/api/v1/workitem-attachments";
+        try
         {
-            string requestPath = "/api/v1/workitem-attachments";
-            try
-            {
-                return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
-            }
-            return new WorkItemAttachmentDTO();
+            return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
         }
-        public List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId)
+        catch (Exception ex)
         {
-            string requestPath = $"/api/v1/workitem-attachments/{workitemId}/attachments";
-            try
-            {   
-                 return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
-            }
-            catch(Exception ex)
-            {
-                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
-            }
-            return new List<WorkItemAttachmentDTO>();
+            this.logger.LogError(ex.Message + "\n" + ex.InnerException);
         }
-        public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
-        {
-            int requestId = Convert.ToInt32(requestModel.RequestID);
-            var existingWorkItem = this.GetByWorkItemById(requestId);
-
-            var cdn = requestModel.Cdn;
-            var applicantInfo = gatewayService.GetApplicantInfoByCdn(cdn);
-
-            var contact = this.GetContacInfoDtoFromApplicant(applicantInfo, false, existingWorkItem);
-            var itemDetailString = this.GetItemDetailFromRequestModel(requestModel);
-
-            WorkItemDTO workItem = new WorkItemDTO();
-            workItem.Id = requestModel.RequestID ;
-            workItem.InitialDetailJson = itemDetailString;
-            workItem.Detail = itemDetailString;
-            workItem.ApplicantContact = contact;
-            workItem.CreatedDateUTC = existingWorkItem.CreatedDateUTC;
-            workItem.ReceivedDateUTC = existingWorkItem.ReceivedDateUTC;
-            workItem.LastUpdatedDateUTC = DateTime.UtcNow;
-            workItem.SameApplicantSubmitterInd = true;
-            workItem.LineOfBusinessId = Constants.MarineMedical;
-            // WorkItemStatuses
-            workItem.WorkItemStatus = new WorkItemStatusDTO();
-            workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
-            workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
-            AddWorkItemStatus(workItem.WorkItemStatus);
-            var uploadedWorkItem = this.UpdateWorkitem(workItem);
-
-            return uploadedWorkItem;
-        }
-
-        public WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status)
-        {
-            WorkItemStatusDTO updatedStatus = null;
-            string requestPath = $"api/v1/workitems/statuses";
-            try
-            {
-                updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
-            }
-
-            return updatedStatus;
-        }
-        private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
-        {
-            ContactInformationDTO contact = new ContactInformationDTO();
-            if (isNewContact)
-            {
-                contact.Id = Guid.NewGuid().ToString();
-            }
-            else
-            {
-                contact.Id = exitingWorkItem.ApplicantContact.Id;
-
-                var t = applicant.Id;
-                var to = applicant.ContactId;
-            }
-
-            contact.Name = applicant.FullName;
-            contact.AddressLine1 = applicant.HomeAddress;
-            contact.City = applicant.HomeAddressCity;
-            contact.Province = applicant.HomeAddressProvince;
-            contact.Country = applicant.HomeAddressCountry;
-            contact.PostalCode = applicant.HomeAddressPostalCode;
-            contact.Phone = applicant.PhoneNumber;
-            contact.Email = applicant.Email;
-            contact.PrimaryContactInd = true;
-            contact.ContactUniqueId = applicant.Cdn;
-
-            return contact;
-        }
-
-        private string GetItemDetailFromRequestModel(RequestModel requestModel)
-        {
-            WorkItemDetail itemDetail = new WorkItemDetail();
-            itemDetail.RequestType = requestModel.RequestType;
-            itemDetail.CertificateType = requestModel.CertificateType;
-            itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
-            itemDetail.ApplicantName = requestModel.ApplicantFullName;
-            itemDetail.Cdn = requestModel.Cdn;
-            itemDetail.ProcessingPhase = requestModel.ProcessingPhase;
-            itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
-            itemDetail.Comments = requestModel.Comments;
-            string itemDetailString = JsonSerializer.Serialize(itemDetail);
-
-            return itemDetailString;
-        }
-
-
+        return new WorkItemAttachmentDTO();
     }
+    public List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId)
+    {
+        string requestPath = $"/api/v1/workitem-attachments/{workitemId}/attachments";
+        try
+        {
+            return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+        }
+        return new List<WorkItemAttachmentDTO>();
+    }
+    public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
+    {
+        int requestId = Convert.ToInt32(requestModel.RequestID);
+        var existingWorkItem = this.GetByWorkItemById(requestId);
+
+        var cdn = requestModel.Cdn;
+        var applicantInfo = gatewayService.GetApplicantInfoByCdn(cdn);
+
+        var contact = this.GetContacInfoDtoFromApplicant(applicantInfo, false, existingWorkItem);
+        var itemDetailString = this.GetItemDetailFromRequestModel(requestModel);
+
+        WorkItemDTO workItem = new WorkItemDTO();
+        workItem.Id = requestModel.RequestID;
+        workItem.InitialDetailJson = itemDetailString;
+        workItem.Detail = itemDetailString;
+        workItem.ApplicantContact = contact;
+        workItem.CreatedDateUTC = existingWorkItem.CreatedDateUTC;
+        workItem.ReceivedDateUTC = existingWorkItem.ReceivedDateUTC;
+        workItem.LastUpdatedDateUTC = DateTime.UtcNow;
+        workItem.SameApplicantSubmitterInd = true;
+        workItem.LineOfBusinessId = Constants.MarineMedical;
+        // WorkItemStatuses
+        workItem.WorkItemStatus = new WorkItemStatusDTO();
+        workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
+        workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
+        AddWorkItemStatus(workItem.WorkItemStatus);
+        var uploadedWorkItem = this.UpdateWorkitem(workItem);
+
+        return uploadedWorkItem;
+    }
+
+    public WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status)
+    {
+        WorkItemStatusDTO updatedStatus = null;
+        string requestPath = $"api/v1/workitems/statuses";
+        try
+        {
+            updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+        }
+
+        return updatedStatus;
+    }
+    private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
+    {
+        ContactInformationDTO contact = new ContactInformationDTO();
+        if (isNewContact)
+        {
+            contact.Id = Guid.NewGuid().ToString();
+        }
+        else
+        {
+            contact.Id = exitingWorkItem.ApplicantContact.Id;
+
+            var t = applicant.Id;
+            var to = applicant.ContactId;
+        }
+
+        contact.Name = applicant.FullName;
+        contact.AddressLine1 = applicant.HomeAddress;
+        contact.City = applicant.HomeAddressCity;
+        contact.Province = applicant.HomeAddressProvince;
+        contact.Country = applicant.HomeAddressCountry;
+        contact.PostalCode = applicant.HomeAddressPostalCode;
+        contact.Phone = applicant.PhoneNumber;
+        contact.Email = applicant.Email;
+        contact.PrimaryContactInd = true;
+        contact.ContactUniqueId = applicant.Cdn;
+
+        return contact;
+    }
+
+    private string GetItemDetailFromRequestModel(RequestModel requestModel)
+    {
+        var temp = GetByWorkItemById(requestModel.RequestID);
+        WorkItemDetail itemDetail = new WorkItemDetail();
+
+        var tempJson = JsonSerializer.Deserialize<WorkItemDetail>(temp.Detail);
+
+            if(tempJson.Status == null)
+            {
+                tempJson.Status = new List<StatusHistoryItem>();
+            }
+
+        tempJson.Status.Insert(0, new StatusHistoryItem()
+        {
+            ProcessingPhase = requestModel.ProcessingPhase,
+            StatusText = requestModel.Status,
+            AssignedTo = string.IsNullOrEmpty(requestModel.AssignedTo)? "Not assigned": requestModel.AssignedTo,
+            RequestStatusTime = DateTime.UtcNow
+        }
+        );
+
+        itemDetail.Status = tempJson.Status;
+        itemDetail.RequestType = requestModel.RequestType;
+        itemDetail.CertificateType = requestModel.CertificateType;
+        itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+        itemDetail.ApplicantName = requestModel.ApplicantFullName;
+        itemDetail.Cdn = requestModel.Cdn;
+        itemDetail.ProcessingPhase = requestModel.ProcessingPhase;
+        itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
+        itemDetail.Comments = requestModel.Comments;
+        string itemDetailString = JsonSerializer.Serialize(itemDetail);
+
+        return itemDetailString;
+    }
+
+
+}
 
 }

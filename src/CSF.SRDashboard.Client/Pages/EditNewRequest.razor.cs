@@ -68,6 +68,7 @@ namespace CSF.SRDashboard.Client.Pages
         public bool MostRecentCommentsIsCollapsed { get; private set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
         public IUploadDocumentHelper UploadService { get; set; }
+        public List<StatusHistoryItem> StatusHistories { get; set; } = new List<StatusHistoryItem>();
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -102,7 +103,7 @@ namespace CSF.SRDashboard.Client.Pages
 
                 Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
-
+            this.StatusHistories = RequestModel.StatusHistories;
             this.RequestModel.UploadedDocuments = DocumentForm;
             InitialDocumentCount = documentIds.Count;
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -230,7 +231,7 @@ namespace CSF.SRDashboard.Client.Pages
                     requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
                 }
             }
-
+            requestModel.StatusHistories = workItem.ItemDetail.Status;
             return requestModel;
         }
 

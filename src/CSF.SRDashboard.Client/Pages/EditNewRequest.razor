@@ -32,10 +32,11 @@
                 <CSF.SRDashboard.Client.Components.AddDocumentComponent ShowDefaultOption="true" EditContext="this.EditContext" @bind-DocumentForm="this.RequestModel.UploadedDocuments" AllowMultipleUploads="true"></CSF.SRDashboard.Client.Components.AddDocumentComponent>
             </div>
         </div>
-
-        <div style="flex-basis:25%;" class="pl-4 pr-4">
+        <div style="flex-basis:35%;" class="pt-3 pl-3 pr-2">
+            <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestHistoryComponent StatusHistories="this.StatusHistories" DateFormat="MMMM d - hh:mm tt"></CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestHistoryComponent>
             <CSF.SRDashboard.Client.Components.RequestStatus EditContext="EditContext" RequestModel="RequestModel" Editable="true" IsReadOnly="false" ShowDefaultOption="false" />
         </div>
+       
     </div>
 
     <hr />

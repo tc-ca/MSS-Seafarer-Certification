@@ -25,6 +25,8 @@ namespace CSF.SRDashboard.Client.Models
 
         public string ProcessingPhase { get; set; }
 
+        public List<StatusHistoryItem> StatusHistories { get; set; }
+
         public List<RequestComment> Comments { get; set; }
 
         public List<UploadedDocument> UploadedDocuments { get; set; }

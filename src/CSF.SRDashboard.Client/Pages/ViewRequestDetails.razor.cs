@@ -49,6 +49,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
 
+        public List<StatusHistoryItem> StatusHistories { get; set; } = new List<StatusHistoryItem>();
+
 
         protected async override Task OnInitializedAsync()
         {
@@ -69,7 +71,7 @@ namespace CSF.SRDashboard.Client.Pages
                 Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 ProcessingPhase = WorkItemDTO.ItemDetail.ProcessingPhase
             };
-
+            this.StatusHistories = WorkItemDTO.ItemDetail.Status;
             this.EditContext = new EditContext(RequestModel);
 
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
