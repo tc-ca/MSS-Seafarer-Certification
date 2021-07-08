@@ -70,13 +70,14 @@ namespace CSF.SRDashboard.Client.Pages
         public bool MostRecentCommentsIsCollapsed { get; private set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
         public IUploadDocumentHelper UploadService { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
             IsEditMode = true;
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            this.RequestModel = await PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
             previousAssigneeId = this.RequestModel.AssigneeId;
 
             this.EditContext = new EditContext(RequestModel);
@@ -168,25 +169,30 @@ namespace CSF.SRDashboard.Client.Pages
 
             if (previousAssigneeId != this.RequestModel.AssigneeId)
             {
-                var new_assignment_toPost = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
+                var new_assignment_toPost = new WorkItemAssignmentDTO()
+                {
+                    WorkItemId = this.RequestModel.RequestID,
+                    AssignedEmployeeId = this.RequestModel.AssigneeId,
+                    DateAssignedUTC = DateTimeOffset.UtcNow
+                };
 
                 // when blank option is selected, we need to delete the old assignee from the work request
                 if (RequestModel.AssigneeId == Constants.NotSelected)
                 {
                     var workItemId = RequestModel.RequestID;
-                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
-                    WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                    var oldAssignment_toDelete = await WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    await WorkLoadService.DeleteAssignmentForWorkItemAsync(oldAssignment_toDelete);
                 }
                 else
                 {
                     // old assignee is deleted and the new assignee is posted.
                     var workItemId = RequestModel.RequestID;
-                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    var oldAssignment_toDelete = await WorkLoadService .GetMostRecentAssingmentForWorkItem(workItemId);
                     if (oldAssignment_toDelete != null) // this is the scenario where there is no old assignee and we are assigning a person
                     {
-                        WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                        await WorkLoadService.DeleteAssignmentForWorkItemAsync(oldAssignment_toDelete);
                     }
-                    WorkLoadService.DeleteOrPost(new_assignment_toPost, false);
+                    await WorkLoadService.PostAssignmentForWorkItemAsync(new_assignment_toPost);
                 }
             }
 
