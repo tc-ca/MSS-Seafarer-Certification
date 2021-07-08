@@ -347,7 +347,7 @@ input[type=checkbox] {
         content: '';
         position: absolute;
         left: -24px;
-        height: 67%;
+        height: 70%;
         width: 3px;
     }
 
@@ -364,7 +364,7 @@ input[type=checkbox] {
 
     .StatusHistoryList-item.not-first::before {
         border-left: 2px solid #4D5D6C;
-        margin-top: 30px;
+        margin-top: 25px;
     }
 
     .StatusHistoryList-item.not-first::after {

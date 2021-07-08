@@ -138,6 +138,7 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 RequestID = EditRequestId,
                 Cdn = Applicant.Cdn,
+                LoggedInUser = this.State.UserDisplayName,
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,

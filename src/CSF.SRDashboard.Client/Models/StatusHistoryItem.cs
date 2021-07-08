@@ -30,6 +30,6 @@ namespace CSF.SRDashboard.Client.Models
         }
 
         public DateTime? RequestStatusTime { get; set; }
-        public string AssignedTo { get; set; }
+        public string ChangedBy { get; set; }
     }
 }
