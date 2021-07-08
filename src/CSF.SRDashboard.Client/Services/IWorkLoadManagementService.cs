@@ -75,6 +75,12 @@ namespace CSF.SRDashboard.Client.Services
 
         Task<List<WorkItemAttachmentDTO>> GetAllAttachmentsByRequestId(int workitemId);
 
+        WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status);
+
+        int DeleteOrPost(WorkItemAssignmentDTO assignment, bool isToDelete);
+        WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request);
+        WorkItemAssignmentDTO GetMostRecentAssingmentForWorkItem(int workItemId);
+
         Task<WorkItemStatusDTO> AddWorkItemStatus(WorkItemStatusDTO status);
     }
 }

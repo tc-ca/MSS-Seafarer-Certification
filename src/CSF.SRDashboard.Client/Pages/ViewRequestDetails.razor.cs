@@ -10,6 +10,7 @@ using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Pages
@@ -60,15 +61,20 @@ namespace CSF.SRDashboard.Client.Pages
 
             WorkItemDTO = await this.WorkLoadService.GetByWorkItemById(RequestId);
 
+
+
+
             RequestModel = new RequestModel
             {
                 RequestID = WorkItemDTO.Id,
                 CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id,
-                Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id
+                Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id,
+                ProcessingPhase = WorkItemDTO.ItemDetail.ProcessingPhase
             };
 
+            RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
             this.EditContext = new EditContext(RequestModel);
 
             var documentIds = (await this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId)).Select(x => x.DocumentId).ToList();

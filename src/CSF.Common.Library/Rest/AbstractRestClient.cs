@@ -32,8 +32,9 @@
             where TReturnMessage : class, new()
         {
             HttpResponseMessage response;
+            string baseURi = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
+            var uri = new Uri($"{baseURi}/{path}");
 
-            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
             // Here is actual call to target service
             this.ResetRestClientHeaders();
             response = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
@@ -134,10 +135,12 @@
         ///<inheritdoc/>
         public virtual async Task<bool> DeleteAsync(ServiceLocatorDomain serviceName, string path)
         {
-            var uri = new Uri($"{this.serviceLocator.GetServiceUri(serviceName)}/{path}");
+            string baseURi = this.serviceLocator.GetServiceUri(serviceName).ToString().Trim('/');
+
+            var uri = new Uri($"{baseURi}/{path}");
 
             this.ResetRestClientHeaders();
-            var response = await this.httpClient.DeleteAsync(uri).ConfigureAwait(true);
+            var response = await this.httpClient.DeleteAsync(uri).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             return response.IsSuccessStatusCode;

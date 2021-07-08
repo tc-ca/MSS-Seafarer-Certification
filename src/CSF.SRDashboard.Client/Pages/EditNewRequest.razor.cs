@@ -16,6 +16,7 @@ using CSF.SRDashboard.Client.Utilities;
 using System;
 using DSD.MSS.Blazor.Components.Core.Models;
 using CSF.SRDashboard.Client.DTO.DocumentStorage;
+using CSF.SRDashboard.Client.Services.WorkloadRequest;
 
 namespace CSF.SRDashboard.Client.Pages
 {
@@ -61,6 +62,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public int CurrentDocumentNum { get; set; }
 
+        private string previousAssigneeId;
+
         private string titleInfo { get; set; }
         [Inject]
         public IDocumentService DocumentService { get; set; }
@@ -73,7 +76,8 @@ namespace CSF.SRDashboard.Client.Pages
 
             IsEditMode = true;
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.RequestModel = await PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            previousAssigneeId = this.RequestModel.AssigneeId;
 
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -126,7 +130,9 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return;
             }
-            
+
+            ProcessingPhaseUtility processingPhaseUtility = new ProcessingPhaseUtility();
+
             var RequestToSend = new RequestModel
             {
                 RequestID = EditRequestId,
@@ -135,7 +141,8 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
-               
+                ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),
+                AssigneeId = RequestModel.AssigneeId
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
@@ -159,8 +166,32 @@ namespace CSF.SRDashboard.Client.Pages
                 CurrentDocumentNum++;
             }
 
+            if (previousAssigneeId != this.RequestModel.AssigneeId)
+            {
+                var new_assignment_toPost = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
+
+                // when blank option is selected, we need to delete the old assignee from the work request
+                if (RequestModel.AssigneeId == Constants.NotSelected)
+                {
+                    var workItemId = RequestModel.RequestID;
+                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                }
+                else
+                {
+                    // old assignee is deleted and the new assignee is posted.
+                    var workItemId = RequestModel.RequestID;
+                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    if (oldAssignment_toDelete != null) // this is the scenario where there is no old assignee and we are assigning a person
+                    {
+                        WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                    }
+                    WorkLoadService.DeleteOrPost(new_assignment_toPost, false);
+                }
+            }
+
             this.DocumentForm = null;
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
 
         }
         private async Task<List<Document>> InsertDocumentOnRequest()
@@ -194,8 +225,6 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-
-    
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);
@@ -213,8 +242,11 @@ namespace CSF.SRDashboard.Client.Pages
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
 
+            if (workItem.WorkItemAssignment != null)
+            {
+                requestModel.AssigneeId = workItem.WorkItemAssignment.AssignedEmployeeId;
+            }
             var statusAdditionalDetails = workItem.WorkItemStatus.StatusAdditionalDetails;
-
             if (statusAdditionalDetails != null)
             {
                 requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(statusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
@@ -227,9 +259,46 @@ namespace CSF.SRDashboard.Client.Pages
                 requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                if (detail.ProcessingPhase != null)
+                {
+                    requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
+                }
             }
 
             return requestModel;
+        }
+
+       
+
+        /// <summary>
+        /// Gets Processing Phase id from table Processing Phase text
+        /// </summary>
+        public string GetProcessingPhase(RequestModel requestModel, String ProcessingPhase)
+        {
+            if (requestModel.Status.Equals(Constants.RequestStatuses[0].Id))
+            {
+                return Constants.ProcessingPhaseNew.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[1].Id))
+            {
+                return Constants.ProcessingPhaseInProgress.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[2].Id))
+            {
+                return Constants.ProcessingPhasePending.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[3].Id))
+            {
+                return Constants.ProcessingPhaseComplete.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else if (requestModel.Status.Equals(Constants.RequestStatuses[4].Id))
+            {
+                return Constants.ProcessingPhaseCancelled.Where(x => x.Text.Equals(ProcessingPhase)).Single().Id;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

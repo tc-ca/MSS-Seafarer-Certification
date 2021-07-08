@@ -61,6 +61,9 @@
 
         [Inject]
         IStringLocalizer<SeafarerProfile> Localizer { get; set; }
+
+        [Inject] 
+        IUserGraphApiService graphApiService { get; set; }
         public MpdisApplicantDto Applicant { get; set; }
 
         public bool ShowToast { get; set; } = false;
@@ -183,7 +186,25 @@
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             this.TableItems = await WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
+            this.SetAssigneeNames(this.TableItems);
             this.AlertType = AlertTypes.Success;
+        }
+
+
+        private void SetAssigneeNames(List<WorkloadRequestTableItem> tableItems)
+        {
+            var staffMembers = graphApiService.GetMarineMedicalStaffMembers();
+            foreach(var item in this.TableItems)
+            {
+                if(item.AssigneeId != null)
+                {
+                    var staffMemberFound = staffMembers.Where(x => x.id == item.AssigneeId).FirstOrDefault();
+                    if(staffMemberFound != null)
+                    {
+                        item.AssignedTo = staffMemberFound.Names;
+                    }
+                }
+            }
         }
     }
 }

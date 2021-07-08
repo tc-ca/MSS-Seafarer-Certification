@@ -56,6 +56,31 @@ namespace CSF.SRDashboard.Client.Services
             new SelectListItem { Id = "5", Text = "Cancelled"}
         };
 
+        public static List<SelectListItem> ProcessingPhaseNew = new List<SelectListItem> {
+            new SelectListItem { Id = "1", Text = "Intake & Pre-validation﻿"},
+        };
+
+        public static List<SelectListItem> ProcessingPhaseInProgress = new List<SelectListItem> {
+            new SelectListItem { Id = "1", Text = "Medical review"},
+            new SelectListItem { Id = "2", Text = "Follow-up & certification"},
+        };
+
+        public static List<SelectListItem> ProcessingPhasePending = new List<SelectListItem> {
+            new SelectListItem { Id = "1", Text = "Waiting on client"},
+        };
+
+        public static List<SelectListItem> ProcessingPhaseComplete = new List<SelectListItem> {
+            new SelectListItem { Id = "1", Text = "Certificate sent (Fit)"},
+            new SelectListItem { Id = "2", Text = "Certificate sent (Fit with limitations)"},
+            new SelectListItem { Id = "3", Text = "Letter sent (Unfit)"},
+        };
+
+        public static List<SelectListItem> ProcessingPhaseCancelled = new List<SelectListItem> {
+            new SelectListItem { Id = "1", Text = "Withdrawn by client"},
+            new SelectListItem { Id = "2", Text = "Duplicate"},
+            new SelectListItem { Id = "3", Text = "Created in error"},
+        };
+
         public static List<SelectListItem> Languages = new List<SelectListItem> {
             new SelectListItem { Id = "1", Text = "English" },
             new SelectListItem { Id = "2", Text = "French" }
@@ -64,5 +89,9 @@ namespace CSF.SRDashboard.Client.Services
         public static string RequestStatusesDefaultValue = RequestStatuses[0].Text;
 
         public const string NoProfilePicturePath = "/img/no-profile-photo.png";
+
+        public const string NotSelected = "-1";
+
+        public const string Unassigned = "9999-9999-9999";
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,302 +59,305 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="AddNote" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddNote" xml:space="preserve">
     <value>Add Note_fr</value>
   </data>
-	<data name="ApplicantDetails" xml:space="preserve">
+  <data name="ApplicantDetails" xml:space="preserve">
     <value>Applicant details_fr</value>
   </data>
-	<data name="AddRequest" xml:space="preserve">
+  <data name="AddRequest" xml:space="preserve">
     <value>Add Request_fr</value>
   </data>
-	<data name="AssignedTo" xml:space="preserve">
+  <data name="AssignedTo" xml:space="preserve">
     <value>Assigned to_fr</value>
   </data>
-	<data name="Assignto" xml:space="preserve">
+  <data name="Assignto" xml:space="preserve">
     <value>Assign to_fr</value>
   </data>
-	<data name="Attachments" xml:space="preserve">
+  <data name="Attachments" xml:space="preserve">
     <value>Attachments_fr</value>
   </data>
-	<data name="BackToDashboard" xml:space="preserve">
+  <data name="BackToDashboard" xml:space="preserve">
     <value>Back to dashboard_fr</value>
   </data>
-	<data name="Cancel" xml:space="preserve">
+  <data name="Cancel" xml:space="preserve">
     <value>Cancel_fr</value>
   </data>
-	<data name="CandidateDocumentNumber" xml:space="preserve">
+  <data name="CandidateDocumentNumber" xml:space="preserve">
     <value>Candidate document number_fr</value>
   </data>
-	<data name="CDN" xml:space="preserve">
+  <data name="CDN" xml:space="preserve">
     <value>CDN_fr</value>
   </data>
-	<data name="CertificateType" xml:space="preserve">
+  <data name="CertificateType" xml:space="preserve">
     <value>Certificate type_fr</value>
   </data>
-	<data name="CertificationSummary" xml:space="preserve">
+  <data name="CertificationSummary" xml:space="preserve">
     <value>Certification summary_fr</value>
   </data>
-	<data name="CurrentCertificaties" xml:space="preserve">
+  <data name="CurrentCertificaties" xml:space="preserve">
     <value>Current certificaties_fr</value>
   </data>
-	<data name="CurrentLanguage" xml:space="preserve">
+  <data name="CurrentLanguage" xml:space="preserve">
     <value>fr</value>
   </data>
-	<data name="Date" xml:space="preserve">
+  <data name="Date" xml:space="preserve">
     <value>Date_fr</value>
   </data>
-	<data name="DateOfBirth" xml:space="preserve">
+  <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth_fr</value>
   </data>
-	<data name="DateOfExpiry" xml:space="preserve">
+  <data name="DateOfExpiry" xml:space="preserve">
     <value>Date of expiry_fr</value>
   </data>
-	<data name="DaysRemaining" xml:space="preserve">
+  <data name="DaysRemaining" xml:space="preserve">
     <value>days remaining_fr</value>
   </data>
-	<data name="Edit" xml:space="preserve">
+  <data name="Edit" xml:space="preserve">
     <value>Edit_fr</value>
   </data>
-	<data name="EnteredBy" xml:space="preserve">
+  <data name="EnteredBy" xml:space="preserve">
     <value>Entered_br</value>
   </data>
-	<data name="EnterNoteHere" xml:space="preserve">
+  <data name="EnterNoteHere" xml:space="preserve">
     <value>Enter your note here..._fr</value>
   </data>
-	<data name="FirstAndLastName" xml:space="preserve">
+  <data name="FirstAndLastName" xml:space="preserve">
     <value>First and last name_fr</value>
   </data>
-	<data name="FirstName" xml:space="preserve">
+  <data name="FirstName" xml:space="preserve">
     <value>First name_fr</value>
   </data>
-	<data name="FitnessStatus" xml:space="preserve">
+  <data name="FitnessStatus" xml:space="preserve">
     <value>Fitness status_fr</value>
   </data>
-	<data name="LastName" xml:space="preserve">
+  <data name="LastName" xml:space="preserve">
     <value>Last name_fr</value>
   </data>
-	<data name="MedicalSummary" xml:space="preserve">
+  <data name="MedicalSummary" xml:space="preserve">
     <value>Medical summary_fr</value>
   </data>
-	<data name="MPR" xml:space="preserve">
+  <data name="MPR" xml:space="preserve">
     <value>MPR_fr</value>
   </data>
-	<data name="Name" xml:space="preserve">
+  <data name="Name" xml:space="preserve">
     <value>Name_fr</value>
   </data>
-	<data name="NewOrRenewal" xml:space="preserve">
+  <data name="NewOrRenewal" xml:space="preserve">
     <value>New or renewal_fr</value>
   </data>
-	<data name="NoNotes" xml:space="preserve">
+  <data name="NoNotes" xml:space="preserve">
     <value>No notes_fr</value>
   </data>
-	<data name="Note" xml:space="preserve">
+  <data name="Note" xml:space="preserve">
     <value>Note_fr</value>
   </data>
-	<data name="Notes" xml:space="preserve">
+  <data name="Notes" xml:space="preserve">
     <value>Notes_fr</value>
   </data>
-	<data name="Priority" xml:space="preserve">
+  <data name="Priority" xml:space="preserve">
     <value>Priority_fr</value>
   </data>
-	<data name="ProcessingPhase" xml:space="preserve">
+  <data name="ProcessingPhase" xml:space="preserve">
     <value>Processing phase_fr</value>
   </data>
-	<data name="RequestBoard" xml:space="preserve">
+  <data name="RequestBoard" xml:space="preserve">
     <value>Request board_fr</value>
   </data>
-	<data name="RequestDate" xml:space="preserve">
+  <data name="RequestDate" xml:space="preserve">
     <value>Request Date_fr</value>
   </data>
-	<data name="RequestDetails" xml:space="preserve">
+  <data name="RequestDetails" xml:space="preserve">
     <value>Request details_fr</value>
   </data>
-	<data name="RequestID" xml:space="preserve">
+  <data name="RequestID" xml:space="preserve">
     <value>Request ID_fr</value>
   </data>
-	<data name="RequestInformation" xml:space="preserve">
+  <data name="RequestInformation" xml:space="preserve">
     <value>Request information_fr</value>
   </data>
-	<data name="RequestNumber" xml:space="preserve">
+  <data name="RequestNumber" xml:space="preserve">
     <value>Request #_fr</value>
   </data>
-	<data name="RequestType" xml:space="preserve">
+  <data name="RequestType" xml:space="preserve">
     <value>Request type_fr</value>
   </data>
-	<data name="Save" xml:space="preserve">
+  <data name="Save" xml:space="preserve">
     <value>Save_fr</value>
   </data>
-	<data name="SeafarerDetails" xml:space="preserve">
+  <data name="SeafarerDetails" xml:space="preserve">
     <value>Seafarer details_fr</value>
   </data>
-	<data name="SeafarerSearch" xml:space="preserve">
+  <data name="SeafarerSearch" xml:space="preserve">
     <value>Seafarer search_fr</value>
   </data>
-	<data name="ServiceStandard" xml:space="preserve">
+  <data name="ServiceStandard" xml:space="preserve">
     <value>Service standard_fr</value>
   </data>
-	<data name="ShipSafetyBulletin" xml:space="preserve">
+  <data name="ShipSafetyBulletin" xml:space="preserve">
     <value>Ship Safety Bulletin_fr</value>
   </data>
-	<data name="Status" xml:space="preserve">
+  <data name="Status" xml:space="preserve">
     <value>Status_fr</value>
   </data>
-	<data name="StatusInProgress" xml:space="preserve">
+  <data name="StatusInProgress" xml:space="preserve">
     <value>Status: In progress_fr</value>
   </data>
-	<data name="SubmissionMethod" xml:space="preserve">
+  <data name="SubmissionMethod" xml:space="preserve">
     <value>Submission method_fr</value>
   </data>
-	<data name="Summary" xml:space="preserve">
+  <data name="Summary" xml:space="preserve">
     <value>Summary_fr</value>
   </data>
-	<data name="TombstoneSummary" xml:space="preserve">
+  <data name="TombstoneSummary" xml:space="preserve">
     <value>Tombstone summary_fr</value>
   </data>
-	<data name="TriageType" xml:space="preserve">
+  <data name="TriageType" xml:space="preserve">
     <value>Triage type_fr</value>
   </data>
-	<data name="View" xml:space="preserve">
+  <data name="View" xml:space="preserve">
     <value>View_fr</value>
   </data>
-	<data name="ViewFullMedicalFile" xml:space="preserve">
+  <data name="ViewFullMedicalFile" xml:space="preserve">
     <value>View full medical file_fr</value>
   </data>
-	<data name="ViewFullProfile" xml:space="preserve">
+  <data name="ViewFullProfile" xml:space="preserve">
     <value>View full profile_fr</value>
   </data>
-	<data name="ViewProfile" xml:space="preserve">
+  <data name="ViewProfile" xml:space="preserve">
     <value>View profile_fr</value>
   </data>
-	<data name="ViewRequest" xml:space="preserve">
+  <data name="ViewRequest" xml:space="preserve">
     <value>View Request_fr</value>
   </data>
-	<data name="Attachment" xml:space="preserve">
+  <data name="Attachment" xml:space="preserve">
     <value>Attachment_fr</value>
   </data>
-	<data name="RequiredField" xml:space="preserve">
+  <data name="RequiredField" xml:space="preserve">
     <value>Required field_fr</value>
   </data>
-	<data name="Description" xml:space="preserve">
+  <data name="Description" xml:space="preserve">
     <value>Description_fr</value>
   </data>
-	<data name="DocumentLanguage" xml:space="preserve">
+  <data name="DocumentLanguage" xml:space="preserve">
     <value>Document language_fr</value>
   </data>
-	<data name="DocumentType" xml:space="preserve">
+  <data name="DocumentType" xml:space="preserve">
     <value>Document type_fr</value>
   </data>
-	<data name="DocumentTypes" xml:space="preserve">
+  <data name="DocumentTypes" xml:space="preserve">
     <value>Document type(s)_fr</value>
   </data>
-	<data name="Delete" xml:space="preserve">
+  <data name="Delete" xml:space="preserve">
     <value>Delete-fr</value>
   </data>
-	<data name="DocumentTypes2" xml:space="preserve">
+  <data name="DocumentTypes2" xml:space="preserve">
     <value>Document type(s)_fr*</value>
   </data>
-	<data name="EditRequest" xml:space="preserve">
+  <data name="EditRequest" xml:space="preserve">
     <value>Edit request_fr</value>
   </data>
-	<data name="SaveRequest" xml:space="preserve">
+  <data name="SaveRequest" xml:space="preserve">
     <value>Save-request_fr</value>
   </data>
-	<data name="AddRequest2" xml:space="preserve">
+  <data name="AddRequest2" xml:space="preserve">
     <value>add-request_fr</value>
   </data>
-	<data name="RequestLower" xml:space="preserve">
+  <data name="RequestLower" xml:space="preserve">
     <value>request_fr</value>
   </data>
-	<data name="DefaultSelectOption" xml:space="preserve">
+  <data name="DefaultSelectOption" xml:space="preserve">
     <value>Select_fr</value>
   </data>
-	<data name="AddAttachment" xml:space="preserve">
+  <data name="AddAttachment" xml:space="preserve">
     <value>Add Attachment_fr</value>
   </data>
-	<data name="SelectLanguage" xml:space="preserve">
+  <data name="SelectLanguage" xml:space="preserve">
     <value>Select Language_fr</value>
   </data>
-	<data name="SelectDocType" xml:space="preserve">
+  <data name="SelectDocType" xml:space="preserve">
     <value>Select doc type_fr</value>
   </data>
-	<data name="DefaultCertificateSelect" xml:space="preserve">
+  <data name="DefaultCertificateSelect" xml:space="preserve">
     <value>Select Certificate Type_fr</value>
   </data>
-	<data name="DefaultSubmissionSelect" xml:space="preserve">
+  <data name="DefaultSubmissionSelect" xml:space="preserve">
     <value>Select Submission type_fr</value>
   </data>
-	<data name="Attachment" xml:space="preserve">
-    <value>Attachment_fr</value>
-  </data>
-	<data name="Back" xml:space="preserve">
+  <data name="Back" xml:space="preserve">
     <value>Back_fr</value>
   </data>
-	<data name="EditAttachment" xml:space="preserve">
+  <data name="EditAttachment" xml:space="preserve">
     <value>edit attachment_fr</value>
   </data>
-	<data name="SaveAttachment" xml:space="preserve">
+  <data name="SaveAttachment" xml:space="preserve">
     <value>Save attachment_fr</value>
   </data>
-	<data name="ViewAttachment" xml:space="preserve">
+  <data name="ViewAttachment" xml:space="preserve">
     <value>view attachment_fr</value>
+  </data>
+  <data name="DefaultProcessingPhaseSelect" xml:space="preserve">
+    <value>Select Processing Phase_fr</value>
+  </data>
+  <data name="Unassigned" xml:space="preserve">
+    <value>Unassigned_fr</value>
   </data>
 </root>
