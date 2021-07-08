@@ -163,6 +163,7 @@ namespace CSF.SRDashboard.Client.Pages
                 else
                 {
                     var added = await this.InsertDocumentOnRequest();
+                    break;
                 }
 
                 CurrentDocumentNum++;
