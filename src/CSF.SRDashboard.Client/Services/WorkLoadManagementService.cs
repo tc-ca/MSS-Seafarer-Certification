@@ -367,11 +367,7 @@ namespace CSF.SRDashboard.Client.Services
             {
                 tempWorkItemJson.Status = new List<StatusHistoryItem>();
             }
-            if (this.VerifyStatusDuplicate(tempWorkItemJson.Status.First(), requestModel))
-            {
-                //do nothing
-            }
-            else
+            if (!this.VerifyStatusDuplicate(tempWorkItemJson.Status.First(), requestModel))
             {
                 tempWorkItemJson.Status.Insert(0, new StatusHistoryItem()
                 {
@@ -397,7 +393,7 @@ namespace CSF.SRDashboard.Client.Services
             return itemDetailString;
         }
 
-        private bool VerifyStatusDuplicate(StatusHistoryItem historyItem, RequestModel requestModel) => string.Equals(requestModel.ProcessingPhase, historyItem.ProcessingPhase) && string.Equals(requestModel.Status, historyItem.StatusText) ? true : false;
+        private bool VerifyStatusDuplicate(StatusHistoryItem historyItem, RequestModel requestModel) => string.Equals(requestModel.ProcessingPhase, historyItem.ProcessingPhase) && string.Equals(requestModel.Status, historyItem.StatusText);
 
 
         public WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request)

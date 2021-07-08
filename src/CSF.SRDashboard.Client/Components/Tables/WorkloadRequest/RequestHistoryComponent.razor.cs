@@ -15,14 +15,6 @@
         public List<StatusHistoryItem> StatusHistories { get; set; }
         [Parameter]
         public string DateFormat { get; set; }
-
-        public string SetListCSS(int index)
-        {
-            switch (index)
-            {
-                case 0: return "first";
-                default: return "not-first";
-            }
-        }
+        public bool IsListEmpty() => this.StatusHistories == null ? false : true;
     }
 }
