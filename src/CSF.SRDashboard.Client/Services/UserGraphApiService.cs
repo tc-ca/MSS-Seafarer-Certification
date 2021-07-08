@@ -22,12 +22,13 @@ namespace CSF.SRDashboard.Client.Services
         private MicrosoftIdentityConsentAndConditionalAccessHandler consentHandler;
         private IStringLocalizer<Shared.Common> localizer;
 
-        public UserGraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService, MicrosoftIdentityConsentAndConditionalAccessHandler consentHandler)
+        public UserGraphApiService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAcquisition tokenAcquisitionService, MicrosoftIdentityConsentAndConditionalAccessHandler consentHandler, IStringLocalizer<Shared.Common> localizer)
         {
             this.configuration = configuration;
             this.httpClient = httpClientFactory.CreateClient();
             this.tockenAcquisition = tokenAcquisitionService;
             this.consentHandler = consentHandler;
+            this.localizer = localizer;
         }
 
         /// <summary>
