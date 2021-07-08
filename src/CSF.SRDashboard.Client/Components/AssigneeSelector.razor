@@ -1,0 +1,19 @@
+﻿@if (!this.IsReadOnly)
+{
+    <EditForm EditContext="@EditContext">
+        <div class="d-flex">
+            <label class="mr-2 pt-2"><b>@Localizer["AssignedTo"]</b></label>
+            <FormInputSelect @bind-Value="RequestModel.AssigneeId" ValidationFor="@(() => RequestModel.AssigneeId)" ShowDefaultOption="false">
+                @foreach (var member in staff_members)
+                {
+                    <option value="@member.id"> @member.Names</option>
+                }
+            </FormInputSelect>
+        </div>
+    </EditForm>
+}
+else
+{
+    <label class="form-label mr-1"><b>@Localizer["AssignedTo"]:</b></label>
+    <label>@this.GetCurrentlySelectedStaff</label>
+}

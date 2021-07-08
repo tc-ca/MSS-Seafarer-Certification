@@ -157,8 +157,11 @@ namespace CSF.SRDashboard.Client
             secretName = appConfiguration.GetSection("AzureAd")["ClientSecret"];
             token = kvService.GetSecretByName(secretName);
             appConfiguration.GetSection("AzureAd")["ClientSecret"] = token;
+
+            // MarineMedicalGroupId
+            secretName = appConfiguration.GetSection("AzureAd")["MarineMedicalGroupId"];
+            token = kvService.GetSecretByName(secretName);
+            appConfiguration.GetSection("AzureAd")["MarineMedicalGroupId"] = token;
         }
-
-
     }
 }

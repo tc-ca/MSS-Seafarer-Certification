@@ -10,6 +10,8 @@
 
             public string AssignedTo { get; set; }
 
+            public string AssigneeId { get; set; }
+
             public string Certificate { get; set; }
 
             public string ApplicantCDN { get; set; }

@@ -62,6 +62,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public int CurrentDocumentNum { get; set; }
 
+        private string previousAssigneeId;
+
         private string titleInfo { get; set; }
         [Inject]
         public IDocumentService DocumentService { get; set; }
@@ -76,6 +78,7 @@ namespace CSF.SRDashboard.Client.Pages
             IsEditMode = true;
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            previousAssigneeId = this.RequestModel.AssigneeId;
 
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -139,7 +142,8 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
-                ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel)
+                ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),
+                AssigneeId = RequestModel.AssigneeId
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
@@ -163,8 +167,32 @@ namespace CSF.SRDashboard.Client.Pages
                 CurrentDocumentNum++;
             }
 
+            if (previousAssigneeId != this.RequestModel.AssigneeId)
+            {
+                var new_assignment_toPost = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
+
+                // when blank option is selected, we need to delete the old assignee from the work request
+                if (RequestModel.AssigneeId == Constants.NotSelected)
+                {
+                    var workItemId = RequestModel.RequestID;
+                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                }
+                else
+                {
+                    // old assignee is deleted and the new assignee is posted.
+                    var workItemId = RequestModel.RequestID;
+                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    if (oldAssignment_toDelete != null) // this is the scenario where there is no old assignee and we are assigning a person
+                    {
+                        WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                    }
+                    WorkLoadService.DeleteOrPost(new_assignment_toPost, false);
+                }
+            }
+
             this.DocumentForm = null;
-            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated);
+            this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
 
         }
         private async Task<List<Document>> InsertDocumentOnRequest()
@@ -214,6 +242,12 @@ namespace CSF.SRDashboard.Client.Pages
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
+
+            if(workItem.WorkItemAssignment != null)
+            {
+                requestModel.AssigneeId = workItem.WorkItemAssignment.AssignedEmployeeId;
+            }
+
             if(workItem.WorkItemStatus.StatusAdditionalDetails != null)
             {
                 requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(workItem.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;

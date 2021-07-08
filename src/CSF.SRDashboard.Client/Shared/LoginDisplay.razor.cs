@@ -21,6 +21,7 @@ namespace CSF.SRDashboard.Client.Shared
             {
                 this.userDisplayName = graphApiService.GetUserDisplayName();
                 this.photoDataString = graphApiService.GetUserPhotoData();
+                var groupMembers = graphApiService.GetMarineMedicalStaffMembers();
             }
         }
     }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Pages
@@ -62,6 +63,9 @@ namespace CSF.SRDashboard.Client.Pages
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
 
+
+
+
             RequestModel = new RequestModel
             {
                 RequestID = WorkItemDTO.Id,
@@ -71,6 +75,8 @@ namespace CSF.SRDashboard.Client.Pages
                 Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 ProcessingPhase = WorkItemDTO.ItemDetail.ProcessingPhase
             };
+
+            RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
             this.StatusHistories = WorkItemDTO.ItemDetail.Status;
             this.EditContext = new EditContext(RequestModel);
 
