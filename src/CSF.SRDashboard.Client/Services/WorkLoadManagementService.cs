@@ -161,11 +161,20 @@ namespace CSF.SRDashboard.Client.Services
 
                     if (workItem.Detail != null)
                     {
-                        var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
-                        tableItem.Certificate = detail.CertificateType;
-                        tableItem.RequestType = detail.RequestType;
-                        tableItem.ApplicantCDN = detail.Cdn;
-                        tableItem.ProcessingPhase = detail.ProcessingPhase;
+                        try
+                        {
+                            var detail = JsonSerializer.Deserialize<WorkItemDetail>(workItem.Detail);
+                            tableItem.Certificate = detail.CertificateType;
+                            tableItem.RequestType = detail.RequestType;
+                            tableItem.ApplicantCDN = detail.Cdn;
+                            tableItem.ProcessingPhase = detail.ProcessingPhase;
+                        }
+                        catch (Exception ex)
+                        {
+                            this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+                            continue; // we have some dirty data currently. we want skip those requests
+                        }
+
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
