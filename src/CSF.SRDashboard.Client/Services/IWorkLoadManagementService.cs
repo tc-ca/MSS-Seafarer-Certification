@@ -1,9 +1,7 @@
 ﻿using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
 using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
 using CSF.SRDashboard.Client.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CSF.SRDashboard.Client.Services
@@ -15,28 +13,28 @@ namespace CSF.SRDashboard.Client.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>a WorkItemDTO</returns>
-        WorkItemDTO GetByWorkItemById(int id);
+        Task<WorkItemDTO> GetByWorkItemById(int id);
 
         /// <summary>
         /// Gets a list of work items by the given line of business id in Work Load Management Service
         /// </summary>
         /// <param name="lineOfBusinessId"></param>
         /// <returns>a list of WorkItemDTO</returns>
-        List<WorkItemDTO> GetByLineOfBusinessId(string lineOfBusinessId);
+        Task<List<WorkItemDTO>> GetByLineOfBusinessId(string lineOfBusinessId);
 
         /// <summary>
         /// Adds a work item into the Work Load Management Service when passing a workItem DTO
         /// </summary>
         /// <param name="workItem"></param>
         /// <returns>the newly added WorkItem dto with an id assigned to it</returns>
-        WorkItemDTO AddWorkItem(WorkItemDTO workItem);
+        Task<WorkItemDTO> AddWorkItem(WorkItemDTO workItem);
 
         /// <summary>
         /// Gets a list of work items from Work Load Management Service by a given CDN number of a seafarer
         /// </summary>
         /// <param name="cdn"></param>
         /// <returns>a list of WorkItemDTO</returns>
-        List<WorkItemDTO> GetByCdnNumber(string cdn);
+        Task<List<WorkItemDTO>> GetByCdnNumber(string cdn);
 
         /// <summary>
         /// Makes a post request and creates a work item inside Work Load Management Service from RequestModel
@@ -45,7 +43,7 @@ namespace CSF.SRDashboard.Client.Services
         /// <param name="requestModel"></param>
         /// <param name="gatewayService"></param>
         /// <returns>the newly created WorkItem in Workload Management Service</returns>
-        WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService);
+        Task<WorkItemDTO> PostRequestModel(RequestModel requestModel, IGatewayService gatewayService);
 
         /// <summary>
         /// Updates a work item after retrieving data from the request model.
@@ -54,15 +52,14 @@ namespace CSF.SRDashboard.Client.Services
         /// <param name="requestModel"></param>
         /// <param name="gatewayService"></param>
         /// <returns></returns>
-        WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService);
+        Task<WorkItemDTO> UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService);
 
         /// <summary>
         /// Updates a work item in Work Load Management Service
         /// </summary>
         /// <param name="workItem"></param>
         /// <returns>returns the updated work item if successful, returns null if the call fails</returns>
-        WorkItemDTO UpdateWorkitem(WorkItemDTO workItem);
-
+        Task<WorkItemDTO> UpdateWorkitem(WorkItemDTO workItem);
 
         /// <summary>
         /// Gets work items from Work Load Management Service and formats them into WorkloadRequestTableItem
@@ -70,14 +67,14 @@ namespace CSF.SRDashboard.Client.Services
         /// </summary>
         /// <param name="cdn"></param>
         /// <returns>List of WorkloadRequestTableItem</returns>
-        List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn);
+        Task<List<WorkloadRequestTableItem>> GetByCdnInRequestTableFormat(string cdn);
 
-        List<WorkloadRequestTableItem> GetAllInRequestTableFormat();
+        Task<List<WorkloadRequestTableItem>> GetAllInRequestTableFormat();
 
         Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO);
-        List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId);
 
+        Task<List<WorkItemAttachmentDTO>> GetAllAttachmentsByRequestId(int workitemId);
 
-        WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status);
+        Task<WorkItemStatusDTO> AddWorkItemStatus(WorkItemStatusDTO status);
     }
 }

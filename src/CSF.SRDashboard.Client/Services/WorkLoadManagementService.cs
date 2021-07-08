@@ -1,29 +1,38 @@
-﻿using CSF.Common.Library;
-using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
-using CSF.SRDashboard.Client.DTO;
-using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
-using CSF.SRDashboard.Client.Models;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace CSF.SRDashboard.Client.Services
+﻿namespace CSF.SRDashboard.Client.Services
 {
+    using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
+    using CSF.SRDashboard.Client.DTO;
+    using CSF.SRDashboard.Client.DTO.WorkLoadManagement;
+    using CSF.SRDashboard.Client.Models;
+    using Microsoft.AspNetCore.Components.Authorization;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Identity.Web;
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Claims;
+    using System.Text.Json;
+    using System.Threading.Tasks;
+
     public class WorkLoadManagementService : IWorkLoadManagementService
     {
-        private readonly IRestClient restClient;
+        private AuthenticationStateProvider authenticationStateProvider;
+        private IDownstreamWebApi downstreamWebApi;
         private readonly ILogger<WorkLoadManagementService> logger;
 
-        public WorkLoadManagementService(IEnumerable<IRestClient> restClientCollection, ILogger<WorkLoadManagementService> logger)
+        public WorkLoadManagementService(IDownstreamWebApi downstreamWebApi, AuthenticationStateProvider authenticationStateProvider, ILogger<WorkLoadManagementService> logger)
         {
-            this.restClient = restClientCollection.First(o => o is UnauthenticatedRestClient);
+            this.downstreamWebApi = downstreamWebApi;
+            this.authenticationStateProvider = authenticationStateProvider;
             this.logger = logger;
         }
 
-        public WorkItemDTO GetByWorkItemById(int id)
+        public async Task<ClaimsPrincipal> GetUserClaims()
+        {
+            var authState = await this.authenticationStateProvider.GetAuthenticationStateAsync();
+            return authState.User;
+        }
+
+        public async Task<WorkItemDTO> GetByWorkItemById(int id)
         {
             WorkItemDTO workItem = null;
 
@@ -34,7 +43,8 @@ namespace CSF.SRDashboard.Client.Services
 
             try
             {
-                workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+                workItem = await this.downstreamWebApi.GetForUserAsync<WorkItemDTO>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
+                //workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
 
                 if (!string.IsNullOrWhiteSpace(workItem.InitialDetailJson))
                 {
@@ -50,7 +60,7 @@ namespace CSF.SRDashboard.Client.Services
             return workItem;
         }
 
-        public List<WorkItemDTO> GetByLineOfBusinessId(string lineOfBusinessId)
+        public async Task<List<WorkItemDTO>> GetByLineOfBusinessId(string lineOfBusinessId)
         {
             List<WorkItemDTO> workItems = null;
 
@@ -61,7 +71,8 @@ namespace CSF.SRDashboard.Client.Services
 
             try
             {
-                workItems = this.restClient.GetAsync<List<WorkItemDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+                workItems = await this.downstreamWebApi.GetForUserAsync<List<WorkItemDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
+                //workItems = this.restClient.GetAsync<List<WorkItemDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -71,13 +82,14 @@ namespace CSF.SRDashboard.Client.Services
             return workItems;
         }
 
-        public WorkItemDTO AddWorkItem(WorkItemDTO workItem)
+        public async Task<WorkItemDTO> AddWorkItem(WorkItemDTO workItem)
         {
             string requestPath = $"api/v1/workitems";
 
             try
             {
-                workItem = this.restClient.PostAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
+                workItem = await this.downstreamWebApi.PostForUserAsync<WorkItemDTO, WorkItemDTO>("ApiWorkManagement", requestPath, workItem, user: await this.GetUserClaims());
+                //workItem = this.restClient.PostAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -87,17 +99,14 @@ namespace CSF.SRDashboard.Client.Services
             return workItem;
         }
 
-        public WorkItemDTO UpdateWorkitem(WorkItemDTO workItem)
+        public async Task<WorkItemDTO> UpdateWorkitem(WorkItemDTO workItem)
         {
             WorkItemDTO updatedWorkItem = null;
             string requestPath = $"api/v1/workitems";
             try
             {
-                var result = this.restClient.UpdateAsync(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
-                if (result > 0)
-                {
-                    updatedWorkItem = this.GetByWorkItemById(workItem.Id);
-                }
+                updatedWorkItem = await this.downstreamWebApi.PutForUserAsync<WorkItemDTO, WorkItemDTO>("ApiWorkManagement", requestPath, workItem, user: await this.GetUserClaims());
+                //var result = this.restClient.UpdateAsync(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -107,7 +116,7 @@ namespace CSF.SRDashboard.Client.Services
             return updatedWorkItem;
         }
 
-        public List<WorkItemDTO> GetByCdnNumber(string cdn)
+        public async Task<List<WorkItemDTO>> GetByCdnNumber(string cdn)
         {
             List<WorkItemDTO> workItems = new List<WorkItemDTO>();
             string requestPath = $"api/v1/workitems/applicants/ContactUniqueId/{cdn}/workitems";
@@ -116,7 +125,8 @@ namespace CSF.SRDashboard.Client.Services
 
             try
             {
-                workItems = this.restClient.GetAsync<List<WorkItemDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+                workItems = await this.downstreamWebApi.GetForUserAsync<List<WorkItemDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
+                //workItems = this.restClient.GetAsync<List<WorkItemDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -125,23 +135,72 @@ namespace CSF.SRDashboard.Client.Services
 
             return workItems;
         }
+
+        public async Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO)
+        {
+            string requestPath = "/api/v1/workitem-attachments";
+            try
+            {
+                return await this.downstreamWebApi.PostForUserAsync<WorkItemAttachmentDTO, WorkItemAttachmentDTO>("ApiWorkManagement", requestPath, workItemAttachmentDTO, user: await this.GetUserClaims());
+                //return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return new WorkItemAttachmentDTO();
+        }
+
+        public async Task<List<WorkItemAttachmentDTO>> GetAllAttachmentsByRequestId(int workitemId)
+        {
+            string requestPath = $"/api/v1/workitem-attachments/{workitemId}/attachments";
+            try
+            {
+                return await this.downstreamWebApi.GetForUserAsync<List<WorkItemAttachmentDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
+                //return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return new List<WorkItemAttachmentDTO>();
+        }
+
+        public async Task<WorkItemStatusDTO> AddWorkItemStatus(WorkItemStatusDTO status)
+        {
+            WorkItemStatusDTO updatedStatus = null;
+            string requestPath = $"api/v1/workitems/statuses";
+            try
+            {
+                updatedStatus = await this.downstreamWebApi.PostForUserAsync<WorkItemStatusDTO, WorkItemStatusDTO>("ApiWorkManagement", requestPath, status, user: await this.GetUserClaims());
+                //updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+
+            return updatedStatus;
+        }
+
         /// <summary>
         /// Gets all requests 
         /// </summary>
         /// <returns>All requests in workload table format</returns>
-        public List<WorkloadRequestTableItem> GetAllInRequestTableFormat()
+        public async Task<List<WorkloadRequestTableItem>> GetAllInRequestTableFormat()
         {
-            var workItems = this.GetByLineOfBusinessId(Constants.MarineMedical);
+            var workItems = await this.GetByLineOfBusinessId(Constants.MarineMedical);
             return PopulateWorkloadItem(workItems);
         }
+
         /// <summary>
         /// gets all requests linked to a given CDN
         /// </summary>
         /// <param name="cdn"></param>
         /// <returns>Requests linked to CDN in workload table format</returns>
-        public List<WorkloadRequestTableItem> GetByCdnInRequestTableFormat(string cdn)
+        public async Task<List<WorkloadRequestTableItem>> GetByCdnInRequestTableFormat(string cdn)
         {
-            var workItems = this.GetByCdnNumber(cdn);
+            var workItems = await this.GetByCdnNumber(cdn);
             return PopulateWorkloadItem(workItems);
         }
 
@@ -180,9 +239,7 @@ namespace CSF.SRDashboard.Client.Services
                 return tableItems;
             }
         
-
-        
-        public WorkItemDTO PostRequestModel(RequestModel requestModel, IGatewayService gatewayService)
+        public async Task<WorkItemDTO> PostRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
             var Cdn = requestModel.Cdn;
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(Cdn);
@@ -215,40 +272,15 @@ namespace CSF.SRDashboard.Client.Services
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
-            var uploadedWorkItem = this.AddWorkItem(workItem);
+            var uploadedWorkItem = await this.AddWorkItem(workItem);
 
             return uploadedWorkItem;
         }
-        public async Task<WorkItemAttachmentDTO> AddWorkItemAttachment(WorkItemAttachmentDTO workItemAttachmentDTO)
-        {
-            string requestPath = "/api/v1/workitem-attachments";
-            try
-            {
-                return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
-            }
-            return new WorkItemAttachmentDTO();
-        }
-        public List<WorkItemAttachmentDTO> GetAllAttachmentsByRequestId(int workitemId)
-        {
-            string requestPath = $"/api/v1/workitem-attachments/{workitemId}/attachments";
-            try
-            {   
-                 return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
-            }
-            catch(Exception ex)
-            {
-                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
-            }
-            return new List<WorkItemAttachmentDTO>();
-        }
-        public WorkItemDTO UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
+
+        public async Task<WorkItemDTO> UpdateWorkItemForRequestModel(RequestModel requestModel, IGatewayService gatewayService)
         {
             int requestId = Convert.ToInt32(requestModel.RequestID);
-            var existingWorkItem = this.GetByWorkItemById(requestId);
+            var existingWorkItem = await this.GetByWorkItemById(requestId);
 
             var cdn = requestModel.Cdn;
             var applicantInfo = gatewayService.GetApplicantInfoByCdn(cdn);
@@ -271,26 +303,11 @@ namespace CSF.SRDashboard.Client.Services
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
             AddWorkItemStatus(workItem.WorkItemStatus);
-            var uploadedWorkItem = this.UpdateWorkitem(workItem);
+            var uploadedWorkItem = await this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;
         }
 
-        public WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status)
-        {
-            WorkItemStatusDTO updatedStatus = null;
-            string requestPath = $"api/v1/workitems/statuses";
-            try
-            {
-                updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
-            }
-
-            return updatedStatus;
-        }
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
             ContactInformationDTO contact = new ContactInformationDTO();

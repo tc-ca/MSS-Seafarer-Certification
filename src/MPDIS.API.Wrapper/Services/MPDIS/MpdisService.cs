@@ -4,6 +4,7 @@ using CSF.Common.Library;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using CSF.Common.Library.Rest;
 
 namespace MPDIS.API.Wrapper.Services.MPDIS
 {

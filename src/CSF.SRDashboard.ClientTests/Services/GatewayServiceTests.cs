@@ -6,6 +6,7 @@ using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
+using CSF.Common.Library.Rest;
 
 namespace CSF.SRDashboard.Client.Services.Tests
 {

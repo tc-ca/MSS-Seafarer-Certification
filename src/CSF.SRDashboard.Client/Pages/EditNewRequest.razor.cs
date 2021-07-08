@@ -73,12 +73,12 @@ namespace CSF.SRDashboard.Client.Pages
 
             IsEditMode = true;
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            this.RequestModel = await PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
 
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
 
-            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
+            var documentIds = (await this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId)).Select(x => x.DocumentId).ToList();
             var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
             this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
             {
@@ -206,15 +206,18 @@ namespace CSF.SRDashboard.Client.Pages
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
 
-        private RequestModel PopulateRequestmodel(int requestId, string cdn)
+        private async Task<RequestModel> PopulateRequestmodel(int requestId, string cdn)
         {
-            var workItem = this.WorkLoadService.GetByWorkItemById(requestId);
+            var workItem = await this.WorkLoadService.GetByWorkItemById(requestId);
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
-            if(workItem.WorkItemStatus.StatusAdditionalDetails != null)
+
+            var statusAdditionalDetails = workItem.WorkItemStatus.StatusAdditionalDetails;
+
+            if (statusAdditionalDetails != null)
             {
-                requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(workItem.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(statusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
 
             if (workItem.Detail != null)

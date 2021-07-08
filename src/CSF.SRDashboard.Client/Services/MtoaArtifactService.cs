@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using CSF.Common.Library;
 using CSF.Web.Client.Utilities;
+using CSF.Common.Library.Rest;
 
 namespace CSF.SRDashboard.Client.Services
 {

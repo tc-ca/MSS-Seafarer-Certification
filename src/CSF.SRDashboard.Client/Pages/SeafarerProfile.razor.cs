@@ -179,10 +179,10 @@
             }
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.TableItems = WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
+            this.TableItems = await WorkLoadService.GetByCdnInRequestTableFormat(Cdn);
             this.AlertType = AlertTypes.Success;
         }
     }

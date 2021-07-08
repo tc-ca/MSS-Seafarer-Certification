@@ -17,11 +17,10 @@ namespace CSF.SRDashboard.Client.Pages
 
         public IWorkLoadManagementService WorkLoadService { get; set; }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            //
-            WorkloadData = WorkLoadService.GetAllInRequestTableFormat();
+        protected async override Task OnInitializedAsync()
+        { 
+            await base.OnInitializedAsync();
+            WorkloadData = await WorkLoadService.GetAllInRequestTableFormat();
         }
     }
 }

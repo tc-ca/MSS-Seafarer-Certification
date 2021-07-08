@@ -1,6 +1,7 @@
 ﻿namespace CSF.Common.Library
 {
     using CSF.Common.Library.Azure;
+    using CSF.Common.Library.Rest;
     using Microsoft.Extensions.DependencyInjection;
     using System.Net.Http;
 

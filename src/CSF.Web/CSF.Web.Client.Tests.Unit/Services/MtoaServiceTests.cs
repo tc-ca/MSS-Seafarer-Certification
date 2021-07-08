@@ -1,6 +1,7 @@
 ﻿namespace CSF.Web.Client.Tests.Unit.Services
 {
     using CSF.Common.Library;
+    using CSF.Common.Library.Rest;
     using CSF.Web.Client.Data.DTO.MTAPI;
     using CSF.Web.Client.Services;
     using CSF.Web.Client.Utilities;
@@ -13,9 +14,7 @@
     public class MtoaServiceTests
     {
         private readonly IMtoaServices mtoaServices;
-
         private readonly Mock<IRestClient> mockRestClient;
-
         private readonly Mock<ILogger<MtoaServices>> mockLogger;
 
         public MtoaServiceTests()

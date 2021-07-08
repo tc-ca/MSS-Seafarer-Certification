@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using CSF.Common.Library;
+using CSF.Common.Library.Rest;
 
 namespace CSF.SRDashboard.Client.Test.Integration
 {

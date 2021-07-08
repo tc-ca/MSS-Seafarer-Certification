@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSF.Common.Library
+﻿namespace CSF.Common.Library.Rest
 {
+    using Newtonsoft.Json;
+    using System;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public abstract class AbstractRestClient : IRestClient
     {
         /// <summary>
