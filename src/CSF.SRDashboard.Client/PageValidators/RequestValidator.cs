@@ -15,6 +15,7 @@ namespace CSF.SRDashboard.Client.PageValidators
             RuleFor(x => x.CertificateType).NotEmpty().WithMessage("Certificate type is required");
             RuleFor(x => x.SubmissionMethod).NotEmpty().WithMessage("Submission method is required");
             RuleFor(x => x.ProcessingPhase).NotEmpty().WithMessage("Processing phase is required");
+            RuleFor(x => x.DueDate).Must(x => x >= DateTime.Today).WithMessage("Due Date must be today or later");
         }
     }
 }

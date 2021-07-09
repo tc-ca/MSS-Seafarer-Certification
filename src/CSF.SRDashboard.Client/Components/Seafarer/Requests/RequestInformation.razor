@@ -60,7 +60,7 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSubmissionSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
+                <FormInputSelect class=" " Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSubmissionSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
                     @foreach (var item in Constants.SubmissionMethods)
                         {
                         <option value="@item.Id">@item.Text</option>
@@ -79,6 +79,19 @@
                 }
 
             }
+
+
         </div>
     </div>
 </EditForm>
+
+@if (!this.IsReadOnly)
+{
+    <FormInputDate Id="DDInput" Label="@Localizer["DueDate"]" @bind-Value="@RequestModel.DueDate" ValidationFor="@(()=>RequestModel.DueDate)" />
+    @*<ValidationMessage For="()=> RequestModel.DueDate"></ValidationMessage>*@
+}
+else
+{
+    <label class="form-label"><b>@Localizer["DueDate"]</b></label>
+    <p>@RequestModel.DueDate</p>
+}
