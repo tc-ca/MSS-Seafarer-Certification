@@ -106,7 +106,9 @@ namespace CSF.SRDashboard.Client.Pages
 
                 Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
-            this.StatusHistories = RequestModel.StatusHistories;
+
+            var statuses = this.WorkLoadService.GetWorkItemStatuses(EditRequestId).OrderByDescending(i => i.Id).ToList(); 
+            this.StatusHistories = this.PopulateStatusHistoryItems(statuses);
             this.RequestModel.UploadedDocuments = DocumentForm;
             InitialDocumentCount = documentIds.Count;
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -267,7 +269,7 @@ namespace CSF.SRDashboard.Client.Pages
                     requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
                 }
             }
-            requestModel.StatusHistories = workItem.ItemDetail.Status;
+         
             return requestModel;
         }
 
@@ -302,6 +304,25 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return null;
             }
+        }
+        private List<StatusHistoryItem> PopulateStatusHistoryItems(List<WorkItemStatusDTO> statusItems)
+        {
+            List<StatusHistoryItem> historyItems = new List<StatusHistoryItem>();
+            if (statusItems != null)
+            {
+                foreach (var item in statusItems)
+                {
+                    historyItems.Add(new StatusHistoryItem()
+                    {
+                        ChangedBy = item.StatusChangeEmployeeId,
+                        Id = item.Id.ToString(),
+                        ProcessingPhase = item.WorkItemReasonCode,
+                        StatusText = item.StatusAdditionalDetails,
+                        RequestStatusTime = item.StatusDateUTC
+                    }) ;
+                }
+            }
+            return historyItems;
         }
     }
 }

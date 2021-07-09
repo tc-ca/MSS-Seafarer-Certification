@@ -214,20 +214,6 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.ProcessingPhase = requestModel.ProcessingPhase;
             itemDetail.HasAttachments = (requestModel.UploadedDocuments != null) ? true : false;
             itemDetail.Comments = requestModel.Comments;
-            // Status history
-            List<StatusHistoryItem> statusHistory = new List<StatusHistoryItem>()
-            {
-                new StatusHistoryItem()
-                {
-                    RequestStatusTime = DateTime.UtcNow,
-                    StatusText = requestModel.Status,
-                    ChangedBy =  string.IsNullOrEmpty(requestModel.LoggedInUser) ? "Not assigned" : requestModel.LoggedInUser,
-                    Id = "1",
-                    ProcessingPhase = requestModel.ProcessingPhase
-                }
-            };
-
-            itemDetail.Status = statusHistory;
             itemDetail.Assignment = assignment;
             string itemDetailString = JsonSerializer.Serialize(itemDetail);
 
@@ -245,8 +231,12 @@ namespace CSF.SRDashboard.Client.Services
             // WorkItemStatuses
             workItem.WorkItemStatus = new WorkItemStatusDTO();
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
-
+            workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
+            workItem.WorkItemStatus.StatusDateUTC = DateTime.UtcNow;
+            workItem.WorkItemStatus.StatusChangeEmployeeId = requestModel.LoggedInUser;
+            workItem.WorkItemStatus.WorkItemReasonCode = requestModel.ProcessingPhase;
             workItem.WorkItemAssignment = assignment;
+            this.AddWorkItemStatus(workItem.WorkItemStatus);
             var uploadedWorkItem = this.AddWorkItem(workItem);
 
             return uploadedWorkItem;
@@ -305,7 +295,13 @@ namespace CSF.SRDashboard.Client.Services
             workItem.WorkItemStatus = new WorkItemStatusDTO();
             workItem.WorkItemStatus.StatusAdditionalDetails = requestModel.Status;
             workItem.WorkItemStatus.WorkItemId = requestModel.RequestID;
-            this.AddWorkItemStatus(workItem.WorkItemStatus);
+            workItem.WorkItemStatus.StatusDateUTC = DateTime.UtcNow;
+            workItem.WorkItemStatus.WorkItemReasonCode = requestModel.ProcessingPhase;
+            workItem.WorkItemStatus.StatusChangeEmployeeId = requestModel.LoggedInUser;
+            if (!this.VerifyStatusDuplicate(existingWorkItem, requestModel))
+            {
+                this.AddWorkItemStatus(workItem.WorkItemStatus);
+            }
             var uploadedWorkItem = this.UpdateWorkitem(workItem);
 
             return uploadedWorkItem;
@@ -325,6 +321,21 @@ namespace CSF.SRDashboard.Client.Services
             }
 
             return updatedStatus;
+        }
+
+        public List<WorkItemStatusDTO> GetWorkItemStatuses(int workItemId)
+        {
+            string requestPath = $"/api/v1/workitems/{workItemId}/statuses";
+            List<WorkItemStatusDTO> workItemStatuses = null;
+            try
+            {
+                workItemStatuses = this.restClient.GetAsync<List<WorkItemStatusDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+            }
+            catch(Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return workItemStatuses;
         }
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
@@ -357,29 +368,8 @@ namespace CSF.SRDashboard.Client.Services
 
         private string GetItemDetailFromRequestModel(RequestModel requestModel)
         {
-            var tempWorkItem = GetByWorkItemById(requestModel.RequestID);
+         
             WorkItemDetail itemDetail = new WorkItemDetail();
-
-            var tempWorkItemJson = JsonSerializer.Deserialize<WorkItemDetail>(tempWorkItem.Detail);
-
-
-            if (tempWorkItemJson.Status == null)
-            {
-                tempWorkItemJson.Status = new List<StatusHistoryItem>();
-            }
-            if (!this.VerifyStatusDuplicate(tempWorkItemJson.Status.First(), requestModel))
-            {
-                tempWorkItemJson.Status.Insert(0, new StatusHistoryItem()
-                {
-                    ProcessingPhase = requestModel.ProcessingPhase,
-                    StatusText = requestModel.Status,
-                    ChangedBy = string.IsNullOrEmpty(requestModel.LoggedInUser) ? "Not assigned" : requestModel.LoggedInUser,
-                    RequestStatusTime = DateTime.UtcNow
-                }
-                );
-            }
-
-            itemDetail.Status = tempWorkItemJson.Status;
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
@@ -393,7 +383,7 @@ namespace CSF.SRDashboard.Client.Services
             return itemDetailString;
         }
 
-        private bool VerifyStatusDuplicate(StatusHistoryItem historyItem, RequestModel requestModel) => string.Equals(requestModel.ProcessingPhase, historyItem.ProcessingPhase) && string.Equals(requestModel.Status, historyItem.StatusText);
+        private bool VerifyStatusDuplicate(WorkItemDTO historyItem, RequestModel requestModel) => string.Equals(requestModel.ProcessingPhase, historyItem.WorkItemStatus.WorkItemReasonCode) && string.Equals(requestModel.Status, historyItem.WorkItemStatus.StatusAdditionalDetails);
 
 
         public WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request)
