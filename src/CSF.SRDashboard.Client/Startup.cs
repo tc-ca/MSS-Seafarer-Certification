@@ -51,9 +51,6 @@ namespace CSF.SRDashboard.Client
             {
                 // By default, all incoming requests will be authorized according to the default policy
                 options.FallbackPolicy = options.DefaultPolicy;
-
-                options.AddPolicy("RoleAssignmentRequiredWriters", policy => policy.RequireRole("BasicUser"));
-                options.AddPolicy("RoleAssignmentRequiredReaders", policy => policy.RequireRole("BasicUser"));
             });
 
             services.AddRazorPages()
