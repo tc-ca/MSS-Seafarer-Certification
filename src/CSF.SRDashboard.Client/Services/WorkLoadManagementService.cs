@@ -46,7 +46,6 @@
             try
             {
                 workItem = await this.downstreamWebApi.GetForUserAsync<WorkItemDTO>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
-                //workItem = this.restClient.GetAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
 
                 if (!string.IsNullOrWhiteSpace(workItem.Detail))
                 {
@@ -74,7 +73,6 @@
             try
             {
                 workItems = await this.downstreamWebApi.GetForUserAsync<List<WorkItemDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
-                //workItems = this.restClient.GetAsync<List<WorkItemDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -91,7 +89,6 @@
             try
             {
                 workItem = await this.downstreamWebApi.PostForUserAsync<WorkItemDTO, WorkItemDTO>("ApiWorkManagement", requestPath, workItem, user: await this.GetUserClaims());
-                //workItem = this.restClient.PostAsync<WorkItemDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -108,7 +105,6 @@
             try
             {
                 updatedWorkItem = await this.downstreamWebApi.PutForUserAsync<WorkItemDTO, WorkItemDTO>("ApiWorkManagement", requestPath, workItem, user: await this.GetUserClaims());
-                //var result = this.restClient.UpdateAsync(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItem).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -128,7 +124,6 @@
             try
             {
                 workItems = await this.downstreamWebApi.GetForUserAsync<List<WorkItemDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
-                //workItems = this.restClient.GetAsync<List<WorkItemDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -144,7 +139,6 @@
             try
             {
                 return await this.downstreamWebApi.PostForUserAsync<WorkItemAttachmentDTO, WorkItemAttachmentDTO>("ApiWorkManagement", requestPath, workItemAttachmentDTO, user: await this.GetUserClaims());
-                //return await this.restClient.PostAsync<WorkItemAttachmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, workItemAttachmentDTO);
             }
             catch (Exception ex)
             {
@@ -159,7 +153,6 @@
             try
             {
                 return await this.downstreamWebApi.GetForUserAsync<List<WorkItemAttachmentDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
-                //return this.restClient.GetAsync<List<WorkItemAttachmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -175,7 +168,6 @@
             try
             {
                 updatedStatus = await this.downstreamWebApi.PostForUserAsync<WorkItemStatusDTO, WorkItemStatusDTO>("ApiWorkManagement", requestPath, status, user: await this.GetUserClaims());
-                //updatedStatus = this.restClient.PostAsync<WorkItemStatusDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, status).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -189,13 +181,11 @@
         public async Task<WorkItemAssignmentDTO> PostAssignmentForWorkItemAsync(WorkItemAssignmentDTO assignment)
         {
             WorkItemAssignmentDTO uploadedAssignment = null;
-            //
             string requestPath = "api/v1/workitems/assignments";
 
             try
             {
                 uploadedAssignment = await this.downstreamWebApi.PostForUserAsync<WorkItemAssignmentDTO, WorkItemAssignmentDTO>("ApiWorkManagement", requestPath, assignment, user: await this.GetUserClaims());
-                //uploadedAssignment = this.restClient.PostAsync<WorkItemAssignmentDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, assignment).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -223,7 +213,6 @@
                     options.HttpMethod = HttpMethod.Delete;
                     options.RelativePath = $"{requestPath}";
                 }, user: await GetUserClaims());
-                //var isDeleted = this.restClient.DeleteAsync(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
                 deletedInd = result.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -248,7 +237,6 @@
             try
             {
                 assignments = await this.downstreamWebApi.GetForUserAsync<List<WorkItemAssignmentDTO>>("ApiWorkManagement", requestPath, user: await this.GetUserClaims());
-                //assignments = this.restClient.GetAsync<List<WorkItemAssignmentDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
                 assignment = assignments.OrderBy(x => x.Id).Last();// most recent assignment for the workItem
             }
             catch (Exception ex)
