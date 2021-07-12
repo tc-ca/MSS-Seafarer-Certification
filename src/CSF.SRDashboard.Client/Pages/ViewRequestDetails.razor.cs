@@ -50,6 +50,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
 
+        public List<StatusHistoryItem> StatusHistories { get; set; } = new List<StatusHistoryItem>();
+
 
         protected async override Task OnInitializedAsync()
         {
@@ -61,7 +63,9 @@ namespace CSF.SRDashboard.Client.Pages
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
 
+            var statuses = this.WorkLoadService.GetWorkItemStatuses(RequestId).OrderByDescending(i => i.Id).ToList();
 
+            this.StatusHistories = this.PopulateStatusHistoryItems(statuses);
 
 
             RequestModel = new RequestModel
@@ -75,6 +79,7 @@ namespace CSF.SRDashboard.Client.Pages
             };
 
             RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
+           
             this.EditContext = new EditContext(RequestModel);
 
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
@@ -118,6 +123,25 @@ namespace CSF.SRDashboard.Client.Pages
         public void Cancel()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
+        }
+
+        private List<StatusHistoryItem> PopulateStatusHistoryItems(List<WorkItemStatusDTO> statusItems)
+        {
+            List<StatusHistoryItem> historyItems = new List<StatusHistoryItem>();
+            if (statusItems != null)
+            {
+                foreach (var item in statusItems) {
+                    historyItems.Add(new StatusHistoryItem()
+                    {
+                        ChangedBy = item.StatusChangeEmployeeId,
+                        Id = item.Id.ToString(),
+                        ProcessingPhase = item.WorkItemReasonCode,
+                        StatusText = item.StatusAdditionalDetails,
+                        RequestStatusTime = item.StatusDateUTC
+                    }) ;
+                }
+            }
+            return historyItems;
         }
     }
 }

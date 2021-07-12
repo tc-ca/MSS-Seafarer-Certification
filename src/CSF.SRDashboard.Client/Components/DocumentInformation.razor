@@ -31,8 +31,8 @@
                     <FluentValidationValidator />
                     @if (!this.IsReadOnly)
                     {
-                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id=@string.Format("MultipleSelect{0}", i)  CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">
-                            <SelectedItemTemplate Context="SelectItem">
+                        <InputMultipleSelect UseSelectedItemsAsSelectTitle="true" Title="@Localizer["DocumentTypes2"]" SelectTitle="" Id=@string.Format("MultipleSelect{0}", i)  CheckBoxList="@this.UploadedDocuments[i].DocumentTypeList">      
+                    <SelectedItemTemplate Context="SelectItem">
                                 <span>@SelectItem, </span>
                             </SelectedItemTemplate>
                         </InputMultipleSelect> }

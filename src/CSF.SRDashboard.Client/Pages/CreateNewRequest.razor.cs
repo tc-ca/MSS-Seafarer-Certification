@@ -111,6 +111,7 @@ namespace CSF.SRDashboard.Client.Pages
             var RequestToSend = new RequestModel
             {
                 Cdn = Applicant.Cdn,
+                LoggedInUser = this.State.UserDisplayName,
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,

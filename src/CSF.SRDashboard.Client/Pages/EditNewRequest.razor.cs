@@ -70,6 +70,7 @@ namespace CSF.SRDashboard.Client.Pages
         public bool MostRecentCommentsIsCollapsed { get; private set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
         public IUploadDocumentHelper UploadService { get; set; }
+        public List<StatusHistoryItem> StatusHistories { get; set; } = new List<StatusHistoryItem>();
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -106,6 +107,8 @@ namespace CSF.SRDashboard.Client.Pages
                 Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
 
+            var statuses = this.WorkLoadService.GetWorkItemStatuses(EditRequestId).OrderByDescending(i => i.Id).ToList(); 
+            this.StatusHistories = this.PopulateStatusHistoryItems(statuses);
             this.RequestModel.UploadedDocuments = DocumentForm;
             InitialDocumentCount = documentIds.Count;
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -137,6 +140,7 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 RequestID = EditRequestId,
                 Cdn = Applicant.Cdn,
+                LoggedInUser = this.State.UserDisplayName,
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
@@ -161,6 +165,7 @@ namespace CSF.SRDashboard.Client.Pages
                 else
                 {
                     var added = await this.InsertDocumentOnRequest();
+                    break;
                 }
 
                 CurrentDocumentNum++;
@@ -264,7 +269,7 @@ namespace CSF.SRDashboard.Client.Pages
                     requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
                 }
             }
-
+         
             return requestModel;
         }
 
@@ -299,6 +304,25 @@ namespace CSF.SRDashboard.Client.Pages
             {
                 return null;
             }
+        }
+        private List<StatusHistoryItem> PopulateStatusHistoryItems(List<WorkItemStatusDTO> statusItems)
+        {
+            List<StatusHistoryItem> historyItems = new List<StatusHistoryItem>();
+            if (statusItems != null)
+            {
+                foreach (var item in statusItems)
+                {
+                    historyItems.Add(new StatusHistoryItem()
+                    {
+                        ChangedBy = item.StatusChangeEmployeeId,
+                        Id = item.Id.ToString(),
+                        ProcessingPhase = item.WorkItemReasonCode,
+                        StatusText = item.StatusAdditionalDetails,
+                        RequestStatusTime = item.StatusDateUTC
+                    }) ;
+                }
+            }
+            return historyItems;
         }
     }
 }

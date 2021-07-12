@@ -79,7 +79,7 @@ namespace CSF.SRDashboard.Client.Services
 
 
         WorkItemStatusDTO AddWorkItemStatus(WorkItemStatusDTO status);
-
+        List<WorkItemStatusDTO> GetWorkItemStatuses(int workItemId);
         int DeleteOrPost(WorkItemAssignmentDTO assignment, bool isToDelete);
         WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request);
         WorkItemAssignmentDTO GetMostRecentAssingmentForWorkItem(int workItemId);
