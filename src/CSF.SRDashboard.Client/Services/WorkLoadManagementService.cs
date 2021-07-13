@@ -307,6 +307,51 @@ namespace CSF.SRDashboard.Client.Services
 
             return updatedStatus;
         }
+
+        public List<WorkItemStatusDTO> GetWorkItemStatuses(int workItemId)
+        {
+            string requestPath = $"/api/v1/workitems/{workItemId}/statuses";
+            List<WorkItemStatusDTO> workItemStatuses = null;
+            try
+            {
+                workItemStatuses = this.restClient.GetAsync<List<WorkItemStatusDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+            }
+            catch(Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return workItemStatuses;
+        }
+        public WorkItemCommentsDTO AddWorkItemComment(WorkItemCommentsDTO comment)
+        {
+            WorkItemCommentsDTO addedComment = null;
+            string requestPath = "/api/v1/workitem-comments";
+            try
+            {
+                addedComment  = this.restClient.PostAsync<WorkItemCommentsDTO>(ServiceLocatorDomain.WorkLoadManagement, requestPath, comment).GetAwaiter().GetResult();
+
+            }
+            catch(Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return addedComment;
+        }
+        public List<WorkItemCommentsDTO> GetAllCommentsForWorkItem(int workItemId)
+        {
+            string requestPath = $"/api/v1/workitem-comments/{workitemId}/comments";
+            List<WorkItemCommentsDTO> workComments = new List<WorkItemCommentsDTO>();
+            try
+            {
+                workComments = this.restClient.GetAsync<List<WorkItemCommentsDTO>>(ServiceLocatorDomain.WorkLoadManagement, requestPath).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message + "\n" + ex.InnerException);
+            }
+            return workComments;
+        }
+
         private ContactInformationDTO GetContacInfoDtoFromApplicant(MpdisApplicantDto applicant, bool isNewContact, WorkItemDTO exitingWorkItem)
         {
             ContactInformationDTO contact = new ContactInformationDTO();

@@ -84,5 +84,8 @@ namespace CSF.SRDashboard.Client.Services
         WorkItemAssignmentDTO GetAssignmentFromRequestModel(RequestModel request);
         WorkItemAssignmentDTO GetMostRecentAssingmentForWorkItem(int workItemId);
 
+        WorkItemCommentsDTO AddWorkItemComment(WorkItemCommentsDTO comment);
+        List<WorkItemCommentsDTO> GetAllCommentsForWorkItem(int workItemId);
+
     }
 }

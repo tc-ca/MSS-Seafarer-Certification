@@ -68,6 +68,7 @@ namespace CSF.SRDashboard.Client.Pages
         [Inject]
         public IDocumentService DocumentService { get; set; }
         public bool MostRecentCommentsIsCollapsed { get; private set; }
+        public List<RequestCommentInfo> WorkComments { get; set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
         public IUploadDocumentHelper UploadService { get; set; }
         protected async override Task OnInitializedAsync()
@@ -193,6 +194,17 @@ namespace CSF.SRDashboard.Client.Pages
             this.DocumentForm = null;
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + RequestModel.RequestID + "/" + Constants.Updated + "?tab=requestLink");
 
+        }
+
+        public void InsertCommentOnRequest(string commentText)
+        {
+            WorkItemCommentsDTO workCommentToInsert = new WorkItemCommentsDTO()
+            {
+                Comment = commentText,
+                CreatedDateUTC = DateTime.UtcNow,
+                CreatedBy = "Get Logged in User"
+            };
+           
         }
         private async Task<List<Document>> InsertDocumentOnRequest()
         {
