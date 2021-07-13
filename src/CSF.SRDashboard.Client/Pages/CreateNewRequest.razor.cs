@@ -59,7 +59,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public RequestValidator validator = new RequestValidator();
 
-
+        public List<RequestCommentInfo> WorkComments { get; set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
 
         public WorkItemDTO UploadedRequest { get; set; }
