@@ -339,7 +339,7 @@ namespace CSF.SRDashboard.Client.Services
         }
         public List<WorkItemCommentsDTO> GetAllCommentsForWorkItem(int workItemId)
         {
-            string requestPath = $"/api/v1/workitem-comments/{workitemId}/comments";
+            string requestPath = $"/api/v1/workitem-comments/{workItemId}/comments";
             List<WorkItemCommentsDTO> workComments = new List<WorkItemCommentsDTO>();
             try
             {

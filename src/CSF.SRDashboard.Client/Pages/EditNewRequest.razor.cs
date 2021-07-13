@@ -198,12 +198,18 @@ namespace CSF.SRDashboard.Client.Pages
 
         public void InsertCommentOnRequest(string commentText)
         {
-            WorkItemCommentsDTO workCommentToInsert = new WorkItemCommentsDTO()
+            if (!string.IsNullOrEmpty(commentText))
             {
-                Comment = commentText,
-                CreatedDateUTC = DateTime.UtcNow,
-                CreatedBy = "Get Logged in User"
-            };
+                WorkItemCommentsDTO workCommentToInsert = new WorkItemCommentsDTO()
+                {
+                    Comment = commentText,
+                    CreatedDateUTC = DateTime.UtcNow,
+                    WorkItemId = this.EditRequestId,
+                    CreatedBy = "Get Logged in User"
+                };
+
+                this.WorkLoadService.AddWorkItemComment(workCommentToInsert);
+            }
            
         }
         private async Task<List<Document>> InsertDocumentOnRequest()

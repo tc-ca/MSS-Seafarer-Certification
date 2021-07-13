@@ -1,5 +1,6 @@
 ﻿<div class="d-flex">
     <EditForm EditContext="@this.EditContext" OnValidSubmit="SaveComment">
+      <FluentValidationValidator />
         <FormInputTextArea Id="InputTextArea" Label="Input Text Area" Required="required" Rows="3" Cols="50" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(()=>this.RequestComment.Comment)" />
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-outline-primary" @onclick="SaveComment">Add comment</button>
