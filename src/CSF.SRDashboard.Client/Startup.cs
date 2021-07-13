@@ -12,6 +12,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ using Microsoft.Identity.Web.UI;
 using MPDIS.API.Wrapper.Services.MPDIS;
 using MPDIS.API.Wrapper.Services.MPDIS.Entities;
 using Radzen;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
@@ -121,6 +123,17 @@ namespace CSF.SRDashboard.Client
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.Use(next => context =>
+            {
+                // Set the environment on start up
+                context.Response.Cookies.Append("Environment", Environment.GetEnvironmentVariable("ENVIRONMENT"), new CookieOptions()
+                {
+                    HttpOnly = true,
+                });
+
+                return next(context);
+            });
 
             app.UseHttpsRedirection();
             app.UseRequestLocalization();

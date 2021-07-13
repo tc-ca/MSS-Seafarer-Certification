@@ -12,7 +12,38 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
+        "ENVIRONMENT": "Development",
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "TESTING": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ENVIRONMENT": "nct",
+        "ASPNETCORE_ENVIRONMENT": "Testing"
+      }
+    },
+    "DEV": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ENVIRONMENT": "ncd",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "ACC": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ENVIRONMENT": "nca"
+      }
+    },
+    "PROD": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ENVIRONMENT": "pcp"
       }
     },
     "CSF.SRDashboard.Client": {

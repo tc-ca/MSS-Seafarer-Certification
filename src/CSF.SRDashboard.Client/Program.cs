@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,14 @@ namespace CSF.SRDashboard.Client
 {
     public class Program
     {
+
+        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // reloadOnChange whether the configuration should be reloaded if the file changes
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ENVIRONMENT")}.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables() // Enironment variables override all other, *Should always be last
+            .Build();
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -21,6 +30,10 @@ namespace CSF.SRDashboard.Client
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureAppConfiguration((c, builder) =>
+                {
+                    // Allows us to use the configuration we set
+                    builder.AddConfiguration(Configuration);
                 });
     }
 }
