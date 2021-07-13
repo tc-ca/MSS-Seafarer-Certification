@@ -87,11 +87,17 @@
 
 @if (!this.IsReadOnly)
 {
-    <FormInputDate Id="DDInput" Label="@Localizer["DueDate"]" @bind-Value="@RequestModel.DueDate" ValidationFor="@(()=>RequestModel.DueDate)" />
-    @*<ValidationMessage For="()=> RequestModel.DueDate"></ValidationMessage>*@
+    <FormInputDate Id="DDInput" Label="@Localizer["DueDate"]" @bind-Value="@RequestModel.DueDate" ValidationFor="@(() => RequestModel.DueDate)" />
 }
 else
 {
     <label class="form-label"><b>@Localizer["DueDate"]</b></label>
-    <p>@RequestModel.DueDate</p>
+    @if (RequestModel.DueDate.HasValue)
+    {
+        <p>@RequestModel.DueDate.Value.ToString("MMM d, yyyy")</p>
+    }
+    else
+    {
+        <p>N/A</p>
+    }
 }
