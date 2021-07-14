@@ -60,6 +60,28 @@
 
             @if (!this.IsReadOnly)
             {
+                <FormInputSelect Id="Language" Label="@Localizer["Language"]" SelectLabel="@Localizer["DefaultLanguageSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Language" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
+                    @foreach (var item in Constants.Languages)
+                        {
+                        <option value="@item.Id">@item.Text</option>
+                        }
+                </FormInputSelect>
+            }
+            else
+            {
+                <label class="form-label"><b>@Localizer["Language"]</b></label>
+                @foreach (var item in Constants.Languages)
+                {
+                    if (@RequestModel.Language == item.Id)
+                    {
+                        <p>@item.Text</p>
+                    }
+                }
+
+            }
+
+            @if (!this.IsReadOnly)
+            {
                 <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSubmissionSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
                     @foreach (var item in Constants.SubmissionMethods)
                         {

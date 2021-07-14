@@ -7,6 +7,7 @@
     using CSF.SRDashboard.Client.Services.WorkloadRequest.Enums;
     using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
     using CSF.SRDashboard.Client.DTO;
+    using CSF.SRDashboard.Client.Services;
 
     public partial class WorkloadRequestTable
     {
@@ -23,7 +24,22 @@
         {
             if (this.Applicant != null)
             {
-                this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request");
+                if (this.Applicant.SelectedLanguage.Equals(Constants.Languages[0].Text, StringComparison.OrdinalIgnoreCase) || this.Applicant.SelectedLanguage.Equals(Constants.Languages[1].Text, StringComparison.OrdinalIgnoreCase))
+                {
+                    this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request/" + this.Applicant.SelectedLanguage);
+                }
+                else if (this.Applicant.SelectedLanguage.Equals("en", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request/" + Constants.Languages[0].Text);
+                }
+                else if (this.Applicant.SelectedLanguage.Equals("fn", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request/" + Constants.Languages[0].Text);
+                }
+                else
+                {
+                    this.NavigationManager.NavigateTo("/SeafarerProfile/" + this.Applicant.Cdn + "/create-new-request");
+                }
             }
         }
 

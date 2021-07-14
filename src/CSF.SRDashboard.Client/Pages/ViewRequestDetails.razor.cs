@@ -71,6 +71,7 @@ namespace CSF.SRDashboard.Client.Pages
                 RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 Status = Constants.RequestStatuses.Where(x => x.Text.Equals(WorkItemDTO.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id,
+                Language = Constants.Languages.Where(x => x.Text.Equals(WorkItemDTO.ItemDetail.Language, StringComparison.OrdinalIgnoreCase)).Single().Id,
                 ProcessingPhase = WorkItemDTO.ItemDetail.ProcessingPhase,
                 DueDate = WorkItemDTO.ItemDetail.DueDate
             };
