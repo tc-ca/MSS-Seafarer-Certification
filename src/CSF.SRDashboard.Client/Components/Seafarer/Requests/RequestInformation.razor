@@ -60,7 +60,7 @@
 
             @if (!this.IsReadOnly)
             {
-                <FormInputSelect class=" " Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSubmissionSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
+                <FormInputSelect Id="SubmissionMethod" Label="@Localizer["SubmissionMethod"]" SelectLabel="@Localizer["DefaultSubmissionSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.SubmissionMethod" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
                     @foreach (var item in Constants.SubmissionMethods)
                         {
                         <option value="@item.Id">@item.Text</option>
