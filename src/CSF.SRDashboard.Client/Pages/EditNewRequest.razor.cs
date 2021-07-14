@@ -83,6 +83,10 @@ namespace CSF.SRDashboard.Client.Pages
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
 
+
+
+
+            var requestComments = this.WorkLoadService.GetAllCommentsForWorkItem(this.EditRequestId);
             var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
             var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
             this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
@@ -106,7 +110,7 @@ namespace CSF.SRDashboard.Client.Pages
 
                 Document.Language = Constants.Languages.Where(x => x.Text.Equals(Document.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
-
+            this.WorkComments = this.PopulateCommentList(requestComments);
             this.RequestModel.UploadedDocuments = DocumentForm;
             InitialDocumentCount = documentIds.Count;
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -211,6 +215,22 @@ namespace CSF.SRDashboard.Client.Pages
                 this.WorkLoadService.AddWorkItemComment(workCommentToInsert);
             }
            
+        }
+        private List<RequestCommentInfo> PopulateCommentList(List<WorkItemCommentsDTO> comments)
+        {
+            List<RequestCommentInfo> requestComments = new List<RequestCommentInfo>();
+            foreach(var comment in comments)
+            {
+                requestComments.Add(new RequestCommentInfo()
+                {
+                    Id = comment.Id,
+                    Comment = comment.Comment,
+                    CreatedDateUTC = comment.CreatedDateUTC,
+                    CreatedBy = comment.CreatedBy
+                });
+            }
+
+            return requestComments;
         }
         private async Task<List<Document>> InsertDocumentOnRequest()
         {

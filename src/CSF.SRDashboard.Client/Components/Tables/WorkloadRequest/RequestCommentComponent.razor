@@ -1,9 +1,36 @@
 ﻿<div class="d-flex">
     <EditForm EditContext="@this.EditContext" OnValidSubmit="SaveComment">
-      <FluentValidationValidator />
-        <FormInputTextArea Id="InputTextArea" Label="Input Text Area" Required="required" Rows="3" Cols="50" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(()=>this.RequestComment.Comment)" />
+        <FluentValidationValidator />
+        <FormInputTextArea Id="InputTextArea" Required="required" Rows="3" Cols="50" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(()=>this.RequestComment.Comment)" />
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-outline-primary" @onclick="SaveComment">Add comment</button>
         </div>
     </EditForm>
 </div>
+<div class="d-flex">
+    <p>Comments </p>
+    <FormInputSelect Id="InputSelect" Label="" SelectLabel="" Required="required" @bind-Value="SortOption.Value" ValidationFor="@(() => SortOption.Value)" OnChange="ChangeSortOrder">
+        @foreach (var item in SortOptions)
+        {
+            <option value="@item.Id">@item.Value</option>
+        }
+    </FormInputSelect>
+    <hr />
+</div>
+<div>
+    @if (this.isCommentListEmpty())
+    {
+        <p>No comments available</p>
+    }
+    else
+    {
+        foreach (var comment in this.WorkComments)
+        {
+            <div></div>
+            <b>@comment.CreatedBy  @comment.CreatedDateUTC</b>
+
+        }
+
+    }
+</div>
+<hr />
