@@ -53,10 +53,6 @@ namespace CSF.SRDashboard.Client.Components.Tables.WorkloadRequest
             {
                 WorkComments.OrderBy(o => o.CreatedDateUTC);
             }
-
-            
-
-
             StateHasChanged();
         }
 
