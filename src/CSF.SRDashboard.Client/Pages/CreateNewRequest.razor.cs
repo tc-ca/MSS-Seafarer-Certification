@@ -116,7 +116,8 @@ namespace CSF.SRDashboard.Client.Pages
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
                 ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),
-                AssigneeId = RequestModel.AssigneeId
+                AssigneeId = RequestModel.AssigneeId,
+                DueDate = RequestModel.DueDate
             };
 
             UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
