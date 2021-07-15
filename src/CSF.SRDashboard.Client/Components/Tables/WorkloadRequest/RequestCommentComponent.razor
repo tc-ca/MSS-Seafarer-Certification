@@ -3,22 +3,22 @@
         <FluentValidationValidator />
         <FormInputTextArea Id="InputTextArea" Required="required" Rows="3" Cols="50" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(()=>this.RequestComment.Comment)" />
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-outline-primary" @onclick="SaveComment">Add comment</button>
+            <button type="submit" class="btn btn-outline-primary">Add comment</button>
         </div>
     </EditForm>
 </div>
 <div class="d-flex">
     <p>Comments </p>
-    <FormInputSelect Id="InputSelect" Label="" SelectLabel="" Required="required" @bind-Value="SortOption.Value" ValidationFor="@(() => SortOption.Value)" OnChange="ChangeSortOrder">
+    <FormInputSelect Id="InputSelect" ShowDefaultOption="false" Label="" SelectLabel="Select Sort type" Required="required" @bind-Value="SortOption.Text" ValidationFor="@(() => SortOption.Text)" OnChange="ChangeSortOrder">
         @foreach (var item in SortOptions)
         {
-            <option value="@item.Id">@item.Value</option>
+            <option value="@item.Id">@item.Text</option>
         }
     </FormInputSelect>
     <hr />
 </div>
 <div>
-    @if (this.isCommentListEmpty())
+    @if (!this.IsCommentListEmpty())
     {
         <p>No comments available</p>
     }
@@ -26,8 +26,11 @@
     {
         foreach (var comment in this.WorkComments)
         {
-            <div></div>
-            <b>@comment.CreatedBy  @comment.CreatedDateUTC</b>
+            <div>
+                <b>@comment.CreatedBy  @comment.CreatedDateUTC</b>
+            </div>
+            <p>@comment.Comment</p>
+
 
         }
 

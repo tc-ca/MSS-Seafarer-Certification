@@ -13,14 +13,24 @@ namespace CSF.SRDashboard.Client.Components.Tables.WorkloadRequest
     public partial class RequestCommentComponent
     {
         [Parameter]
-        public List<RequestCommentInfo> WorkComments { get; set; }
+        public List<RequestCommentInfo> WorkComments {
+            get => workComments;
+                set
+            {
+                if (workComments == value) return;
+                this.workComments = value;
+                WorkCommentsChanged.InvokeAsync(value);
+            } 
+        }
         [Parameter]
         public bool ReadOnly { get; set; }
         [Parameter]
         public EventCallback<string> SubmitComment { get; set; }
+        [Parameter]
+        public EventCallback<List<RequestCommentInfo>> WorkCommentsChanged { get; set; }
         private SortOption SortOption { get; set; } = new SortOption();
         public EditContext EditContext { get; set; }
-
+        private List<RequestCommentInfo> workComments { get; set; }
         public RequestComment RequestComment { get; set; } = new RequestComment();
 
         public static List<SelectListItem> SortOptions = new List<SelectListItem>() {
@@ -35,33 +45,46 @@ namespace CSF.SRDashboard.Client.Components.Tables.WorkloadRequest
             this.EditContext = new EditContext(this.RequestComment);
             base.OnInitialized();
         }
-        public async Task SaveComment()
+        public async void SaveComment()
         {
+           
             if (this.EditContext.Validate())
             {
                 await SubmitComment.InvokeAsync(this.RequestComment.Comment);
             }
-            StateHasChanged();
         }
         
         public void ChangeSortOrder()
         {
-            if(string.Equals(this.SortOption.Value, "Newest")){
-                WorkComments.OrderByDescending(o => o.CreatedDateUTC);
+            if(string.Equals(this.SortOption.Text, "2")){
+             var sortedNew = WorkComments.OrderByDescending(o => o.CreatedDateUTC).ToList();
+                this.WorkComments = sortedNew; 
             }
             else
             {
-                WorkComments.OrderBy(o => o.CreatedDateUTC);
+             var sortedOld = WorkComments.OrderBy(o => o.CreatedDateUTC).ToList();
+                this.WorkComments = sortedOld;
             }
             StateHasChanged();
         }
 
-        private bool isCommentListEmpty() => this.WorkComments == null || !this.WorkComments.Any() ? false : true;
+        private bool IsCommentListEmpty() => this.WorkComments == null || !this.WorkComments.Any() ? false : true;
+        private TimeSpan GetElapsedTime(DateTime postedTime)
+        {
+            DateTime currentTime = DateTime.UtcNow;
+            TimeSpan timeDifference = currentTime - postedTime;
 
+            return timeDifference;
+
+
+        }
     }
+   
+
+
     public partial class SortOption
     {
         public string Id { get; set; }
-        public string Value { get; set; }
+        public string Text { get; set; }
     }
 }

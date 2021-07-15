@@ -59,7 +59,7 @@ namespace CSF.SRDashboard.Client.Pages
 
         public RequestValidator validator = new RequestValidator();
 
-        public List<RequestCommentInfo> WorkComments { get; set; }
+        public List<RequestCommentInfo> WorkComments { get; set; } = new List<RequestCommentInfo>();
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
 
         public WorkItemDTO UploadedRequest { get; set; }
@@ -119,7 +119,7 @@ namespace CSF.SRDashboard.Client.Pages
                 AssigneeId = RequestModel.AssigneeId
             };
 
-            UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
+            UploadedRequest = await WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
             var addedDocuments = await this.InsertDocumentOnRequest(UploadedRequest.Id);
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }
@@ -147,6 +147,37 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
+        public async void InsertCommentsOnSave(int workItemId, List<RequestCommentInfo> tempComments)
+        {
+            if (tempComments != null || tempComments.Any())
+            {
+                foreach (var tempComment in tempComments)
+                {
+                    WorkItemCommentsDTO workCommentToInsert = new WorkItemCommentsDTO()
+                    {
+                        Comment = tempComment.Comment,
+                        CreatedDateUTC = tempComment.CreatedDateUTC,
+                        WorkItemId = workItemId,
+                        CreatedBy = tempComment.CreatedBy
+                    };
+                    await this.WorkLoadService.AddWorkItemComment(workCommentToInsert);
+                }
+            }
+        }
+        public void InsertTempComment(string commentText)
+        {
+            if (!string.IsNullOrEmpty(commentText))
+            {
+                RequestCommentInfo tempWorkComment = new RequestCommentInfo()
+                {
+                    Comment = commentText,
+                    CreatedDateUTC = DateTime.UtcNow,
+                    CreatedBy = "Get Logged in User"
+                };
+                this.WorkComments.Add(tempWorkComment);
+            }
+           
+        }
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);

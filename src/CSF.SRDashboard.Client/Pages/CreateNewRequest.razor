@@ -52,7 +52,11 @@
                         <CSF.SRDashboard.Client.Components.AddDocumentComponent ShowDefaultOption="true" EditContext="this.EditContext" @bind-DocumentForm="this.RequestModel.UploadedDocuments" AllowMultipleUploads="true"></CSF.SRDashboard.Client.Components.AddDocumentComponent>
                     </div>
                     <div class="mt-3 mb-3">
-                        <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestCommentComponent WorkComments="" ReadOnly="false" SubmitComment=""></CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestCommentComponent>
+                        <Collapse HeaderTitleTextColor="#FFFFFF" Title="Comments" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                            <BodyContent>
+                                <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestCommentComponent @bind-WorkComments="this.WorkComments" ReadOnly="false" SubmitComment="InsertTempComment"></CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestCommentComponent>
+                            </BodyContent>
+                        </Collapse>
                     </div>
                 </div>
 
