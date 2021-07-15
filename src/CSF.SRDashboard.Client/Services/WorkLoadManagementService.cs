@@ -205,6 +205,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.Language = requestModel.Language;
             itemDetail.DueDate = requestModel.DueDate;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;
@@ -344,6 +345,7 @@ namespace CSF.SRDashboard.Client.Services
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.Language = requestModel.Language;
             itemDetail.DueDate = requestModel.DueDate;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
             itemDetail.Cdn = requestModel.Cdn;

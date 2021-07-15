@@ -369,4 +369,7 @@
   <data name="DueDate" xml:space="preserve">
     <value>Due Date</value>
   </data>
+  <data name="DefaultLanguageSelect" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
 </root>

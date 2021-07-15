@@ -17,6 +17,8 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string RequestType { get; set; }
         [JsonPropertyName("CertificateType")]
         public string CertificateType { get; set; }
+        [JsonPropertyName("Language")]
+        public string Language { get; set; }
         [JsonPropertyName("SubmissionMethod")]
         public string SubmissionMethod { get; set; }
         [JsonPropertyName("DueDate")]

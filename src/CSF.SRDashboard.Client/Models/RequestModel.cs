@@ -17,6 +17,8 @@ namespace CSF.SRDashboard.Client.Models
 
         public string ApplicantFullName { get; set; }
 
+        public string Language { get; set; }
+
         public string Cdn { get; set; }
 
         public string AssigneeId { get; set; }

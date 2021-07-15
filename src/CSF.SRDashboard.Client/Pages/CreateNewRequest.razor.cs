@@ -80,6 +80,13 @@ namespace CSF.SRDashboard.Client.Pages
                 AssigneeId = Constants.Unassigned
             };
 
+            var Language = FindPreferredLanguage(Applicant);
+
+            if (Language != null)
+            {
+                RequestModel.Language = Constants.Languages.Where(x => x.Text.Equals(Language, StringComparison.OrdinalIgnoreCase)).Single().Id; ;
+            }
+
             this.EditContext = new EditContext(RequestModel);
           
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
@@ -114,6 +121,7 @@ namespace CSF.SRDashboard.Client.Pages
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                Language = Constants.Languages.Where(x => x.Id.Equals(RequestModel.Language, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
                 ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),
                 AssigneeId = RequestModel.AssigneeId,
@@ -146,6 +154,30 @@ namespace CSF.SRDashboard.Client.Pages
                 }
             }
             return addedDocuments;
+        }
+
+        public string FindPreferredLanguage(MpdisApplicantDto Applicant)
+        {
+            if(Applicant.SelectedLanguage == null)
+            {
+                return null;
+            }
+            else if (Applicant.SelectedLanguage.Equals(Constants.Languages[0].Text, StringComparison.OrdinalIgnoreCase) || this.Applicant.SelectedLanguage.Equals(Constants.Languages[1].Text, StringComparison.OrdinalIgnoreCase))
+            {
+                return Applicant.SelectedLanguage;
+            }
+            else if (Applicant.SelectedLanguage.Equals("en", StringComparison.OrdinalIgnoreCase))
+            {
+                return Constants.Languages[0].Text;
+            }
+            else if (Applicant.SelectedLanguage.Equals("fn", StringComparison.OrdinalIgnoreCase))
+            {
+                return Constants.Languages[1].Text;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void ViewProfile()
