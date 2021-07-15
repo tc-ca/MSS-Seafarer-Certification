@@ -17,5 +17,7 @@ namespace CSF.SRDashboard.Client.Utilities
         public ApplicantSearchResult ApplicantSearchResult { get; set; }
 
         public ApplicantSearchCriteria SearchCriteria { get; set; }
+
+        public string LoggedInUser { get; set; }
     }
 }

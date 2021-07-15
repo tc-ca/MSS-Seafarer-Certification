@@ -119,7 +119,7 @@ namespace CSF.SRDashboard.Client.Pages
                 AssigneeId = RequestModel.AssigneeId
             };
 
-            UploadedRequest = await WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
+            UploadedRequest =  WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
             var addedDocuments = await this.InsertDocumentOnRequest(UploadedRequest.Id);
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }
@@ -147,7 +147,7 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-        public async void InsertCommentsOnSave(int workItemId, List<RequestCommentInfo> tempComments)
+        public void InsertCommentsOnSave(int workItemId, List<RequestCommentInfo> tempComments)
         {
             if (tempComments != null || tempComments.Any())
             {
@@ -160,7 +160,7 @@ namespace CSF.SRDashboard.Client.Pages
                         WorkItemId = workItemId,
                         CreatedBy = tempComment.CreatedBy
                     };
-                    await this.WorkLoadService.AddWorkItemComment(workCommentToInsert);
+                     this.WorkLoadService.AddWorkItemComment(workCommentToInsert);
                 }
             }
         }

@@ -1,21 +1,25 @@
 ﻿<div class="d-flex">
     <EditForm EditContext="@this.EditContext" OnValidSubmit="SaveComment">
         <FluentValidationValidator />
-        <FormInputTextArea Id="InputTextArea" Required="required" Rows="3" Cols="50" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(()=>this.RequestComment.Comment)" />
+        <FormInputTextArea Id="InputTextArea" Required="required" Rows="3" Cols="80" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(()=>this.RequestComment.Comment)" />
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-outline-primary">Add comment</button>
         </div>
     </EditForm>
 </div>
-<div class="d-flex">
-    <p>Comments </p>
-    <FormInputSelect Id="InputSelect" ShowDefaultOption="false" Label="" SelectLabel="Select Sort type" Required="required" @bind-Value="SortOption.Text" ValidationFor="@(() => SortOption.Text)" OnChange="ChangeSortOrder">
-        @foreach (var item in SortOptions)
-        {
-            <option value="@item.Id">@item.Text</option>
-        }
-    </FormInputSelect>
-    <hr />
+<div class="d-flex border-bottom">
+    <p class="d-inline">Comments </p>
+    <div style="flex-basis:30%">
+        <FormInputSelect Id="InputSelect" ShowDefaultOption="false" Label="" SelectLabel="Select Sort type" Required="required" @bind-Value="SortOption.Text" ValidationFor="@(() => SortOption.Text)" OnChange="ChangeSortOrder">
+            @foreach (var item in SortOptions)
+            {
+                <option value="@item.Id">@item.Text</option>
+            }
+        </FormInputSelect>
+    </div>
+    <div>
+        <p>@this.WorkComments.Count() Comments</p>
+    </div>
 </div>
 <div>
     @if (!this.IsCommentListEmpty())
@@ -24,16 +28,15 @@
     }
     else
     {
-        foreach (var comment in this.WorkComments)
-        {
-            <div>
+        <ul>
+            @foreach (var comment in this.WorkComments)
+            {
+            <li>
                 <b>@comment.CreatedBy  @comment.CreatedDateUTC</b>
-            </div>
-            <p>@comment.Comment</p>
-
-
-        }
-
+                <p>@comment.Comment</p>
+            </li>
+            }
+        </ul>
     }
 </div>
 <hr />

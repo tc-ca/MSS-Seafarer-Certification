@@ -209,12 +209,11 @@ namespace CSF.SRDashboard.Client.Pages
                     Comment = commentText,
                     CreatedDateUTC = DateTime.UtcNow,
                     WorkItemId = this.EditRequestId,
-                    CreatedBy = "Get Logged in User"
+                    CreatedBy = this.State.LoggedInUser
                 };
 
                 this.WorkLoadService.AddWorkItemComment(workCommentToInsert);
-            }
-           
+            }           
         }
         private List<RequestCommentInfo> PopulateCommentList(List<WorkItemCommentsDTO> comments)
         {
