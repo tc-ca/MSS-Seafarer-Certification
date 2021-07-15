@@ -32,7 +32,7 @@
             @foreach (var comment in this.WorkComments)
             {
             <li>
-                <b>@comment.CreatedBy  @comment.CreatedDateUTC</b>
+                <b>@comment.CreatedBy  @comment.CreatedDateFormatted</b>
                 <p>@comment.Comment</p>
             </li>
             }
