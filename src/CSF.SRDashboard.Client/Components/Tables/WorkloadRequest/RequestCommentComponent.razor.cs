@@ -47,7 +47,15 @@ namespace CSF.SRDashboard.Client.Components.Tables.WorkloadRequest
         protected override void OnInitialized()
         {
 
-            var language = httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+            string language;
+
+            httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(CookieRequestCultureProvider.DefaultCookieName, out language);
+
+            if (string.IsNullOrWhiteSpace(language))
+            {
+                language = "en";
+            }
+
             language = language.Substring(2, 2);
 
             foreach (var item in WorkComments)
