@@ -93,5 +93,7 @@ namespace CSF.SRDashboard.Client.Services
         public const string NotSelected = "-1";
 
         public const string Unassigned = "9999-9999-9999";
+
+        public const string Language = "lang";
     }
 }
