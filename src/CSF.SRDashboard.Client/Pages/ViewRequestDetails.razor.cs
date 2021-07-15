@@ -48,6 +48,8 @@ namespace CSF.SRDashboard.Client.Pages
 
         public RequestModel RequestModel { get; set; }
 
+        public List<RequestCommentInfo> WorkComments { get; set; } = new List<RequestCommentInfo>();
+
         public List<UploadedDocument> UploadedDocuments { get; set; } = new List<UploadedDocument>();
 
 
@@ -60,7 +62,8 @@ namespace CSF.SRDashboard.Client.Pages
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
             WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
-
+            var requestComments = this.WorkLoadService.GetAllCommentsForWorkItem(this.RequestId);
+            this.WorkComments = this.PopulateCommentList(requestComments);
 
 
 
@@ -109,7 +112,22 @@ namespace CSF.SRDashboard.Client.Pages
 
             StateHasChanged();
         }
+        private List<RequestCommentInfo> PopulateCommentList(List<WorkItemCommentsDTO> comments)
+        {
+            List<RequestCommentInfo> requestComments = new List<RequestCommentInfo>();
+            foreach (var comment in comments)
+            {
+                requestComments.Add(new RequestCommentInfo()
+                {
+                    Id = comment.Id,
+                    Comment = comment.Comment,
+                    CreatedDateUTC = comment.CreatedDateUTC,
+                    CreatedBy = comment.CreatedBy
+                });
+            }
 
+            return requestComments;
+        }
         public void ViewProfile()
         {
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn);

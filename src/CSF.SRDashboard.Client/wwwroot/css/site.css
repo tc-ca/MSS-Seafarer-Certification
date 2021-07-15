@@ -299,20 +299,17 @@ span.csf-span {
 input[type=checkbox]{
     margin-right: 0.5rem;
 }
-.TestToast {
-    animation: fadeout 1.5;
-    
-    
-   
+
+.CommentListItem {
+    border-bottom: 1px solid #CCCCCC;
+    width: 100%;
+    padding-top: 1rem;
 }
-@keyframes fadeout {
-from{
-    opacity: 1;
-}
-to{
-    opacity: 0;
-}
-}
+    .CommentListItem:last-child {
+        width: 100%;
+        border-bottom: 0px;
+    }
+
 .AttachmentScreenHeader {
     border-bottom: 1px solid #dee2e6 !important;
     background-color: #fff;

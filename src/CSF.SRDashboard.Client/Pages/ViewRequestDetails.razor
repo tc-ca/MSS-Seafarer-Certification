@@ -39,6 +39,13 @@
                 </Collapse>
             }
         </div>
+        <div class="mt-3 mb-3">
+            <Collapse HeaderTitleTextColor="#FFFFFF" Title="Comments" HeaderBackgroundColor="#1B50B1" IsCollapsable="true">
+                <BodyContent>
+                    <CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestCommentComponent WorkComments="this.WorkComments" ReadOnly="true"></CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.RequestCommentComponent>
+                </BodyContent>
+            </Collapse>
+        </div>
 
         <div style="flex-basis:25%;" class="pl-4 pr-4">
             <CSF.SRDashboard.Client.Components.RequestStatus EditContext="EditContext" RequestModel="RequestModel" Editable="true" IsReadOnly="true" ShowDefaultOption="true" />
