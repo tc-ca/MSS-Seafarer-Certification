@@ -19,6 +19,8 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         public string CertificateType { get; set; }
         [JsonPropertyName("SubmissionMethod")]
         public string SubmissionMethod { get; set; }
+        [JsonPropertyName("DueDate")]
+        public DateTime? DueDate { get; set; }
         [JsonPropertyName("Status")]
         public object Status { get; set; }
         [JsonPropertyName("ProcessingPhase")]

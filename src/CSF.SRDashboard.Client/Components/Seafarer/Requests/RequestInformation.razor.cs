@@ -41,6 +41,8 @@ namespace CSF.SRDashboard.Client.Components.Seafarer.Requests
         [Inject]
         public IStringLocalizer<Shared.Common> Localizer { get; set; }
 
+        public string CssError { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();

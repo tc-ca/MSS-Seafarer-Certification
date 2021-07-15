@@ -79,6 +79,25 @@
                 }
 
             }
+
+
         </div>
     </div>
 </EditForm>
+
+@if (!this.IsReadOnly)
+{
+    <FormInputDate Id="DDInput" Label="@Localizer["DueDate"]" @bind-Value="@RequestModel.DueDate" ValidationFor="@(() => RequestModel.DueDate)" />
+}
+else
+{
+    <label class="form-label"><b>@Localizer["DueDate"]</b></label>
+    @if (RequestModel.DueDate.HasValue)
+    {
+        <p>@RequestModel.DueDate.Value.ToString("MMM d, yyyy")</p>
+    }
+    else
+    {
+        <p>N/A</p>
+    }
+}
