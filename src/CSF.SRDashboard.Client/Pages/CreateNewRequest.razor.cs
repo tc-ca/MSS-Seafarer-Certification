@@ -33,9 +33,6 @@ namespace CSF.SRDashboard.Client.Pages
         [Parameter]
         public int RequestId { get; set; }
 
-        [Parameter]
-        public string Language { get; set; }
-
         [Inject]
         public IGatewayService GatewayService { get; set; }
 
@@ -83,7 +80,9 @@ namespace CSF.SRDashboard.Client.Pages
                 AssigneeId = Constants.Unassigned
             };
 
-            if(Language != null)
+            var Language = GetLanguage(Applicant);
+
+            if (Language != null)
             {
                 RequestModel.Language = Constants.Languages.Where(x => x.Text.Equals(Language, StringComparison.OrdinalIgnoreCase)).Single().Id; ;
             }
@@ -155,6 +154,30 @@ namespace CSF.SRDashboard.Client.Pages
                 }
             }
             return addedDocuments;
+        }
+
+        public string GetLanguage(MpdisApplicantDto Applicant)
+        {
+            if(Applicant.SelectedLanguage == null)
+            {
+                return null;
+            }
+            else if (Applicant.SelectedLanguage.Equals(Constants.Languages[0].Text, StringComparison.OrdinalIgnoreCase) || this.Applicant.SelectedLanguage.Equals(Constants.Languages[1].Text, StringComparison.OrdinalIgnoreCase))
+            {
+                return Applicant.SelectedLanguage;
+            }
+            else if (Applicant.SelectedLanguage.Equals("en", StringComparison.OrdinalIgnoreCase))
+            {
+                return Constants.Languages[0].Text;
+            }
+            else if (Applicant.SelectedLanguage.Equals("fn", StringComparison.OrdinalIgnoreCase))
+            {
+                return Constants.Languages[1].Text;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void ViewProfile()
