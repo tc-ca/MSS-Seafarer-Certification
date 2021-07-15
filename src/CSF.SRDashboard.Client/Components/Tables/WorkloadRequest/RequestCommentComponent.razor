@@ -1,10 +1,10 @@
 ﻿
-<div class="d-flex">
+<div class="d-flex pb-5">
     <EditForm EditContext="@this.EditContext" OnValidSubmit="SaveComment">
         <FluentValidationValidator />
         @if (!this.ReadOnly)
         {
-            <FormInputTextArea Id="InputTextArea" Required="required" Rows="3" Cols="80" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(() => this.RequestComment.Comment)" />
+            <FormInputTextArea Id="InputTextArea" Required="required" Rows="3" Cols="75" @bind-Value="@this.RequestComment.Comment" ValidationFor="@(() => this.RequestComment.Comment)" />
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-outline-primary">Add comment</button>
             </div>
@@ -41,7 +41,7 @@
             {
                 <li class="CommentListItem">
                     <b>@comment.CreatedBy  @comment.CreatedDateFormatted</b>
-                    <p class="mt-1">@comment.Comment</p>
+                    <p class="mt-1 mr-5">@comment.Comment</p>
                 </li>
             }
         </ul>

@@ -360,4 +360,7 @@
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned_fr</value>
   </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due Date_fr</value>
+  </data>
 </root>
