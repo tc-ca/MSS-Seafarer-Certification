@@ -15,6 +15,6 @@
         public List<StatusHistoryItem> StatusHistories { get; set; }
         [Parameter]
         public string DateFormat { get; set; }
-        public bool IsListEmpty() => this.StatusHistories == null || !this.StatusHistories.Any() ? false : true;
+        public bool IsListEmpty() => !(this.StatusHistories == null || !this.StatusHistories.Any());
     }
 }
