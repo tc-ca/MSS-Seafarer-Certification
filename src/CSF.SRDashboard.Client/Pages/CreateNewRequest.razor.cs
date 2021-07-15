@@ -80,7 +80,7 @@ namespace CSF.SRDashboard.Client.Pages
                 AssigneeId = Constants.Unassigned
             };
 
-            var Language = GetLanguage(Applicant);
+            var Language = FindPreferredLanguage(Applicant);
 
             if (Language != null)
             {
@@ -156,7 +156,7 @@ namespace CSF.SRDashboard.Client.Pages
             return addedDocuments;
         }
 
-        public string GetLanguage(MpdisApplicantDto Applicant)
+        public string FindPreferredLanguage(MpdisApplicantDto Applicant)
         {
             if(Applicant.SelectedLanguage == null)
             {
