@@ -1,6 +1,7 @@
 ﻿namespace CSF.Web.Client.Tests.Unit.Utilities
 {
     using CSF.Common.Library;
+    using CSF.Common.Library.Rest;
     using CSF.Web.Client.Data.Services;
     using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;

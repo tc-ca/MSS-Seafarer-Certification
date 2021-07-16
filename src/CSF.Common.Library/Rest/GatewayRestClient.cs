@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Net.Http;
-using System.Net.Http.Headers;
-
-namespace CSF.Common.Library
+﻿namespace CSF.Common.Library.Rest
 {
+    using Microsoft.Extensions.Configuration;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+
     /// <summary>
     /// This IRestClient implements security necessary to make valid calls against our custom API gateway.
     /// </summary>
@@ -27,7 +27,6 @@ namespace CSF.Common.Library
         protected override void ResetRestClientHeaders()
         {
             base.ResetRestClientHeaders();
-
             this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.bearerToken);
         }
     }

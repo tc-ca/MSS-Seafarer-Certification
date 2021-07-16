@@ -1,6 +1,5 @@
-﻿namespace CSF.Common.Library
+﻿namespace CSF.Common.Library.Rest
 {
-    using System;
     using System.Threading.Tasks;
 
     /// <summary>

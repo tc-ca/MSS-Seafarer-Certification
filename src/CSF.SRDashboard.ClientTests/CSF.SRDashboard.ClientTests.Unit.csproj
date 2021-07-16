@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CSF.Common.Library\CSF.Common.Library.csproj" />
     <ProjectReference Include="..\CSF.SRDashboard.Client\CSF.SRDashboard.Client.csproj" />
   </ItemGroup>
 

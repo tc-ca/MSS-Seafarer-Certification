@@ -4,10 +4,9 @@
     using System.IO;
     using System.Threading.Tasks;
     using CSF.Common.Library;
+    using CSF.Common.Library.Rest;
     using CSF.Web.Client.Data;
-    using CSF.Web.Client.Data.DTO;
     using CSF.Web.Client.Data.DTO.MTAPI;
-    using CSF.Web.Client.Utilities;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 

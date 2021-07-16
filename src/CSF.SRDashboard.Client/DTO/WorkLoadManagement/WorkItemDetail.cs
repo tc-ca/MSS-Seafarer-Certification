@@ -22,7 +22,7 @@ namespace CSF.SRDashboard.Client.DTO.WorkLoadManagement
         [JsonPropertyName("DueDate")]
         public DateTime? DueDate { get; set; }
         [JsonPropertyName("Status")]
-        public string Status { get; set; }
+        public object Status { get; set; }
         [JsonPropertyName("ProcessingPhase")]
         public string ProcessingPhase { get; set; }
         [JsonPropertyName("HasAttachments")]

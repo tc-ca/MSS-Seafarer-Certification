@@ -10,7 +10,8 @@
     using System.Threading.Tasks;
     using CSF.SRDashboard.Client.Services.Document.Entities;
     using CSF.SRDashboard.Client.DTO.DocumentStorage;
-    using CSF.SRDashboard.Client.Models;
+    using CSF.Common.Library.Rest;
+
     public class DocumentService : IDocumentService
     {
         private readonly IConfiguration configuration;
