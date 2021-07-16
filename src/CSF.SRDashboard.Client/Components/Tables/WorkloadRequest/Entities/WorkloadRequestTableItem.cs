@@ -18,6 +18,8 @@
 
             public string RequestType { get; set; }
 
+            public DateTime? DueDate { get; set; }
+
             public DateTime? RequestDate { get; set; }
 
             public string Status { get; set; }

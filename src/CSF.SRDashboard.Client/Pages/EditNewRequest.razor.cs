@@ -143,7 +143,8 @@ namespace CSF.SRDashboard.Client.Pages
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
                 ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),
-                AssigneeId = RequestModel.AssigneeId
+                AssigneeId = RequestModel.AssigneeId,
+                DueDate = RequestModel.DueDate
             };
 
             var updatedWorkItem = WorkLoadService.UpdateWorkItemForRequestModel(RequestToSend, GatewayService);
@@ -265,6 +266,7 @@ namespace CSF.SRDashboard.Client.Pages
                 requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                requestModel.DueDate = detail.DueDate;
                 if (detail.ProcessingPhase != null)
                 {
                     requestModel.ProcessingPhase = GetProcessingPhase(requestModel, detail.ProcessingPhase);
