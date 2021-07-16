@@ -86,6 +86,13 @@ namespace CSF.SRDashboard.Client.Services
             new SelectListItem { Id = "2", Text = "French" }
         };
 
+        public static List<SelectListItem> Priority = new List<SelectListItem> {
+            new SelectListItem { Id = "1", Text = "Urgent" },
+            new SelectListItem { Id = "2", Text = "High" },
+            new SelectListItem { Id = "3", Text = "Medium" },
+            new SelectListItem { Id = "4", Text = "Low" }
+        };
+
         public static string RequestStatusesDefaultValue = RequestStatuses[0].Text;
 
         public const string NoProfilePicturePath = "/img/no-profile-photo.png";

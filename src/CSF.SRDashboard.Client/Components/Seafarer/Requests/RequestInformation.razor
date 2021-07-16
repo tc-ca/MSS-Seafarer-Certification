@@ -58,6 +58,28 @@
                 }
             }
 
+
+            @if (!this.IsReadOnly)
+            {
+                <FormInputSelect Id="Priority" Label="@Localizer["Priority"]" SelectLabel="@Localizer["DefaultPrioritySelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Priority" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
+                    @foreach (var item in Constants.Languages)
+                        {
+                        <option value="@item.Id">@item.Text</option>
+                        }
+                </FormInputSelect>
+            }
+            else
+            {
+                <label class="form-label"><b>@Localizer["Priority"]</b></label>
+                @foreach (var item in Constants.Priority)
+                {
+                    if (@RequestModel.Priority == item.Id)
+                    {
+                        <p>@item.Text</p>
+                    }
+                }
+            }
+
             @if (!this.IsReadOnly)
             {
                 <FormInputSelect Id="Language" Label="@Localizer["Language"]" SelectLabel="@Localizer["DefaultLanguageSelect"]" ShowDefaultOption="ShowDefaultOption" @bind-Value="@RequestModel.Language" ValidationFor="@(() => RequestModel.SubmissionMethod)" Required="true">
@@ -77,7 +99,6 @@
                         <p>@item.Text</p>
                     }
                 }
-
             }
 
             @if (!this.IsReadOnly)
