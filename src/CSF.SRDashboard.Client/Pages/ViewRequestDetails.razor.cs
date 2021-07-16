@@ -62,8 +62,6 @@ namespace CSF.SRDashboard.Client.Pages
             WorkItemDTO = await this.WorkLoadService.GetByWorkItemById(RequestId);
 
 
-
-
             RequestModel = new RequestModel
             {
                 RequestID = WorkItemDTO.Id,

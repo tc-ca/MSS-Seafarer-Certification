@@ -113,7 +113,7 @@
 
             await base.OnInitializedAsync();
 
-            this.LoadData();
+            await this.LoadData();
             var Documents = ClientXrefDocumentRepository.GetDocumentsByCdn(Cdn).ToList();
             List<Services.Document.Entities.DocumentInfo> documentInfos = new List<Services.Document.Entities.DocumentInfo>();
 
@@ -182,7 +182,7 @@
             }
         }
 
-        private async void LoadData()
+        private async Task LoadData()
         {
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
             this.TableItems = await WorkLoadService.GetByCdnInRequestTableFormat(Cdn);

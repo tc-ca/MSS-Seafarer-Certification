@@ -290,6 +290,7 @@
                         tableItem.ApplicantCDN = detail.Cdn;
                         tableItem.ProcessingPhase = detail.ProcessingPhase;
                         tableItem.DueDate = detail.DueDate;
+                        tableItem.Priority = detail.Priority;
                     }
              
                     tableItem.RequestId = workItem.Id.ToString();
@@ -326,6 +327,7 @@
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.Priority = requestModel.Priority;
             itemDetail.Language = requestModel.Language;
             itemDetail.DueDate = requestModel.DueDate;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;
@@ -426,6 +428,7 @@
             itemDetail.RequestType = requestModel.RequestType;
             itemDetail.CertificateType = requestModel.CertificateType;
             itemDetail.SubmissionMethod = requestModel.SubmissionMethod;
+            itemDetail.Priority = requestModel.Priority;
             itemDetail.Language = requestModel.Language;
             itemDetail.DueDate = requestModel.DueDate;
             itemDetail.ApplicantName = requestModel.ApplicantFullName;

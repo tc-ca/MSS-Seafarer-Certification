@@ -141,6 +141,7 @@ namespace CSF.SRDashboard.Client.Pages
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod)).Single().Text,
+                Priority = Constants.Priorities.Where(x => x.Id.Equals(RequestModel.Priority)).Single().Text,
                 Language = Constants.Languages.Where(x => x.Id.Equals(RequestModel.Language)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
                 ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),
@@ -267,6 +268,7 @@ namespace CSF.SRDashboard.Client.Pages
                 requestModel.CertificateType = Constants.CertificateTypes.Where(x => x.Text.Equals(detail.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.RequestType = Constants.RequestTypes.Where(x => x.Text.Equals(detail.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Text.Equals(detail.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                requestModel.Priority = Constants.Priorities.Where(x => x.Text.Equals(detail.Priority, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.Language = Constants.Languages.Where(x => x.Text.Equals(detail.Language, StringComparison.OrdinalIgnoreCase)).Single().Id;
                 requestModel.DueDate = detail.DueDate;
                 if (detail.ProcessingPhase != null)

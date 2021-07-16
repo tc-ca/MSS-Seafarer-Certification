@@ -1,5 +1,7 @@
 ﻿using CSF.SRDashboard.Client.DTO;
 using CSF.SRDashboard.Client.Models;
+using CSF.SRDashboard.Client.Services;
+using DSD.MSS.Blazor.Components.Core.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
@@ -40,6 +42,8 @@ namespace CSF.SRDashboard.Client.Components.Seafarer.Requests
 
         [Inject]
         public IStringLocalizer<Shared.Common> Localizer { get; set; }
+
+        public bool IsCurrentSelectedPriority(SelectListItem dropdown) => dropdown.Text.Equals(Constants.PriorityDefaultValue) && (RequestModel.Priority == null || RequestModel.Priority == dropdown.Id);
 
         public string CssError { get; set; }
 

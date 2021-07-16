@@ -121,6 +121,7 @@ namespace CSF.SRDashboard.Client.Pages
                 CertificateType = Constants.CertificateTypes.Where(x => x.Id.Equals(RequestModel.CertificateType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 RequestType = Constants.RequestTypes.Where(x => x.Id.Equals(RequestModel.RequestType, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 SubmissionMethod = Constants.SubmissionMethods.Where(x => x.Id.Equals(RequestModel.SubmissionMethod, StringComparison.OrdinalIgnoreCase)).Single().Text,
+                Priority = Constants.Priorities.Where(x => x.Id.Equals(RequestModel.Priority, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 Language = Constants.Languages.Where(x => x.Id.Equals(RequestModel.Language, StringComparison.OrdinalIgnoreCase)).Single().Text,
                 Status = Constants.RequestStatuses.Where(x => x.Id.Equals(RequestModel.Status)).Single().Text,
                 ProcessingPhase = processingPhaseUtility.FindProcessingPhaseById(RequestModel),

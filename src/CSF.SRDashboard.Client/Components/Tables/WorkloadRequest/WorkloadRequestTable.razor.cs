@@ -7,6 +7,7 @@
     using CSF.SRDashboard.Client.Services.WorkloadRequest.Enums;
     using CSF.SRDashboard.Client.Components.Tables.WorkloadRequest.Entities;
     using CSF.SRDashboard.Client.DTO;
+    using DSD.MSS.Blazor.Components.Table;
 
     public partial class WorkloadRequestTable
     {
