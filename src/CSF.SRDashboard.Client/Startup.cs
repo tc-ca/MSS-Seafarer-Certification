@@ -2,6 +2,7 @@ using CSF.API.Data.Contexts;
 using CSF.API.Services.Repositories;
 using CSF.Common.Library;
 using CSF.Common.Library.Azure;
+using CSF.Common.Library.Rest;
 using CSF.SRDashboard.Client.Graph;
 using CSF.SRDashboard.Client.Models;
 using CSF.SRDashboard.Client.PageValidators;
@@ -42,8 +43,9 @@ namespace CSF.SRDashboard.Client
         {
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
-                .EnableTokenAcquisitionToCallDownstreamApi(GraphConstants.Scopes)
-                .AddInMemoryTokenCaches();
+                    .EnableTokenAcquisitionToCallDownstreamApi(GraphConstants.Scopes)
+                        .AddDownstreamWebApi("ApiWorkManagement", Configuration.GetSection("WorkloadManagementAPI"))
+                            .AddInMemoryTokenCaches();    
 
             services.AddAuthorization(options =>
             {
@@ -64,14 +66,13 @@ namespace CSF.SRDashboard.Client
             services.AddSingleton<IRestClient, UnauthenticatedRestClient>();
             services.AddSingleton<IRestClient, GatewayRestClient>();
             services.AddSingleton<IDocumentService, DocumentService>();
-            services.AddSingleton<IWorkLoadManagementService, WorkLoadManagementService>();
+            services.AddScoped<IWorkLoadManagementService, WorkLoadManagementService>();
 
             services.AddTransient<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddTransient<IClientXrefDocumentRepository, ClientXrefDocumentRepository>();
             services.AddTransient<IKeyVaultService, AzureKeyVaultService>();
             services.AddTransient<IValidator<ApplicantSearchCriteria>, SearchValidator>();
             services.AddTransient<IMtoaArtifactService, MtoaArtifactService>();
-
             services.AddTransient<IUserGraphApiService, UserGraphApiService>();
             services.AddTransient<IValidator<UploadedDocument>, UploadDocumentAttachmentValidator>();
 
@@ -79,19 +80,16 @@ namespace CSF.SRDashboard.Client
             services.AddScoped<SessionState>();
             services.AddScoped<DialogService>();
             services.AddScoped<RequestGridsModel>();
-            services.AddScoped<IUserGraphApiService, UserGraphApiService>();
 
             services.AddApplicationInsightsTelemetry(Configuration.GetSection("ApplicationInsights:Instrumentationkey").Value);
 
             services.AddHttpContextAccessor();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
-
             var keyVault = serviceProvider.GetService<IKeyVaultService>();
 
             services.AddDbContext<ClientDBContext>(options =>
             {
-
                 options.UseNpgsql(keyVault.GetSecretByName("DocumentStorageClientDbDatabase"));
 
             });

@@ -1,6 +1,7 @@
 ﻿namespace MPDIS.API.Wrapper.Tests
 {
     using CSF.Common.Library;
+    using CSF.Common.Library.Rest;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Moq;

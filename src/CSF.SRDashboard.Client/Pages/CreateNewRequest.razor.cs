@@ -128,7 +128,7 @@ namespace CSF.SRDashboard.Client.Pages
                 DueDate = RequestModel.DueDate
             };
 
-            UploadedRequest = WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
+            UploadedRequest = await WorkLoadService.PostRequestModel(RequestToSend, GatewayService);
             var addedDocuments = await this.InsertDocumentOnRequest(UploadedRequest.Id);
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "/" + UploadedRequest.Id);
         }

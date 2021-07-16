@@ -70,19 +70,20 @@ namespace CSF.SRDashboard.Client.Pages
         public bool MostRecentCommentsIsCollapsed { get; private set; }
         public List<UploadedDocument> DocumentForm { get; set; } = new List<UploadedDocument>();
         public IUploadDocumentHelper UploadService { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
             IsEditMode = true;
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
-            this.RequestModel = PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
+            this.RequestModel = await PopulateRequestmodel(EditRequestId, this.Applicant.Cdn);
             previousAssigneeId = this.RequestModel.AssigneeId;
 
             this.EditContext = new EditContext(RequestModel);
             this.UploadService = new UploadDocumentHelper(this.DocumentService);
 
-            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId).Select(x => x.DocumentId).ToList();
+            var documentIds = (await this.WorkLoadService.GetAllAttachmentsByRequestId(EditRequestId)).Select(x => x.DocumentId).ToList();
             var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
             this.DocumentForm = documentInfos.Select(x => new UploadedDocument()
             {
@@ -170,25 +171,30 @@ namespace CSF.SRDashboard.Client.Pages
 
             if (previousAssigneeId != this.RequestModel.AssigneeId)
             {
-                var new_assignment_toPost = WorkLoadService.GetAssignmentFromRequestModel(RequestModel);
+                var new_assignment_toPost = new WorkItemAssignmentDTO()
+                {
+                    WorkItemId = this.RequestModel.RequestID,
+                    AssignedEmployeeId = this.RequestModel.AssigneeId,
+                    DateAssignedUTC = DateTimeOffset.UtcNow
+                };
 
                 // when blank option is selected, we need to delete the old assignee from the work request
                 if (RequestModel.AssigneeId == Constants.NotSelected)
                 {
                     var workItemId = RequestModel.RequestID;
-                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
-                    WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                    var oldAssignment_toDelete = await WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    await WorkLoadService.DeleteAssignmentForWorkItemAsync(oldAssignment_toDelete);
                 }
                 else
                 {
                     // old assignee is deleted and the new assignee is posted.
                     var workItemId = RequestModel.RequestID;
-                    var oldAssignment_toDelete = WorkLoadService.GetMostRecentAssingmentForWorkItem(workItemId);
+                    var oldAssignment_toDelete = await WorkLoadService .GetMostRecentAssingmentForWorkItem(workItemId);
                     if (oldAssignment_toDelete != null) // this is the scenario where there is no old assignee and we are assigning a person
                     {
-                        WorkLoadService.DeleteOrPost(oldAssignment_toDelete, true);
+                        await WorkLoadService.DeleteAssignmentForWorkItemAsync(oldAssignment_toDelete);
                     }
-                    WorkLoadService.DeleteOrPost(new_assignment_toPost, false);
+                    await WorkLoadService.PostAssignmentForWorkItemAsync(new_assignment_toPost);
                 }
             }
 
@@ -237,21 +243,21 @@ namespace CSF.SRDashboard.Client.Pages
             this.NavigationManager.NavigateTo("/SeafarerProfile/" + Cdn + "?tab=requestLink");
         }
 
-        private RequestModel PopulateRequestmodel(int requestId, string cdn)
+        private async Task<RequestModel> PopulateRequestmodel(int requestId, string cdn)
         {
-            var workItem = this.WorkLoadService.GetByWorkItemById(requestId);
+            var workItem = await this.WorkLoadService.GetByWorkItemById(requestId);
             var requestModel = new RequestModel();
             requestModel.Cdn = cdn;
             requestModel.RequestID = requestId;
 
-            if(workItem.WorkItemAssignment != null)
+            if (workItem.WorkItemAssignment != null)
             {
                 requestModel.AssigneeId = workItem.WorkItemAssignment.AssignedEmployeeId;
             }
-
-            if(workItem.WorkItemStatus.StatusAdditionalDetails != null)
+            var statusAdditionalDetails = workItem.WorkItemStatus.StatusAdditionalDetails;
+            if (statusAdditionalDetails != null)
             {
-                requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(workItem.WorkItemStatus.StatusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
+                requestModel.Status = Constants.RequestStatuses.Where(x => x.Text.Equals(statusAdditionalDetails, StringComparison.OrdinalIgnoreCase)).Single().Id;
             }
 
             if (workItem.Detail != null)

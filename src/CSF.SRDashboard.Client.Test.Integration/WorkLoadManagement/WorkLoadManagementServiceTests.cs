@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 using Moq;
 using CSF.SRDashboard.Client.Services;
 using CSF.Common.Library;
@@ -11,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using CSF.Common.Library.Azure;
 using Microsoft.Extensions.Logging;
+using CSF.Common.Library.Rest;
 
 namespace CSF.SRDashboard.Client.Test.Integration.WorkLoadManagement
 {
@@ -29,7 +26,7 @@ namespace CSF.SRDashboard.Client.Test.Integration.WorkLoadManagement
             this.logger = new Mock<ILogger<WorkLoadManagementService>>().Object;
         }
 
-        [Fact]
+        /*[Fact]
         public void GetByWorkItemById_Succeeds_WhenWorkItemNotNull()
         {
             // Arrange
@@ -40,7 +37,7 @@ namespace CSF.SRDashboard.Client.Test.Integration.WorkLoadManagement
 
             // Assert
             Assert.NotNull(workItem);
-        }
+        }*/
 
         private IEnumerable<IRestClient> BuildRestClient()
         {

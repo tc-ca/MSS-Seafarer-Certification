@@ -1,5 +1,5 @@
-﻿using CSF.SRDashboard.Client.Graph;
-using CSF.SRDashboard.Client.DTO.Azure;
+﻿using CSF.SRDashboard.Client.DTO.Azure;
+using CSF.SRDashboard.Client.Graph;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Identity.Web;
@@ -92,32 +92,13 @@ namespace CSF.SRDashboard.Client.Services
         }
 
         /// <summary>
-        /// Acquires a valid token for calling Graph API. If token is invalid, instruct <see cref="consentHandler"/> to refresh it.
-        /// See https://github.com/AzureAD/microsoft-identity-web/wiki/Managing-incremental-consent-and-conditional-access.
-        /// </summary>
-        /// <returns></returns>
-        private void acquireToken()
-        {
-            try
-            {
-                var token = this.tockenAcquisition.GetAccessTokenForUserAsync(GraphConstants.Scopes).GetAwaiter().GetResult();
-                this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + "\n" + ex.InnerException);
-                consentHandler.HandleException(ex);
-            }
-        }
-
-
-        /// <summary>
         /// Following method gets a list of Marine Medical Staff members from
         /// the Azure group CSF Marine Medical Users
         /// </summary>
         /// <returns>a list of AzureMemberInfo</returns>
         public List<AzureMemberInfo> GetMarineMedicalStaffMembers()
         {
+            this.acquireToken();
             List<AzureMemberInfo> groupMembers = new List<AzureMemberInfo>();
 
             try
@@ -150,33 +131,6 @@ namespace CSF.SRDashboard.Client.Services
             return groupMembers;
         }
 
-
-        public List<AzureMemberInfo> GetGroupMembersByGroupId(string groupId)
-        {
-            List<AzureMemberInfo> groupMembers = new List<AzureMemberInfo>();
-
-            try
-            {
-                string url = $"https://graph.microsoft.com/v1.0/groups/{groupId}/members/microsoft.graph.user";
-
-                var basicInfoRequest = this.httpClient.GetAsync(url).GetAwaiter().GetResult();
-                if (basicInfoRequest.IsSuccessStatusCode)
-                {
-                    var userData = System.Text.Json.JsonDocument.Parse(basicInfoRequest.Content.ReadAsStreamAsync().GetAwaiter().GetResult());
-                    var rootElement = userData.RootElement.ToString();
-                    var memberList = JsonConvert.DeserializeObject<AzureMemberListInfo>(rootElement);
-                    groupMembers = memberList.value;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return groupMembers;
-        }
-
         public AzureMemberInfo GetUserByUserId(string Id)
         {
             string url = $"https://graph.microsoft.com/v1.0/users/{Id}";
@@ -197,6 +151,25 @@ namespace CSF.SRDashboard.Client.Services
             }
 
             return memberInfo;
+        }
+
+        /// <summary>
+        /// Acquires a valid token for calling Graph API. If token is invalid, instruct <see cref="consentHandler"/> to refresh it.
+        /// See https://github.com/AzureAD/microsoft-identity-web/wiki/Managing-incremental-consent-and-conditional-access.
+        /// </summary>
+        /// <returns></returns>
+        private void acquireToken()
+        {
+            try
+            {
+                var token = this.tockenAcquisition.GetAccessTokenForUserAsync(GraphConstants.Scopes).GetAwaiter().GetResult();
+                this.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + "\n" + ex.InnerException);
+                consentHandler.HandleException(ex);
+            }
         }
     }
 }

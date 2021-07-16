@@ -2,6 +2,7 @@
 {
     using CSF.Common.Library;
     using CSF.Common.Library.Azure;
+    using CSF.Common.Library.Rest;
     using CSF.SRDashboard.Client.DTO.DocumentStorage;
     using CSF.SRDashboard.Client.Services.Document;
     using Microsoft.AspNetCore.Http;

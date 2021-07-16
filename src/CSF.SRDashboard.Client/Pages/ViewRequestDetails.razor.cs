@@ -59,7 +59,7 @@ namespace CSF.SRDashboard.Client.Pages
 
             this.Applicant = this.GatewayService.GetApplicantInfoByCdn(Cdn);
 
-            WorkItemDTO = this.WorkLoadService.GetByWorkItemById(RequestId);
+            WorkItemDTO = await this.WorkLoadService.GetByWorkItemById(RequestId);
 
 
 
@@ -79,7 +79,7 @@ namespace CSF.SRDashboard.Client.Pages
             RequestModel.AssigneeId = (WorkItemDTO.WorkItemAssignment == null) ? null : WorkItemDTO.WorkItemAssignment.AssignedEmployeeId;
             this.EditContext = new EditContext(RequestModel);
 
-            var documentIds = this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId).Select(x => x.DocumentId).ToList();
+            var documentIds = (await this.WorkLoadService.GetAllAttachmentsByRequestId(RequestId)).Select(x => x.DocumentId).ToList();
             var documentInfos = await this.DocumentService.GetDocumentsWithDocumentIds(documentIds);
             foreach (var docFromDB in documentInfos)
             {
