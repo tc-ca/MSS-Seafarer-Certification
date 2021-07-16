@@ -98,7 +98,7 @@ namespace CSF.SRDashboard.Client.Services
         /// <returns>a list of AzureMemberInfo</returns>
         public List<AzureMemberInfo> GetMarineMedicalStaffMembers()
         {
-            this.acquireToken(); // we need to set the token again if there were other secure API calls were made before this call where the token is different.
+            this.acquireToken();
             List<AzureMemberInfo> groupMembers = new List<AzureMemberInfo>();
 
             try
